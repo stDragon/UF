@@ -1,0 +1,43 @@
+.um-tooltip{
+  //max-width: 200px;
+  color: #fff;
+  -webkit-transform: scale(0);
+  transform: scale(0);
+  -webkit-transform-origin: top center;
+  transform-origin: top center;
+  will-change: transform;
+  z-index: 999;
+  background: rgba(97, 97, 97, 0.9);
+  border-radius: 2px;
+  display: block;
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 14px;
+  max-width: 170px;
+  position: absolute;
+  padding: 8px;
+  //text-align: center;
+  right: 0;
+  &.active{
+    -webkit-animation: pulse 200ms cubic-bezier(0,0,.2,1)forwards;
+    animation: pulse 200ms cubic-bezier(0,0,.2,1)forwards;
+    -webkit-transform: scale(0);
+    transform: scale(1);
+  }
+  &.bottom{
+    top: 100%;
+  }
+}
+.um-form-group{
+  input:focus + .um-tooltip{
+    -webkit-animation: pulse 200ms cubic-bezier(0,0,.2,1)forwards;
+    animation: pulse 200ms cubic-bezier(0,0,.2,1)forwards;
+    -webkit-transform: scale(0);
+    transform: scale(1);
+  }
+  .um-tooltip{
+    width: 100%;
+    position: absolute;
+    max-width: none;
+  }
+}

@@ -1,4 +1,5 @@
 @import 'colors';
+@import 'tooltip';
 //@import 'loading';
 @import 'load-bar';
 
@@ -67,7 +68,14 @@ $font-stack: Helvetica, sans-serif;
   border: 0;
 }
 .um-form-group{
+  position: relative;
   margin-bottom: 15px;
+  &.um-has-error{
+    .um-form-control{
+      border-color: #d50000;
+      box-shadow: none;
+    }
+  }
 }
 .um-form-control{
   border: none;

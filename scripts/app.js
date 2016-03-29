@@ -60,16 +60,76 @@ UM.TemplateManager = {
 
 };
 
+UM.Views.Tooltip = Backbone.View.extend({
+
+    tagName: 'span',
+    className: 'um-tooltip bottom',
+
+    initialize: function (text) {
+        this.render(text);
+    },
+
+    render: function(text) {
+        this.$el.html(text);
+        return this;
+    }
+
+});
+
 UM.Models.User = Backbone.Model.extend({
     defaults: {
-        firstName: '',
         surname: '',
+        firstName: '',
+        email: '',
         phone: '',
         city: '',
         wishes: ''
     },
     
     url: UM.url + 'users/',
+
+    validate: function(attrs, options) {
+        var email_filter    = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+
+        var errors = [];
+        if (!attrs.firstName) {
+            errors.push({
+                text: "Вы не заполнили имя",
+                attr: 'firstName'
+            });
+        }
+        if (!attrs.surname) {
+            errors.push({
+                text: "Вы не заполнили фамилию",
+                attr: 'surname'
+            });
+        }
+        if (!attrs.email) {
+            errors.push({
+                text: "Вы не заполнили электронную почту",
+                attr: 'email'
+            });
+        } else if (!email_filter.test(attrs.email)) {
+            errors.push({
+                text: "Почтовый адресс не коректен",
+                attr: 'email'
+            });
+        }
+        if (!attrs.phone) {
+            errors.push({
+                text: "Вы не заполнили телефон",
+                attr: 'phone'
+            });
+        }
+        if (!attrs.city) {
+            errors.push({
+                text: "Вы не выбрали город",
+                attr: 'city'
+            })
+        }
+
+        if(errors) return errors;
+    },
     
     initialize: function () {
         this.on('change', this.log, this);
@@ -94,10 +154,11 @@ UM.Views.Form = Backbone.View.extend({
     initialize: function () {
         this.render();
         this.listenTo(this.model, 'sync', function(){UM.page.hideLoader()});
+        this.listenTo(this.model, 'invalid', this.invalid);
     },
     
     initMask: function() {
-        this.$el.find('#umPhone').inputmask({"mask": "+7(999)999-99-99"});
+        this.$el.find('[name=phone]').inputmask({"mask": "+7(999)999-99-99"});
     },
     
     render: function () {
@@ -117,13 +178,31 @@ UM.Views.Form = Backbone.View.extend({
         UM.page.showLoader();
         
         var data = {
-            'firstName': this.$el.find('#umFirstname').val(),
-            'surname':   this.$el.find('#umSurname').val(),
-            'city':      this.$el.find('#umCity').val(),
-            'phone':     this.$el.find('#umPhone').val()
+            'surname':   this.$el.find('[name=surname]').val(),
+            'firstName': this.$el.find('[name=firstName]').val(),
+            'email':     this.$el.find('[name=email]').val(),
+            'city':      this.$el.find('[name=city]').val(),
+            'phone':     this.$el.find('[name=phone]').val()
         };
         
         this.model.save(data);
+    },
+
+    invalid: function(model, errors) {
+        this.$el.find('input')
+            .closest('.um-form-group').removeClass('um-has-error')
+            .children('.um-tooltip').remove();
+        _.each(errors, function(error){
+            var $el = this.$el.find('[name=' +error.attr + ']'),
+                $group = $el.closest('.um-form-group');
+
+            $group.addClass('um-has-error');
+            var tooltip = new UM.Views.Tooltip();
+            tooltip.$el.html(error.text);
+            $group.append(tooltip.el);
+        }, this);
+
+        //$group.find('.help-block').html(error).removeClass('hidden');
     }
 });
 
