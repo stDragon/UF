@@ -157,7 +157,27 @@ UM.Models.User = Backbone.Model.extend({
     }
 });
 
-UM.Views.Form = Backbone.View.extend({
+UM.Views.Confirm = Backbone.View.extend({
+
+    className: 'um-order-confirm',
+
+    template: 'confirm',
+
+    initialize: function () {
+        this.render();
+    },
+
+    render: function () {
+        var that = this;
+        UM.TemplateManager.get(this.template, function(template){
+            var html = $(template);
+            that.$el.html(html);
+        });
+        return this;
+    }
+});
+
+UM.Views.UserForm = Backbone.View.extend({
     
     tagName: 'form',
     className: 'um-form',
@@ -177,6 +197,11 @@ UM.Views.Form = Backbone.View.extend({
         this.listenTo(this.model, 'sync', function(){
             UM.page.hideLoader();
             this.valid();
+            UM.vent.trigger('page:showConfirm');
+        });
+        this.listenTo(this.model, 'error', function(){
+            UM.page.hideLoader();
+            this.enabledSubmit();
         });
         this.listenTo(this.model, 'invalid', this.invalid);
     },
@@ -210,6 +235,10 @@ UM.Views.Form = Backbone.View.extend({
 
     disabledSubmit: function() {
         this.$el.find('.js-create-order')[0].disabled = true;
+    },
+
+    enabledSubmit: function() {
+        this.$el.find('.js-create-order')[0].disabled = false;
     },
 
     valid: function () {
@@ -265,18 +294,16 @@ UM.Views.Page = Backbone.View.extend({
     
     className: 'um fixed',
     template: '',
-
-    events: {
-        'showLoader': 'showLoader',
-        'hideLoader': 'hideLoader'
-    },
     
     initialize: function() {
-        this.render();
+        this.render(this.showStartForm());
+        UM.vent.on('page:showConfirm', function(){
+            this.render(this.showConfirm());
+        }, this);
     },
     
-    render: function() {
-        this.$el.html(this.showStartForm());
+    render: function(form) {
+        this.$el.html(form);
         return this;
     },
 
@@ -300,8 +327,14 @@ UM.Views.Page = Backbone.View.extend({
     },
     
     showStartForm: function() {
-        UM.user = new UM.Views.Form({model: new UM.Models.User});
-        return UM.user.el;
+        UM.user = new UM.Models.User;
+        UM.userCreateFormView = new UM.Views.UserForm({model: UM.user});
+        return UM.userCreateFormView.el;
+    },
+
+    showConfirm: function () {
+        UM.confirm = new UM.Views.Confirm();
+        return UM.confirm.el;
     }
 });
 
