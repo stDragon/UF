@@ -1,7 +1,6 @@
 var express      = require('express'),
     errorhandler = require('errorhandler'),
-    bodyParser   = require('body-parser'),
-    validation   = require('backbone-validation');
+    bodyParser   = require('body-parser');
 
 var app = module.exports.app = exports.app = express();
 

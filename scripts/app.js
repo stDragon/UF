@@ -89,12 +89,19 @@ UM.Models.User = Backbone.Model.extend({
     url: UM.url + 'users/',
 
     validate: function(attrs, options) {
-        var email_filter    = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        var emailFilter    = /^[-\w.]+@([A-z0-9][-A-z0-9]+\.)+[A-z]{2,4}$/,
+            lettersFilter = /^[а-яА-ЯёЁa-zA-Z]{1,20}$/,
+            phoneFilter = /((8|\+7)-?)?\(?\d{3}\)?-?\d{1}-?\d{1}-?\d{1}-?\d{1}-?\d{1}-?\d{1}-?\d{1}/;
 
         var errors = [];
         if (!attrs.firstName) {
             errors.push({
                 text: "Вы не заполнили имя",
+                attr: 'firstName'
+            });
+        } else if (!lettersFilter.test(attrs.firstName)) {
+            errors.push({
+                text: "Имя должно содержать только буквы",
                 attr: 'firstName'
             });
         }
@@ -103,13 +110,18 @@ UM.Models.User = Backbone.Model.extend({
                 text: "Вы не заполнили фамилию",
                 attr: 'surname'
             });
+        } else if (!lettersFilter.test(attrs.surname)) {
+            errors.push({
+                text: "Фамилия должна содержать только буквы",
+                attr: 'surname'
+            });
         }
         if (!attrs.email) {
             errors.push({
                 text: "Вы не заполнили электронную почту",
                 attr: 'email'
             });
-        } else if (!email_filter.test(attrs.email)) {
+        } else if (!emailFilter.test(attrs.email)) {
             errors.push({
                 text: "Почтовый адресс не коректен",
                 attr: 'email'
@@ -120,6 +132,11 @@ UM.Models.User = Backbone.Model.extend({
                 text: "Вы не заполнили телефон",
                 attr: 'phone'
             });
+        } else if (!phoneFilter.test(attrs.phone)) {
+            errors.push({
+                text: "Телефон не коректен",
+                attr: 'phone'
+            });
         }
         if (!attrs.city) {
             errors.push({
@@ -128,7 +145,7 @@ UM.Models.User = Backbone.Model.extend({
             })
         }
 
-        if(errors) return errors;
+        if(errors.length) return errors;
     },
     
     initialize: function () {
@@ -153,7 +170,14 @@ UM.Views.Form = Backbone.View.extend({
     
     initialize: function () {
         this.render();
-        this.listenTo(this.model, 'sync', function(){UM.page.hideLoader()});
+        this.listenTo(this.model, 'request', function(){
+            UM.page.showLoader();
+            this.disabledSubmit();
+        });
+        this.listenTo(this.model, 'sync', function(){
+            UM.page.hideLoader();
+            this.valid();
+        });
         this.listenTo(this.model, 'invalid', this.invalid);
     },
     
@@ -173,10 +197,6 @@ UM.Views.Form = Backbone.View.extend({
     save: function (e) {
         e.preventDefault();
         
-        this.$el.find('.js-create-order').disabled = true;
-
-        UM.page.showLoader();
-        
         var data = {
             'surname':   this.$el.find('[name=surname]').val(),
             'firstName': this.$el.find('[name=firstName]').val(),
@@ -186,6 +206,16 @@ UM.Views.Form = Backbone.View.extend({
         };
         
         this.model.save(data);
+    },
+
+    disabledSubmit: function() {
+        this.$el.find('.js-create-order')[0].disabled = true;
+    },
+
+    valid: function () {
+        this.$el.find('input')
+            .closest('.um-form-group').removeClass('um-has-error')
+            .children('.um-tooltip').remove();
     },
 
     invalid: function(model, errors) {
@@ -201,8 +231,6 @@ UM.Views.Form = Backbone.View.extend({
             tooltip.$el.html(error.text);
             $group.append(tooltip.el);
         }, this);
-
-        //$group.find('.help-block').html(error).removeClass('hidden');
     }
 });
 
