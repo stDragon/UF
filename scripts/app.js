@@ -230,17 +230,17 @@ UM.Views.UserForm = Backbone.View.extend({
     
     initialize: function () {
         this.render();
-        this.listenTo(this.model, 'request', function(){
-            UM.page.showLoader();
+        this.listenTo(this.model, 'request', function() {
+            UM.vent.trigger('page:showLoader');
             this.disabledSubmit();
         });
-        this.listenTo(this.model, 'sync', function(){
-            UM.page.hideLoader();
+        this.listenTo(this.model, 'sync', function() {
+            UM.vent.trigger('page:hideLoader');
             this.valid();
             UM.vent.trigger('page:showPhoneForm');
         });
-        this.listenTo(this.model, 'error', function(){
-            UM.page.hideLoader();
+        this.listenTo(this.model, 'error', function() {
+            UM.vent.trigger('page:hideLoader');
             this.enabledSubmit();
         });
         this.listenTo(this.model, 'invalid', this.invalid);
@@ -253,7 +253,8 @@ UM.Views.UserForm = Backbone.View.extend({
     render: function () {
         var that = this;
         UM.TemplateManager.get(this.template, function(template){
-            var html = $(template);
+            var temp = _.template(template);
+            var html = $(temp( that.model.toJSON() ));
             that.$el.html(html);
         });
         return this;
@@ -338,6 +339,14 @@ UM.Views.Page = Backbone.View.extend({
     initialize: function() {
 
         this.render(this.showStartForm());
+
+        UM.vent.on('page:showLoader', function(){
+            this.render(this.showLoader());
+        }, this);
+
+        UM.vent.on('page:hideLoader', function(){
+            this.render(this.hideLoader());
+        }, this);
 
         UM.vent.on('page:showPhoneForm', function(){
             this.render(this.showPhoneForm());
