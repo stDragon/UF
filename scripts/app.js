@@ -48,9 +48,9 @@ UM.TemplateManager = {
             $.ajax({
                 url : UM.url + "templates/" + id + ".html",
                 success: function(template){
-                    var $tmpl = $(template);
-                    that.templates[id] = $tmpl;
-                    callback($tmpl);
+                    var tmpl = template;
+                    that.templates[id] = tmpl;
+                    callback(tmpl);
                 }
             });
 
@@ -157,10 +157,16 @@ UM.Models.User = Backbone.Model.extend({
     }
 });
 
+UM.Models.Phone = Backbone.Model.extend({
+    defaults: {
+        phone: '',
+        confirm: false
+    }
+});
+
 UM.Views.Confirm = Backbone.View.extend({
 
     className: 'um-order-confirm',
-
     template: 'confirm',
 
     initialize: function () {
@@ -174,6 +180,40 @@ UM.Views.Confirm = Backbone.View.extend({
             that.$el.html(html);
         });
         return this;
+    }
+});
+
+UM.Views.UserPhoneForm = Backbone.View.extend({
+
+    tagName: 'form',
+    className: 'um-form',
+    template: 'formPhoneAuth',
+
+    events: {
+        'focus #umPhone': 'initMask',
+        'submit': 'confirm'
+    },
+
+    initialize: function () {
+        this.render();
+    },
+
+    render: function () {
+        var that = this;
+        UM.TemplateManager.get(this.template, function(template){
+            var temp = _.template(template);
+            var html = $(temp( that.model.toJSON() ));
+            that.$el.html(html);
+        });
+        return this;
+    },
+
+    confirm: function (e) {
+        e.preventDefault();
+
+        //@TODO: Добавить обработку подтверждения СМС
+
+        UM.vent.trigger('page:showConfirm');
     }
 });
 
@@ -197,7 +237,7 @@ UM.Views.UserForm = Backbone.View.extend({
         this.listenTo(this.model, 'sync', function(){
             UM.page.hideLoader();
             this.valid();
-            UM.vent.trigger('page:showConfirm');
+            UM.vent.trigger('page:showPhoneForm');
         });
         this.listenTo(this.model, 'error', function(){
             UM.page.hideLoader();
@@ -296,10 +336,17 @@ UM.Views.Page = Backbone.View.extend({
     template: '',
     
     initialize: function() {
+
         this.render(this.showStartForm());
+
+        UM.vent.on('page:showPhoneForm', function(){
+            this.render(this.showPhoneForm());
+        }, this);
+
         UM.vent.on('page:showConfirm', function(){
             this.render(this.showConfirm());
         }, this);
+
     },
     
     render: function(form) {
@@ -332,9 +379,16 @@ UM.Views.Page = Backbone.View.extend({
         return UM.userCreateFormView.el;
     },
 
+    showPhoneForm: function () {
+        var phone = UM.user.get('phone');
+        UM.phone = new UM.Models.Phone({phone:phone});
+        UM.phoneView = new UM.Views.UserPhoneForm({model: UM.phone});
+        return UM.phoneView.el;
+    },
+
     showConfirm: function () {
-        UM.confirm = new UM.Views.Confirm();
-        return UM.confirm.el;
+        UM.confirmView = new UM.Views.Confirm();
+        return UM.confirmView.el;
     }
 });
 
