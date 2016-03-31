@@ -11,6 +11,51 @@ var UM = {
     Router: {},
     url: "http://localhost:8888/"
 };
+/**
+ * @todo временный массив, удалить после его получения с сервера
+ * */
+UM.citys = [
+    {
+        name: 'Саратов',
+        mr3id: '1'
+    },
+    {
+        name: 'Москва',
+        mr3id: '2'
+    },
+    {
+        name: 'Питер',
+        mr3id: '3'
+    },
+    {
+        name: 'Самара',
+        mr3id: '4'
+    },
+    {
+        name: 'Новгород',
+        mr3id: '5'
+    },
+    {
+        name: 'Тула',
+        mr3id: '6'
+    },
+    {
+        name: 'Энгельс',
+        mr3id: '7'
+    },
+    {
+        name: 'Омск',
+        mr3id: '8'
+    },
+    {
+        name: 'Томск',
+        mr3id: '9'
+    },
+    {
+        name: 'Тверь',
+        mr3id: '10'
+    }
+];
 
 $('head').append('<link rel="stylesheet" type="text/css" href="' + UM.url + 'css/marya-um-styles.css">');
 
@@ -150,10 +195,36 @@ UM.Models.User = Backbone.Model.extend({
     
     initialize: function () {
         this.on('change', this.log, this);
+        UM.vent.on('user:setCity', this.setCity, this);
     },
                                        
     log: function () {
         console.log(this.toJSON());
+    },
+
+    setCity: function(name) {
+        this.set('city', name);
+    }
+});
+
+UM.Models.City = Backbone.Model.extend({
+    defaults: {
+        name: '',
+        mr3id: ''
+    }
+});
+
+UM.Models.Shop = Backbone.Model.extend({
+    defaults: {
+        name: '',
+        mr3id: '',
+        brend: '',
+        dealer: '',
+        status: '',
+        city: '',
+        address: '',
+        administrator: '',
+        priceZone: ''
     }
 });
 
@@ -162,6 +233,20 @@ UM.Models.Phone = Backbone.Model.extend({
         phone: '',
         confirm: false
     }
+});
+
+UM.Collections.Citys = Backbone.Collection.extend({
+    model: UM.Models.City,
+    //url: UM.url +'/city'
+
+    comparator: function(model) {
+        return model.get('name');
+    }
+});
+
+UM.Collections.Shops = Backbone.Collection.extend({
+    model: UM.Models.Shop,
+    //url: UM.url +'/shop'
 });
 
 UM.Views.Confirm = Backbone.View.extend({
@@ -225,11 +310,14 @@ UM.Views.UserForm = Backbone.View.extend({
 
     events: {
         'focus #umPhone': 'initMask',
+        'focus #umCity': 'showSelectCity',
+        'focus input:not(#umCity)': 'hideSelectCity',
         'submit': 'save'
     },
     
     initialize: function () {
         this.render();
+        this.model.on('change', this.setValue, this);
         this.listenTo(this.model, 'request', function() {
             UM.vent.trigger('page:showLoader');
             this.disabledSubmit();
@@ -249,6 +337,19 @@ UM.Views.UserForm = Backbone.View.extend({
     initMask: function() {
         this.$el.find('[name=phone]').inputmask({"mask": "+7(999)999-99-99"});
     },
+
+    showSelectCity: function() {
+        var $el = this.$el.find('.um-dropdown-content.um-city-list');
+
+        if(!$el.length)
+            this.$el.find('[name=city]').after(UM.cityCollectionView.el);
+        else
+            UM.vent.trigger('cityList:show');
+    },
+
+    hideSelectCity: function(){
+        UM.vent.trigger('cityList:hide');
+    },
     
     render: function () {
         var that = this;
@@ -258,6 +359,13 @@ UM.Views.UserForm = Backbone.View.extend({
             that.$el.html(html);
         });
         return this;
+    },
+
+    setValue: function () {
+        var attr = this.model.toJSON();
+        _.each(attr, function(num, key) {
+            this.$el.find('[name=' + key + ']').val(num);
+        }, this);
     },
 
     save: function (e) {
@@ -331,6 +439,79 @@ UM.Views.Loader = Backbone.View.extend({
     }
 });
 
+UM.Views.City = Backbone.View.extend({
+
+    events: {
+        'click': 'active'
+    },
+
+    tagName: "li",
+    template: _.template('<span><%= name %></span>'),
+
+    initialize: function() {
+        this.render();
+        this.model.on('change', this.render, this);
+    },
+
+    render: function() {
+        var active = this.model.get('active');
+
+        if(active)
+            this.$el.addClass('active');
+        else
+            this.$el.removeClass('active');
+
+        this.$el.html( this.template( this.model.toJSON() ) );
+
+        return this;
+    },
+
+    active: function () {
+        this.model.set('active', !this.model.get('playing'));
+        UM.vent.trigger('user:setCity', this.model.get('name'));
+    }
+});
+
+UM.Views.Citys = Backbone.View.extend({
+
+    tagName: 'ul',
+    className: 'um-dropdown-content um-city-list',
+
+    initialize: function() {
+        this.render();
+        UM.vent.on('cityList:show', this.show, this);
+        UM.vent.on('cityList:hide', this.hidden, this);
+        this.collection.on('change', this.hidden, this);
+    },
+
+    render: function() {
+        this.collection.each(function(city) {
+            var view = new UM.Views.City({model: city});
+            this.$el.append(view.render().el);
+        }, this);
+
+        return this;
+    },
+
+    hidden: function() {
+        this.$el.addClass('um-hidden');
+    },
+
+    show: function() {
+        this.unsetActive(UM.user.get('city'));
+        this.$el.removeClass('um-hidden');
+    },
+
+    unsetActive: function (cityActive) {
+        this.collection.each(function(model) {
+            if( model.get('name') != cityActive){
+                model.set('active', false);
+            }
+        }, this);
+    }
+
+});
+
 UM.Views.Page = Backbone.View.extend({
     
     className: 'um fixed',
@@ -383,6 +564,9 @@ UM.Views.Page = Backbone.View.extend({
     },
     
     showStartForm: function() {
+        UM.cityCollection = new UM.Collections.Citys(UM.citys);
+        UM.cityCollectionView = new UM.Views.Citys({collection: UM.cityCollection});
+
         UM.user = new UM.Models.User;
         UM.userCreateFormView = new UM.Views.UserForm({model: UM.user});
         return UM.userCreateFormView.el;
