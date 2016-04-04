@@ -1,0 +1,32 @@
+.um-modal{
+  position: fixed;
+  top: 50vh;
+  left: 50vw;
+  min-width: 500px;
+  min-height: 500px;
+  margin: -25vh 0 0 -25vw;
+  padding: 20px;
+  border-radius: 2px;
+  background-color: #fff;
+  box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
+  box-sizing: border-box;
+  transition: box-shadow .25s;
+  z-index: 2020;
+  * {
+    box-sizing: inherit;
+  }
+  .um-modal-close{
+    position: absolute;
+    top: -3em;
+    right: -3em;
+    width: 3em;
+    height: 3em;
+    background-color: transparent;
+    fill: #000;
+    opacity: .3;
+    cursor: pointer;
+    :hover{
+      opacity: .5;
+    }
+  }
+}

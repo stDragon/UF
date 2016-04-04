@@ -2,7 +2,8 @@ var _ = require('underscore'),
     $ = require('jQuery'),
     Backbone = require('Backbone');
 
-require('jquery.inputmask');
+window._ = window._ || _;
+window.Backbone = window.Backbone || Backbone;
 
 var UM = {
     Models: {},
@@ -11,6 +12,14 @@ var UM = {
     Router: {},
     url: "http://localhost:8888/"
 };
+
+$('head').append(
+    '<link rel="stylesheet" type="text/css" href="' + UM.url + 'css/marya-um-styles.css">' +
+    '<script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&mode=debug" type="text/javascript">'
+);
+
+require('jquery.inputmask');
+require('./Backbone.Ymaps.js');
 /**
  * @todo временные массивы, удалить после его получения с сервера
  * */
@@ -44,7 +53,8 @@ UM.citys = [
     },
     {
         name: 'Энгельс',
-        mr3id: '7'
+        mr3id: '7',
+        showShop: true
     },
     {
         name: 'Омск',
@@ -70,7 +80,9 @@ UM.shop = [
         city: 'Энгельс',
         address: 'ул. Степная, д.11',
         administrator: 'Петр I',
-        priceZone: ''
+        priceZone: '',
+        lon: '51.481297',
+        lat: '46.12762'
     },
     {
         name: 'Кухонная студия "Мария"',
@@ -81,18 +93,22 @@ UM.shop = [
         city: 'Саратов',
         address: 'Вольский тракт, д. 2',
         administrator: 'Вася Николаев',
-        priceZone: ''
+        priceZone: '',
+        lon: '51.621449',
+        lat: '45.972443'
     },
     {
         name: 'Кухонная студия "Мария"',
-        mr3id: '11',
+        mr3id: '15',
         brand: 'Мария',
         dealer: '',
         status: 'Продает',
         city: 'Саратов',
         address: 'ул. Московская, д. 129/133',
         administrator: 'Олик Солдатов',
-        priceZone: ''
+        priceZone: '',
+        lon: '51.537118',
+        lat: '46.019346'
     },
     {
         name: 'Кухонная студия "Мария"',
@@ -106,8 +122,6 @@ UM.shop = [
         priceZone: ''
     }
 ];
-
-$('head').append('<link rel="stylesheet" type="text/css" href="' + UM.url + 'css/marya-um-styles.css">');
 
 function start() {
     UM.page = new UM.Views.Page();
@@ -255,7 +269,10 @@ UM.Models.User = Backbone.Model.extend({
     },
 
     setCity: function(name) {
-        this.set('city', name);
+        this.set({
+            'city': name,
+            'shop': ''
+        });
     },
     setShop: function(name) {
         this.set('shop', name);
@@ -280,6 +297,10 @@ UM.Models.Shop = Backbone.Model.extend({
         address: '',
         administrator: '',
         priceZone: ''
+    },
+
+    initialize: function () {
+        this.set('title', this.get('name') + ', ' + this.get('address'));
     }
 });
 
@@ -304,8 +325,14 @@ UM.Collections.Shops = Backbone.Collection.extend({
     //url: UM.url +'/shop'
 
     filterByCity: function (city) {
-        var filtered = this.filter(function (box) {
-            return box.get("city") === city;
+        var filtered = this.filter(function (model) {
+            return model.get("city") === city;
+        });
+        return new UM.Collections.Shops(filtered);
+    },
+    filterByCityForMap: function (city) {
+        var filtered = this.filter(function (model) {
+            return model.get("city") === city && model.get("lat") && model.get("lat");
         });
         return new UM.Collections.Shops(filtered);
     }
@@ -376,11 +403,13 @@ UM.Views.UserForm = Backbone.View.extend({
         'focus #umShop': 'showSelectShop',
         'focus input:not(#umCity)': 'hideSelectCity',
         'focus input:not(#umShop)': 'hideSelectShop',
+        'click .um-icon-add-location': 'showYaMap',
         'submit': 'save'
     },
     
     initialize: function () {
         this.render();
+        this.createYaMapModal();
         this.model.on('change', this.setValue, this);
         this.model.on('change', this.createSelectShop, this);
         this.listenTo(this.model, 'request', function() {
@@ -425,8 +454,10 @@ UM.Views.UserForm = Backbone.View.extend({
 
             if(city && UM.cityCollection.findWhere({'name': city}).get('showShop')) {
                 this.addSelectShop(city);
+                this.createYaMap();
             } else {
                 this.removeSelectShop();
+                this.removeYaMap();
                 this.model.set('shop', '');
             }
         }
@@ -522,6 +553,100 @@ UM.Views.UserForm = Backbone.View.extend({
             tooltip.$el.html(error.text);
             $group.append(tooltip.el);
         }, this);
+    },
+
+    createYaMapModal: function() {
+        if(!$('#umMap').length) {
+
+            var content = '<div id="umMap"></div>';
+            UM.modalMap = new UM.Views.Modal({'content': content});
+            $('body').append(UM.modalMap.el);
+
+        }
+    },
+
+    createYaMap: function() {
+        $('#umMap').children().remove();
+
+        var mapShopArr = UM.shopCollection.filterByCityForMap(this.model.get('city')).toJSON();
+
+        var latSum = 0,
+            lonSum = 0,
+            latAvg = 0,
+            lonAvg = 0;
+
+        _.each(mapShopArr, function(obj){
+            latSum += Number(obj.lat);
+            lonSum += Number(obj.lon);
+        });
+        latAvg = latSum/mapShopArr.length;
+        lonAvg = lonSum/mapShopArr.length;
+
+        if(mapShopArr.length) {
+            var map = new ymaps.Map('umMap', {
+                center: [lonAvg, latAvg],
+                zoom: 10
+            });
+            UM.mapShopCollection =  new Backbone.Collection(mapShopArr);
+
+            var Placemark = Backbone.Ymaps.Placemark.extend({
+                placemarkOptions: {
+
+                },
+
+                initialize: function() {
+                    var colors = Object.keys(this.styles),
+                        idx = _.random(0, colors.length);
+
+                    this.setStyle(colors[idx]);
+                },
+
+                hintContent: 'Выбрать студию',
+
+                balloonContent: function() {
+                    return 'Выбрана ' + this.model.get('title');
+                },
+
+                iconContent: function() {
+                    return this.model.get('mr3id');
+                },
+
+                events: {
+                    'click': 'selectShop'
+                },
+
+                selectShop: function () {
+                    UM.vent.trigger('user:setShop', this.model.get('title'));
+                }
+            });
+
+            UM.mapShopCollectionView = new Backbone.Ymaps.CollectionView({
+                geoItem: Placemark,
+                collection: UM.mapShopCollection,
+                map: map
+            });
+
+            UM.mapShopCollectionView.render();
+        } else {
+            this.hideYaMap();
+        }
+
+    },
+
+    removeYaMap: function () {
+        UM.mapShopCollection = {};
+        UM.mapShopCollectionView = {};
+    },
+
+    showYaMap: function () {
+        if (UM.mapShopCollectionView) {
+            $('.um-modal').removeClass('um-hidden');
+            UM.vent.trigger('shopList:hide');
+        }
+    },
+
+    hideYaMap: function() {
+        $('.um-modal').addClass('um-hidden');
     }
 });
 
@@ -543,6 +668,44 @@ UM.Views.Loader = Backbone.View.extend({
         return this;
     },
     
+    show: function() {
+        this.$el.removeClass('um-hidden');
+    },
+
+    hide: function() {
+        this.$el.addClass('um-hidden');
+    }
+});
+
+UM.Views.Modal = Backbone.View.extend({
+
+    className: 'um-modal um-hidden',
+    template: 'modalTpl',
+
+    events: {
+        'click .um-modal-close': 'hide'
+    },
+
+    initialize: function(attrs) {
+        this.options = attrs;
+        if(this.options.content) {
+
+        }
+        this.render(this.options.content);
+    },
+
+    render: function (content) {
+        var that = this;
+        UM.TemplateManager.get(this.template, function(template){
+            var html = $(template);
+            if(content) {
+                html.find('.modal-content').html(content);
+            }
+            that.$el.html(html);
+        });
+        return this;
+    },
+
     show: function() {
         this.$el.removeClass('um-hidden');
     },

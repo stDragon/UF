@@ -1,5 +1,6 @@
 @import 'colors';
 @import 'tooltip';
+@import 'modal';
 //@import 'loading';
 @import 'load-bar';
 
@@ -15,15 +16,16 @@ $font-stack: Helvetica, sans-serif;
     border-radius: 2px;
     //overflow: hidden;
     background: #fff;
+    box-sizing: border-box;
     &.fixed {
         position: fixed;
         bottom: 5vh;
         right: 5vh;
-        z-index: 999999;
+        z-index: 2010;
         box-shadow: 0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.12);
     }
     * {
-        box-sizing: border-box;
+        box-sizing: inherit;
     }
 }
 
@@ -75,6 +77,16 @@ $font-stack: Helvetica, sans-serif;
       border-color: #d50000;
       box-shadow: none;
     }
+  }
+  svg[class^='um-icon-']{
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 2.5em;
+    background-color: #fff;
+    line-height: 100%;
+    fill: #757575;
+    cursor: pointer;
   }
 }
 .um-form-control{
@@ -169,7 +181,7 @@ $font-stack: Helvetica, sans-serif;
   overflow-y: auto;
   //opacity: 0;
   position: absolute;
-  top: 0;
+  top: 100%;
   left: 0;
   z-index: 999;
   will-change: width, height;
@@ -204,4 +216,8 @@ $font-stack: Helvetica, sans-serif;
       background-color: transparent;
     }
   }
+}
+
+#umMap{
+  height: 500px;
 }
