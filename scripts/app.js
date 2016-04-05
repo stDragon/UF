@@ -5,18 +5,15 @@ var _ = require('underscore'),
 window._ = window._ || _;
 window.Backbone = window.Backbone || Backbone;
 
-var UM = {
+var UM = window.UM || {};
+
+UM = {
     Models: {},
     Collections: {},
     Views: {},
     Router: {},
-    url: "http://localhost:8888/"
+    option: {}
 };
-
-$('head').append(
-    '<link rel="stylesheet" type="text/css" href="' + UM.url + 'css/marya-um-styles.css">' +
-    '<script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&mode=debug" type="text/javascript">'
-);
 
 require('jquery.inputmask');
 require('./Backbone.Ymaps.js');
@@ -123,10 +120,28 @@ UM.shop = [
     }
 ];
 
-function start() {
+UM.start = function(option) {
+    this.option = option;
+
+    if(!this.option.serverUrl)
+        throw new Error("Не указано имя сервера Мария '" + option.serverUrl + "' проверьте конфигурацию");
+    if(!this.option.siteUrl)
+        throw new Error("Не указано имя вашего сайта '" + option.siteUrl + "' проверьте конфигурацию");
+
+    var head = '';
+    if(this.option.style) {
+        var style = this.option.serverUrl + this.option.style;
+        head += '<link rel="stylesheet" type="text/css" href="'+ style + '">'
+    }
+    //if(this.option.showMap) {
+        head += '<script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&mode=debug" type="text/javascript">';
+        console.warn('карта отключина');
+    //}
+    $('head').append(head);
+
     UM.page = new UM.Views.Page();
     $('body').append(UM.page.el);
-}
+};
 
 UM.vent = _.extend({}, Backbone.Events);
 
@@ -155,7 +170,7 @@ UM.TemplateManager = {
                 };
             });
             $.ajax({
-                url : UM.url + "templates/" + id + ".html",
+                url : UM.option.serverUrl + "templates/" + id + ".html",
                 success: function(template){
                     var tmpl = template;
                     that.templates[id] = tmpl;
@@ -196,7 +211,9 @@ UM.Models.User = Backbone.Model.extend({
         wishes: ''
     },
     
-    url: UM.url + 'users/',
+    url: function() {
+        return UM.option.serverUrl + 'users/'
+    },
 
     validate: function(attrs, options) {
         var emailFilter    = /^[-\w.]+@([A-z0-9][-A-z0-9]+\.)+[A-z]{2,4}$/,
@@ -313,7 +330,10 @@ UM.Models.Phone = Backbone.Model.extend({
 
 UM.Collections.Citys = Backbone.Collection.extend({
     model: UM.Models.City,
-    //url: UM.url +'/city'
+
+    //url: function() {
+    //    return UM.option.serverUrl + '/city/'
+    //},
 
     comparator: function(model) {
         return model.get('name');
@@ -322,7 +342,10 @@ UM.Collections.Citys = Backbone.Collection.extend({
 
 UM.Collections.Shops = Backbone.Collection.extend({
     model: UM.Models.Shop,
-    //url: UM.url +'/shop'
+
+    //url: function() {
+    //    return UM.option.serverUrl + '/shop/'
+    //},
 
     filterByCity: function (city) {
         var filtered = this.filter(function (model) {
@@ -403,6 +426,7 @@ UM.Views.UserForm = Backbone.View.extend({
         'focus #umShop': 'showSelectShop',
         'focus input:not(#umCity)': 'hideSelectCity',
         'focus input:not(#umShop)': 'hideSelectShop',
+        'blur input': 'saveAttr',
         'click .um-icon-add-location': 'showYaMap',
         'submit': 'save'
     },
@@ -411,7 +435,9 @@ UM.Views.UserForm = Backbone.View.extend({
         this.render();
         this.createYaMapModal();
         this.model.on('change', this.setValue, this);
-        this.model.on('change', this.createSelectShop, this);
+        if(UM.option.showShop){
+            this.model.on('change', this.createSelectShop, this);
+        }
         this.listenTo(this.model, 'request', function() {
             UM.vent.trigger('page:showLoader');
             this.disabledSubmit();
@@ -454,7 +480,9 @@ UM.Views.UserForm = Backbone.View.extend({
 
             if(city && UM.cityCollection.findWhere({'name': city}).get('showShop')) {
                 this.addSelectShop(city);
-                this.createYaMap();
+                if(UM.option.showShop){
+                    this.createYaMap();
+                }
             } else {
                 this.removeSelectShop();
                 this.removeYaMap();
@@ -509,6 +537,12 @@ UM.Views.UserForm = Backbone.View.extend({
         _.each(attr, function(num, key) {
             this.$el.find('[name=' + key + ']').val(num);
         }, this);
+    },
+
+    saveAttr: function(e) {
+        var name = $(e.target).attr('name'),
+            val = $(e.target).val();
+        this.model.set(name, val);
     },
 
     save: function (e) {
@@ -945,7 +979,5 @@ UM.Views.Page = Backbone.View.extend({
         return UM.confirmView.el;
     }
 });
-
-$(document).ready(start);
 
 window.UM = UM;
