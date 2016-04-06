@@ -5,6 +5,15 @@
 @import 'load-bar';
 
 $font-stack: Helvetica, sans-serif;
+@mixin um-animation-show() {
+    opacity: 1;
+    visibility: visible;
+    -webkit-transition: opacity 0.3s, visibility 0s ease-in 0.3s;
+    -moz-transition: opacity 0.3s, visibility 0s ease-in 0.3s;
+    -o-transition: opacity 0.3s, visibility 0s ease-in 0.3s;
+    transition: opacity 0.3s, visibility 0s ease-in 0.3s;
+    transition-delay: 0s;
+}
 
 .um-hidden {
     display: none !important;
@@ -12,6 +21,7 @@ $font-stack: Helvetica, sans-serif;
 }
 
 .um {
+    @include um-animation-show();
     max-width: 500px;
     border-radius: 2px;
     //overflow: hidden;
@@ -26,6 +36,22 @@ $font-stack: Helvetica, sans-serif;
     }
     * {
         box-sizing: inherit;
+    }
+    .um-close {
+        position: absolute;
+        top: 1em;
+        right: 1em;
+        width: 2em;
+        height: 2em;
+    }
+}
+.um-close {
+    background-color: transparent;
+    fill: #000;
+    opacity: .3;
+    cursor: pointer;
+    :hover{
+        opacity: .5;
     }
 }
 
@@ -162,6 +188,22 @@ $font-stack: Helvetica, sans-serif;
     &:focus:not(:active) {
         background-color: $primary-color;
     }
+}
+.um-btn-red{
+  color: #fff;
+  background-color: $main-color;
+  &:active {
+    background-color: $main-color;
+  }
+  &:focus:not(:active) {
+    background-color: $main-color;
+  }
+}
+.um-btn-start--fixed{
+  position: fixed;
+  bottom: 5vh;
+  right: 5vh;
+  z-index: 2000;
 }
 
 .um-order-confirm{

@@ -121,14 +121,19 @@ UM.shop = [
 ];
 
 UM.start = function(option) {
+    var $head = $('head'),
+        $body = $('body');
+
     this.option = option;
 
     if (!this.option.serverUrl)
         throw new Error("Не указано имя сервера Мария '" + option.serverUrl + "' проверьте конфигурацию");
     if (!this.option.siteUrl)
         throw new Error("Не указано имя вашего сайта '" + option.siteUrl + "' проверьте конфигурацию");
+    if (!this.option.type)
+        throw new Error("Не указан тип модуля '" + option.type + "' проверьте конфигурацию");
 
-    var head = '';
+        var head = '';
     if (this.option.style) {
         var style = this.option.serverUrl + this.option.style;
         head += '<link rel="stylesheet" type="text/css" href="' + style + '">'
@@ -138,10 +143,17 @@ UM.start = function(option) {
     //} else {
     //    console.warn('карта отключина');
     //}
-    $('head').append(head);
+    $head.append(head);
 
-    UM.page = new UM.Views.Page();
-    $('body').append(UM.page.el);
+    UM.page = new UM.Views.Page({options: this.option});
+
+    if(this.option.type == 'button') {
+        UM.button = new UM.Views.Button({});
+        $body.append(UM.button.el);
+        UM.page.hide();
+    }
+
+    $body.append(UM.page.el);
 };
 
 UM.vent = _.extend({}, Backbone.Events);
@@ -718,7 +730,7 @@ UM.Views.Modal = Backbone.View.extend({
     template: 'modalTpl',
 
     events: {
-        'click .um-modal-close': 'hide'
+        'click .um-close': 'hide'
     },
 
     initialize: function(attrs) {
@@ -910,10 +922,17 @@ UM.Views.Page = Backbone.View.extend({
     
     className: 'um fixed',
     template: '',
+
+    events: {
+        'click .um-close': 'hide'
+    },
     
-    initialize: function() {
+    initialize: function(options) {
+        this.options = options.options;
 
         this.render(this.showStartForm());
+
+        UM.vent.on('page:show', this.show, this);
 
         UM.vent.on('page:showLoader', function(){
             this.render(this.showLoader());
@@ -934,8 +953,26 @@ UM.Views.Page = Backbone.View.extend({
     },
     
     render: function(form) {
+        if (this.options.type == 'button'){
+            var close = '<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24" class="um-close">' +
+                '<path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>' +
+                '<path d="M0 0h24v24H0z" fill="none"/>' +
+                '</svg>';
+        }
         this.$el.html(form);
+        this.$el.prepend(close);
         return this;
+    },
+
+    show: function() {
+      this.$el.removeClass('um-hidden');
+    },
+
+    hide: function() {
+        this.$el.addClass('um-hidden');
+        if (this.options.type == 'button'){
+            UM.vent.trigger('button:show');
+        }
     },
 
     initLoader: function() {
@@ -978,6 +1015,38 @@ UM.Views.Page = Backbone.View.extend({
     showConfirm: function () {
         UM.confirmView = new UM.Views.Confirm();
         return UM.confirmView.el;
+    }
+});
+
+UM.Views.Button = Backbone.View.extend({
+    className: 'um-btn um-btn--raised um-btn-red um-btn-start--fixed js-open-order',
+    tagName:'button',
+
+    events: {
+        'click': 'clicked'
+    },
+
+    initialize: function() {
+        this.render();
+        UM.vent.on('button:show', this.show, this);
+    },
+
+    render: function() {
+        this.$el.html('Заказать кухню');
+        return this;
+    },
+
+    show: function() {
+        this.$el.removeClass('um-hidden');
+    },
+
+    hide: function() {
+        this.$el.addClass('um-hidden');
+    },
+
+    clicked: function() {
+        UM.vent.trigger('page:show');
+        this.hide();
     }
 });
 

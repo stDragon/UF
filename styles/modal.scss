@@ -15,18 +15,11 @@
   * {
     box-sizing: inherit;
   }
-  .um-modal-close{
+  .um-close{
     position: absolute;
     top: -3em;
     right: -3em;
     width: 3em;
     height: 3em;
-    background-color: transparent;
-    fill: #000;
-    opacity: .3;
-    cursor: pointer;
-    :hover{
-      opacity: .5;
-    }
   }
 }
