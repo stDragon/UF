@@ -123,19 +123,20 @@ UM.shop = [
 UM.start = function(option) {
     this.option = option;
 
-    if(!this.option.serverUrl)
+    if (!this.option.serverUrl)
         throw new Error("Не указано имя сервера Мария '" + option.serverUrl + "' проверьте конфигурацию");
-    if(!this.option.siteUrl)
+    if (!this.option.siteUrl)
         throw new Error("Не указано имя вашего сайта '" + option.siteUrl + "' проверьте конфигурацию");
 
     var head = '';
-    if(this.option.style) {
+    if (this.option.style) {
         var style = this.option.serverUrl + this.option.style;
-        head += '<link rel="stylesheet" type="text/css" href="'+ style + '">'
+        head += '<link rel="stylesheet" type="text/css" href="' + style + '">'
     }
     //if(this.option.showMap) {
         head += '<script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&mode=debug" type="text/javascript">';
-        console.warn('карта отключина');
+    //} else {
+    //    console.warn('карта отключина');
     //}
     $('head').append(head);
 

@@ -10,7 +10,7 @@ gulp.task('concat', function() {
     return gulp.src([
             'scripts/**/*.js'
         ])
-        .pipe(concat('app.js'))
+        .pipe(concat('marya-um.js'))
         .pipe(browserify({
             insertGlobals : true,
             debug : !gulp.env.production
@@ -19,7 +19,7 @@ gulp.task('concat', function() {
 });
 
 gulp.task('compress', ['concat'], function() {
-    return gulp.src('public/js/app.js')
+    return gulp.src('public/js/marya-um.js')
         .pipe(uglify())
         .pipe(rename({
             suffix: '.min'

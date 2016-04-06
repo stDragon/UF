@@ -4,6 +4,8 @@ var express      = require('express'),
 
 var app = module.exports.app = exports.app = express();
 
+app.set('port', process.env.PORT || 80);
+
 var jsonParser = bodyParser.json();
 
 app.use(function(req, res, next) {
@@ -17,6 +19,10 @@ app.use(function(req, res, next) {
 app.use(express.static('public'));
 //app.use(express.errorHandler({dumpExceptions: true, showStack: true}));
 
+app.get('/', function(req, res) {
+    res.render('index.html');
+});
+
 app.post('/users', jsonParser, function(req, res) {
     var score = req.body;
     score.id = Date.now().toString();
@@ -25,8 +31,8 @@ app.post('/users', jsonParser, function(req, res) {
     }, 2000);
 });
 
-app.listen(8888, function () {
-  console.log('Example app listening on port 8888!');
+app.listen(app.get('port'), function () {
+  console.log(new Date().toISOString() + ': server started on port ' + app.get('port') +'!');
 });
 
 app.use(require('connect-livereload')());

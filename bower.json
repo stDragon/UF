@@ -1,0 +1,27 @@
+{
+  "name": "um",
+  "description": "",
+  "main": "app.js",
+  "authors": [
+    "s-oleynik"
+  ],
+  "license": "ISC",
+  "keywords": [
+    "Мария"
+  ],
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "public/libs",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "backbone": "^1.3.2",
+    "jquery": "^2.2.2",
+    "underscore": "^1.8.3",
+    "Materialize": "materialize#^0.97.6"
+  }
+}
