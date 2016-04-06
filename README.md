@@ -70,3 +70,14 @@ gulp scripts
 ```sh
 gulp styles
 ```
+
+## Config
+
+Name	 | type		      | default               | description 
+-------- | -------------- | --------------------  | -----------
+serverUrl| string         | "http://localhost/"   | Url сервера с которого будет запрашиваться скрипт и на который будут отправляться данные
+siteUrl	 | string 		  | ""                    | Url сайта партнера на котором будет отображаться модуль
+style	 | string/boolean | "css/um-material.css" | стиль для модуля
+type 	 | string         | "button"              | тип отображения модуля 
+showMap  | boolean        | false                 | есть ли возможность выбора студий в модальном окне карты
+showShop | boolean        | false                 | показывать ли select с выбором студий
