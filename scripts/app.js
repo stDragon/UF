@@ -349,6 +349,12 @@ UM.Models.Phone = Backbone.Model.extend({
     }
 });
 
+UM.Models.Modal = Backbone.Model.extend({
+    defaults: {
+        content: ''
+    }
+});
+
 UM.Collections.Citys = Backbone.Collection.extend({
     model: UM.Models.City,
 
@@ -454,9 +460,9 @@ UM.Views.UserForm = Backbone.View.extend({
 
     initialize: function () {
         this.render();
-        this.createYaMapModal();
         this.model.on('change', this.setValue, this);
         if (UM.option.showShop) {
+            this.createYaMapModal();
             this.model.on('change', this.createSelectShop, this);
         }
         this.listenTo(this.model, 'request', function () {
@@ -612,16 +618,19 @@ UM.Views.UserForm = Backbone.View.extend({
 
     createYaMapModal: function () {
         if (!$('#umMap').length) {
-
             var content = '<div id="umMap"></div>';
-            UM.modalMap = new UM.Views.Modal({'content': content});
-            $('body').append(UM.modalMap.el);
-
+            UM.modalMap = new UM.Models.Modal({'content': content});
+            UM.modalMapView = new UM.Views.Modal({model: UM.modalMap});
+            $('body').append(UM.modalMapView.el);
         }
     },
 
     createYaMap: function () {
-        $('#umMap').children().remove();
+        var $elMap = $('#umMap');
+
+        if (!$elMap.length) return false;
+
+        $elMap.children().remove();
 
         var mapShopArr = UM.shopCollection.filterByCityForMap(this.model.get('city')).toJSON();
 
@@ -638,7 +647,7 @@ UM.Views.UserForm = Backbone.View.extend({
         lonAvg = lonSum / mapShopArr.length;
 
         if (mapShopArr.length) {
-            var map = new ymaps.Map('umMap', {
+            UM.map = new ymaps.Map('umMap', {
                 center: [lonAvg, latAvg],
                 zoom: 10
             });
@@ -676,7 +685,7 @@ UM.Views.UserForm = Backbone.View.extend({
             UM.mapShopCollectionView = new Backbone.Ymaps.CollectionView({
                 geoItem: Placemark,
                 collection: UM.mapShopCollection,
-                map: map
+                map: UM.map
             });
 
             UM.mapShopCollectionView.render();
@@ -687,8 +696,9 @@ UM.Views.UserForm = Backbone.View.extend({
     },
 
     removeYaMap: function () {
-        UM.mapShopCollection = {};
-        UM.mapShopCollectionView = {};
+        UM.map.destroy();
+        UM.mapShopCollection.reset();
+        UM.mapShopCollectionView.destroy();
     },
 
     showYaMap: function () {
@@ -739,21 +749,15 @@ UM.Views.Modal = Backbone.View.extend({
         'click .um-close': 'hide'
     },
 
-    initialize: function (attrs) {
-        this.options = attrs;
-        if (this.options.content) {
-
-        }
-        this.render(this.options.content);
+    initialize: function () {
+        this.render();
     },
 
-    render: function (content) {
+    render: function () {
         var that = this;
         UM.TemplateManager.get(this.template, function (template) {
-            var html = $(template);
-            if (content) {
-                html.find('.modal-content').html(content);
-            }
+            var temp = _.template(template);
+            var html = $(temp(that.model.toJSON()));
             that.$el.html(html);
         });
         return this;
