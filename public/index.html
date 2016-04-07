@@ -120,9 +120,9 @@
 
                 App.Models.Code = Backbone.Model.extend({
                     defaults: {
-                        serverUrl: 'http://localhost/',
+                        serverUrl: 'http://localhost',
                         siteUrl: '',
-                        style: 'css/um-material.css',
+                        style: '/css/um-material.css',
                         initType: 'button',
                         initPosition: 'fixed',
                         showMap: false,
@@ -132,10 +132,9 @@
                     initialize: function () {
                         /** @todo временное решение для получения имя сервера отдающего кнопку*/
                         var hostname = window.location.hostname;
-                        if(hostname == 'localhost') {
-                            hostname = 'http://localhost/';
+                        if(hostname != 'localhost') {
+                            this.set('serverUrl', hostname);
                         }
-                        this.set('serverUrl', hostname);
                         this.on('change', this.log, this);
                     },
 
@@ -152,7 +151,7 @@
                     },
 
                     getScript: function () {
-                        return '<script type="text/javascript" src="' + this.get('serverUrl') + 'js/marya-um.js"><\/script>' +
+                        return '<script type="text/javascript" src="' + this.get('serverUrl') + '/js/marya-um.js"><\/script>' +
                                '<script>UM.init(' + JSON.stringify(this.toJSON()) + ');<\/script>';
                     },
 

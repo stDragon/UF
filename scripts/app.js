@@ -17,108 +17,6 @@ UM = {
 
 require('jquery.inputmask');
 require('./Backbone.Ymaps.js');
-/**
- * @todo временные массивы, удалить после его получения с сервера
- * */
-UM.citys = [
-    {
-        name: 'Саратов',
-        mr3id: '1',
-        showShop: true
-    },
-    {
-        name: 'Москва',
-        mr3id: '2',
-        showShop: true
-    },
-    {
-        name: 'Питер',
-        mr3id: '3',
-        showShop: true
-    },
-    {
-        name: 'Самара',
-        mr3id: '4'
-    },
-    {
-        name: 'Новгород',
-        mr3id: '5'
-    },
-    {
-        name: 'Тула',
-        mr3id: '6'
-    },
-    {
-        name: 'Энгельс',
-        mr3id: '7',
-        showShop: true
-    },
-    {
-        name: 'Омск',
-        mr3id: '8'
-    },
-    {
-        name: 'Томск',
-        mr3id: '9'
-    },
-    {
-        name: 'Тверь',
-        mr3id: '10'
-    }
-];
-
-UM.shop = [
-    {
-        name: 'Кухонная студия "Мария"',
-        mr3id: '11',
-        brand: 'Мария',
-        dealer: '',
-        status: 'Продает',
-        city: 'Энгельс',
-        address: 'ул. Степная, д.11',
-        administrator: 'Петр I',
-        priceZone: '',
-        lon: '51.481297',
-        lat: '46.12762'
-    },
-    {
-        name: 'Кухонная студия "Мария"',
-        mr3id: '11',
-        brand: 'Мария',
-        dealer: '',
-        status: 'Закрыт',
-        city: 'Саратов',
-        address: 'Вольский тракт, д. 2',
-        administrator: 'Вася Николаев',
-        priceZone: '',
-        lon: '51.621449',
-        lat: '45.972443'
-    },
-    {
-        name: 'Кухонная студия "Мария"',
-        mr3id: '15',
-        brand: 'Мария',
-        dealer: '',
-        status: 'Продает',
-        city: 'Саратов',
-        address: 'ул. Московская, д. 129/133',
-        administrator: 'Олик Солдатов',
-        priceZone: '',
-        lon: '51.537118',
-        lat: '46.019346'
-    },
-    {
-        name: 'Кухонная студия "Мария"',
-        mr3id: '11',
-        brand: 'Мария',
-        dealer: '',
-        status: 'Продает',
-        city: 'Питер',
-        address: 'ул. Саратовская, д. 129/133',
-        administrator: 'Кролик Киевский',
-        priceZone: ''
-    }
-];
 
 UM.init = function (option) {
     var $head = $('head'),
@@ -191,7 +89,7 @@ UM.TemplateManager = {
                 };
             });
             $.ajax({
-                url: UM.option.serverUrl + "templates/" + id + ".html",
+                url: UM.option.serverUrl + "/templates/" + id + ".html",
                 success: function (template) {
                     var tmpl = template;
                     that.templates[id] = tmpl;
@@ -233,7 +131,7 @@ UM.Models.User = Backbone.Model.extend({
     },
 
     url: function () {
-        return UM.option.serverUrl + 'users/'
+        return UM.option.serverUrl + '/api/users/'
     },
 
     validate: function (attrs, options) {
@@ -358,9 +256,9 @@ UM.Models.Modal = Backbone.Model.extend({
 UM.Collections.Citys = Backbone.Collection.extend({
     model: UM.Models.City,
 
-    //url: function() {
-    //    return UM.option.serverUrl + '/city/'
-    //},
+    url: function() {
+        return UM.option.serverUrl + '/api/cities/'
+    },
 
     comparator: function (model) {
         return model.get('name');
@@ -370,9 +268,9 @@ UM.Collections.Citys = Backbone.Collection.extend({
 UM.Collections.Shops = Backbone.Collection.extend({
     model: UM.Models.Shop,
 
-    //url: function() {
-    //    return UM.option.serverUrl + '/shop/'
-    //},
+    url: function() {
+        return UM.option.serverUrl + '/api/shops/'
+    },
 
     filterByCity: function (city) {
         var filtered = this.filter(function (model) {
@@ -459,7 +357,15 @@ UM.Views.UserForm = Backbone.View.extend({
     },
 
     initialize: function () {
+        UM.cityCollection = new UM.Collections.Citys();
+        UM.cityCollection.fetch();
+        UM.cityCollectionView = new UM.Views.Citys({collection: UM.cityCollection});
+
+        UM.shopCollection = new UM.Collections.Shops();
+        UM.shopCollection.fetch();
+
         this.render();
+
         this.model.on('change', this.setValue, this);
         if (UM.option.showShop) {
             this.createYaMapModal();
@@ -819,6 +725,7 @@ UM.Views.Citys = Backbone.View.extend({
         UM.vent.on('cityList:show', this.show, this);
         UM.vent.on('cityList:hide', this.hidden, this);
         this.collection.on('change', this.hidden, this);
+        this.collection.on('sync', this.render, this);
     },
 
     render: function () {
@@ -1005,11 +912,6 @@ UM.Views.Page = Backbone.View.extend({
     },
 
     showStartForm: function () {
-        UM.cityCollection = new UM.Collections.Citys(UM.citys);
-        UM.cityCollectionView = new UM.Views.Citys({collection: UM.cityCollection});
-
-        UM.shopCollection = new UM.Collections.Shops(UM.shop);
-
         UM.user = new UM.Models.User;
         UM.userCreateFormView = new UM.Views.UserForm({model: UM.user});
         return UM.userCreateFormView.el;
