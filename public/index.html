@@ -28,42 +28,58 @@
                             </div>
                             <div class="row">
                                 <div class="input-field col s6">
-                                    <select id="type" name="type">
-                                        <option value="" disabled selected>Выберите опцию</option>
-                                        <option value="button">Кнопка</option>
-                                        <option value="form">форма</option>
-                                    </select>
-                                    <label for="type">Тип генерируемого кода</label>
-                                </div>
-                                <div class="input-field col s6">
                                     <select id="style" name="style">
                                         <option value="" disabled selected>Выберите опцию</option>
                                         <option value="false">Из настроек сайта</option>
-                                        <option value="css/marya-um-styles.css">Material Design</option>
+                                        <option value="css/um-material.css">Material Design</option>
                                     </select>
                                     <label for="style">Стиль окна</label>
                                 </div>
                             </div>
                             <div class="row">
-                                <p>Возможность выбора студий</p>
-                                <div class="switch">
-                                    <label>
-                                        Off
-                                        <input type="checkbox" name="showShop">
-                                        <span class="lever"></span>
-                                        On
-                                    </label>
+                                <div class="input-field col s6">
+                                    <select id="initType" name="initType">
+                                        <option value="" disabled selected>Выберите опцию</option>
+                                        <option value="button">Кнопка</option>
+                                        <option value="form">Форма</option>
+                                    </select>
+                                    <label for="initType">Тип генерируемого кода</label>
                                 </div>
                             </div>
                             <div class="row">
-                                <p>Показывать студии на карте</p>
-                                <div class="switch">
-                                    <label>
-                                        Off
-                                        <input type="checkbox" name="showMap">
-                                        <span class="lever"></span>
-                                        On
-                                    </label>
+                                <div class="input-field col s6">
+                                    <select id="initPosition" name="initPosition">
+                                        <option value="" disabled selected>Выберите опцию</option>
+                                        <option value="fixed">Фиксированный относительно окна браузера</option>
+                                        <option value="static">В статичном элементе</option>
+                                    </select>
+                                    <label for="initPosition">Начальное отображение</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col s6">
+                                    <p>Возможность выбора студий</p>
+                                    <div class="switch">
+                                        <label>
+                                            Off
+                                            <input type="checkbox" name="showShop">
+                                            <span class="lever"></span>
+                                            On
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col s6">
+                                    <p>Показывать студии на карте</p>
+                                    <div class="switch">
+                                        <label>
+                                            Off
+                                            <input type="checkbox" name="showMap">
+                                            <span class="lever"></span>
+                                            On
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
                             <div class="row">
@@ -97,7 +113,7 @@
                     Router: {}
                 };
 
-                function start() {
+                function init() {
                     App.formCode = new App.Views.CodeGeneratorForm();
                     $('main').append(App.formCode.el);
                 }
@@ -107,7 +123,8 @@
                         serverUrl: 'http://localhost/',
                         siteUrl: '',
                         style: 'css/um-material.css',
-                        type: 'button',
+                        initType: 'button',
+                        initPosition: 'fixed',
                         showMap: false,
                         showShop: false
                     },
@@ -126,11 +143,36 @@
                         console.log(this.toJSON());
                     },
 
+                    getButtonDOM: function() {
+                        return '<button id="um-btn-init" class="um-btn um-btn--raised um-btn-red">Заказать кухню</button>'
+                    },
+
+                    getFormDOM: function() {
+                        return '<div id="um-form-init"></div>'
+                    },
+
+                    getScript: function () {
+                        return '<script type="text/javascript" src="' + this.get('serverUrl') + 'js/marya-um.js"><\/script>' +
+                               '<script>UM.init(' + JSON.stringify(this.toJSON()) + ');<\/script>';
+                    },
+
                     getCode: function () {
-                        return '<!-- marya UM -->' +
-                                '<script type="text/javascript" src="' + this.get('serverUrl') + 'js/marya-um.js"><\/script>' +
-                                '<script>UM.start(' + JSON.stringify(this.toJSON()) + ');<\/script>' +
-                                '<!-- / marya UM -->';
+                        if (this.get('initPosition') == 'fixed') {
+
+                            return  this.getScript();
+
+                        } else if (this.get('initPosition') == 'static') {
+
+                            if (this.get('initType') == 'button')
+                                return this.getButtonDOM() + this.getScript();
+                            else if(this.get('initType') == 'form')
+                                return this.getFormDOM() + this.getScript();
+
+                        } else {
+
+                            throw new Error("Не указано initPosition '" + this.get('initPosition') + "' проверьте конфигурацию");
+
+                        }
                     }
                 });
 
@@ -170,9 +212,8 @@
                     }
                 });
 
-                start();
+                init();
             });
         </script>
-
     </body>
 </html>
