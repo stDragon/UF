@@ -243,7 +243,24 @@ UM.Models.Shop = Backbone.Model.extend({
 UM.Models.Phone = Backbone.Model.extend({
     defaults: {
         phone: '',
-        confirm: false
+        confirm: false,
+        code: ''
+    },
+
+    url: function () {
+        return UM.option.serverUrl + '/api/phone/'
+    },
+
+    validate: function (attrs, options) {
+        var errors = [];
+        if (!attrs.code) {
+            errors.push({
+                text: "Поле не может быть пустым",
+                attr: 'code'
+            });
+        }
+
+        if (errors.length) return errors;
     }
 });
 
@@ -313,11 +330,28 @@ UM.Views.UserPhoneForm = Backbone.View.extend({
 
     events: {
         'focus #umPhone': 'initMask',
-        'submit': 'confirm'
+        'input input': 'setAttr',
+        'submit': 'save'
     },
 
     initialize: function () {
         this.render();
+        this.listenTo(this.model, 'change', this.setValue);
+        this.listenTo(this.model, 'invalid', this.invalid);
+        this.listenTo(this.model, 'request', function () {
+            UM.vent.trigger('page:showLoader');
+            this.valid();
+            this.disabledSubmit();
+        });
+        this.listenTo(this.model, 'sync', function () {
+            UM.vent.trigger('page:hideLoader');
+            this.confirm();
+        });
+        this.listenTo(this.model, 'error', function (obj, name, callback) {
+            UM.vent.trigger('page:hideLoader');
+            this.enabledSubmit();
+            this.error(obj, name, callback);
+        },this);
     },
 
     render: function () {
@@ -330,12 +364,68 @@ UM.Views.UserPhoneForm = Backbone.View.extend({
         return this;
     },
 
-    confirm: function (e) {
+    setValue: function () {
+        var attr = this.model.toJSON();
+        _.each(attr, function (num, key) {
+            this.$el.find('[name=' + key + ']').val(num);
+        }, this);
+    },
+
+    disabledSubmit: function () {
+        this.$el.find('button:submit')[0].disabled = true;
+    },
+
+    enabledSubmit: function () {
+        this.$el.find('button:submit')[0].disabled = false;
+    },
+
+    valid: function () {
+        this.$el.find('input')
+            .closest('.um-form-group').removeClass('um-has-error')
+            .children('.um-tooltip').remove();
+    },
+
+    invalid: function (model, errors) {
+        this.$el.find('input')
+            .closest('.um-form-group').removeClass('um-has-error')
+            .children('.um-tooltip').remove();
+        _.each(errors, function (error) {
+            var $el = this.$el.find('[name=' + error.attr + ']'),
+                $group = $el.closest('.um-form-group');
+
+            $group.addClass('um-has-error');
+            var tooltip = new UM.Views.Tooltip();
+            tooltip.$el.html(error.text);
+            $group.append(tooltip.el);
+        }, this);
+    },
+
+    save: function (e) {
         e.preventDefault();
 
-        //@TODO: Добавить обработку подтверждения СМС
+        var data = {};
+        this.$el.find('.um-form-control').each(function(){
+            data[this.name] = $(this).val();
+        });
 
-        UM.vent.trigger('page:showConfirm');
+        this.model.save(data);
+    },
+
+    confirm: function () {
+        if (this.model.get('confirm')) {
+            UM.vent.trigger('page:showConfirm');
+        } else {
+            throw new Error("Сервер прислал некоректное значение confirm:'" + this.model.get('confirm'));
+        }
+    },
+
+    error: function (obj, name, callback) {
+        var errors = [{
+            text: "Не верный код",
+            attr: 'code'
+        }];
+        this.model.set('code', '');
+        this.invalid(this.model, errors);
     }
 });
 
@@ -352,8 +442,8 @@ UM.Views.UserForm = Backbone.View.extend({
         'focus input:not(#umCity)': 'hideSelectCity',
         'focus input:not(#umShop)': 'hideSelectShop',
         'input input': 'setAttrs',
-        'blur input': 'saveAttr',
-        'blur textarea': 'saveAttr',
+        'blur input': 'setAttr',
+        'blur textarea': 'setAttr',
         'click .um-icon-add-location': 'showYaMap',
         'submit': 'save'
     },
@@ -375,11 +465,11 @@ UM.Views.UserForm = Backbone.View.extend({
         }
         this.listenTo(this.model, 'request', function () {
             UM.vent.trigger('page:showLoader');
+            this.valid();
             this.disabledSubmit();
         });
         this.listenTo(this.model, 'sync', function () {
             UM.vent.trigger('page:hideLoader');
-            this.valid();
             UM.vent.trigger('page:showPhoneForm');
         });
         this.listenTo(this.model, 'error', function () {
@@ -474,7 +564,7 @@ UM.Views.UserForm = Backbone.View.extend({
         }, this);
     },
 
-    saveAttr: function (e) {
+    setAttr: function (e) {
         var name = $(e.target).attr('name'),
             val = $(e.target).val();
         this.model.set(name, val);
@@ -501,11 +591,11 @@ UM.Views.UserForm = Backbone.View.extend({
     },
 
     disabledSubmit: function () {
-        this.$el.find('.js-create-order')[0].disabled = true;
+        this.$el.find('button:submit')[0].disabled = true;
     },
 
     enabledSubmit: function () {
-        this.$el.find('.js-create-order')[0].disabled = false;
+        this.$el.find('button:submit')[0].disabled = false;
     },
 
     valid: function () {

@@ -133,6 +133,20 @@ app.get('/api/shops', function(req, res) {
     res.json(shops);
 });
 
+app.post('/api/phone', jsonParser, function(req, res) {
+    var data = req.body;
+    console.log(data);
+    setTimeout(function(){
+        if(data.code == 5555){
+            data.confirm = true;
+            res.json(data, 202);
+        } else {
+            data.confirm = false;
+            res.json(data, 401);
+        }
+    }, 2000);
+});
+
 app.post('/api/users', jsonParser, function(req, res) {
     var score = req.body;
     score.id = Date.now().toString();
