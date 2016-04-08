@@ -26,11 +26,13 @@ UM.init = function (option) {
     this.option = option;
 
     if (!this.option.serverUrl)
-        throw new Error("Не указано имя сервера Мария '" + option.serverUrl + "' проверьте конфигурацию");
+        throw new Error("Не указано имя сервера Мария serverUrl:'" + option.serverUrl + "' проверьте конфигурацию");
     if (!this.option.siteUrl)
-        throw new Error("Не указано имя вашего сайта '" + option.siteUrl + "' проверьте конфигурацию");
+        throw new Error("Не указано имя вашего сайта siteUrl:'" + option.siteUrl + "' проверьте конфигурацию");
     if (!this.option.initType)
-        throw new Error("Не указан тип модуля '" + option.initType + "' проверьте конфигурацию");
+        throw new Error("Не указан тип модуля initType:'" + option.initType + "' проверьте конфигурацию");
+    if (!this.option.initPosition)
+        throw new Error("Не указан способ инициализации initPosition:'" + option.initPosition + "' проверьте конфигурацию");
     if (this.option.style) {
         var style = this.option.serverUrl + this.option.style;
         head += '<link rel="stylesheet" type="text/css" href="' + style + '">'
@@ -40,26 +42,30 @@ UM.init = function (option) {
     if (this.option.showMap)
         head += '<script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&mode=debug" type="text/javascript">';
     else
-        console.warn('карта отключина');
+        console.warn('Карта отключина');
 
     if (head) $head.append(head);
 
     UM.page = new UM.Views.Page({options: this.option});
 
     if (this.option.initType == 'button') {
-        if (this.option.initPosition) {
-            if (this.option.initPosition == 'fixed')
-                UM.button = new UM.Views.ButtonFixed();
-            else if (this.option.initPosition == 'static')
-                UM.button = new UM.Views.ButtonStatic();
-        } else
+
+        if (this.option.initPosition == 'fixed') {
             UM.button = new UM.Views.ButtonFixed();
+            $body.append(UM.button.el);
+        } else if (this.option.initPosition == 'static')
+            UM.button = new UM.Views.ButtonStatic();
 
-        $body.append(UM.button.el);
+        $body.append(UM.page.el);
         UM.page.hide();
-    }
 
-    $body.append(UM.page.el);
+    } else if (this.option.initType == 'form') {
+
+        if (this.option.initPosition  == 'fixed') {
+            $body.append(UM.page.el);
+        }  else if (this.option.initPosition == 'static')
+            $('#um-form-init').append(UM.page.el);
+    }
 };
 
 UM.vent = _.extend({}, Backbone.Events);
@@ -934,8 +940,8 @@ UM.Views.Shops = Backbone.View.extend({
 
 UM.Views.Page = Backbone.View.extend({
 
-    className: 'um fixed',
-    template: '',
+    tagName: 'article',
+    className: 'um',
 
     events: {
         'click .um-close': 'hide'
@@ -943,6 +949,9 @@ UM.Views.Page = Backbone.View.extend({
 
     initialize: function (options) {
         this.options = options.options;
+
+        if (this.options.initType == 'button' || this.options.initPosition == 'fixed')
+            this.$el.addClass('fixed');
 
         this.render(this.showStartForm());
 
@@ -967,10 +976,11 @@ UM.Views.Page = Backbone.View.extend({
     },
 
     render: function (form) {
-        if (this.options.initType == 'button') {
-            var close = '<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24" class="um-close">' +
-                '<path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>' +
-                '<path d="M0 0h24v24H0z" fill="none"/>' +
+        if (this.options.initType == 'button' || this.options.initPosition == 'fixed') {
+            var close =
+                '<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24" class="um-close">' +
+                    '<path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>' +
+                    '<path d="M0 0h24v24H0z" fill="none"/>' +
                 '</svg>';
         }
         this.$el.html(form);
@@ -1038,7 +1048,7 @@ UM.Views.Button = Backbone.View.extend({
 });
 
 UM.Views.ButtonStatic = UM.Views.Button.extend({
-    el: $('#um-btn-start'),
+    el: $('#um-btn-init'),
 
     clicked: function () {
         UM.vent.trigger('page:show');

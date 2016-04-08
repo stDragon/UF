@@ -22,7 +22,7 @@ $font-stack: Helvetica, sans-serif;
 
 .um {
     @include um-animation-show();
-    max-width: 500px;
+    max-width: 315px;
     border-radius: 2px;
     //overflow: hidden;
     background: #fff;
