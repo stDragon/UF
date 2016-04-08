@@ -81,6 +81,7 @@ Name	     | type		      | default               | description
 ------------ | -------------- | --------------------- | -----------
 serverUrl    | string         | "http://localhost/"   | Url сервера с которого будет запрашиваться скрипт и на который будут отправляться данные
 siteUrl	     | string 		  | ""                    | Url сайта партнера на котором будет отображаться модуль
+formType     | string 		  | "calculation"         | тип заявки
 style	     | string/boolean | "css/um-material.css" | стиль для модуля
 initType 	 | string         | "button"              | тип отображения модуля 
 initPosition | string         | "fixed"               | расположение формы или кнопки

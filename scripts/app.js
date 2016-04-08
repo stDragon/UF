@@ -429,11 +429,11 @@ UM.Views.UserPhoneForm = Backbone.View.extend({
     }
 });
 
-UM.Views.UserForm = Backbone.View.extend({
+UM.Views.СalculationForm = Backbone.View.extend({
 
     tagName: 'form',
     className: 'um-form',
-    template: 'formTpl',
+    template: 'formCalculationTpl',
 
     events: {
         'focus #umPhone': 'initMask',
@@ -1009,9 +1009,13 @@ UM.Views.Page = Backbone.View.extend({
     },
 
     showStartForm: function () {
-        UM.user = new UM.Models.User;
-        UM.userCreateFormView = new UM.Views.UserForm({model: UM.user});
-        return UM.userCreateFormView.el;
+        if (this.options.formType == 'calculation') {
+            UM.user = new UM.Models.User;
+            UM.сalculationFormView = new UM.Views.СalculationForm({model: UM.user});
+            return UM.сalculationFormView.el;
+        } else {
+            throw new Error("Тип заявки '" + this.options.formType + "' не поддерживается или не корректен");
+        }
     },
 
     showPhoneForm: function () {
