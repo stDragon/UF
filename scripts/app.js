@@ -351,7 +351,9 @@ UM.Views.UserForm = Backbone.View.extend({
         'focus #umShop': 'showSelectShop',
         'focus input:not(#umCity)': 'hideSelectCity',
         'focus input:not(#umShop)': 'hideSelectShop',
+        'input input': 'setAttrs',
         'blur input': 'saveAttr',
+        'blur textarea': 'saveAttr',
         'click .um-icon-add-location': 'showYaMap',
         'submit': 'save'
     },
@@ -478,17 +480,22 @@ UM.Views.UserForm = Backbone.View.extend({
         this.model.set(name, val);
     },
 
+    setAttrs: function() {
+        var data = {};
+        this.$el.find('.um-form-control').each(function(){
+            data[this.name] = $(this).val();
+        });
+
+        this.model.set(data);
+    },
+
     save: function (e) {
         e.preventDefault();
 
-        var data = {
-            'surname': this.$el.find('[name=surname]').val(),
-            'firstName': this.$el.find('[name=firstName]').val(),
-            'email': this.$el.find('[name=email]').val(),
-            'city': this.$el.find('[name=city]').val(),
-            'shop': this.$el.find('[name=shop]:not(disabled)').val() || '',
-            'phone': this.$el.find('[name=phone]').val()
-        };
+        var data = {};
+        this.$el.find('.um-form-control').each(function(){
+            data[this.name] = $(this).val();
+        });
 
         this.model.save(data);
     },
