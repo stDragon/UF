@@ -1,6 +1,6 @@
 var _ = require('underscore'),
-    $ = require('jQuery'),
-    Backbone = require('Backbone');
+    $ = require('jquery'),
+    Backbone = require('backbone');
 
 window._ = window._ || _;
 window.Backbone = window.Backbone || Backbone;

@@ -9,6 +9,7 @@
     "errorhandler": "^1.4.3",
     "express": "^4.13.4",
     "jquery": "^2.2.2",
+    "jquery.inputmask": "^3.3.0",
     "underscore": "^1.8.3"
   },
   "devDependencies": {

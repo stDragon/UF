@@ -158,5 +158,3 @@ app.post('/api/users', jsonParser, function(req, res) {
 app.listen(app.get('port'), function () {
   console.log(new Date().toISOString() + ': server started on port ' + app.get('port') +'!');
 });
-
-app.use(require('connect-livereload')());
