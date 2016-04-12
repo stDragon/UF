@@ -8,7 +8,7 @@ var gulp        = require('gulp'),
 
 gulp.task('concat', function() {
     return gulp.src([
-            'scripts/**/*.js'
+            'scripts/app.js'
         ])
         .pipe(concat('marya-um.js'))
         .pipe(browserify({
@@ -47,3 +47,5 @@ gulp.task('server', function () {
 
     gulp.watch(['app.js'], [server.run]);
 });
+
+gulp.task('default', ['server']);
