@@ -112,8 +112,13 @@ app.set('port', process.env.PORT || 80);
 var jsonParser = bodyParser.json();
 
 app.use(function(req, res, next) {
+    var serverName = '*';
+    if(req.headers.origin) {
+        serverName = req.headers.origin;
+    }
+
     //res.header("Content-Type", "application/json; charset=utf-8");
-    res.header("Access-Control-Allow-Origin", "http://bx.local");
+    res.header("Access-Control-Allow-Origin", serverName);
     res.header("Access-Control-Allow-Credentials", "true");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
