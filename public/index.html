@@ -223,6 +223,7 @@
                     },
 
                     initialize: function () {
+                        this.renderCode();
                         this.listenTo(this.model, 'sync', this.renderCode);
                         this.listenTo(this.model, 'invalid', this.invalid);
                         this.listenTo(this.model, 'request', this.valid);
@@ -271,7 +272,6 @@
                     el: '#example',
 
                     initialize: function () {
-                        this.render();
                         this.listenTo(this.model, 'sync', this.render);
                     },
 
@@ -291,8 +291,6 @@
                                 this.$el.html(this.model.getFormDOM());
 
                         } else this.$el.html('');
-
-
 
                         UM.init(this.model.toJSON());
                     }
