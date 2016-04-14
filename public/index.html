@@ -21,7 +21,7 @@
                     <form id="сodeGeneratorForm" method="get" action="" class="col s12">
                             <div class="row">
                                 <div class="input-field col s6">
-                                    <input id="siteUrl" name="siteUrl" type="text" class="validate">
+                                    <input id="siteUrl" name="siteUrl" type="text" class="validate" placeholder="http://yandex.ru" required>
                                     <label for="siteUrl">Сайт на котором будет использоваться модуль</label>
                                 </div>
                             </div>
@@ -118,6 +118,7 @@
         <script>
             $(document).ready(function() {
                 $('select').material_select();
+                window.validate_field = function(){}; //отмена встроенного валидатора Materialize
 
                 window.App = {
                     Models: {},
@@ -153,6 +154,26 @@
                         var hostname = window.location.origin;
                         this.set('serverUrl', hostname);
                         this.on('sync', this.log, this);
+                    },
+
+                    validate: function (attrs, options) {
+                        /** @todo проверить корректность регулярки*/
+                        var regURL = /^(https?:\/\/)?([\S\.]+)\.(\S{2,6}\.?)(\/[\S\.]*)*\/?$/;
+
+                        var errors = [];
+                        if (!attrs.siteUrl) {
+                            errors.push({
+                                text: 'Вы не заполнили поле "Сайт на котором будет использоваться модуль',
+                                attr: 'siteUrl'
+                            });
+                        } else if (!regURL.test(attrs.siteUrl)) {
+                            errors.push({
+                                text: "Сайт не коректен",
+                                attr: 'siteUrl'
+                            });
+                        }
+
+                        if (errors.length) return errors;
                     },
 
                     log: function () {
@@ -202,8 +223,9 @@
                     },
 
                     initialize: function () {
-                        this.renderCode();
-                        this.listenTo(this.model, 'change', this.renderCode);
+                        this.listenTo(this.model, 'sync', this.renderCode);
+                        this.listenTo(this.model, 'invalid', this.invalid);
+                        this.listenTo(this.model, 'request', this.valid);
                         _.bindAll(this, 'changed');
                     },
 
@@ -224,6 +246,24 @@
                         var obj = {};
                         obj[changed.name] = value;
                         this.model.save(obj);
+                    },
+
+                    valid: function () {
+                        this.$el.find('input')
+                                .removeClass('invalid')
+                                .addClass('valid');
+                    },
+
+                    invalid: function (model, errors) {
+                        this.$el.find('input')
+                                .removeClass('invalid')
+                                .removeClass('valid');
+                        _.each(errors, function (error) {
+                            var $el = this.$el.find('[name=' + error.attr + ']');
+
+                            $el.removeClass('valid')
+                                .addClass('invalid');
+                        }, this);
                     }
                 });
 
@@ -253,8 +293,8 @@
                         } else this.$el.html('');
 
 
-                        if (this.model.get('siteUrl'))
-                            UM.init(this.model.toJSON());
+
+                        UM.init(this.model.toJSON());
                     }
 
                 });
