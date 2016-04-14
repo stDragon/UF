@@ -82,16 +82,17 @@ gulp styles
 
 Начальный конфиг служит для инициализации формы. Получается из сгенерированного скрипта добавляемого перед "body" на сайтах партнеров
 
-Name	     | type		      | default               | description 
------------- | -------------- | --------------------- | -----------
-serverUrl    | string         | "http://localhost/"   | Url сервера с которого будет запрашиваться скрипт и на который будут отправляться данные
-siteUrl	     | string 		  | ""                    | Url сайта партнера на котором будет отображаться модуль
-formType     | string 		  | "calculation"         | тип заявки
-style	     | string/boolean | "css/um-material.css" | стиль для модуля
-initType 	 | string         | "button"              | тип отображения модуля 
-initPosition | string         | "fixed"               | расположение формы или кнопки
-showMap      | boolean        | false                 | есть ли возможность выбора студий в модальном окне карты
-showShop     | boolean        | false                 | показывать ли select с выбором студий
+Name	     | type		      | default                    | description 
+------------ | -------------- | -------------------------- | -----------
+ID           | number         | ""                         | ID конфига
+serverUrl    | string         | "http://umodule.marya.ru/" | Url сервера с которого будет запрашиваться скрипт и на который будут отправляться данные
+siteUrl	     | string 		  | ""                         | Url сайта партнера на котором будет отображаться модуль
+formType     | string 		  | "calculation"              | тип заявки
+style	     | string/boolean | "/css/um-material.css"     | стиль для модуля
+initType 	 | string         | "button"                   | тип отображения модуля 
+initPosition | string         | "fixed"                    | расположение формы или кнопки
+showMap      | boolean        | false                      | есть ли возможность выбора студий в модальном окне карты
+showShop     | boolean        | false                      | показывать ли select с выбором студий
 
 ### City
 

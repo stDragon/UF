@@ -18,54 +18,94 @@ UM = {
 require('jquery.inputmask');
 require('./Backbone.Ymaps.js');
 
-UM.init = function (option) {
-    var $head = $('head'),
-        $body = $('body'),
-        head = '';
+UM.Models.Config = Backbone.Model.extend({
+    defaults: {
+        serverUrl: 'http://umodule.marya.ru',
+        siteUrl: '',
+        formType: 'calculation',
+        style: '/css/um-material.css',
+        initType: 'button',
+        initPosition: 'fixed',
+        showMap: false,
+        showShop: false
+    },
 
-    this.option = option;
+    urlRoot: function () {
+        return this.get('serverUrl') + '/api/configs/'
+    },
 
-    if (!this.option.serverUrl)
-        throw new Error("Не указано имя сервера Мария serverUrl:'" + option.serverUrl + "' проверьте конфигурацию");
-    if (!this.option.siteUrl)
-        throw new Error("Не указано имя вашего сайта siteUrl:'" + option.siteUrl + "' проверьте конфигурацию");
-    if (!this.option.initType)
-        throw new Error("Не указан тип модуля initType:'" + option.initType + "' проверьте конфигурацию");
-    if (!this.option.initPosition)
-        throw new Error("Не указан способ инициализации initPosition:'" + option.initPosition + "' проверьте конфигурацию");
-    if (this.option.style) {
-        var style = this.option.serverUrl + this.option.style;
-        head += '<link rel="stylesheet" type="text/css" href="' + style + '">'
-    } else
-        console.warn('Стили отключены');
-
-    if (this.option.showMap)
-        head += '<script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&mode=debug" type="text/javascript">';
-    else
-        console.warn('Карта отключина');
-
-    if (head) $head.append(head);
-
-    UM.page = new UM.Views.Page({options: this.option});
-
-    if (this.option.initType == 'button') {
-
-        if (this.option.initPosition == 'fixed') {
-            UM.button = new UM.Views.ButtonFixed();
-            $body.append(UM.button.el);
-        } else if (this.option.initPosition == 'static')
-            UM.button = new UM.Views.ButtonStatic();
-
-        $body.append(UM.page.el);
-        UM.page.hide();
-
-    } else if (this.option.initType == 'form') {
-
-        if (this.option.initPosition  == 'fixed') {
-            $body.append(UM.page.el);
-        }  else if (this.option.initPosition == 'static')
-            $('#um-form-init').append(UM.page.el);
+    initialize: function () {
+        //this.fetch();
     }
+});
+
+UM.Views.Config = Backbone.View.extend({
+    initialize: function () {
+        var $head = $('head'),
+            head = '';
+
+        if (!this.model.get('serverUrl'))
+            throw new Error("Не указано имя сервера Мария serverUrl:'" + this.model.get('serverUrl') + "' проверьте конфигурацию");
+        if (!this.model.get('siteUrl'))
+            throw new Error("Не указано имя вашего сайта siteUrl:'" + this.model.get('siteUrl') + "' проверьте конфигурацию");
+        if (!this.model.get('initType'))
+            throw new Error("Не указан тип модуля initType:'" + this.model.get('initType') + "' проверьте конфигурацию");
+        if (!this.model.get('initPosition'))
+            throw new Error("Не указан способ инициализации initPosition:'" + this.model.get('initPosition') + "' проверьте конфигурацию");
+        if (this.model.get('style'))
+            head += this.getStyle();
+        else
+            console.warn('Стили отключены');
+        debugger;
+        if (!window.ymaps && this.model.get('showMap'))
+            head += this.getYaMap();
+        else
+            console.warn('Карта отключина');
+
+        if (head) $head.append(head);
+        this.initPage();
+    },
+
+    getStyle: function () {
+        var style = this.model.get('serverUrl') + this.model.get('style');
+        return '<link rel="stylesheet" type="text/css" href="' + style + '">';
+
+    },
+
+    getYaMap: function () {
+        return '<script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&mode=debug" type="text/javascript">';
+    },
+
+    initPage: function () {
+        var $body = $('body');
+
+        UM.page = new UM.Views.Page({options: this.model.toJSON()});
+
+        if (this.model.get('initType') == 'button') {
+
+            if (this.model.get('initPosition') == 'fixed') {
+                UM.button = new UM.Views.ButtonFixed();
+                $body.append(UM.button.el);
+            } else if (this.model.get('initPosition') == 'static')
+                UM.button = new UM.Views.ButtonStatic();
+
+            $body.append(UM.page.el);
+            UM.page.hide();
+
+        } else if (this.model.get('initType') == 'form') {
+
+            if (this.model.get('initPosition')  == 'fixed') {
+                $body.append(UM.page.el);
+            }  else if (this.model.get('initPosition') == 'static')
+                $('#um-form-init').append(UM.page.el);
+        }
+    }
+});
+
+UM.init = function (option) {
+    this.option = option;
+    UM.config = new UM.Models.Config(option);
+    UM.configView = new UM.Views.Config({model: UM.config});
 };
 
 UM.vent = _.extend({}, Backbone.Events);
@@ -95,7 +135,7 @@ UM.TemplateManager = {
                 };
             });
             $.ajax({
-                url: UM.option.serverUrl + "/templates/" + id + ".html",
+                url: UM.config.get('serverUrl') + "/templates/" + id + ".html",
                 success: function (template) {
                     var tmpl = template;
                     that.templates[id] = tmpl;
@@ -136,8 +176,8 @@ UM.Models.User = Backbone.Model.extend({
         wishes: ''
     },
 
-    url: function () {
-        return UM.option.serverUrl + '/api/users/'
+    urlRoot: function () {
+        return UM.config.get('serverUrl') + '/api/users/'
     },
 
     validate: function (attrs, options) {
@@ -254,7 +294,7 @@ UM.Models.Phone = Backbone.Model.extend({
     },
 
     url: function () {
-        return UM.option.serverUrl + '/api/phone/'
+        return UM.config.get('serverUrl') + '/api/phone/'
     },
 
     validate: function (attrs, options) {
@@ -280,7 +320,7 @@ UM.Collections.Citys = Backbone.Collection.extend({
     model: UM.Models.City,
 
     url: function() {
-        return UM.option.serverUrl + '/api/cities/'
+        return UM.config.get('serverUrl') + '/api/cities/'
     },
 
     comparator: function (model) {
@@ -292,7 +332,7 @@ UM.Collections.Shops = Backbone.Collection.extend({
     model: UM.Models.Shop,
 
     url: function() {
-        return UM.option.serverUrl + '/api/shops/'
+        return UM.config.get('serverUrl') + '/api/shops/'
     },
 
     filterByCity: function (city) {
@@ -465,7 +505,7 @@ UM.Views.СalculationForm = Backbone.View.extend({
         this.render();
 
         this.model.on('change', this.setValue, this);
-        if (UM.option.showShop) {
+        if (UM.config.get('showShop')) {
             this.createYaMapModal();
             this.model.on('change', this.createSelectShop, this);
         }
@@ -511,7 +551,7 @@ UM.Views.СalculationForm = Backbone.View.extend({
 
             if (city && UM.cityCollection.findWhere({'name': city}).get('showShop')) {
                 this.addSelectShop(city);
-                if (UM.option.showShop) {
+                if (UM.config.get('showShop')) {
                     this.createYaMap();
                 }
             } else {
@@ -973,6 +1013,7 @@ UM.Views.Page = Backbone.View.extend({
             this.render(this.showConfirm());
         }, this);
 
+        this.listenTo(this.model, 'destroy', this.unrender);
     },
 
     render: function (form) {
@@ -986,6 +1027,10 @@ UM.Views.Page = Backbone.View.extend({
         this.$el.html(form);
         this.$el.prepend(close);
         return this;
+    },
+
+    unrender: function() {
+        this.remove(); // this.$el.remove()
     },
 
     show: function () {
@@ -1067,6 +1112,10 @@ UM.Views.ButtonFixed = UM.Views.Button.extend({
     render: function () {
         this.$el.html('Заказать кухню');
         return this;
+    },
+
+    unrender: function() {
+        this.remove(); // this.$el.remove()
     },
 
     show: function () {

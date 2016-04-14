@@ -105,6 +105,9 @@ var shops = [
     }
 ];
 
+var users = [];
+var configs = [];
+
 var app = module.exports.app = exports.app = express();
 
 app.set('port', process.env.PORT || 80);
@@ -130,6 +133,30 @@ app.use(express.static(__dirname + '/public'));
 app.get('/', function(req, res) {
     res.render('index.html');
 });
+
+app.post('/api/configs', jsonParser, function(req, res) {
+    var data = req.body;
+    data.id = Date.now().toString();
+    configs[data.id] = data;
+
+    res.json(data, 201);
+});
+
+app.get('/api/configs/:id', jsonParser, function(req, res) {
+    res.json(configs[req.params.id]);
+});
+
+app.put('/api/configs/:id', jsonParser, function(req, res) {
+    var success = false;
+    if(configs[req.params.id]) {
+        configs[req.params.id] = req.body;
+        success = true;
+    }
+
+    //res.json(success ? 200 : 404);
+    res.json(configs[req.params.id], 200);
+});
+
 app.get('/api/cities', function(req, res) {
     res.json(cities);
 });
@@ -140,7 +167,6 @@ app.get('/api/shops', function(req, res) {
 
 app.post('/api/phone', jsonParser, function(req, res) {
     var data = req.body;
-    console.log(data);
     setTimeout(function(){
         if(data.code == 5555){
             data.confirm = true;
@@ -153,11 +179,17 @@ app.post('/api/phone', jsonParser, function(req, res) {
 });
 
 app.post('/api/users', jsonParser, function(req, res) {
-    var score = req.body;
-    score.id = Date.now().toString();
+    var data = req.body;
+    data.id = Date.now().toString();
+    users[data.id] = data;
+
     setTimeout(function(){
-        res.json(score, 201);
+        res.json(data, 201);
     }, 2000);
+});
+
+app.get('/api/users/:id', jsonParser, function(req, res) {
+    res.json(users[req.params.id]);
 });
 
 app.listen(app.get('port'), function () {
