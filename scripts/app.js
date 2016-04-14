@@ -56,8 +56,7 @@ UM.Views.Config = Backbone.View.extend({
             head += this.getStyle();
         else
             console.warn('Стили отключены');
-        debugger;
-        if (!window.ymaps && this.model.get('showMap'))
+        if (this.model.get('showMap'))
             head += this.getYaMap();
         else
             console.warn('Карта отключина');
