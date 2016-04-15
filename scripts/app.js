@@ -20,7 +20,7 @@ require('./Backbone.Ymaps.js');
 
 UM.Models.Config = Backbone.Model.extend({
     defaults: {
-        serverUrl: 'http://umodule.marya.ru',
+        serverUrl: 'http://localhost',
         siteUrl: '',
         formType: 'calculation',
         style: '/css/um-material.css',
@@ -32,7 +32,7 @@ UM.Models.Config = Backbone.Model.extend({
 
     urlRoot: function () {
         return this.get('serverUrl') + '/api/configs/'
-    },
+    }
 });
 
 UM.Views.Config = Backbone.View.extend({
@@ -64,7 +64,6 @@ UM.Views.Config = Backbone.View.extend({
     getStyle: function () {
         var style = this.model.get('serverUrl') + this.model.get('style');
         return '<link rel="stylesheet" type="text/css" href="' + style + '">';
-
     },
 
     getYaMap: function () {
@@ -74,7 +73,7 @@ UM.Views.Config = Backbone.View.extend({
     initPage: function () {
         var $body = $('body');
 
-        UM.page = new UM.Views.Page({options: this.model.toJSON()});
+        UM.page = new UM.Views.Page({model: this.model});
 
         if (this.model.get('initType') == 'button') {
 
@@ -316,8 +315,13 @@ UM.Models.Modal = Backbone.Model.extend({
 UM.Collections.Citys = Backbone.Collection.extend({
     model: UM.Models.City,
 
+    initialize: function(models, options) {
+        if(options)
+            this.options = options;
+    },
+
     url: function() {
-        return UM.config.get('serverUrl') + '/api/cities/'
+        return UM.config.get('serverUrl') + '/api/cities/' + this.options.configId || ''
     },
 
     comparator: function (model) {
@@ -328,8 +332,13 @@ UM.Collections.Citys = Backbone.Collection.extend({
 UM.Collections.Shops = Backbone.Collection.extend({
     model: UM.Models.Shop,
 
+    initialize: function(models, options) {
+        if(options)
+            this.options = options;
+    },
+
     url: function() {
-        return UM.config.get('serverUrl') + '/api/shops/'
+        return UM.config.get('serverUrl') + '/api/shops/' + this.options.configId || ''
     },
 
     filterByCity: function (city) {
@@ -492,11 +501,12 @@ UM.Views.СalculationForm = Backbone.View.extend({
     },
 
     initialize: function () {
-        UM.cityCollection = new UM.Collections.Citys();
-        UM.cityCollection.fetch();
-        UM.cityCollectionView = new UM.Views.Citys({collection: UM.cityCollection});
+        UM.cityCollection = new UM.Collections.Citys([], this.model.toJSON());
+        UM.cityCollection.fetch().then(function(){
+            UM.cityCollectionView = new UM.Views.Citys({collection: UM.cityCollection});
+        });
 
-        UM.shopCollection = new UM.Collections.Shops();
+        UM.shopCollection = new UM.Collections.Shops([], this.model.toJSON());
         UM.shopCollection.fetch();
 
         this.render();
@@ -594,7 +604,8 @@ UM.Views.СalculationForm = Backbone.View.extend({
         var that = this;
         UM.TemplateManager.get(this.template, function (template) {
             var temp = _.template(template);
-            var html = $(temp(that.model.toJSON()));
+            var data = _.extend(that.model.toJSON(), UM.config.toJSON());
+            var html = $(temp(data));
             that.$el.html(html);
         });
         return this;
@@ -984,10 +995,9 @@ UM.Views.Page = Backbone.View.extend({
         'click .um-close': 'hide'
     },
 
-    initialize: function (options) {
-        this.options = options.options;
+    initialize: function () {
 
-        if (this.options.initType == 'button' || this.options.initPosition == 'fixed')
+        if (this.model.get('initType') == 'button' || this.model.get('initPosition') == 'fixed')
             this.$el.addClass('fixed');
 
         this.render(this.showStartForm());
@@ -1014,7 +1024,7 @@ UM.Views.Page = Backbone.View.extend({
     },
 
     render: function (form) {
-        if (this.options.initType == 'button' || this.options.initPosition == 'fixed') {
+        if (this.model.get('initType') == 'button' || this.model.get('initPosition') == 'fixed') {
             var close =
                 '<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24" class="um-close">' +
                     '<path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>' +
@@ -1036,7 +1046,7 @@ UM.Views.Page = Backbone.View.extend({
 
     hide: function () {
         this.$el.addClass('um-hidden');
-        if (this.options.initType == 'button') {
+        if (this.model.get('initType') == 'button') {
             UM.vent.trigger('button:show');
         }
     },
@@ -1061,12 +1071,12 @@ UM.Views.Page = Backbone.View.extend({
     },
 
     showStartForm: function () {
-        if (this.options.formType == 'calculation') {
-            UM.user = new UM.Models.User;
+        if (this.model.get('formType') == 'calculation') {
+            UM.user = new UM.Models.User({configId: this.model.get('id')});
             UM.сalculationFormView = new UM.Views.СalculationForm({model: UM.user});
             return UM.сalculationFormView.el;
         } else {
-            throw new Error("Тип заявки '" + this.options.formType + "' не поддерживается или не корректен");
+            throw new Error("Тип заявки '" + this.model.get('formType') + "' не поддерживается или не корректен");
         }
     },
 

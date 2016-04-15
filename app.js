@@ -161,7 +161,15 @@ app.get('/api/cities', function(req, res) {
     res.json(cities);
 });
 
+app.get('/api/cities/:id', function(req, res) {
+    res.json(cities);
+});
+
 app.get('/api/shops', function(req, res) {
+    res.json(shops);
+});
+
+app.get('/api/shops/:id', function(req, res) {
     res.json(shops);
 });
 
