@@ -245,17 +245,24 @@
                                '<script>UM.init(' + JSON.stringify(this.toJSON()) + ');<\/script>';
                     },
 
+                    getShortScript: function () {
+                        return '<script type="text/javascript" src="' + this.get('serverUrl') + '/js/marya-um.js"><\/script>' +
+                                '<script>UM.init({"id": ' + this.get('id') + '});<\/script>';
+                    },
+
                     getCode: function () {
+                        var code = this.getShortScript();
+
                         if (this.get('initPosition') == 'fixed') {
 
-                            return  this.getScript();
+                            return  code;
 
                         } else if (this.get('initPosition') == 'static') {
 
                             if (this.get('initType') == 'button')
-                                return this.getButtonDOM() + this.getScript();
+                                return this.getButtonDOM() + code;
                             else if(this.get('initType') == 'form')
-                                return this.getFormDOM() + this.getScript();
+                                return this.getFormDOM() + code;
 
                         } else {
 

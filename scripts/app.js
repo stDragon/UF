@@ -33,10 +33,6 @@ UM.Models.Config = Backbone.Model.extend({
     urlRoot: function () {
         return this.get('serverUrl') + '/api/configs/'
     },
-
-    initialize: function () {
-        //this.fetch();
-    }
 });
 
 UM.Views.Config = Backbone.View.extend({
@@ -104,7 +100,9 @@ UM.Views.Config = Backbone.View.extend({
 UM.init = function (option) {
     this.option = option;
     UM.config = new UM.Models.Config(option);
-    UM.configView = new UM.Views.Config({model: UM.config});
+    UM.config.fetch().then(function(){
+        UM.configView = new UM.Views.Config({model: UM.config});
+    });
 };
 
 UM.vent = _.extend({}, Backbone.Events);
