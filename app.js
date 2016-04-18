@@ -139,7 +139,7 @@ app.post('/api/configs', jsonParser, function(req, res) {
     data.id = Date.now().toString();
     configs[data.id] = data;
 
-    res.json(data, 201);
+    res.status(201).json(data);
 });
 
 app.get('/api/configs/:id', jsonParser, function(req, res) {
@@ -154,7 +154,7 @@ app.put('/api/configs/:id', jsonParser, function(req, res) {
     }
 
     //res.json(success ? 200 : 404);
-    res.json(configs[req.params.id], 200);
+    res.status(200).json(configs[req.params.id]);
 });
 
 app.get('/api/cities', function(req, res) {
@@ -178,10 +178,10 @@ app.post('/api/phone', jsonParser, function(req, res) {
     setTimeout(function(){
         if(data.code == 5555){
             data.confirm = true;
-            res.json(data, 202);
+            res.status(202).json(data);
         } else {
             data.confirm = false;
-            res.json(data, 401);
+            res.status(401).json(data);
         }
     }, 2000);
 });
@@ -192,7 +192,7 @@ app.post('/api/users', jsonParser, function(req, res) {
     users[data.id] = data;
 
     setTimeout(function(){
-        res.json(data, 201);
+        res.status(201).json(data);
     }, 2000);
 });
 
@@ -201,5 +201,5 @@ app.get('/api/users/:id', jsonParser, function(req, res) {
 });
 
 app.listen(app.get('port'), function () {
-  console.log(new Date().toISOString() + ': server started on port ' + app.get('port') +'!');
+    console.log(new Date().toISOString() + ': server started on port ' + app.get('port') +'!');
 });

@@ -5,14 +5,12 @@ var _ = require('underscore'),
 window._ = window._ || _;
 window.Backbone = window.Backbone || Backbone;
 
-var UM = window.UM || {};
-
-UM = {
+var UM = window.UM || {
     Models: {},
     Collections: {},
     Views: {},
     Router: {},
-    option: {}
+    option: []
 };
 
 require('jquery.inputmask');
@@ -118,7 +116,7 @@ UM.Views.Config = Backbone.View.extend({
  *  @param  {string} option - Опции для инициализации модуля.
  *  */
 UM.init = function (option) {
-    this.option = option;
+    this.option.push(option);
     UM.config = new UM.Models.Config(option);
     UM.config.fetch().then(function(){
         UM.configView = new UM.Views.Config({model: UM.config});
