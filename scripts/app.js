@@ -18,6 +18,9 @@ UM = {
 require('jquery.inputmask');
 require('./Backbone.Ymaps.js');
 
+/**
+ *  Конфигурирует универсальный модуль
+ *  */
 UM.Models.Config = Backbone.Model.extend({
     defaults: {
         serverUrl: 'http://umodule.marya.ru',
@@ -32,33 +35,34 @@ UM.Models.Config = Backbone.Model.extend({
 
     urlRoot: function () {
         return this.get('serverUrl') + '/api/configs/'
+    },
+
+    initialize: function () {
+        this.on('sync', this.checkConfig, this);
+    },
+
+    checkConfig: function () {
+        if (!this.get('serverUrl'))
+            throw new Error("Не указано имя сервера Мария serverUrl:'" + this.get('serverUrl') + "' проверьте конфигурацию");
+        if (!this.get('siteUrl'))
+            throw new Error("Не указано имя вашего сайта siteUrl:'" + this.get('siteUrl') + "' проверьте конфигурацию");
+        if (!this.get('initType'))
+            throw new Error("Не указан тип модуля initType:'" + this.get('initType') + "' проверьте конфигурацию");
+        if (!this.get('initPosition'))
+            throw new Error("Не указан способ инициализации initPosition:'" + this.get('initPosition') + "' проверьте конфигурацию");
+        if (!this.get('style'))
+            console.warn('Стили отключены');
+        if (!this.get('showMap'))
+            console.warn('Карта отключина');
     }
 });
-
+/**
+ *  Подгружает необходимые стили и скрипты
+ *  */
 UM.Views.Config = Backbone.View.extend({
     initialize: function () {
-        var $head = $('head'),
-            head = '';
-
-        if (!this.model.get('serverUrl'))
-            throw new Error("Не указано имя сервера Мария serverUrl:'" + this.model.get('serverUrl') + "' проверьте конфигурацию");
-        if (!this.model.get('siteUrl'))
-            throw new Error("Не указано имя вашего сайта siteUrl:'" + this.model.get('siteUrl') + "' проверьте конфигурацию");
-        if (!this.model.get('initType'))
-            throw new Error("Не указан тип модуля initType:'" + this.model.get('initType') + "' проверьте конфигурацию");
-        if (!this.model.get('initPosition'))
-            throw new Error("Не указан способ инициализации initPosition:'" + this.model.get('initPosition') + "' проверьте конфигурацию");
-        if (this.model.get('style'))
-            head += this.getStyle();
-        else
-            console.warn('Стили отключены');
-        if (this.model.get('showMap'))
-            head += this.getYaMap();
-        else
-            console.warn('Карта отключина');
-
-        if (head) $head.append(head);
-        this.initPage();
+        this.initHead();
+        this.initBody();
     },
 
     getStyle: function () {
@@ -70,7 +74,21 @@ UM.Views.Config = Backbone.View.extend({
         return '<script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&mode=debug" type="text/javascript">';
     },
 
-    initPage: function () {
+    initHead: function () {
+        var $head = $('head'),
+            head = '';
+
+        if (this.model.get('style'))
+            head += this.getStyle();
+
+        if (this.model.get('showMap'))
+            head += this.getYaMap();
+
+        if (head)
+            $head.append(head);
+    },
+
+    initBody: function () {
         var $body = $('body');
 
         UM.page = new UM.Views.Page({model: this.model});
@@ -95,7 +113,10 @@ UM.Views.Config = Backbone.View.extend({
         }
     }
 });
-
+/**
+ *  Запуск модуля
+ *  @param  {string} option - Опции для инициализации модуля.
+ *  */
 UM.init = function (option) {
     this.option = option;
     UM.config = new UM.Models.Config(option);
@@ -104,12 +125,21 @@ UM.init = function (option) {
     });
 };
 
+/**
+ *  Helper создания событий
+ *  */
 UM.vent = _.extend({}, Backbone.Events);
 
+/**
+ *  Helper шаблон из статичного DOM элемента по его ID
+ *  */
 UM.template = function (id) {
     return _.template($('#' + id).html());
 };
 
+/**
+ *  Ajax подгрузка шаблона
+ *  */
 UM.TemplateManager = {
     templates: {},
 
@@ -144,7 +174,9 @@ UM.TemplateManager = {
     }
 
 };
-
+/**
+ *  Тултипы для вывода текста ошибок формы
+ *  */
 UM.Views.Tooltip = Backbone.View.extend({
 
     tagName: 'span',
@@ -160,7 +192,9 @@ UM.Views.Tooltip = Backbone.View.extend({
     }
 
 });
-
+/**
+ *  Клиент оформивший заявку
+ *  */
 UM.Models.User = Backbone.Model.extend({
     defaults: {
         surname: '',
@@ -252,6 +286,7 @@ UM.Models.User = Backbone.Model.extend({
             'shop': ''
         });
     },
+
     setShop: function (name) {
         this.set('shop', name);
     }
@@ -281,7 +316,9 @@ UM.Models.Shop = Backbone.Model.extend({
         this.set('title', this.get('name') + ', ' + this.get('address'));
     }
 });
-
+/**
+ *  Подтверждения регестрации через телефон
+ *  */
 UM.Models.Phone = Backbone.Model.extend({
     defaults: {
         phone: '',
@@ -305,13 +342,18 @@ UM.Models.Phone = Backbone.Model.extend({
         if (errors.length) return errors;
     }
 });
-
+/**
+ *  Модальное окно
+ *  */
 UM.Models.Modal = Backbone.Model.extend({
     defaults: {
         content: ''
     }
 });
-
+/**
+ *  Коллекция городов
+ *  @param {UM.Models.Config} options конфиг для получении коллекции.
+ *  */
 UM.Collections.Citys = Backbone.Collection.extend({
     model: UM.Models.City,
 
@@ -323,12 +365,17 @@ UM.Collections.Citys = Backbone.Collection.extend({
     url: function() {
         return UM.config.get('serverUrl') + '/api/cities/' + this.options.configId || ''
     },
-
+    /**
+     * Сортирует по названию города
+     * */
     comparator: function (model) {
         return model.get('name');
     }
 });
-
+/**
+ *  Коллекция студий
+ *  @param {UM.Models.Config} options конфиг для получении коллекции.
+ *  */
 UM.Collections.Shops = Backbone.Collection.extend({
     model: UM.Models.Shop,
 
@@ -340,13 +387,22 @@ UM.Collections.Shops = Backbone.Collection.extend({
     url: function() {
         return UM.config.get('serverUrl') + '/api/shops/' + this.options.configId || ''
     },
-
+    /**
+     * Создает новый экземпляр Shops по названию города.
+     * @param  {string} city - Диаметр окружности.
+     * @return {UM.Collections.Shops} Новый объект Shops.
+     */
     filterByCity: function (city) {
         var filtered = this.filter(function (model) {
             return model.get("city") === city;
         });
         return new UM.Collections.Shops(filtered);
     },
+    /**
+     * Создает новый экземпляр Shops по названию города содержащих координаты для карты.
+     * @param  {string} city - Диаметр окружности.
+     * @return {UM.Collections.Shops} Новый объект Shops.
+     */
     filterByCityForMap: function (city) {
         var filtered = this.filter(function (model) {
             return model.get("city") === city && model.get("lat") && model.get("lat");
@@ -354,7 +410,9 @@ UM.Collections.Shops = Backbone.Collection.extend({
         return new UM.Collections.Shops(filtered);
     }
 });
-
+/**
+ *  Окно "заказ принят на обработку"
+ *  */
 UM.Views.Confirm = Backbone.View.extend({
 
     className: 'um-order-confirm',
@@ -373,7 +431,9 @@ UM.Views.Confirm = Backbone.View.extend({
         return this;
     }
 });
-
+/**
+ *  Форма подтверждения телефона
+ *  */
 UM.Views.UserPhoneForm = Backbone.View.extend({
 
     tagName: 'form',
@@ -480,7 +540,9 @@ UM.Views.UserPhoneForm = Backbone.View.extend({
         this.invalid(this.model, errors);
     }
 });
-
+/**
+ *  Форма заявки на просчет
+ *  */
 UM.Views.СalculationForm = Backbone.View.extend({
 
     tagName: 'form',
@@ -610,20 +672,24 @@ UM.Views.СalculationForm = Backbone.View.extend({
         });
         return this;
     },
-
+    /** Устанавливает значения полей формы*/
     setValue: function () {
         var attr = this.model.toJSON();
         _.each(attr, function (num, key) {
             this.$el.find('[name=' + key + ']').val(num);
         }, this);
     },
-
+    /**
+     * Сохраняет изменения поля в модель.
+     */
     setAttr: function (e) {
         var name = $(e.target).attr('name'),
             val = $(e.target).val();
         this.model.set(name, val);
     },
-
+    /**
+     * Сохраняет все поля в модель.
+     */
     setAttrs: function() {
         var data = {};
         this.$el.find('.um-form-control').each(function(){
@@ -632,7 +698,9 @@ UM.Views.СalculationForm = Backbone.View.extend({
 
         this.model.set(data);
     },
-
+    /**
+     * Сохраняет все поля на сервер.
+     */
     save: function (e) {
         e.preventDefault();
 
@@ -643,11 +711,15 @@ UM.Views.СalculationForm = Backbone.View.extend({
 
         this.model.save(data);
     },
-
+    /**
+     * Кнопка отправки становится неактивной
+     */
     disabledSubmit: function () {
         this.$el.find('button:submit')[0].disabled = true;
     },
-
+    /**
+     * Кнопка отправки становится активной
+     */
     enabledSubmit: function () {
         this.$el.find('button:submit')[0].disabled = false;
     },
@@ -657,7 +729,11 @@ UM.Views.СalculationForm = Backbone.View.extend({
             .closest('.um-form-group').removeClass('um-has-error')
             .children('.um-tooltip').remove();
     },
-
+    /**
+     * Вывод ошибок
+     * @param  {object} model - Диаметр окружности.
+     * @param  {object} errors - Диаметр окружности.
+     */
     invalid: function (model, errors) {
         this.$el.find('input')
             .closest('.um-form-group').removeClass('um-has-error')
@@ -672,7 +748,9 @@ UM.Views.СalculationForm = Backbone.View.extend({
             $group.append(tooltip.el);
         }, this);
     },
-
+    /**
+     * Создание модального окна для Яндекс карты
+     */
     createYaMapModal: function () {
         if (!$('#umMap').length) {
             var content = '<div id="umMap"></div>';
@@ -681,7 +759,9 @@ UM.Views.СalculationForm = Backbone.View.extend({
             $('body').append(UM.modalMapView.el);
         }
     },
-
+    /**
+     * Создание/обновление Яндекс карты и изменение на нее меток
+     */
     createYaMap: function () {
         var $elMap = $('#umMap');
 
@@ -769,7 +849,9 @@ UM.Views.СalculationForm = Backbone.View.extend({
         $('.um-modal').addClass('um-hidden');
     }
 });
-
+/**
+ *  Прелоудер
+ *  */
 UM.Views.Loader = Backbone.View.extend({
 
     className: 'um-load-bar um-hidden',
@@ -796,7 +878,9 @@ UM.Views.Loader = Backbone.View.extend({
         this.$el.addClass('um-hidden');
     }
 });
-
+/**
+ *  Модальное окно
+ *  */
 UM.Views.Modal = Backbone.View.extend({
 
     className: 'um-modal um-hidden',
@@ -865,7 +949,9 @@ UM.Views.City = Backbone.View.extend({
         }
     }
 });
-
+/**
+ *  Список городов
+ *  */
 UM.Views.Citys = Backbone.View.extend({
 
     tagName: 'ul',
@@ -946,7 +1032,9 @@ UM.Views.Shop = Backbone.View.extend({
 
     }
 });
-
+/**
+ *  Список студий
+ *  */
 UM.Views.Shops = Backbone.View.extend({
 
     tagName: 'ul',
@@ -985,7 +1073,9 @@ UM.Views.Shops = Backbone.View.extend({
         }, this);
     }
 });
-
+/**
+ *  Основное окно универсального модуля
+ *  */
 UM.Views.Page = Backbone.View.extend({
 
     tagName: 'article',
@@ -996,7 +1086,7 @@ UM.Views.Page = Backbone.View.extend({
     },
 
     initialize: function () {
-
+        /** В фиксированном окне добваляется соответствующий класс DOM элементу */
         if (this.model.get('initType') == 'button' || this.model.get('initPosition') == 'fixed')
             this.$el.addClass('fixed');
 
@@ -1024,6 +1114,7 @@ UM.Views.Page = Backbone.View.extend({
     },
 
     render: function (form) {
+        /** В фиксированном окне добваляется кнопка закрытия окна */
         if (this.model.get('initType') == 'button' || this.model.get('initPosition') == 'fixed') {
             var close =
                 '<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24" class="um-close">' +
@@ -1051,6 +1142,7 @@ UM.Views.Page = Backbone.View.extend({
         }
     },
 
+    /** Добавление прелоудера для обмена данными с сервером */
     initLoader: function () {
         UM.laoder = new UM.Views.Loader();
         this.$el.prepend(UM.laoder.el);
@@ -1070,6 +1162,9 @@ UM.Views.Page = Backbone.View.extend({
         UM.laoder.hide();
     },
 
+    /**
+     * Рендер выбранной в конфигураторе формы
+     * */
     showStartForm: function () {
         if (this.model.get('formType') == 'calculation') {
             UM.user = new UM.Models.User({configId: this.model.get('id')});
@@ -1079,26 +1174,34 @@ UM.Views.Page = Backbone.View.extend({
             throw new Error("Тип заявки '" + this.model.get('formType') + "' не поддерживается или не корректен");
         }
     },
-
+    /**
+     * Рендер формы подтверждения телефона
+     * */
     showPhoneForm: function () {
         var phone = UM.user.get('phone');
         UM.phone = new UM.Models.Phone({phone: phone});
         UM.phoneView = new UM.Views.UserPhoneForm({model: UM.phone});
         return UM.phoneView.el;
     },
-
+    /**
+     * Рендер сообщения ою оформлении заявки
+     * */
     showConfirm: function () {
         UM.confirmView = new UM.Views.Confirm();
         return UM.confirmView.el;
     }
 });
-
+/**
+ *  Кнопка инициализации универсального модуля
+ *  */
 UM.Views.Button = Backbone.View.extend({
     events: {
         'click': 'clicked'
     }
 });
-
+/**
+ *  Кнопка связанная со статиным DOM элементом
+ *  */
 UM.Views.ButtonStatic = UM.Views.Button.extend({
     el: $('#um-btn-init'),
 
@@ -1106,7 +1209,9 @@ UM.Views.ButtonStatic = UM.Views.Button.extend({
         UM.vent.trigger('page:show');
     }
 });
-
+/**
+ *  Кнопка фиксированная относительно окна браузера
+ *  */
 UM.Views.ButtonFixed = UM.Views.Button.extend({
     className: 'um-btn um-btn--raised um-btn-red um-btn-start--fixed',
     tagName: 'button',
