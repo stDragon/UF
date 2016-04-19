@@ -130,7 +130,7 @@ app.use(function(req, res, next) {
 app.use(express.static(__dirname + '/public'));
 //app.use(express.errorHandler({dumpExceptions: true, showStack: true}));
 
-app.get('/', function(req, res) {
+app.get('/module/', function(req, res) {
     res.render('index.html');
 });
 
