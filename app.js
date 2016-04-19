@@ -1,6 +1,26 @@
 var express      = require('express'),
+    https        = require('https'),
+    http         = require('http'),
+    fs           = require('fs'),
     errorhandler = require('errorhandler'),
     bodyParser   = require('body-parser');
+
+var options = {};
+
+fs.readFile('../ssl/certificate.key', 'utf8', function (err,data) {
+    if (err) {
+        return console.log(err);
+    }
+    console.log(data);
+    options.key = data;
+});
+fs.readFile('../ssl/certificate.crt', 'utf8', function (err,data) {
+    if (err) {
+        return console.log(err);
+    }
+    console.log(data);
+    options.crt = data;
+});
 
 /**
  * @todo временные массивы, удалить после появления БД
@@ -200,6 +220,17 @@ app.get('/api/users/:id', jsonParser, function(req, res) {
     res.json(users[req.params.id]);
 });
 
-app.listen(app.get('port'), function () {
-    console.log(new Date().toISOString() + ': server started on port ' + app.get('port') +'!');
-});
+var server = https.createServer(options);
+
+if (options.crt && options.key){
+    // Create an HTTPS service identical to the HTTP service.
+    https.createServer(options, app).listen(app.get('port'));
+} else {
+    // Create an HTTP service.
+    http.createServer(app).listen(app.get('port'));
+}
+
+
+//app.listen(app.get('port'), function () {
+//    console.log(new Date().toISOString() + ': server started on port ' + app.get('port') +'!');
+//});
