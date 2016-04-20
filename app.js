@@ -5,20 +5,10 @@ var express      = require('express'),
     errorhandler = require('errorhandler'),
     bodyParser   = require('body-parser');
 
-var options = {};
-
-fs.readFile('../ssl/certificate.key', 'utf8', function (err,data) {
-    if (err) {
-        return console.log(err);
-    }
-    options.key = data;
-});
-fs.readFile('../ssl/certificate.crt', 'utf8', function (err,data) {
-    if (err) {
-        return console.log(err);
-    }
-    options.crt = data;
-});
+var options = {
+    key: fs.readFileSync('../ssl/certificate.key'),
+    cert: fs.readFileSync('../ssl/certificate.crt')
+};
 
 /**
  * @todo временные массивы, удалить после появления БД
