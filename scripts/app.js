@@ -24,7 +24,7 @@ UM.Models.Config = Backbone.Model.extend({
         serverUrl: 'http://module.infcentre.ru',
         siteUrl: '',
         formType: 'calculation',
-        style: '/css/um-material.css',
+        style: '/public/css/um-material.css',
         initType: 'button',
         initPosition: 'fixed',
         showMap: false,
@@ -159,7 +159,7 @@ UM.TemplateManager = {
                 };
             });
             $.ajax({
-                url: UM.config.get('serverUrl') + "/templates/" + id + ".html",
+                url: UM.config.get('serverUrl') + "/public/templates/" + id + ".html",
                 success: function (template) {
                     var tmpl = template;
                     that.templates[id] = tmpl;
