@@ -3,10 +3,17 @@ var express      = require('express'),
     http         = require('http'),
     fs           = require('fs'),
     errorhandler = require('errorhandler'),
+    expressHbs = require('express3-handlebars'),
     bodyParser   = require('body-parser');
 
 var app = module.exports.app = exports.app = express();
     require('./server.js')(app);
+
+app.set('view engine', 'html');
+app.set('views', __dirname + '/views');
+
+app.engine('hbs', expressHbs({extname:'hbs', defaultLayout:'main.hbs'}));
+app.set('view engine', 'hbs');
 /**
  * @todo временные массивы, удалить после появления БД
  * */
@@ -22,7 +29,7 @@ app.use(express.static(__dirname + '/public'));
 //app.use(express.errorHandler({dumpExceptions: true, showStack: true}));
 
 app.get('/module/', function(req, res) {
-    res.render('index.html');
+    res.render('index');
 });
 
 app.post('/api/configs', jsonParser, function(req, res) {

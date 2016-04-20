@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Получение HTML-кода модуля</title>
+    <!--Import Google Icon Font-->
+    <link href="//fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="/libs/Materialize/dist/css/materialize.min.css"  media="screen,projection"/>
+
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <style>
+        body > .progress{
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            margin-top: 0;
+        }
+        h1 {
+            font-size: 2.92rem;
+        }
+        h2 {
+            font-size: 2.28rem;
+        }
+        textarea.code{
+            padding: 2em 1em;
+            height: auto;
+            background: #f5f2f0;
+        }
+        .btn-default,
+        .btn-default:hover{
+            color: #000;
+            background-color: rgba(158,158,158,.2);
+        }
+        .btn-default:active,
+        .btn-default:focus {
+            background-color: rgba(158,158,158,.4);
+        }
+        .btn-small{
+            height: 30px;
+            line-height: 30px
+        }
+        .btn-textarea{
+            position: absolute;
+            top: 0;
+            right: 11px;
+            padding: 0 1rem;
+            font-size: 0.8em;
+            opacity: 0;
+        }
+        .valid + .btn-textarea{
+            opacity: 1;
+        }
+        .error-text{
+            color: #E57373;
+        }
+        .error-text .material-icons{
+            font-size: inherit;
+            line-height: inherit;
+        }
+    </style>
+</head>
+<body>
+<div class="progress hiddendiv">
+    <div class="indeterminate"></div>
+</div>
+<div class="container">
+    <h1>Получение HTML-кода модуля</h1>
+    <main>
+        {{{body}}}
+    </main>
+</div>
+
+<script src="/libs/jquery/dist/jquery.min.js"></script>
+<script src="/libs/underscore/underscore-min.js"></script>
+<script src="/libs/backbone/backbone-min.js"></script>
+<script src="/libs/Materialize/dist/js/materialize.min.js"></script>
+<script src="//api-maps.yandex.ru/2.1/?lang=ru_RU&mode=debug"></script>
+<script src="/js/marya-um.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $('select').material_select();
+        window.validate_field = function(){}; //отмена встроенного валидатора Materialize
+
+        window.App = {
+            Models: {},
+            Collections: {},
+            Views: {},
+            Router: {}
+        };
+
+        function init() {
+            App.config = new App.Models.Config;
+            App.formCode = new App.Views.CodeGeneratorForm({model: App.config});
+            App.example = new App.Views.Example({model: App.config});
+        }
+
+        App.Models.Config = Backbone.Model.extend({
+            defaults: {
+                serverUrl: 'http://umodule.marya.ru',
+                siteUrl: '',
+                formType: 'calculation',
+                style: '/css/um-material.css',
+                initType: 'button',
+                initPosition: 'fixed',
+                showMap: false,
+                showShop: false
+            },
+
+            urlRoot: function () {
+                return this.get('serverUrl') + '/api/configs/'
+            },
+
+            initialize: function () {
+                /** @todo временное решение для получения имя сервера отдающего кнопку*/
+                var hostname = window.location.origin;
+                this.set('serverUrl', hostname);
+                this.on('sync', this.log, this);
+            },
+
+            validate: function (attrs, options) {
+                /** @todo проверить корректность регулярки*/
+                var regURL = /^(https?:\/\/)?([\S\.]+)\.(\S{2,6}\.?)(\/[\S\.]*)*\/?$/;
+
+                var errors = [];
+                if (!attrs.siteUrl) {
+                    errors.push({
+                        text: 'Вы не заполнили поле "Сайт на котором будет использоваться модуль',
+                        attr: 'siteUrl'
+                    });
+                } else if (!regURL.test(attrs.siteUrl)) {
+                    errors.push({
+                        text: "Сайт не коректен",
+                        attr: 'siteUrl'
+                    });
+                }
+
+                if (errors.length) return errors;
+            },
+
+            log: function () {
+                console.log(this.toJSON());
+            },
+
+            getButtonDOM: function() {
+                return '<button type="button" id="um-btn-init" class="um-btn um-btn--raised um-btn-red">Заказать кухню</button>'
+            },
+
+            getFormDOM: function() {
+                return '<div id="um-form-init"></div>'
+            },
+
+            getScript: function () {
+                return '<script type="text/javascript" src="' + this.get('serverUrl') + '/js/marya-um.js"><\/script>' +
+                        '<script>UM.init(' + JSON.stringify(this.toJSON()) + ');<\/script>';
+            },
+
+            getShortScript: function () {
+                return '<script type="text/javascript" src="' + this.get('serverUrl') + '/js/marya-um.js"><\/script>' +
+                        '<script>UM.init({"id": ' + this.get('id') + '});<\/script>';
+            },
+
+            getCode: function () {
+                var code = this.getShortScript();
+
+                if (this.get('initPosition') == 'fixed') {
+
+                    return  code;
+
+                } else if (this.get('initPosition') == 'static') {
+
+                    if (this.get('initType') == 'button')
+                        return this.getButtonDOM() + code;
+                    else if(this.get('initType') == 'form')
+                        return this.getFormDOM() + code;
+
+                } else {
+
+                    throw new Error("Не указано initPosition '" + this.get('initPosition') + "' проверьте конфигурацию");
+
+                }
+            }
+        });
+
+        App.Views.CodeGeneratorForm = Backbone.View.extend({
+            el: '#сodeGeneratorForm',
+
+            events: {
+                "input input:text"    : "changed",
+                "change input"        : "changed",
+                "change select"       : "changed",
+                "click .js-copy-code" : "copyCode",
+                "submit"              : "submit"
+            },
+
+            initialize: function () {
+                this.listenTo(this.model, 'sync', this.renderCode);
+                this.listenTo(this.model, 'invalid', this.invalid);
+                this.listenTo(this.model, 'invalid', this.unrenderCode);
+                this.listenTo(this.model, 'request', this.valid);
+                _.bindAll(this, 'changed');
+            },
+
+            renderCode: function () {
+                this.$el.find('[name=code]')
+                        .val(this.model.getCode())
+                        .addClass('valid');
+            },
+
+            unrenderCode: function () {
+                this.$el.find('[name=code]')
+                        .val('')
+                        .removeClass('valid');
+            },
+
+            changed: function(e) {
+                var changed = e.currentTarget;
+
+                var value;
+                if (changed.type == 'checkbox') {
+                    value = changed.checked;
+                } else {
+                    value = changed.value;
+                }
+
+                var obj = {};
+                obj[changed.name] = value;
+                if (!this.model.save(obj)) {
+                    this.model.set(obj);
+                }
+            },
+
+            valid: function () {
+                this.$el.find('input')
+                        .removeClass('invalid')
+                        .addClass('valid');
+            },
+
+            invalid: function (model, errors) {
+                this.$el.find('input')
+                        .removeClass('invalid')
+                        .removeClass('valid');
+                _.each(errors, function (error) {
+                    var $el = this.$el.find('[name=' + error.attr + ']');
+
+                    $el.removeClass('valid')
+                            .addClass('invalid');
+                }, this);
+            },
+
+            copyCode: function () {
+                var el = this.el.querySelector('[name=code]');
+                var range = document.createRange();
+                range.selectNode(el);
+                window.getSelection().addRange(range);
+                try {
+                    var successful = document.execCommand('copy');
+                    if (successful)
+                        Materialize.toast('Код скопирован в буфер обмена', 2000);
+                } catch(err) {
+                    console.error('Не удалось скопировать');
+                }
+            },
+
+            submit: function (e) {
+                e.preventDefault();
+                this.model.save();
+            }
+        });
+
+        App.Views.Example = Backbone.View.extend({
+            el: '#example',
+
+            initialize: function () {
+                this.listenTo(this.model, 'sync', this.render);
+                this.listenTo(this.model, 'invalid', this.unrender);
+            },
+
+            render: function () {
+
+                this.unrender();
+
+                if (this.model.get('initPosition') == 'static') {
+
+                    if (this.model.get('initType') == 'button')
+                        this.$el.html(this.model.getButtonDOM());
+
+                    else if (this.model.get('initType') == 'form')
+                        this.$el.html(this.model.getFormDOM());
+
+                } else this.$el.html('');
+
+                UM.init(this.model.toJSON());
+            },
+
+            unrender: function() {
+                if(UM.page)
+                    UM.page.unrender();
+
+                if(UM.button && UM.button.$el.hasClass('um-btn-start--fixed'))
+                    UM.button.unrender();
+            }
+
+        });
+
+        init();
+    });
+</script>
+</body>
+</html>
