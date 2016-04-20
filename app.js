@@ -11,14 +11,12 @@ fs.readFile('../ssl/certificate.key', 'utf8', function (err,data) {
     if (err) {
         return console.log(err);
     }
-    console.log(data);
     options.key = data;
 });
 fs.readFile('../ssl/certificate.crt', 'utf8', function (err,data) {
     if (err) {
         return console.log(err);
     }
-    console.log(data);
     options.crt = data;
 });
 
@@ -131,6 +129,7 @@ var configs = [];
 var app = module.exports.app = exports.app = express();
 
 app.set('port', process.env.PORT || 80);
+app.set('portSSL', process.env.PORTSSL || 443);
 
 var jsonParser = bodyParser.json();
 
@@ -220,17 +219,12 @@ app.get('/api/users/:id', jsonParser, function(req, res) {
     res.json(users[req.params.id]);
 });
 
-var server = https.createServer(options);
+var httpServer = http.createServer(app);
+var httpsServer = https.createServer(options, app);
 
-if (options.crt && options.key){
-    // Create an HTTPS service identical to the HTTP service.
-    https.createServer(options, app).listen(app.get('port'));
-} else {
-    // Create an HTTP service.
-    http.createServer(app).listen(app.get('port'));
-}
-
-
-//app.listen(app.get('port'), function () {
-//    console.log(new Date().toISOString() + ': server started on port ' + app.get('port') +'!');
-//});
+httpServer.listen(app.get('port'), function () {
+    console.log(new Date().toISOString() + ': server started on port ' + app.get('port') +'!');
+});
+httpsServer.listen(app.get('portSSL'), function () {
+    console.log(new Date().toISOString() + ': server started on port ' + app.get('portSSL') +'!');
+});
