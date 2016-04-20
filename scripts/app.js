@@ -21,7 +21,7 @@ require('./Backbone.Ymaps.js');
  *  */
 UM.Models.Config = Backbone.Model.extend({
     defaults: {
-        serverUrl: 'http://umodule.marya.ru',
+        serverUrl: 'http://module.infcentre.ru',
         siteUrl: '',
         formType: 'calculation',
         style: '/css/um-material.css',
