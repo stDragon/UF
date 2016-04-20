@@ -25,7 +25,7 @@ var configs = tmp.tmpDb.configs;
 
 var jsonParser = bodyParser.json();
 
-app.use(express.static(__dirname + '/public'));
+app.use('/public',express.static(__dirname + '/public'));
 //app.use(express.errorHandler({dumpExceptions: true, showStack: true}));
 
 app.get('/module/', function(req, res) {
