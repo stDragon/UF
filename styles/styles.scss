@@ -1,0 +1,53 @@
+@import 'colors';
+body{
+  >.progress{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin-top: 0;
+  }
+}
+h1 {
+  font-size: 2.92rem;
+}
+h2 {
+  font-size: 2.28rem;
+}
+textarea.code{
+  padding: 2em 1em;
+  height: auto;
+  background: #f5f2f0;
+}
+.btn-default{
+  &:hover{
+    color: #000;
+    background-color: rgba(158,158,158,.2);
+  }
+  &:active,
+  &:focus {
+    background-color: rgba(158,158,158,.4);
+  }
+}
+.btn-small{
+  height: 30px;
+  line-height: 30px
+}
+.btn-textarea{
+  position: absolute;
+  top: 0;
+  right: 11px;
+  padding: 0 1rem;
+  font-size: 0.8em;
+  opacity: 0;
+}
+.valid + .btn-textarea{
+  opacity: 1;
+}
+.error-text{
+  color: #E57373;
+  .material-icons{
+    font-size: inherit;
+    line-height: inherit;
+  }
+}

@@ -19,7 +19,7 @@ gulp.task('concat', function() {
 });
 
 gulp.task('compress', ['concat'], function() {
-    return gulp.src('public/js/marya-um.js')
+    return gulp.src(['scripts/main.js', 'public/js/main.js'])
         .pipe(uglify())
         .pipe(rename({
             suffix: '.min'
