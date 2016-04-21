@@ -1101,7 +1101,10 @@ UM.Views.Page = Backbone.View.extend({
         }, this);
 
         UM.vent.on('page:showPhoneForm', function () {
-            this.render(this.showPhoneForm());
+            if (this.model.get('phoneVerification') === true)
+                this.render(this.showPhoneForm());
+            else
+                this.render(this.showConfirm());
         }, this);
 
         UM.vent.on('page:showConfirm', function () {

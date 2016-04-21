@@ -10,19 +10,6 @@ module.exports = function(app){
     app.set('port', process.env.PORT || 80);
     app.set('portSSL', process.env.PORTSSL || 443);
 
-    app.use(function(req, res, next) {
-        var serverName = '*';
-        if(req.headers.origin) {
-            serverName = req.headers.origin;
-        }
-
-        //res.header("Content-Type", "application/json; charset=utf-8");
-        res.header("Access-Control-Allow-Origin", serverName);
-        res.header("Access-Control-Allow-Credentials", "true");
-        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-        next();
-    });
-
     var httpServer = http.createServer(app);
     var httpsServer = https.createServer(options, app);
 

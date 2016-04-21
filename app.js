@@ -4,6 +4,7 @@ var express      = require('express'),
     fs           = require('fs'),
     errorhandler = require('errorhandler'),
     expressHbs = require('express3-handlebars'),
+    robots = require('express-robots'),
     bodyParser   = require('body-parser');
 
 var app = module.exports.app = exports.app = express();
@@ -24,6 +25,21 @@ var users = tmp.tmpDb.users;
 var configs = tmp.tmpDb.configs;
 
 var jsonParser = bodyParser.json();
+
+app.use(function(req, res, next) {
+    var serverName = '*';
+    if(req.headers.origin) {
+        serverName = req.headers.origin;
+    }
+
+    //res.header("Content-Type", "application/json; charset=utf-8");
+    res.header("Access-Control-Allow-Origin", serverName);
+    res.header("Access-Control-Allow-Credentials", "true");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
+
+app.use(robots(__dirname + '/robots.txt'));
 
 app.use('/public',express.static(__dirname + '/public'));
 //app.use(express.errorHandler({dumpExceptions: true, showStack: true}));

@@ -17,14 +17,15 @@ $(document).ready(function() {
 
     App.Models.Config = Backbone.Model.extend({
         defaults: {
-            serverUrl: 'http://umodule.marya.ru',
+            serverUrl: 'http://module.infcentre.ru',
             siteUrl: '',
             formType: 'calculation',
             style: '/public/css/um-material.css',
             initType: 'button',
             initPosition: 'fixed',
             showMap: false,
-            showShop: false
+            showShop: false,
+            phoneVerification: true
         },
 
         urlRoot: function () {
@@ -71,12 +72,12 @@ $(document).ready(function() {
         },
 
         getScript: function () {
-            return '<script type="text/javascript" src="' + this.get('serverUrl') + '/js/marya-um.js"><\/script>' +
+            return '<script type="text/javascript" src="' + this.get('serverUrl') + '/public/js/marya-um.js"><\/script>' +
                 '<script>UM.init(' + JSON.stringify(this.toJSON()) + ');<\/script>';
         },
 
         getShortScript: function () {
-            return '<script type="text/javascript" src="' + this.get('serverUrl') + '/js/marya-um.js"><\/script>' +
+            return '<script type="text/javascript" src="' + this.get('serverUrl') + '/public/js/marya-um.js"><\/script>' +
                 '<script>UM.init({"id": ' + this.get('id') + '});<\/script>';
         },
 
