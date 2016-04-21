@@ -1,5 +1,4 @@
 $(document).ready(function() {
-    $('select').material_select();
     window.validate_field = function(){}; //отмена встроенного валидатора Materialize
 
     window.App = {
@@ -9,10 +8,17 @@ $(document).ready(function() {
         Router: {}
     };
 
-    function init() {
-        App.config = new App.Models.Config;
-        App.formCode = new App.Views.CodeGeneratorForm({model: App.config});
-        App.example = new App.Views.Example({model: App.config});
+    function init(option) {
+        App.config = new App.Models.Config(option);
+        if(option)
+            App.config.fetch().then(function(){
+                App.formCode = new App.Views.CodeGeneratorForm({model: App.config});
+                App.example = new App.Views.Example({model: App.config});
+            });
+        else {
+            App.formCode = new App.Views.CodeGeneratorForm({model: App.config});
+            App.example = new App.Views.Example({model: App.config});
+        }
     }
 
     App.Models.Config = Backbone.Model.extend({
@@ -115,11 +121,29 @@ $(document).ready(function() {
         },
 
         initialize: function () {
+            if(this.model.get('id')) {
+                this.setValue();
+                this.renderCode();
+            } else
+                this.$el.find('select').material_select();
+            this.listenTo(this.model, 'change', this.setValue);
             this.listenTo(this.model, 'sync', this.renderCode);
             this.listenTo(this.model, 'invalid', this.invalid);
             this.listenTo(this.model, 'invalid', this.unrenderCode);
             this.listenTo(this.model, 'request', this.valid);
             _.bindAll(this, 'changed');
+        },
+
+        setValue: function () {
+            var attr = this.model.toJSON();
+            _.each(attr, function (num, key) {
+                var $el = this.$el.find('[name=' + key + ']');
+                if ($el.is(':checkbox'))
+                    $el.prop("checked", num);
+                else
+                    $el.val(num);
+            }, this);
+            this.$el.find('select').material_select();
         },
 
         renderCode: function () {
@@ -224,5 +248,10 @@ $(document).ready(function() {
 
     });
 
-    init();
+    var codeID = $('#сodeGeneratorForm').data('id');
+
+    if(codeID){
+        init({id: codeID});
+    } else
+        init();
 });

@@ -44,8 +44,14 @@ app.use(robots(__dirname + '/robots.txt'));
 app.use('/public',express.static(__dirname + '/public'));
 //app.use(express.errorHandler({dumpExceptions: true, showStack: true}));
 
-app.get('/module/', function(req, res) {
+app.get('/module', function(req, res) {
     res.render('index');
+});
+app.get('/module/:id', function(req, res) {
+    if (!configs[req.params.id])
+        res.redirect('/module');
+
+    res.render('index', configs[req.params.id]);
 });
 
 app.post('/api/configs', jsonParser, function(req, res) {
@@ -56,20 +62,20 @@ app.post('/api/configs', jsonParser, function(req, res) {
     res.status(201).json(data);
 });
 
-app.get('/api/configs/:id', jsonParser, function(req, res) {
-    res.json(configs[req.params.id]);
-});
+app.route('/api/configs/:id')
+    .get(jsonParser, function(req, res) {
+        res.json(configs[req.params.id]);
+    })
+    .put(jsonParser, function(req, res) {
+        var success = false;
+        if(configs[req.params.id]) {
+            configs[req.params.id] = req.body;
+            success = true;
+        }
 
-app.put('/api/configs/:id', jsonParser, function(req, res) {
-    var success = false;
-    if(configs[req.params.id]) {
-        configs[req.params.id] = req.body;
-        success = true;
-    }
-
-    //res.json(success ? 200 : 404);
-    res.status(200).json(configs[req.params.id]);
-});
+        //res.json(success ? 200 : 404);
+        res.status(200).json(configs[req.params.id]);
+    });
 
 app.get('/api/cities', function(req, res) {
     res.json(cities);

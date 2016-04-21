@@ -1,5 +1,5 @@
 <div class="row">
-    <form id="сodeGeneratorForm" method="get" action="" class="col s12">
+    <form id="сodeGeneratorForm" method="get" action="" class="col s12"data-id="{{id}}">
         <div class="row">
             <div class="input-field col s6">
                 <input id="siteUrl" name="siteUrl" type="text" class="validate" placeholder="http://yandex.ru" required>
@@ -22,7 +22,7 @@
                 <select id="style" name="style">
                     <option value="" disabled selected>Выберите опцию</option>
                     <option value="false">Из настроек сайта</option>
-                    <option value="/css/um-material.css">Material Design</option>
+                    <option value="/public/css/um-material.css">Material Design</option>
                 </select>
                 <label for="style">Стиль окна</label>
             </div>
@@ -53,7 +53,7 @@
                 <div class="switch">
                     <label>
                         Off
-                        <input type="checkbox" name="phoneVerification" checked>
+                        <input type="checkbox" name="phoneVerification">
                         <span class="lever"></span>
                         On
                     </label>
