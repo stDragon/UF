@@ -13,11 +13,11 @@ $(document).ready(function() {
         if(option)
             App.config.fetch().then(function(){
                 App.formCode = new App.Views.CodeGeneratorForm({model: App.config});
-                App.example = new App.Views.Example({model: App.config});
+                //App.example = new App.Views.Example({model: App.config});
             });
         else {
             App.formCode = new App.Views.CodeGeneratorForm({model: App.config});
-            App.example = new App.Views.Example({model: App.config});
+            //App.example = new App.Views.Example({model: App.config});
         }
     }
 

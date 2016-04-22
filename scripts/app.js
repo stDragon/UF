@@ -15,7 +15,7 @@ var UM = window.UM || {
         forms: [],
         buttons: [],
         cityCollections: [],
-        serverUrl: 'http://module.infcentre.ru'
+        serverUrl: 'http://module.infcentre.ru/um/um/umdata'
     };
 
 require('jquery.inputmask');
@@ -37,7 +37,7 @@ UM.Models.Config = Backbone.Model.extend({
     },
 
     urlRoot: function () {
-        return UM.serverUrl + '/api/configs/'
+        return UM.serverUrl + '/conf/'
     },
 
     initialize: function () {
@@ -70,7 +70,7 @@ UM.Collections.Configs = Backbone.Collection.extend({
     model: UM.Models.Config,
 
     url: function () {
-        return UM.serverUrl + '/api/cities/'
+        return UM.serverUrl + '/conf/'
     }
 });
 /**
@@ -83,7 +83,7 @@ UM.Views.Config = Backbone.View.extend({
     },
 
     getStyle: function () {
-        var style = UM.serverUrl + this.model.get('style');
+        var style = this.model.get('serverUrl') + this.model.get('style');
         return '<link rel="stylesheet" type="text/css" href="' + style + '">';
     },
 
@@ -145,7 +145,7 @@ UM.init = function (option) {
     else if (option.server == 'pre-prod')
         UM.serverUrl = 'http://localhost';
     else
-        UM.serverUrl = 'http://module.infcentre.ru';
+        UM.serverUrl = 'http://module.infcentre.ru/um/um/';
     /** создаем новую кллекцию конфигураций */
     if (!UM.configsCollection)
         UM.configsCollection = new UM.Collections.Configs;
@@ -189,7 +189,7 @@ UM.TemplateManager = {
                 };
             });
             $.ajax({
-                url: UM.serverUrl + "/public/templates/" + id + ".html",
+                url: "http://module.infcentre.ru/public/templates/" + id + ".html",
                 success: function (template) {
                     var tmpl = template;
                     that.templates[id] = tmpl;
@@ -235,7 +235,7 @@ UM.Models.User = Backbone.Model.extend({
     },
 
     urlRoot: function () {
-        return UM.serverUrl + '/api/users/'
+        return '/umclient/add/'
     },
 
     validate: function (attrs, options) {
@@ -356,8 +356,8 @@ UM.Models.Phone = Backbone.Model.extend({
         code: ''
     },
 
-    url: function () {
-        return UM.serverUrl + '/api/phone/'
+    urlRoot: function () {
+        return UM.serverUrl + '/umclient/sendcode/'
     },
 
     validate: function (attrs, options) {
@@ -398,7 +398,7 @@ UM.Collections.Citys = Backbone.Collection.extend({
     },
 
     url: function () {
-        return UM.serverUrl + '/api/cities/' + this.options.configId || ''
+        return UM.serverUrl + '/umdata/cities/' + this.options.configId || ''
     },
     /**
      * Сортирует по названию города
@@ -434,7 +434,7 @@ UM.Collections.Shops = Backbone.Collection.extend({
     },
 
     url: function () {
-        return UM.serverUrl + '/api/shops/' + this.options.configId || ''
+        return UM.serverUrl + '/umdata/shops/' + this.options.configId || ''
     },
     /**
      * Создает новый экземпляр Shops по названию города.
