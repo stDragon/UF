@@ -15,7 +15,7 @@ var UM = window.UM || {
         forms: [],
         buttons: [],
         cityCollections: [],
-        serverUrl: 'http://module.infcentre.ru/um/um/'
+        serverUrl: 'http://module.infcentre.ru/um/um'
     };
 
 require('jquery.inputmask');
@@ -83,8 +83,8 @@ UM.Views.Config = Backbone.View.extend({
     },
 
     getStyle: function () {
-        var style = this.model.get('serverUrl') + this.model.get('style');
-        return '<link rel="stylesheet" type="text/css" href="' + style + '">';
+        var style = this.model.get('style');
+        return '<link rel="stylesheet" type="text/css" href="http://module.infcentre.ru' + style + '">';
     },
 
     getYaMap: function () {

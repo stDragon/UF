@@ -78,13 +78,14 @@ $(document).ready(function() {
         },
 
         getScript: function () {
-            return '<script type="text/javascript" src="' + this.get('serverUrl') + '/public/js/marya-um.js"><\/script>' +
+            return '<script type="text/javascript" src="http://module.infcentre.ru/public/js/marya-um.js"><\/script>' +
                 '<script>UM.init(' + JSON.stringify(this.toJSON()) + ');<\/script>';
         },
 
         getShortScript: function () {
-            return '<script type="text/javascript" src="' + this.get('serverUrl') + '/public/js/marya-um.js"><\/script>' +
-                '<script>UM.init({"id": ' + this.get('id') + '});<\/script>';
+            var data = {id: this.get('id')};
+            return '<script type="text/javascript" src="http://module.infcentre.ru/public/js/marya-um.js"><\/script>' +
+                '<script>UM.init(' + JSON.stringify(data) + ');<\/script>';
         },
 
         getCode: function () {
