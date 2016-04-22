@@ -23,7 +23,7 @@ $(document).ready(function() {
 
     App.Models.Config = Backbone.Model.extend({
         defaults: {
-            serverUrl: 'http://module.infcentre.ru',
+            serverUrl: 'http://module.infcentre.ru/um/um/umdata',
             siteUrl: '',
             formType: 'calculation',
             style: '/public/css/um-material.css',
