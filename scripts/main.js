@@ -23,7 +23,7 @@ $(document).ready(function() {
 
     App.Models.Config = Backbone.Model.extend({
         defaults: {
-            serverUrl: 'http://module.infcentre.ru/um/um/umdata',
+            serverUrl: 'http://module.infcentre.ru',
             siteUrl: '',
             formType: 'calculation',
             style: '/public/css/um-material.css',
@@ -35,7 +35,7 @@ $(document).ready(function() {
         },
 
         urlRoot: function () {
-            return this.get('serverUrl') + '/api/configs/'
+            return 'http://module.infcentre.ru/um/um/conf/'
         },
 
         initialize: function () {
