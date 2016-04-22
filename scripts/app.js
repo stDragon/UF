@@ -15,7 +15,7 @@ var UM = window.UM || {
         forms: [],
         buttons: [],
         cityCollections: [],
-        serverUrl: 'http://module.infcentre.ru/um/um/umdata'
+        serverUrl: 'http://module.infcentre.ru/um/um/'
     };
 
 require('jquery.inputmask');
@@ -145,7 +145,7 @@ UM.init = function (option) {
     else if (option.server == 'pre-prod')
         UM.serverUrl = 'http://localhost';
     else
-        UM.serverUrl = 'http://module.infcentre.ru/um/um/';
+        UM.serverUrl = 'http://module.infcentre.ru/um/um';
     /** создаем новую кллекцию конфигураций */
     if (!UM.configsCollection)
         UM.configsCollection = new UM.Collections.Configs;
