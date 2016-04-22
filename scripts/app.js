@@ -6,12 +6,17 @@ window._ = window._ || _;
 window.Backbone = window.Backbone || Backbone;
 
 var UM = window.UM || {
-    Models: {},
-    Collections: {},
-    Views: {},
-    Router: {},
-    option: []
-};
+        Models: {},
+        Collections: {},
+        Views: {},
+        Router: {},
+        option: [],
+        pages: [],
+        forms: [],
+        buttons: [],
+        cityCollections: [],
+        serverUrl: 'http://module.infcentre.ru'
+    };
 
 require('jquery.inputmask');
 require('./Backbone.Ymaps.js');
@@ -32,10 +37,14 @@ UM.Models.Config = Backbone.Model.extend({
     },
 
     urlRoot: function () {
-        return this.get('serverUrl') + '/api/configs/'
+        return UM.serverUrl + '/api/configs/'
     },
 
     initialize: function () {
+        var model = this;
+        this.fetch().then(function () {
+            new UM.Views.Config({model: model});
+        }, model);
         this.on('sync', this.checkConfig, this);
     },
 
@@ -55,6 +64,16 @@ UM.Models.Config = Backbone.Model.extend({
     }
 });
 /**
+ *  Коллекция конфигураций
+ *  */
+UM.Collections.Configs = Backbone.Collection.extend({
+    model: UM.Models.Config,
+
+    url: function () {
+        return UM.serverUrl + '/api/cities/'
+    }
+});
+/**
  *  Подгружает необходимые стили и скрипты
  *  */
 UM.Views.Config = Backbone.View.extend({
@@ -64,7 +83,7 @@ UM.Views.Config = Backbone.View.extend({
     },
 
     getStyle: function () {
-        var style = this.model.get('serverUrl') + this.model.get('style');
+        var style = UM.serverUrl + this.model.get('style');
         return '<link rel="stylesheet" type="text/css" href="' + style + '">';
     },
 
@@ -89,26 +108,30 @@ UM.Views.Config = Backbone.View.extend({
     initBody: function () {
         var $body = $('body');
 
-        UM.page = new UM.Views.Page({model: this.model});
+        this.page = new UM.Views.Page({model: this.model});
 
         if (this.model.get('initType') == 'button') {
 
             if (this.model.get('initPosition') == 'fixed') {
-                UM.button = new UM.Views.ButtonFixed();
-                $body.append(UM.button.el);
+                this.button = new UM.Views.ButtonFixed({model: this.model});
+                $body.append(this.button.el);
             } else if (this.model.get('initPosition') == 'static')
-                UM.button = new UM.Views.ButtonStatic();
+                this.button = new UM.Views.ButtonStatic({model: this.model});
 
-            $body.append(UM.page.el);
-            UM.page.hide();
+            UM.buttons[this.model.id] = this.button;
+
+            $body.append(this.page.el);
+            this.page.hide();
 
         } else if (this.model.get('initType') == 'form') {
 
-            if (this.model.get('initPosition')  == 'fixed') {
-                $body.append(UM.page.el);
-            }  else if (this.model.get('initPosition') == 'static')
-                $('#um-form-init').append(UM.page.el);
+            if (this.model.get('initPosition') == 'fixed') {
+                $body.append(this.page.el);
+            } else if (this.model.get('initPosition') == 'static')
+                $('#um-form-init').append(this.page.el);
         }
+
+        UM.pages[this.model.id] = this.page;
     }
 });
 /**
@@ -116,11 +139,18 @@ UM.Views.Config = Backbone.View.extend({
  *  @param  {string} option - Опции для инициализации модуля.
  *  */
 UM.init = function (option) {
-    this.option.push(option);
-    UM.config = new UM.Models.Config(option);
-    UM.config.fetch().then(function(){
-        UM.configView = new UM.Views.Config({model: UM.config});
-    });
+    UM.option.push(option);
+    if (option.server == 'dev')
+        UM.serverUrl = 'http://localhost';
+    else if (option.server == 'pre-prod')
+        UM.serverUrl = 'http://localhost';
+    else
+        UM.serverUrl = 'http://module.infcentre.ru';
+    /** создаем новую кллекцию конфигураций */
+    if (!UM.configsCollection)
+        UM.configsCollection = new UM.Collections.Configs;
+
+    UM.configsCollection.add(option);
 };
 
 /**
@@ -159,7 +189,7 @@ UM.TemplateManager = {
                 };
             });
             $.ajax({
-                url: UM.config.get('serverUrl') + "/public/templates/" + id + ".html",
+                url: UM.serverUrl + "/public/templates/" + id + ".html",
                 success: function (template) {
                     var tmpl = template;
                     that.templates[id] = tmpl;
@@ -205,7 +235,7 @@ UM.Models.User = Backbone.Model.extend({
     },
 
     urlRoot: function () {
-        return UM.config.get('serverUrl') + '/api/users/'
+        return UM.serverUrl + '/api/users/'
     },
 
     validate: function (attrs, options) {
@@ -269,7 +299,9 @@ UM.Models.User = Backbone.Model.extend({
     },
 
     initialize: function () {
-        this.on('change', this.log, this);
+        if (this.get('debugger'))
+            this.on('change', this.log, this);
+
         UM.vent.on('user:setCity', this.setCity, this);
         UM.vent.on('user:setShop', this.setShop, this);
     },
@@ -325,7 +357,7 @@ UM.Models.Phone = Backbone.Model.extend({
     },
 
     url: function () {
-        return UM.config.get('serverUrl') + '/api/phone/'
+        return UM.serverUrl + '/api/phone/'
     },
 
     validate: function (attrs, options) {
@@ -355,19 +387,33 @@ UM.Models.Modal = Backbone.Model.extend({
 UM.Collections.Citys = Backbone.Collection.extend({
     model: UM.Models.City,
 
-    initialize: function(models, options) {
-        if(options)
+    initialize: function (models, options) {
+        if (options)
             this.options = options;
+
+        /** связываем поле с формой */
+        this.form = UM.forms[this.options.configId];
+
+        this.listenTo(this.form, 'change', this.unsetActive);
     },
 
-    url: function() {
-        return UM.config.get('serverUrl') + '/api/cities/' + this.options.configId || ''
+    url: function () {
+        return UM.serverUrl + '/api/cities/' + this.options.configId || ''
     },
     /**
      * Сортирует по названию города
      * */
     comparator: function (model) {
         return model.get('name');
+    },
+
+    unsetActive: function (form) {
+        var active = form.get('city');
+        this.each(function (model) {
+            if (model.get('name') != active) {
+                model.set('active', false);
+            }
+        }, this);
     }
 });
 /**
@@ -377,13 +423,18 @@ UM.Collections.Citys = Backbone.Collection.extend({
 UM.Collections.Shops = Backbone.Collection.extend({
     model: UM.Models.Shop,
 
-    initialize: function(models, options) {
-        if(options)
+    initialize: function (models, options) {
+        if (options)
             this.options = options;
+
+        /** связываем поле с формой */
+        this.form = UM.forms[this.options.configId];
+
+        this.listenTo(this.form, 'change', this.unsetActive)
     },
 
-    url: function() {
-        return UM.config.get('serverUrl') + '/api/shops/' + this.options.configId || ''
+    url: function () {
+        return UM.serverUrl + '/api/shops/' + this.options.configId || ''
     },
     /**
      * Создает новый экземпляр Shops по названию города.
@@ -394,7 +445,7 @@ UM.Collections.Shops = Backbone.Collection.extend({
         var filtered = this.filter(function (model) {
             return model.get("city") === city;
         });
-        return new UM.Collections.Shops(filtered);
+        return new UM.Collections.Shops(filtered, this.options);
     },
     /**
      * Создает новый экземпляр Shops по названию города содержащих координаты для карты.
@@ -405,7 +456,16 @@ UM.Collections.Shops = Backbone.Collection.extend({
         var filtered = this.filter(function (model) {
             return model.get("city") === city && model.get("lat") && model.get("lat");
         });
-        return new UM.Collections.Shops(filtered);
+        return new UM.Collections.Shops(filtered, this.options);
+    },
+
+    unsetActive: function (form) {
+        var active = form.get('city');
+        this.each(function (model) {
+            if (model.get('name') + ', ' + model.get('address') != active) {
+                model.set('active', false);
+            }
+        }, this);
     }
 });
 /**
@@ -449,19 +509,19 @@ UM.Views.UserPhoneForm = Backbone.View.extend({
         this.listenTo(this.model, 'change', this.setValue);
         this.listenTo(this.model, 'invalid', this.invalid);
         this.listenTo(this.model, 'request', function () {
-            UM.vent.trigger('page:showLoader');
+            UM.vent.trigger('page:showLoader', this.model.get('configId'));
             this.valid();
             this.disabledSubmit();
         });
         this.listenTo(this.model, 'sync', function () {
-            UM.vent.trigger('page:hideLoader');
+            UM.vent.trigger('page:hideLoader', this.model.get('configId'));
             this.confirm();
         });
         this.listenTo(this.model, 'error', function (obj, name, callback) {
-            UM.vent.trigger('page:hideLoader');
+            UM.vent.trigger('page:hideLoader', this.model.get('configId'));
             this.enabledSubmit();
             this.error(obj, name, callback);
-        },this);
+        }, this);
     },
 
     render: function () {
@@ -514,7 +574,7 @@ UM.Views.UserPhoneForm = Backbone.View.extend({
         e.preventDefault();
 
         var data = {};
-        this.$el.find('.um-form-control').each(function(){
+        this.$el.find('.um-form-control').each(function () {
             data[this.name] = $(this).val();
         });
 
@@ -523,7 +583,7 @@ UM.Views.UserPhoneForm = Backbone.View.extend({
 
     confirm: function () {
         if (this.model.get('confirm')) {
-            UM.vent.trigger('page:showConfirm');
+            UM.vent.trigger('page:showConfirm', this.model.get('configId'));
         } else {
             throw new Error("Сервер прислал некоректное значение confirm:'" + this.model.get('confirm'));
         }
@@ -541,7 +601,7 @@ UM.Views.UserPhoneForm = Backbone.View.extend({
 /**
  *  Форма заявки на просчет
  *  */
-UM.Views.СalculationForm = Backbone.View.extend({
+UM.Views.CalculationForm = Backbone.View.extend({
 
     tagName: 'form',
     className: 'um-form',
@@ -562,7 +622,7 @@ UM.Views.СalculationForm = Backbone.View.extend({
 
     initialize: function () {
         UM.cityCollection = new UM.Collections.Citys([], this.model.toJSON());
-        UM.cityCollection.fetch().then(function(){
+        UM.cityCollection.fetch().then(function () {
             UM.cityCollectionView = new UM.Views.Citys({collection: UM.cityCollection});
         });
 
@@ -572,21 +632,21 @@ UM.Views.СalculationForm = Backbone.View.extend({
         this.render();
 
         this.model.on('change', this.setValue, this);
-        if (UM.config.get('showShop')) {
+        if (UM.configsCollection.get(this.model.get('configId')).get('showShop')) {
             this.createYaMapModal();
             this.model.on('change', this.createSelectShop, this);
         }
         this.listenTo(this.model, 'request', function () {
-            UM.vent.trigger('page:showLoader');
+            UM.vent.trigger('page:showLoader', this.model.get('configId'));
             this.valid();
             this.disabledSubmit();
         });
         this.listenTo(this.model, 'sync', function () {
-            UM.vent.trigger('page:hideLoader');
-            UM.vent.trigger('page:showPhoneForm');
+            UM.vent.trigger('page:hideLoader', this.model.get('configId'));
+            UM.vent.trigger('page:showPhoneForm', this.model.get('configId'));
         });
         this.listenTo(this.model, 'error', function () {
-            UM.vent.trigger('page:hideLoader');
+            UM.vent.trigger('page:hideLoader', this.model.get('configId'));
             this.enabledSubmit();
         });
         this.listenTo(this.model, 'invalid', this.invalid);
@@ -602,11 +662,11 @@ UM.Views.СalculationForm = Backbone.View.extend({
         if (!$el.length)
             this.$el.find('[name=city]').before(UM.cityCollectionView.el);
         else
-            UM.vent.trigger('cityList:show');
+            UM.cityCollectionView.show();
     },
 
     hideSelectCity: function () {
-        UM.vent.trigger('cityList:hide');
+        UM.cityCollectionView.hidden();
     },
 
     createSelectShop: function () {
@@ -618,7 +678,7 @@ UM.Views.СalculationForm = Backbone.View.extend({
 
             if (city && UM.cityCollection.findWhere({'name': city}).get('showShop')) {
                 this.addSelectShop(city);
-                if (UM.config.get('showShop')) {
+                if (UM.configsCollection.get(this.model.get('configId')).get('showShop')) {
                     this.createYaMap();
                 }
             } else {
@@ -653,18 +713,18 @@ UM.Views.СalculationForm = Backbone.View.extend({
     },
 
     showSelectShop: function () {
-        UM.vent.trigger('shopList:show');
+        UM.vent.trigger('shopList:show', this.model.toJSON());
     },
 
     hideSelectShop: function () {
-        UM.vent.trigger('shopList:hide');
+        UM.vent.trigger('shopList:hide', this.model.toJSON());
     },
 
     render: function () {
         var that = this;
         UM.TemplateManager.get(this.template, function (template) {
             var temp = _.template(template);
-            var data = _.extend(that.model.toJSON(), UM.config.toJSON());
+            var data = _.extend(that.model.toJSON(), UM.configsCollection.get(that.model.get('configId')).toJSON());
             var html = $(temp(data));
             that.$el.html(html);
         });
@@ -688,9 +748,9 @@ UM.Views.СalculationForm = Backbone.View.extend({
     /**
      * Сохраняет все поля в модель.
      */
-    setAttrs: function() {
+    setAttrs: function () {
         var data = {};
-        this.$el.find('.um-form-control').each(function(){
+        this.$el.find('.um-form-control').each(function () {
             data[this.name] = $(this).val();
         });
 
@@ -703,7 +763,7 @@ UM.Views.СalculationForm = Backbone.View.extend({
         e.preventDefault();
 
         var data = {};
-        this.$el.find('.um-form-control').each(function(){
+        this.$el.find('.um-form-control').each(function () {
             data[this.name] = $(this).val();
         });
 
@@ -831,15 +891,17 @@ UM.Views.СalculationForm = Backbone.View.extend({
     },
 
     removeYaMap: function () {
-        UM.map.destroy();
-        UM.mapShopCollection.reset();
-        UM.mapShopCollectionView.destroy();
+        if(UM.map) {
+            UM.map.destroy();
+            UM.mapShopCollection.reset();
+            UM.mapShopCollectionView.destroy();
+        }
     },
 
     showYaMap: function () {
         if (UM.mapShopCollectionView) {
             $('.um-modal').removeClass('um-hidden');
-            UM.vent.trigger('shopList:hide');
+            UM.vent.trigger('shopList:hide', this.options.configId);
         }
     },
 
@@ -939,9 +1001,7 @@ UM.Views.City = Backbone.View.extend({
     },
 
     active: function () {
-        if (this.model.get('active'))
-            UM.vent.trigger('cityList:hide');
-        else {
+        if (!this.model.get('active')) {
             this.model.set('active', true);
             UM.vent.trigger('user:setCity', this.model.get('name'));
         }
@@ -954,11 +1014,12 @@ UM.Views.Citys = Backbone.View.extend({
 
     tagName: 'ul',
     className: 'um-dropdown-content um-city-list',
+    events: {
+        'click li': 'hidden'
+    },
 
     initialize: function () {
         this.render();
-        UM.vent.on('cityList:show', this.show, this);
-        UM.vent.on('cityList:hide', this.hidden, this);
         this.collection.on('change', this.hidden, this);
         this.collection.on('sync', this.render, this);
     },
@@ -977,16 +1038,7 @@ UM.Views.Citys = Backbone.View.extend({
     },
 
     show: function () {
-        this.unsetActive(UM.user.get('city'));
         this.$el.removeClass('um-hidden');
-    },
-
-    unsetActive: function (active) {
-        this.collection.each(function (model) {
-            if (model.get('name') != active) {
-                model.set('active', false);
-            }
-        }, this);
     }
 });
 
@@ -1019,7 +1071,7 @@ UM.Views.Shop = Backbone.View.extend({
 
     active: function () {
         if (this.model.get('active'))
-            UM.vent.trigger('shopList:hide');
+            UM.vent.trigger('shopList:hide', this.options.configId);
         else {
             this.model.set('active', true);
 
@@ -1040,8 +1092,14 @@ UM.Views.Shops = Backbone.View.extend({
 
     initialize: function () {
         this.render();
-        UM.vent.on('shopList:show', this.show, this);
-        UM.vent.on('shopList:hide', this.hidden, this);
+        UM.vent.on('shopList:show', function (options) {
+            if (this.collection.options.configId == options.configId)
+                this.show();
+        }, this);
+        UM.vent.on('shopList:hide', function (options) {
+            if (this.collection.options.configId == options.configId)
+                this.hidden();
+        }, this);
         this.collection.on('change', this.hidden, this);
     },
 
@@ -1059,16 +1117,7 @@ UM.Views.Shops = Backbone.View.extend({
     },
 
     show: function () {
-        this.unsetActive(UM.user.get('shop'));
         this.$el.removeClass('um-hidden');
-    },
-
-    unsetActive: function (active) {
-        this.collection.each(function (model) {
-            if (model.get('name') + ', ' + model.get('address') != active) {
-                model.set('active', false);
-            }
-        }, this);
     }
 });
 /**
@@ -1090,25 +1139,33 @@ UM.Views.Page = Backbone.View.extend({
 
         this.render(this.showStartForm());
 
-        UM.vent.on('page:show', this.show, this);
-
-        UM.vent.on('page:showLoader', function () {
-            this.render(this.showLoader());
+        UM.vent.on('page:show', function (id) {
+            if (id == this.model.id)
+                this.show();
         }, this);
 
-        UM.vent.on('page:hideLoader', function () {
-            this.render(this.hideLoader());
+        UM.vent.on('page:showLoader', function (id) {
+            if (id == this.model.id)
+                this.render(this.showLoader());
         }, this);
 
-        UM.vent.on('page:showPhoneForm', function () {
-            if (this.model.get('phoneVerification') === true)
-                this.render(this.showPhoneForm());
-            else
+        UM.vent.on('page:hideLoader', function (id) {
+            if (id == this.model.id)
+                this.render(this.hideLoader());
+        }, this);
+
+        UM.vent.on('page:showPhoneForm', function (id) {
+            if (id == this.model.id) {
+                if (this.model.get('phoneVerification') === true)
+                    this.render(this.showPhoneForm());
+                else
+                    this.render(this.showConfirm());
+            }
+        }, this);
+
+        UM.vent.on('page:showConfirm', function (id) {
+            if (id == this.model.id)
                 this.render(this.showConfirm());
-        }, this);
-
-        UM.vent.on('page:showConfirm', function () {
-            this.render(this.showConfirm());
         }, this);
 
         this.listenTo(this.model, 'destroy', this.unrender);
@@ -1119,8 +1176,8 @@ UM.Views.Page = Backbone.View.extend({
         if (this.model.get('initType') == 'button' || this.model.get('initPosition') == 'fixed') {
             var close =
                 '<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24" class="um-close">' +
-                    '<path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>' +
-                    '<path d="M0 0h24v24H0z" fill="none"/>' +
+                '<path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>' +
+                '<path d="M0 0h24v24H0z" fill="none"/>' +
                 '</svg>';
         }
         this.$el.html(form);
@@ -1128,7 +1185,7 @@ UM.Views.Page = Backbone.View.extend({
         return this;
     },
 
-    unrender: function() {
+    unrender: function () {
         this.remove(); // this.$el.remove()
     },
 
@@ -1139,28 +1196,28 @@ UM.Views.Page = Backbone.View.extend({
     hide: function () {
         this.$el.addClass('um-hidden');
         if (this.model.get('initType') == 'button') {
-            UM.vent.trigger('button:show');
+            UM.vent.trigger('button:show', this.model.id);
         }
     },
 
     /** Добавление прелоудера для обмена данными с сервером */
     initLoader: function () {
-        UM.laoder = new UM.Views.Loader();
-        this.$el.prepend(UM.laoder.el);
+        this.laoder = new UM.Views.Loader();
+        this.$el.prepend(this.laoder.el);
     },
 
     showLoader: function () {
-        if (!UM.laoder) {
+        if (!this.laoder) {
             this.initLoader();
         }
-        UM.laoder.show();
+        this.laoder.show();
     },
 
     hideLoader: function () {
-        if (!UM.laoder) {
+        if (!this.laoder) {
             this.initLoader();
         }
-        UM.laoder.hide();
+        this.laoder.hide();
     },
 
     /**
@@ -1168,9 +1225,12 @@ UM.Views.Page = Backbone.View.extend({
      * */
     showStartForm: function () {
         if (this.model.get('formType') == 'calculation') {
-            UM.user = new UM.Models.User({configId: this.model.get('id')});
-            UM.сalculationFormView = new UM.Views.СalculationForm({model: UM.user});
-            return UM.сalculationFormView.el;
+
+            this.form = new UM.Models.User({configId: this.model.id});
+            UM.forms[this.model.id] = this.form;
+            this.formView = new UM.Views.CalculationForm({model: this.form});
+
+            return this.formView.el;
         } else {
             throw new Error("Тип заявки '" + this.model.get('formType') + "' не поддерживается или не корректен");
         }
@@ -1179,17 +1239,17 @@ UM.Views.Page = Backbone.View.extend({
      * Рендер формы подтверждения телефона
      * */
     showPhoneForm: function () {
-        var phone = UM.user.get('phone');
-        UM.phone = new UM.Models.Phone({phone: phone});
-        UM.phoneView = new UM.Views.UserPhoneForm({model: UM.phone});
-        return UM.phoneView.el;
+        var phone = this.form.get('phone');
+        this.phone = new UM.Models.Phone({phone: phone, configId: this.model.id});
+        this.phoneView = new UM.Views.UserPhoneForm({model: this.phone});
+        return this.phoneView.el;
     },
     /**
-     * Рендер сообщения ою оформлении заявки
+     * Рендер сообщения об оформлении заявки
      * */
     showConfirm: function () {
-        UM.confirmView = new UM.Views.Confirm();
-        return UM.confirmView.el;
+        this.confirmView = new UM.Views.Confirm();
+        return this.confirmView.el;
     }
 });
 /**
@@ -1198,17 +1258,17 @@ UM.Views.Page = Backbone.View.extend({
 UM.Views.Button = Backbone.View.extend({
     events: {
         'click': 'clicked'
+    },
+
+    clicked: function () {
+        UM.vent.trigger('page:show', this.model.id);
     }
 });
 /**
  *  Кнопка связанная со статиным DOM элементом
  *  */
 UM.Views.ButtonStatic = UM.Views.Button.extend({
-    el: $('#um-btn-init'),
-
-    clicked: function () {
-        UM.vent.trigger('page:show');
-    }
+    el: $('#um-btn-init')
 });
 /**
  *  Кнопка фиксированная относительно окна браузера
@@ -1219,7 +1279,10 @@ UM.Views.ButtonFixed = UM.Views.Button.extend({
 
     initialize: function () {
         this.render();
-        UM.vent.on('button:show', this.show, this);
+        UM.vent.on('button:show', function (id) {
+            if (id == this.model.id)
+                this.show();
+        }, this);
     },
 
     render: function () {
@@ -1227,7 +1290,7 @@ UM.Views.ButtonFixed = UM.Views.Button.extend({
         return this;
     },
 
-    unrender: function() {
+    unrender: function () {
         this.remove(); // this.$el.remove()
     },
 
@@ -1240,7 +1303,7 @@ UM.Views.ButtonFixed = UM.Views.Button.extend({
     },
 
     clicked: function () {
-        UM.vent.trigger('page:show');
+        UM.vent.trigger('page:show', this.model.id);
         this.hide();
     }
 });
