@@ -26,7 +26,7 @@ var configs = tmp.tmpDb.configs;
 
 var jsonParser = bodyParser.json();
 
-app.use(function(req, res, next) {
+app.all('*', function(req, res, next) {
     var serverName = '*';
     if(req.headers.origin) {
         serverName = req.headers.origin;
@@ -48,10 +48,10 @@ app.get('/module', function(req, res) {
     res.render('index');
 });
 app.get('/module/:id', function(req, res) {
-    if (!configs[req.params.id])
-        res.redirect('/module');
+    //if (!configs[req.params.id])
+    //    res.redirect('/module');
 
-    res.render('index', configs[req.params.id]);
+    res.render(req.params.id, {layout: false});
 });
 
 app.post('/api/configs', jsonParser, function(req, res) {

@@ -189,7 +189,7 @@ UM.TemplateManager = {
                 };
             });
             $.ajax({
-                url: "http://module.infcentre.ru/public/templates/" + id + ".html",
+                url: "http://module.infcentre.ru/module/" + id,
                 success: function (template) {
                     var tmpl = template;
                     that.templates[id] = tmpl;
@@ -235,7 +235,7 @@ UM.Models.User = Backbone.Model.extend({
     },
 
     urlRoot: function () {
-        return '/umclient/add/'
+        return UM.serverUrl + '/umclient/add/'
     },
 
     validate: function (attrs, options) {
