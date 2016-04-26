@@ -93,6 +93,7 @@ initType          | string         | "button"                      | тип от
 initPosition      | string         | "fixed"                       | расположение формы или кнопки
 showMap           | boolean        | false                         | есть ли возможность выбора студий в модальном окне карты
 showShop          | boolean        | false                         | показывать ли select с выбором студий
+showHeader        | boolean        | false                         | показывать ли заголовок
 phoneVerification | boolean        | true                          | показывать ли окно подтверждения по смс
 
 ### City

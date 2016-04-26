@@ -29,6 +29,7 @@ $(document).ready(function() {
             style: '/public/css/um-material.css',
             initType: 'button',
             initPosition: 'fixed',
+            showHeader: false,
             showMap: false,
             showShop: false,
             phoneVerification: true
