@@ -1,0 +1,161 @@
+@import 'base';
+@import 'tooltip';
+@import 'modal';
+
+$main-color: #e11a33;
+
+.um {
+  max-width: 980px;
+  padding: 0 25px;
+  margin: 0 auto;
+}
+.um-form {
+  text-align: center;
+  legend {
+    width: 100%;
+    border: 0;
+    padding: 0 0 15px;
+    font-size: 18px;
+    line-height: 30px;
+    font-family: 'Schlange', sans-serif;
+    color: $main-color;
+  }
+  .um-login{
+    margin-left: -5px;
+    margin-right: -5px;
+    padding-top: 5px;
+  }
+  .um-form-group {
+    width: 25%;
+    float: left;
+    padding: 0 5px;
+    .um-dropdown-content {
+      left: 5px;
+      width: calc(100% - 10px);
+      border: 1px solid #e8e8e8;
+    }
+    .um-tooltip{
+      left: 5px;
+      width: calc(100% - 10px);
+      background: transparent;
+      color: $main-color;
+    }
+    &.um-has-error {
+      .um-form-control {
+        border-color: $main-color;
+      }
+    }
+  }
+  .um-form-control {
+    width: 100%;
+    height: 30px;
+    border-radius: 2px;
+    padding: 4px 6px;
+    border: 1px solid #e8e8e8;
+    background: #f3f3f3;
+    color: #444444;
+    -webkit-transition: all linear 0.2s;
+    transition: all linear 0.2s;
+    -webkit-appearance: none;
+  }
+  .um-form-group:first-child {
+    display: none;
+  }
+  .um-form-group:last-child {
+    width: 100%;
+  }
+
+  textarea.um-form-control {
+    height: 35px;
+    margin-top: 15px;
+    overflow: auto;
+    vertical-align: top;
+    text-align: center;
+
+    border: 1px transparent dashed;
+    background: none !important;
+    &:focus {
+      height: auto;
+      cursor: text;
+
+      outline: 0;
+      color: #444444;
+      border-color: #e8e8e8;
+    }
+  }
+  .um-btn {
+    margin-top: 15px;
+    -webkit-appearance: none;
+    border: none;
+    font: inherit;
+    color: #ffffff;
+    text-transform: none;
+    display: inline-block;
+    box-sizing: border-box;
+    padding: 0 45px 0 21px;
+    background-color: $main-color;
+    vertical-align: middle;
+    line-height: 35px;
+    min-height: 35px;
+    font-size: 17px;
+    font-family: 'Schlange', sans-serif;
+    text-decoration: none!important;
+    text-align: center;
+    border-radius: 25px;
+    position: relative;
+    overflow: hidden;
+    z-index: 10;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.26) inset;
+    -webkit-transition: background .7s ease;
+    -moz-transition: background .7s ease;
+    -ms-transition: background .7s ease;
+    -o-transition: background .7s ease;
+    transition: background .7s ease;
+    &::after {
+      content: '';
+      position: absolute;
+      z-index: -1;
+      top: -70%;
+      height: 400%;
+      width: 300%;
+      left: -230%;
+      background: #ca172e;
+      -webkit-transition: transform .5s ease;
+      -moz-transition: transform .5s ease;
+      -ms-transition: transform .5s ease;
+      -o-transition: transform .5s ease;
+      transition: transform .5s ease;
+      -webkit-transform: rotate(45deg);
+      -moz-transform: rotate(45deg);
+      -ms-transform: rotate(45deg);
+      -o-transform: rotate(45deg);
+      transform: rotate(45deg);
+    }
+    &::before {
+      position: absolute;
+      top: 5px;
+      right: 0;
+      width: 35px;
+      height: 35px;
+      line-height: 35px;
+      content: url(data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTYuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgd2lkdGg9IjI0cHgiIGhlaWdodD0iMjRweCIgdmlld0JveD0iMCAwIDQzOC41MzMgNDM4LjUzMyIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgNDM4LjUzMyA0MzguNTMzOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+CjxnPgoJPHBhdGggZD0iTTQwOS4xMzMsMTA5LjIwM2MtMTkuNjA4LTMzLjU5Mi00Ni4yMDUtNjAuMTg5LTc5Ljc5OC03OS43OTZDMjk1LjczNiw5LjgwMSwyNTkuMDU4LDAsMjE5LjI3MywwICAgYy0zOS43ODEsMC03Ni40Nyw5LjgwMS0xMTAuMDYzLDI5LjQwN2MtMzMuNTk1LDE5LjYwNC02MC4xOTIsNDYuMjAxLTc5LjgsNzkuNzk2QzkuODAxLDE0Mi44LDAsMTc5LjQ4OSwwLDIxOS4yNjcgICBjMCwzOS43OCw5LjgwNCw3Ni40NjMsMjkuNDA3LDExMC4wNjJjMTkuNjA3LDMzLjU5Miw0Ni4yMDQsNjAuMTg5LDc5Ljc5OSw3OS43OThjMzMuNTk3LDE5LjYwNSw3MC4yODMsMjkuNDA3LDExMC4wNjMsMjkuNDA3ICAgczc2LjQ3LTkuODAyLDExMC4wNjUtMjkuNDA3YzMzLjU5My0xOS42MDIsNjAuMTg5LTQ2LjIwNiw3OS43OTUtNzkuNzk4YzE5LjYwMy0zMy41OTYsMjkuNDAzLTcwLjI4NCwyOS40MDMtMTEwLjA2MiAgIEM0MzguNTMzLDE3OS40ODUsNDI4LjczMiwxNDIuNzk1LDQwOS4xMzMsMTA5LjIwM3ogTTM2MS43MzMsMjMyLjExMWwtMjUuOTc4LDI1Ljk4MWwtMTAzLjM1LDEwMy4zNDkgICBjLTMuNDMzLDMuNDMtNy43MTQsNS4xNDctMTIuODUyLDUuMTQ3Yy01LjEzNywwLTkuNDE5LTEuNzE4LTEyLjg0Ny01LjE0N2wtMjUuOTgxLTI1Ljk4Yy0zLjYxNi0zLjYwNy01LjQyNC03Ljg5OC01LjQyNC0xMi44NDcgICBjMC00Ljk0MiwxLjgwOS05LjIyNyw1LjQyNC0xMi44NDdsNTMuOTYyLTUzLjk1NEg5MS4zNjNjLTQuOTQ4LDAtOS4yMjktMS44MTMtMTIuODQ3LTUuNDI4Yy0zLjYxNS0zLjYxMy01LjQyNC03Ljg5OC01LjQyNC0xMi44NDcgICB2LTM2LjU0N2MwLTQuOTQ4LDEuODA5LTkuMjMxLDUuNDI0LTEyLjg0N2MzLjYxNy0zLjYxNyw3Ljg5OC01LjQyNiwxMi44NDctNS40MjZoMTQzLjMyNWwtNTMuOTYyLTUzLjk1OSAgIGMtMy40MjgtMy40MjgtNS4xNC03LjcwOC01LjE0LTEyLjg0N2MwLTUuMTQxLDEuNzEyLTkuNDIsNS4xNC0xMi44NTFsMjUuOTgxLTI1Ljk4MWMzLjQyNy0zLjQyNSw3LjcxLTUuMTM3LDEyLjg0Ny01LjEzNyAgIGM1LjE0NSwwLDkuNDE5LDEuNzExLDEyLjg1Miw1LjEzN2wxMDMuMzUsMTAzLjM1NmwyNS45NzgsMjUuOTgxYzMuNDMyLDMuNDI3LDUuMTQ0LDcuNzA3LDUuMTQ0LDEyLjg0NyAgIEMzNjYuODc3LDIyNC40MDQsMzY1LjE2NSwyMjguNjg2LDM2MS43MzMsMjMyLjExMXoiIGZpbGw9IiNGRkZGRkYiLz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8L3N2Zz4K)
+    }
+    //&::before {
+    //  color: white;
+    //  text-align: center;
+    //  font-family: FontAwesome;
+    //  font-size: 30px;
+    //  content: "\f0a9";
+    //}
+    &:hover {
+      background-color: #ca172e;
+      &::after {
+        -webkit-transform: translate3d(110%,0,0) rotate(45deg);
+        -moz-transform: translate3d(110%,0,0) rotate(45deg);
+        -ms-transform: translate3d(110%,0,0) rotate(45deg);
+        -o-transform: translate3d(110%,0,0) rotate(45deg);
+        transform: translate3d(110%,0,0) rotate(45deg);
+      }
+    }
+  }
+}

@@ -34,17 +34,17 @@ module.exports = Backbone.Model.extend({
                 attr: 'firstName'
             });
         }
-        if (!attrs.surname) {
-            errors.push({
-                text: "Вы не заполнили фамилию",
-                attr: 'surname'
-            });
-        } else if (!lettersFilter.test(attrs.surname)) {
-            errors.push({
-                text: "Фамилия должна содержать только буквы",
-                attr: 'surname'
-            });
-        }
+        //if (!attrs.surname) {
+        //    errors.push({
+        //        text: "Вы не заполнили фамилию",
+        //        attr: 'surname'
+        //    });
+        //} else if (!lettersFilter.test(attrs.surname)) {
+        //    errors.push({
+        //        text: "Фамилия должна содержать только буквы",
+        //        attr: 'surname'
+        //    });
+        //}
         if (!attrs.email) {
             errors.push({
                 text: "Вы не заполнили электронную почту",

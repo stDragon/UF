@@ -1,29 +1,31 @@
-<%if(showHeader){%>
-    <p class="um-title">Легко!</p>
-    <p class="um-title-2">Бесплатный дизайн-проект в&nbsp;три&nbsp;клика</p>
-<%}%>
 <fieldset class="um-login">
-    <div class="um-form-group">
+    <%if(showHeader){%>
+        <legend>
+            <span class="um-title">Легко!</span>
+            <span class="um-title-2">Бесплатный дизайн-проект в&nbsp;три&nbsp;клика</span>
+        </legend>
+    <%}%>
+    <div class="um-form-group um-form-group-surname">
         <label class="um-sr-only" for="umSurname">Фамилия</label>
-        <input type="text" name="surname" class="um-form-control" id="umSurname" placeholder="Фамилия" value="<%= surname %>">
+        <input type="text" name="surname" class="um-form-control" id="umSurname" placeholder="Ваша фамилия" value="<%= surname %>">
     </div>
-    <div class="um-form-group">
+    <div class="um-form-group um-form-group-firstname">
         <label class="um-sr-only" for="umFirstname">Имя</label>
-        <input type="text" name="firstName" class="um-form-control" id="umFirstname" placeholder="Имя" value="<%= firstName %>">
+        <input type="text" name="firstName" class="um-form-control" id="umFirstname" placeholder="Ваше имя" value="<%= firstName %>">
     </div>
-    <div class="um-form-group">
+    <div class="um-form-group um-form-group-email">
         <label class="um-sr-only" for="umEmail">E-mail</label>
-        <input type="email" name="email" class="um-form-control" id="umEmail" placeholder="E-mail" value="<%= email %>">
+        <input type="email" name="email" class="um-form-control" id="umEmail" placeholder="Ваш E-mail" value="<%= email %>">
     </div>
-    <div class="um-form-group">
+    <div class="um-form-group um-form-group-phone">
         <label class="um-sr-only" for="umPhone">Телефон</label>
-        <input type="text" name="phone" class="um-form-control" id="umPhone" placeholder="Телефон" value="<%= phone %>">
+        <input type="text" name="phone" class="um-form-control" id="umPhone" placeholder="Номер телефона" value="<%= phone %>">
     </div>
-    <div class="um-form-group">
+    <div class="um-form-group um-form-group-city">
         <label class="um-sr-only" for="umCity">Город</label>
         <input type="text" name="city" class="um-form-control" id="umCity" placeholder="Город" value="<%= city %>">
     </div>
-    <div class="um-form-group um-hidden">
+    <div class="um-form-group um-form-group-shop um-hidden">
         <label class="um-sr-only" for="umShop">Студия</label>
         <input type="text" name="shop" class="um-form-control" id="umShop" placeholder="Студия" value="<%= shop %>" disabled>
         <%if(showMap){%>
@@ -33,9 +35,9 @@
             </svg>
         <%}%>
     </div>
-    <div class="um-form-group">
+    <div class="um-form-group um-form-group-wishes">
         <label class="um-sr-only" for="umWishes">Студия</label>
-        <textarea id="umWishes" type="text" name="wishes" class="um-form-control" rows="2" placeholder="Пожелания"><%= wishes %></textarea>
+        <textarea id="umWishes" type="text" name="wishes" class="um-form-control" placeholder="Пожелания"><%= wishes %></textarea>
     </div>
 </fieldset>
 <button type="submit" class="um-btn um-btn--raised um-btn-primary js-create-order">Отправить заявку</button>
