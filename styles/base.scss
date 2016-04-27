@@ -1,3 +1,4 @@
+$main-color: #e11a33;
 .um-hidden {
   display: none !important;
   visibility: hidden;
@@ -20,12 +21,74 @@
   box-sizing: border-box;
   * {
     box-sizing: inherit;
+    ::before,
+    ::after {
+      box-sizing: inherit;
+    }
   }
   &.fixed {
     position: fixed;
     bottom: 5vh;
     right: 5vh;
     z-index: 2010;
+  }
+  [type="checkbox"]{
+    &:checked+label:before {
+      content: '';
+      border-top: 2px solid transparent;
+      border-left: 2px solid transparent;
+      border-right: 2px solid $main-color;
+      border-bottom: 2px solid $main-color;
+      top: 0;
+      left: 0;
+      width: 7px;
+      height: 11px;
+      -webkit-transform: rotateZ(37deg);
+      transform: rotateZ(37deg);
+      -webkit-transform-origin: 100% 100%;
+      transform-origin: 100% 100%;
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+      position: absolute;
+      transition: border .25s, background-color .25s, width .20s .1s, height .20s .1s, top .20s .1s, left .20s .1s;
+      z-index: 1;
+    }
+    &:checked+label:after {
+      z-index: 0;
+    }
+    &:checked,
+    &:not(:checked){
+      position: absolute;
+      left: -9999px;
+      opacity: 0;
+    }
+    + label {
+      position: relative;
+      padding-left: 20px;
+      cursor: pointer;
+      display: inline-block;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -khtml-user-select: none;
+      -ms-user-select: none;
+      &:before,
+      &:after{
+        content: '';
+        left: 0;
+        position: absolute;
+        transition: border .25s, background-color .25s, width .20s .1s, height .20s .1s, top .20s .1s, left .20s .1s;
+        z-index: 1;
+      }
+      &:after {
+        height: 14px;
+        width: 14px;
+        background-color: transparent;
+        border: 1px solid #aaaaaa;
+        top: 0;
+        z-index: 0;
+        vertical-align: middle;
+      }
+    }
   }
 }
 .um-form-group {

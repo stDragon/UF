@@ -23,7 +23,7 @@ $(document).ready(function() {
 
     App.Models.Config = Backbone.Model.extend({
         defaults: {
-            serverUrl: 'http://module.infcentre.ru',
+            serverUrl: '//module.infcentre.ru',
             siteUrl: '',
             formType: 'calculation',
             style: '/public/css/um-material.css',
@@ -32,11 +32,12 @@ $(document).ready(function() {
             showHeader: false,
             showMap: false,
             showShop: false,
+            showPersonalDataCheckbox: true,
             phoneVerification: true
         },
 
         urlRoot: function () {
-            return 'http://module.infcentre.ru/um/um/conf/'
+            return '//module.infcentre.ru/um/um/conf/'
         },
 
         initialize: function () {
@@ -79,13 +80,13 @@ $(document).ready(function() {
         },
 
         getScript: function () {
-            return '<script type="text/javascript" src="http://module.infcentre.ru/public/js/marya-um.js"><\/script>' +
+            return '<script type="text/javascript" src="//module.infcentre.ru/public/js/marya-um.js"><\/script>' +
                 '<script>UM.init(' + JSON.stringify(this.toJSON()) + ');<\/script>';
         },
 
         getShortScript: function () {
             var data = {id: this.get('id')};
-            return '<script type="text/javascript" src="http://module.infcentre.ru/public/js/marya-um.js"><\/script>' +
+            return '<script type="text/javascript" src="//module.infcentre.ru/public/js/marya-um.js"><\/script>' +
                 '<script>UM.init(' + JSON.stringify(data) + ');<\/script>';
         },
 

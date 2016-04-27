@@ -4,7 +4,7 @@
 
 module.exports = Backbone.Model.extend({
     defaults: {
-        serverUrl: 'http://module.infcentre.ru',
+        serverUrl: '//module.infcentre.ru',
         siteUrl: '',
         formType: 'calculation',
         style: '/public/css/um-material.css',
@@ -13,6 +13,7 @@ module.exports = Backbone.Model.extend({
         showHeader: false,
         showMap: false,
         showShop: false,
+        showPersonalDataCheckbox: true,
         phoneVerification: true
     },
 

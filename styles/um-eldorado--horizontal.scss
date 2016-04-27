@@ -2,8 +2,6 @@
 @import 'tooltip';
 @import 'modal';
 
-$main-color: #e11a33;
-
 .um {
   max-width: 980px;
   padding: 0 25px;
@@ -58,10 +56,11 @@ $main-color: #e11a33;
     transition: all linear 0.2s;
     -webkit-appearance: none;
   }
-  .um-form-group:first-child {
+  .um-form-group-surname {
     display: none;
   }
-  .um-form-group:last-child {
+  .um-form-group-personal-data,
+  .um-form-group-wishes {
     width: 100%;
   }
 

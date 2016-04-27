@@ -13,7 +13,7 @@ module.exports = Backbone.View.extend({
     },
 
     getYaMap: function () {
-        return '<script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&mode=debug" type="text/javascript">';
+        return '<script src="//api-maps.yandex.ru/2.1/?lang=ru_RU&mode=debug" type="text/javascript">';
     },
 
     initHead: function () {

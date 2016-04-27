@@ -39,5 +39,11 @@
         <label class="um-sr-only" for="umWishes">Студия</label>
         <textarea id="umWishes" type="text" name="wishes" class="um-form-control" placeholder="Пожелания"><%= wishes %></textarea>
     </div>
+    <%if(showPersonalDataCheckbox){%>
+    <div class="um-form-group um-form-group-personal-data">
+        <input type="checkbox" name="personalData" id="umPersonalData" value="<%= personalData %>">
+        <label for="umPersonalData">Согласен с обработкой персональных данных</label>
+    </div>
+    <%}%>
 </fieldset>
 <button type="submit" class="um-btn um-btn--raised um-btn-primary js-create-order">Отправить заявку</button>

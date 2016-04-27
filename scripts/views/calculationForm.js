@@ -18,6 +18,7 @@ module.exports = Backbone.View.extend({
         'blur input': 'setAttr',
         'blur textarea': 'setAttr',
         'click .um-icon-add-location': 'showYaMap',
+        'change input:checkbox': 'changed',
         'submit': 'save'
     },
 
@@ -51,6 +52,21 @@ module.exports = Backbone.View.extend({
             this.enabledSubmit();
         });
         this.listenTo(this.model, 'invalid', this.invalid);
+    },
+
+    changed: function(e) {
+        var changed = e.currentTarget;
+
+        var value;
+        if (changed.type == 'checkbox') {
+            value = changed.checked;
+        } else {
+            value = changed.value;
+        }
+
+        var obj = {};
+        obj[changed.name] = value;
+        this.model.set(obj);
     },
 
     initMask: function () {

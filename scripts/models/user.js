@@ -10,7 +10,8 @@ module.exports = Backbone.Model.extend({
         phone: '',
         city: '',
         shop: '',
-        wishes: ''
+        wishes: '',
+        personalData: false
     },
 
     urlRoot: function () {

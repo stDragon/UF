@@ -82,19 +82,20 @@ gulp styles
 
 Начальный конфиг служит для инициализации формы. Получается из сгенерированного скрипта добавляемого перед "body" на сайтах партнеров
 
-Name              | type           | default                       | description 
------------------ | -------------- | ----------------------------- | -----------
-ID                | number         | ""                            | ID конфига
-serverUrl         | string         | "http://module.infcentre.ru"  | Url сервера с которого будет запрашиваться скрипт и на который будут отправляться данные
-siteUrl           | string         | ""                            | Url сайта партнера на котором будет отображаться модуль
-formType          | string         | "calculation"                 | тип заявки
-style             | string/boolean | "/public/css/um-material.css" | стиль для модуля
-initType          | string         | "button"                      | тип отображения модуля 
-initPosition      | string         | "fixed"                       | расположение формы или кнопки
-showMap           | boolean        | false                         | есть ли возможность выбора студий в модальном окне карты
-showShop          | boolean        | false                         | показывать ли select с выбором студий
-showHeader        | boolean        | false                         | показывать ли заголовок
-phoneVerification | boolean        | true                          | показывать ли окно подтверждения по смс
+Name                     | type           | default                       | description 
+------------------------ | -------------- | ----------------------------- | -----------
+ID                       | number         | ""                            | ID конфига
+serverUrl                | string         | "//module.infcentre.ru"       | Url сервера с которого будет запрашиваться скрипт и на который будут отправляться данные
+siteUrl                  | string         | ""                            | Url сайта партнера на котором будет отображаться модуль
+formType                 | string         | "calculation"                 | тип заявки
+style                    | string/boolean | "/public/css/um-material.css" | стиль для модуля
+initType                 | string         | "button"                      | тип отображения модуля 
+initPosition             | string         | "fixed"                       | расположение формы или кнопки
+showMap                  | boolean        | false                         | есть ли возможность выбора студий в модальном окне карты
+showShop                 | boolean        | false                         | показывать ли select с выбором студий
+showHeader               | boolean        | false                         | показывать ли заголовок
+showPersonalDataCheckbox | boolean        | false                         | показывать ли чекбокс "согласие с обработкой персональных данных"
+phoneVerification        | boolean        | true                          | показывать ли окно подтверждения по смс
 
 ### City
 
@@ -138,6 +139,7 @@ email        | string         | +        | Электронная почта
 phone        | string         | +        | Телефон
 city         | string         | +        | Город
 shop         | string         | -        | Студия
+personalData | boolean        | +        | Согласие обработки персональных данных
 wishes       | string         | -        | Пожелания
 mr3id        | number         | -        | ID в базе MR3
 

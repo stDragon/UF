@@ -18,7 +18,7 @@ var UM = window.UM || {
         forms: [],
         buttons: [],
         cityCollections: [],
-        serverUrl: 'http://module.infcentre.ru/um/um'
+        serverUrl: '//module.infcentre.ru/um/um'
     };
 
 window.UM = UM;
@@ -57,11 +57,11 @@ UM.Views.Shops = require('./views/shops.js');
 UM.init = function (option) {
     UM.option.push(option);
     if (option.server == 'dev')
-        UM.serverUrl = 'http://localhost';
+        UM.serverUrl = '//localhost';
     else if (option.server == 'pre-prod')
-        UM.serverUrl = 'http://localhost';
+        UM.serverUrl = '//localhost';
     else
-        UM.serverUrl = 'http://module.infcentre.ru/um/um';
+        UM.serverUrl = '//module.infcentre.ru/um/um';
     /** создаем новую кллекцию конфигураций */
     if (!UM.configsCollection)
         UM.configsCollection = new UM.Collections.Configs;
