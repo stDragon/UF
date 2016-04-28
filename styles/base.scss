@@ -1,4 +1,9 @@
 $main-color: #e11a33;
+fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
 .um-hidden {
   display: none !important;
   visibility: hidden;

@@ -9,6 +9,9 @@
 }
 .um-form {
   text-align: center;
+  label {
+    font: normal 14px / 20px 'PT Sans', sans-serif;
+  }
   legend {
     width: 100%;
     border: 0;
