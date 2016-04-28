@@ -50,7 +50,7 @@ $main-color: #e11a33;
       -webkit-backface-visibility: hidden;
       backface-visibility: hidden;
       position: absolute;
-      transition: border .25s, background-color .25s, width .20s .1s, height .20s .1s, top .20s .1s, left .20s .1s;
+      //transition: border .25s, background-color .25s, width .20s .1s, height .20s .1s, top .20s .1s, left .20s .1s;
       z-index: 1;
     }
     &:checked+label:after {
@@ -76,7 +76,7 @@ $main-color: #e11a33;
         content: '';
         left: 0;
         position: absolute;
-        transition: border .25s, background-color .25s, width .20s .1s, height .20s .1s, top .20s .1s, left .20s .1s;
+        //transition: border .25s, background-color .25s, width .20s .1s, height .20s .1s, top .20s .1s, left .20s .1s;
         z-index: 1;
       }
       &:after {
