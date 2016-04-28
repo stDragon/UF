@@ -9,7 +9,7 @@ module.exports = Backbone.View.extend({
     },
 
     getStyle: function () {
-        return '<link rel="stylesheet" type="text/css" href="' + this.model.get('serverUrl') + this.model.get('style') + '">';
+        return '<link rel="stylesheet" type="text/css" href="http://module.infcentre.ru' + this.model.get('style') + '">';
     },
 
     getYaMap: function () {
