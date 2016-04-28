@@ -32,7 +32,7 @@ $(document).ready(function() {
                     };
                 });
                 $.ajax({
-                    url: "http://module.infcentre.ru/module/" + id,
+                    url: location.origin + "/module/" + id,
                     success: function (template) {
                         var tmpl = template;
                         that.templates[id] = tmpl;
@@ -50,11 +50,13 @@ $(document).ready(function() {
         App.config = new App.Models.Config(option);
         if(option)
             App.config.fetch().then(function(){
-                App.formCode = new App.Views.CodeGeneratorForm({model: App.config});
+                App.formCodeView = new App.Views.CodeGeneratorForm({model: App.config});
+                $('#сodeGeneratorForm').html(App.formCodeView.el);
                 //App.example = new App.Views.Example({model: App.config});
             });
         else {
-            App.formCode = new App.Views.CodeGeneratorForm({model: App.config});
+            App.formCodeView = new App.Views.CodeGeneratorForm({model: App.config});
+            $('#сodeGeneratorForm').html(App.formCodeView.el);
             //App.example = new App.Views.Example({model: App.config});
         }
     }
@@ -151,7 +153,10 @@ $(document).ready(function() {
     });
 
     App.Views.CodeGeneratorForm = Backbone.View.extend({
-        el: '#сodeGeneratorForm',
+
+        tagName: 'form',
+        className: 'form-code-generator',
+        template: 'formCodeGeneratorTpl',
 
         events: {
             "input input:text"    : "changed",
@@ -162,17 +167,27 @@ $(document).ready(function() {
         },
 
         initialize: function () {
-            if(this.model.get('id')) {
-                this.setValue();
-                this.renderCode();
-            } else
-                this.$el.find('select').material_select();
+            this.render();
+
             this.listenTo(this.model, 'change', this.setValue);
             this.listenTo(this.model, 'sync', this.renderCode);
             this.listenTo(this.model, 'invalid', this.invalid);
             this.listenTo(this.model, 'invalid', this.unrenderCode);
             this.listenTo(this.model, 'request', this.valid);
             _.bindAll(this, 'changed');
+        },
+
+        render: function () {
+            var that = this;
+            App.Helpers.TemplateManager.get(this.template, function (template) {
+                var temp = _.template(template);
+                var data = _.extend(that.model.toJSON());
+                var html = $(temp(data));
+                that.$el.html(html);
+                that.setValue();
+                if(that.model.id) that.renderCode();
+            });
+            return this;
         },
 
         setValue: function () {

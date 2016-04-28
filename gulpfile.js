@@ -6,9 +6,21 @@ var gulp        = require('gulp'),
     sass        = require('gulp-sass'),
     uglify      = require('gulp-uglify');
 
-gulp.task('concat', function() {
+gulp.task('concatMain', function() {
     return gulp.src([
-            'scripts/app.js'
+            'scripts/main.js'
+        ])
+        .pipe(concat('main.js'))
+        .pipe(browserify({
+            insertGlobals : true,
+            debug : !gulp.env.production
+        }))
+        .pipe(gulp.dest('public/js'));
+});
+
+gulp.task('concatUm', function() {
+    return gulp.src([
+            'scripts/um.js'
         ])
         .pipe(concat('marya-um.js'))
         .pipe(browserify({
@@ -18,8 +30,17 @@ gulp.task('concat', function() {
         .pipe(gulp.dest('public/js'));
 });
 
-gulp.task('compress', ['concat'], function() {
+gulp.task('compressMain', ['concatMain'], function() {
     return gulp.src(['scripts/main.js', 'public/js/main.js'])
+        .pipe(uglify())
+        .pipe(rename({
+            suffix: '.min'
+        }))
+        .pipe(gulp.dest('public/js'));
+});
+
+gulp.task('compressUm', ['concatUm'], function() {
+    return gulp.src(['public/js/marya-um.js'])
         .pipe(uglify())
         .pipe(rename({
             suffix: '.min'
@@ -34,7 +55,7 @@ gulp.task('sass', function () {
 });
 
 gulp.task('styles', ['sass']);
-gulp.task('scripts', ['concat', 'compress']);
+gulp.task('scripts', ['concatUm', 'compressUm', 'concatMain', 'compressMain']);
 
 gulp.task('server', function () {
 
