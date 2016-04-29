@@ -1,3 +1,5 @@
+<hr>
+<h2>Основные настройки</h2>
 <div class="row">
     <div class="input-field col s6">
         <input id="siteUrl" name="siteUrl" type="text" class="validate" placeholder="http://yandex.ru" required>
@@ -23,7 +25,7 @@
             <option value="/public/css/um-material.css">Material Design</option>
             <option value="/public/css/um-eldorado--horizontal.css">Eldorado горизонтальная</option>
         </select>
-        <label for="style">Стиль окна</label>
+        <label for="style">Дизайн</label>
     </div>
 </div>
 <div class="row">
@@ -46,6 +48,26 @@
         <label for="initPosition">Начальное отображение</label>
     </div>
 </div>
+
+<h2>Дополнительные окна</h2>
+
+<div class="row">
+    <div class="col s6">
+        <p>Окно подтверждения по СМС</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="phoneVerification">
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+</div>
+
+<hr>
+
+<h2>Настройка полей формы</h2>
 <div class="row">
     <div class="col s6">
         <p>Показывать заголовок</p>
@@ -60,21 +82,8 @@
     </div>
 </div>
 <div class="row">
-    <div class="col s6">
-        <p>Окно подтверждения по СМС</p>
-        <div class="switch">
-            <label>
-                Off
-                <input type="checkbox" name="phoneVerification">
-                <span class="lever"></span>
-                On
-            </label>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col s6">
-        <p>Возможность выбора студий</p>
+    <div class="col s3">
+        <p>Выбора студий</p>
         <div class="switch">
             <label>
                 Off
@@ -84,10 +93,8 @@
             </label>
         </div>
     </div>
-</div>
-<div class="row">
-    <div class="col s6">
-        <p>Показывать студии на карте</p>
+    <div class="col s3">
+        <p>Выбор студии на карте</p>
         <div class="switch">
             <label>
                 Off
@@ -111,6 +118,8 @@
         </div>
     </div>
 </div>
+
+<hr>
 
 <h2>HTML-код</h2>
 <div class="row">
