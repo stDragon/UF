@@ -94,7 +94,7 @@ initPosition             | string         | "fixed"                       | ра
 showMap                  | boolean        | false                         | есть ли возможность выбора студий в модальном окне карты
 showShop                 | boolean        | false                         | показывать ли select с выбором студий
 showHeader               | boolean        | false                         | показывать ли заголовок
-showPersonalDataCheckbox | boolean        | false                         | показывать ли чекбокс "согласие с обработкой персональных данных"
+showPersonalData         | boolean        | true                          | показывать ли чекбокс "согласие с обработкой персональных данных"
 phoneVerification        | boolean        | true                          | показывать ли окно подтверждения по смс
 
 ### City

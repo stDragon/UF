@@ -9,6 +9,9 @@ $(document).ready(function() {
         Helpers: {},
         serverUrl: '//module.infcentre.ru/um/umdata'
     };
+
+    App.formFieldGenerator = [];
+
     /**
      *  Ajax подгрузка шаблона
      *  */
@@ -52,7 +55,7 @@ $(document).ready(function() {
         if(option)
             App.config.fetch().then(function(){
                 App.formCodeView = new App.Views.CodeGeneratorForm({model: App.config});
-                $('#сodeGeneratorForm').html(App.formCodeView.el);
+                $('#formCodeGenerator').html(App.formCodeView.el);
                 //App.example = new App.Views.Example({model: App.config});
             });
         else {
@@ -62,18 +65,15 @@ $(document).ready(function() {
         }
     }
 
-    App.Models.Config = Backbone.Model.extend({
+    App.Models.Config = Backbone.Ribs.Model.extend({
         defaults: {
             serverUrl: '//module.infcentre.ru',
             siteUrl: '',
             formType: 'calculation',
+            formConfig: '',
             style: '/public/css/um-material.css',
             initType: 'button',
             initPosition: 'fixed',
-            showHeader: false,
-            showMap: false,
-            showShop: false,
-            showPersonalDataCheckbox: true,
             phoneVerification: true
         },
 
@@ -83,6 +83,8 @@ $(document).ready(function() {
 
         initialize: function () {
             this.on('sync', this.log, this);
+            this.on('change', this.createFormFieldGenerator, this);
+            this.listenTo(this.formField, 'change', this.setFormConfig);
         },
 
         validate: function (attrs, options) {
@@ -107,6 +109,24 @@ $(document).ready(function() {
 
         log: function () {
             console.log(this.toJSON());
+        },
+
+        createFormFieldGenerator: function() {
+            switch (this.get('formType')) {
+                case 'calculation':
+                    if (App.formFieldGenerator['calculation'])
+                        this.formField = App.formFieldGenerator['calculation'];
+                    else {
+                        App.formFieldGenerator['calculation'] = new App.Models.FormFieldGenerator();
+                        this.formField = App.formFieldGenerator['calculation'];
+                    }
+                    break;
+            }
+            this.setFormConfig()
+        },
+
+        setFormConfig: function () {
+            this.set('formConfig', this.formField.toJSON());
         },
 
         getButtonDOM: function() {
@@ -150,6 +170,66 @@ $(document).ready(function() {
         }
     });
 
+    App.Models.FormFieldGenerator = Backbone.Ribs.Model.extend({
+
+        defaults: {
+            header: {
+                label: 'Заголовок',
+                show: false,
+                value: 'Бесплатный дизайн-проект в&nbsp;три&nbsp;клика'
+            },
+            surname: {
+                label: 'Фамилия',
+                show: false,
+                required: false
+            },
+            name: {
+                label: 'Имя',
+                show: true,
+                required: false
+            },
+            email: {
+                label: 'E-mail',
+                show: true,
+                required: false
+            },
+            phone: {
+                label: 'Телефон',
+                show: true,
+                required: false
+            },
+            city: {
+                label: 'Город',
+                show: true,
+                required: false
+            },
+            shop: {
+                label: 'Студия',
+                show: false,
+                mapShow: false,
+                required: false
+            },
+            personalData: {
+                label: 'Согласен с обработкой персональных данных',
+                show: true,
+                required: false
+            },
+            wishes: {
+                label: 'Пожелания',
+                show: true,
+                required: false
+            }
+        },
+
+        initialize: function() {
+            this.on('change', this.log, this);
+        },
+
+        log: function () {
+            console.log(this.toJSON());
+        }
+    });
+
     App.Views.CodeGeneratorForm = Backbone.View.extend({
 
         tagName: 'form',
@@ -166,6 +246,8 @@ $(document).ready(function() {
 
         initialize: function () {
             this.render();
+
+            this.renderFormField();
 
             this.listenTo(this.model, 'change', this.setValue);
             this.listenTo(this.model, 'sync', this.renderCode);
@@ -186,6 +268,15 @@ $(document).ready(function() {
                 if(that.model.id) that.renderCode();
             });
             return this;
+        },
+
+        renderFormField: function() {
+            switch (this.model.get('formType')) {
+                case 'calculation':
+                    App.formFieldGeneratorView = new App.Views.FormFieldGenerator({model: this.model.formField});
+                    $('#formFieldGenerator').html(App.formFieldGeneratorView.el);
+                    break;
+            }
         },
 
         setValue: function () {
@@ -267,6 +358,70 @@ $(document).ready(function() {
         }
     });
 
+    App.Views.FormFieldGenerator = Backbone.Ribs.View.extend({
+        tagName: 'form',
+        className: 'form-field-generator',
+        template: 'formFieldGenerator',
+
+        events: {
+            "input input:text"    : "changed",
+            "change input"        : "changed",
+            "change select"       : "changed",
+            "submit"              : "submit"
+        },
+
+        initialize: function () {
+            this.render();
+
+            //this.listenTo(this.model, 'change', this.setValue);
+            _.bindAll(this, 'changed');
+        },
+
+        render: function () {
+            var that = this;
+            App.Helpers.TemplateManager.get(this.template, function (template) {
+                var temp = _.template(template);
+                var data = that.model.toJSON();
+                var html = $(temp(data));
+                that.$el.html(html);
+                if(that.model.id) that.renderCode();
+            });
+            return this;
+        },
+
+        setValue: function () {
+            var attr = this.model.toJSON();
+            _.each(attr, function (num, key) {
+                var $el = this.$el.find('[name=' + key + ']');
+                if ($el.is(':checkbox'))
+                    $el.prop("checked", num);
+                else
+                    $el.val(num);
+            }, this);
+            this.$el.find('select').material_select();
+        },
+
+        changed: function(e) {
+            var changed = e.currentTarget;
+
+            var value;
+            if (changed.type == 'checkbox') {
+                value = changed.checked;
+            } else {
+                value = changed.value;
+            }
+
+            var obj = {};
+            obj[changed.name] = value;
+
+            this.model.set(obj);
+        },
+
+        submit: function (e) {
+            e.preventDefault();
+        }
+    });
+
     App.Views.Example = Backbone.View.extend({
         el: '#example',
 
@@ -302,7 +457,7 @@ $(document).ready(function() {
 
     });
 
-    var codeID = $('#сodeGeneratorForm').data('id');
+    var codeID = $('#formCodeGenerator').data('id');
 
     if(codeID){
         init({id: codeID});
