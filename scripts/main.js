@@ -6,7 +6,8 @@ $(document).ready(function() {
         Collections: {},
         Views: {},
         Router: {},
-        Helpers: {}
+        Helpers: {},
+        serverUrl: '//module.infcentre.ru/um/umdate'
     };
     /**
      *  Ajax подгрузка шаблона
@@ -32,7 +33,7 @@ $(document).ready(function() {
                     };
                 });
                 $.ajax({
-                    url: location.origin + "/module/" + id,
+                    url: App.serverUrl + "/module/" + id,
                     success: function (template) {
                         var tmpl = template;
                         that.templates[id] = tmpl;
@@ -77,13 +78,10 @@ $(document).ready(function() {
         },
 
         urlRoot: function () {
-            return '//module.infcentre.ru/um/um/conf/'
+            return App.serverUrl + '/conf/'
         },
 
         initialize: function () {
-            /** @todo временное решение для получения имя сервера отдающего кнопку*/
-            var hostname = window.location.origin;
-            this.set('serverUrl', hostname);
             this.on('sync', this.log, this);
         },
 

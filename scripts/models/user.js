@@ -15,7 +15,7 @@ module.exports = Backbone.Model.extend({
     },
 
     urlRoot: function () {
-        return UM.serverUrl + '/umclient/add/'
+        return UM.serverUrl + '/client/'
     },
 
     validate: function (attrs, options) {

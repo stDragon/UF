@@ -10,7 +10,7 @@ module.exports = Backbone.Model.extend({
     },
 
     urlRoot: function () {
-        return UM.serverUrl + '/umclient/sendcode/'
+        return UM.serverUrl + '/code/'
     },
 
     validate: function (attrs, options) {

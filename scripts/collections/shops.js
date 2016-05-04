@@ -2,6 +2,7 @@
  *  Коллекция студий
  *  @param {UM.Models.Config} options конфиг для получении коллекции.
  *  */
+
 module.exports = Backbone.Collection.extend({
     model: UM.Models.Shop,
 
@@ -12,11 +13,11 @@ module.exports = Backbone.Collection.extend({
         /** связываем поле с формой */
         this.form = UM.forms[this.options.configId];
 
-        this.listenTo(this.form, 'change', this.unsetActive)
+        this.listenTo(this.form, 'change', this.unsetActive);
     },
 
     url: function () {
-        return UM.serverUrl + '/umdata/shops/' + this.options.configId || ''
+        return UM.serverUrl + '/shops/' + this.options.configId || ''
     },
     /**
      * Создает новый экземпляр Shops по названию города.

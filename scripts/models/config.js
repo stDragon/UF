@@ -4,7 +4,7 @@
 
 module.exports = Backbone.Model.extend({
     defaults: {
-        serverUrl: '//module.infcentre.ru',
+        serverUrl: '//module.infcentre.ru/um/umdate',
         siteUrl: '',
         formType: 'calculation',
         style: '/public/css/um-material.css',
@@ -15,10 +15,6 @@ module.exports = Backbone.Model.extend({
         showShop: false,
         showPersonalDataCheckbox: true,
         phoneVerification: true
-    },
-
-    urlRoot: function () {
-        return UM.serverUrl + '/conf/'
     },
 
     initialize: function () {

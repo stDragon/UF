@@ -17,7 +17,7 @@ module.exports = Backbone.Collection.extend({
     },
 
     url: function () {
-        return UM.serverUrl + '/umdata/cities/' + this.options.configId || ''
+        return UM.serverUrl + '/cities/' + this.options.configId || ''
     },
     /**
      * Сортирует по названию города

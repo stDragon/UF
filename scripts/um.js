@@ -18,7 +18,7 @@ var UM = window.UM || {
         forms: [],
         buttons: [],
         cityCollections: [],
-        serverUrl: '//module.infcentre.ru/um/um'
+        serverUrl: '//module.infcentre.ru/um/umdate'
     };
 
 window.UM = UM;
@@ -56,15 +56,15 @@ UM.Views.Shops = require('./views/shops.js');
  *  */
 UM.init = function (option) {
     UM.option.push(option);
-    if (option.server == 'dev')
-        UM.serverUrl = '//localhost';
-    else if (option.server == 'pre-prod')
-        UM.serverUrl = '//localhost';
-    else
-        UM.serverUrl = '//module.infcentre.ru/um/um';
+    //if (option.server == 'dev')
+    //    UM.serverUrl = '//localhost';
+    //else if (option.server == 'pre-prod')
+    //    UM.serverUrl = '//module.infcentre.ru';
+    //else
+    //    UM.serverUrl = '//module.infcentre.ru';
     /** создаем новую кллекцию конфигураций */
     if (!UM.configsCollection)
-        UM.configsCollection = new UM.Collections.Configs;
+        UM.configsCollection = new UM.Collections.Configs([], option);
 
     var config = new UM.Models.Config(option);
     UM.configsCollection.add(config);
@@ -110,7 +110,7 @@ UM.TemplateManager = {
                 };
             });
             $.ajax({
-                url: "http://module.infcentre.ru/module/" + id,
+                url: "//module.infcentre.ru/module/" + id,
                 success: function (template) {
                     var tmpl = template;
                     that.templates[id] = tmpl;
