@@ -4,7 +4,7 @@
 
 module.exports = Backbone.Model.extend({
     defaults: {
-        serverUrl: '//module.infcentre.ru/um/umdate',
+        serverUrl: '//module.infcentre.ru/um/umdata',
         siteUrl: '',
         formType: 'calculation',
         style: '/public/css/um-material.css',

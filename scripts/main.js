@@ -7,7 +7,7 @@ $(document).ready(function() {
         Views: {},
         Router: {},
         Helpers: {},
-        serverUrl: '//module.infcentre.ru/um/umdate'
+        serverUrl: '//module.infcentre.ru/um/umdata'
     };
     /**
      *  Ajax подгрузка шаблона

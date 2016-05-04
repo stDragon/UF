@@ -18,7 +18,7 @@ var UM = window.UM || {
         forms: [],
         buttons: [],
         cityCollections: [],
-        serverUrl: '//module.infcentre.ru/um/umdate'
+        serverUrl: '//module.infcentre.ru/um/umdata'
     };
 
 window.UM = UM;
