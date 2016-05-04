@@ -2,7 +2,7 @@
  *  Форма заявки на просчет
  *  */
 
-module.exports = Backbone.View.extend({
+module.exports = Backbone.Ribs.View.extend({
 
     tagName: 'form',
     className: 'um-form',
@@ -206,8 +206,8 @@ module.exports = Backbone.View.extend({
     },
     /**
      * Вывод ошибок
-     * @param  {object} model - Диаметр окружности.
-     * @param  {object} errors - Диаметр окружности.
+     * @param  {object} model.
+     * @param  {object} errors.
      */
     invalid: function (model, errors) {
         this.$el.find('input')

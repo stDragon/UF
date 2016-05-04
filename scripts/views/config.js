@@ -2,7 +2,7 @@
  *  Подгружает необходимые стили и скрипты
  *  */
 
-module.exports = Backbone.View.extend({
+module.exports = Backbone.Ribs.View.extend({
     initialize: function () {
         this.initHead();
         this.initBody();

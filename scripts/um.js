@@ -6,6 +6,7 @@ window._ = window._ || _;
 window.Backbone = window.Backbone || Backbone;
 
 require('jquery.inputmask');
+require('../public/libs/backbone.ribs/backbone.ribs.js');
 require('./Backbone.Ymaps.js');
 
 var UM = window.UM || {
@@ -56,12 +57,6 @@ UM.Views.Shops = require('./views/shops.js');
  *  */
 UM.init = function (option) {
     UM.option.push(option);
-    //if (option.server == 'dev')
-    //    UM.serverUrl = '//localhost';
-    //else if (option.server == 'pre-prod')
-    //    UM.serverUrl = '//module.infcentre.ru';
-    //else
-    //    UM.serverUrl = '//module.infcentre.ru';
     /** создаем новую кллекцию конфигураций */
     if (!UM.configsCollection)
         UM.configsCollection = new UM.Collections.Configs([], option);

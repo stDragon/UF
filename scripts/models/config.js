@@ -2,19 +2,20 @@
  *  Конфигурирует универсальный модуль
  *  */
 
-module.exports = Backbone.Model.extend({
+module.exports = Backbone.Ribs.Model.extend({
     defaults: {
         serverUrl: '//module.infcentre.ru/um/umdata',
         siteUrl: '',
         formType: 'calculation',
+        formConfig: '',
         style: '/public/css/um-material.css',
         initType: 'button',
         initPosition: 'fixed',
-        showHeader: false,
-        showMap: false,
-        showShop: false,
-        showPersonalDataCheckbox: true,
         phoneVerification: true
+        //showHeader: false,
+        //showMap: false,
+        //showShop: false,
+        //showPersonalDataCheckbox: true
     },
 
     initialize: function () {

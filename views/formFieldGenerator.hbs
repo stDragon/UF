@@ -41,14 +41,14 @@
     </div>
 </div>
 
-<h3><%= name.label %></h3>
+<h3><%= firstName.label %></h3>
 <div class="row">
     <div class="col s2">
         <p>Показывать</p>
         <div class="switch">
             <label>
                 Off
-                <input type="checkbox" name="name.show" <%= name.show ? 'checked' : ''%>>
+                <input type="checkbox" name="firstName.show" <%= firstName.show ? 'checked' : ''%>>
                 <span class="lever"></span>
                 On
             </label>
@@ -59,7 +59,7 @@
         <div class="switch">
             <label>
                 Off
-                <input type="checkbox" name="name.required" <%= name.required ? 'checked' : ''%>>
+                <input type="checkbox" name="firstName.required" <%= firstName.required ? 'checked' : ''%>>
                 <span class="lever"></span>
                 On
             </label>
@@ -158,7 +158,7 @@
             </label>
         </div>
     </div>
-    <div class="col s2">
+    <div class="col s2 hiddendiv">
         <p>Обязательное</p>
         <div class="switch">
             <label>

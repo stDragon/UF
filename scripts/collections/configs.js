@@ -2,7 +2,7 @@
  *  Коллекция конфигураций
  *  */
 
-module.exports = Backbone.Collection.extend({
+module.exports = Backbone.Ribs.Collection.extend({
     model: UM.Models.Config,
 
     url: function () {

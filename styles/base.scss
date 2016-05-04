@@ -64,7 +64,10 @@ fieldset {
     &:checked,
     &:not(:checked){
       position: absolute;
-      left: -9999px;
+      left: 0.5em;
+      top: 1em;
+      width: 1px;
+      height: 1px;
       opacity: 0;
     }
     + label {

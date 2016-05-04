@@ -60,7 +60,7 @@ $(document).ready(function() {
             });
         else {
             App.formCodeView = new App.Views.CodeGeneratorForm({model: App.config});
-            $('#сodeGeneratorForm').html(App.formCodeView.el);
+            $('#formCodeGenerator').html(App.formCodeView.el);
             //App.example = new App.Views.Example({model: App.config});
         }
     }
@@ -127,6 +127,9 @@ $(document).ready(function() {
 
         setFormConfig: function () {
             this.set('formConfig', this.formField.toJSON());
+            if (this.id) {
+                this.save();
+            }
         },
 
         getButtonDOM: function() {
@@ -183,7 +186,7 @@ $(document).ready(function() {
                 show: false,
                 required: false
             },
-            name: {
+            firstName: {
                 label: 'Имя',
                 show: true,
                 required: false

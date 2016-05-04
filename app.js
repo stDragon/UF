@@ -54,7 +54,7 @@ app.get('/module/:id', function(req, res) {
     res.render(req.params.id, {layout: false});
 });
 
-app.post('/api/configs', jsonParser, function(req, res) {
+app.post('/um/um/conf/', jsonParser, function(req, res) {
     var data = req.body;
     data.id = Date.now().toString();
     configs[data.id] = data;
@@ -62,7 +62,7 @@ app.post('/api/configs', jsonParser, function(req, res) {
     res.status(201).json(data);
 });
 
-app.route('/api/configs/:id')
+app.route('/um/um/conf/:id')
     .get(jsonParser, function(req, res) {
         res.json(configs[req.params.id]);
     })
@@ -77,23 +77,23 @@ app.route('/api/configs/:id')
         res.status(200).json(configs[req.params.id]);
     });
 
-app.get('/api/cities', function(req, res) {
+app.get('/um/um/umdata/cities', function(req, res) {
     res.json(cities);
 });
 
-app.get('/api/cities/:id', function(req, res) {
+app.get('/um/um/umdata/cities/:id', function(req, res) {
     res.json(cities);
 });
 
-app.get('/api/shops', function(req, res) {
+app.get('/um/um/umdata/shops', function(req, res) {
     res.json(shops);
 });
 
-app.get('/api/shops/:id', function(req, res) {
+app.get('/um/um/umdata/shops/:id', function(req, res) {
     res.json(shops);
 });
 
-app.post('/api/phone', jsonParser, function(req, res) {
+app.post('/um/um/umclient/sendcode/', jsonParser, function(req, res) {
     var data = req.body;
     setTimeout(function(){
         if(data.code == 5555){
@@ -106,7 +106,7 @@ app.post('/api/phone', jsonParser, function(req, res) {
     }, 2000);
 });
 
-app.post('/api/users', jsonParser, function(req, res) {
+app.post('/um/um/umclient/add/', jsonParser, function(req, res) {
     var data = req.body;
     data.id = Date.now().toString();
     users[data.id] = data;
@@ -116,6 +116,6 @@ app.post('/api/users', jsonParser, function(req, res) {
     }, 2000);
 });
 
-app.get('/api/users/:id', jsonParser, function(req, res) {
+app.get('/um/um/umclient/add/:id', jsonParser, function(req, res) {
     res.json(users[req.params.id]);
 });

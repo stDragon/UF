@@ -2,7 +2,7 @@
  *  Основное окно универсального модуля
  *  */
 
-module.exports = Backbone.View.extend({
+module.exports = Backbone.Ribs.View.extend({
 
     tagName: 'article',
     className: 'um',

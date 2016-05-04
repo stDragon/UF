@@ -1,49 +1,63 @@
 <fieldset class="um-login">
-    <%if(showHeader){%>
+    <%if(formConfig.header.show){%>
         <legend>
             <span class="um-title">Легко!</span>
             <span class="um-title-2">Бесплатный дизайн-проект в&nbsp;три&nbsp;клика</span>
         </legend>
     <%}%>
-    <div class="um-form-group um-form-group-surname">
-        <label class="um-sr-only" for="umSurname">Фамилия</label>
-        <input type="text" name="surname" class="um-form-control" id="umSurname" placeholder="Ваша фамилия" value="<%= surname %>">
-    </div>
-    <div class="um-form-group um-form-group-firstname">
-        <label class="um-sr-only" for="umFirstname">Имя</label>
-        <input type="text" name="firstName" class="um-form-control" id="umFirstname" placeholder="Ваше имя" value="<%= firstName %>">
-    </div>
-    <div class="um-form-group um-form-group-email">
-        <label class="um-sr-only" for="umEmail">E-mail</label>
-        <input type="email" name="email" class="um-form-control" id="umEmail" placeholder="Ваш E-mail" value="<%= email %>">
-    </div>
-    <div class="um-form-group um-form-group-phone">
-        <label class="um-sr-only" for="umPhone">Телефон</label>
-        <input type="text" name="phone" class="um-form-control" id="umPhone" placeholder="Номер телефона" value="<%= phone %>">
-    </div>
-    <div class="um-form-group um-form-group-city">
-        <label class="um-sr-only" for="umCity">Город</label>
-        <input type="text" name="city" class="um-form-control" id="umCity" placeholder="Город" value="<%= city %>">
-    </div>
-    <div class="um-form-group um-form-group-shop um-hidden">
-        <label class="um-sr-only" for="umShop">Студия</label>
-        <input type="text" name="shop" class="um-form-control" id="umShop" placeholder="Студия" value="<%= shop %>" disabled>
-        <%if(showMap){%>
-            <svg height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg" class="um-icon-add-location">
-                <path d="M0 0h24v24H0V0z" fill="none"/>
-                <path d="M12 2C8.14 2 5 5.14 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.86-3.14-7-7-7zm4 8h-3v3h-2v-3H8V8h3V5h2v3h3v2z"/>
-            </svg>
-        <%}%>
-    </div>
-    <div class="um-form-group um-form-group-wishes">
-        <label class="um-sr-only" for="umWishes">Студия</label>
-        <textarea id="umWishes" type="text" name="wishes" class="um-form-control" placeholder="Пожелания"><%= wishes %></textarea>
-    </div>
-    <%if(showPersonalDataCheckbox){%>
-    <div class="um-form-group um-form-group-personal-data">
-        <input type="checkbox" name="personalData" id="umPersonalData" value="<%= personalData %>">
-        <label for="umPersonalData">Согласен с обработкой персональных данных</label>
-    </div>
+    <%if(formConfig.surname.show){%>
+        <div class="um-form-group um-form-group-surname">
+            <label class="um-sr-only" for="umSurname"><%= formConfig.surname.label %></label>
+            <input type="text" name="surname" class="um-form-control" id="umSurname" placeholder="Ваша фамилия" value="<%= surname %>" <%= formConfig.surname.required ? 'required' : ''%>>
+        </div>
+    <%}%>
+    <%if(formConfig.firstName.show){%>
+        <div class="um-form-group um-form-group-firstname">
+            <label class="um-sr-only" for="umFirstname"><%= formConfig.firstName.label %></label>
+            <input type="text" name="firstName" class="um-form-control" id="umFirstname" placeholder="Ваше имя" value="<%= firstName %>" <%= formConfig.firstName.required ? 'required' : ''%>>
+        </div>
+    <%}%>
+    <%if(formConfig.email.show){%>
+        <div class="um-form-group um-form-group-email">
+            <label class="um-sr-only" for="umEmail"><%= formConfig.email.label %></label>
+            <input type="email" name="email" class="um-form-control" id="umEmail" placeholder="Ваш E-mail" value="<%= email %>" <%= formConfig.email.required ? 'required' : ''%>>
+        </div>
+    <%}%>
+    <%if(formConfig.phone.show){%>
+        <div class="um-form-group um-form-group-phone">
+            <label class="um-sr-only" for="umPhone"><%= formConfig.phone.label %></label>
+            <input type="text" name="phone" class="um-form-control" id="umPhone" placeholder="Номер телефона" value="<%= phone %>" <%= formConfig.phone.required ? 'required' : ''%>>
+        </div>
+    <%}%>
+    <%if(formConfig.city.show){%>
+        <div class="um-form-group um-form-group-city">
+            <label class="um-sr-only" for="umCity"><%= formConfig.city.label %></label>
+            <input type="text" name="city" class="um-form-control" id="umCity" placeholder="Город" value="<%= city %>" <%= formConfig.city.required ? 'required' : ''%>>
+        </div>
+    <%}%>
+    <%if(formConfig.shop.show){%>
+        <div class="um-form-group um-form-group-shop um-hidden">
+            <label class="um-sr-only" for="umShop"><%= formConfig.shop.label %></label>
+            <input type="text" name="shop" class="um-form-control" id="umShop" placeholder="Студия" value="<%= shop %>" disabled <%= formConfig.shop.required ? 'required' : ''%>>
+            <%if(formConfig.shop.mapShow){%>
+                <svg height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg" class="um-icon-add-location">
+                    <path d="M0 0h24v24H0V0z" fill="none"/>
+                    <path d="M12 2C8.14 2 5 5.14 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.86-3.14-7-7-7zm4 8h-3v3h-2v-3H8V8h3V5h2v3h3v2z"/>
+                </svg>
+            <%}%>
+        </div>
+    <%}%>
+    <%if(formConfig.wishes.show){%>
+        <div class="um-form-group um-form-group-wishes">
+            <label class="um-sr-only" for="umWishes"><%= formConfig.wishes.label %></label>
+            <textarea id="umWishes" type="text" name="wishes" class="um-form-control" placeholder="Пожелания"><%= wishes %></textarea>
+        </div>
+    <%}%>
+    <%if(formConfig.personalData.show){%>
+        <div class="um-form-group um-form-group-personal-data">
+            <input type="checkbox" name="personalData" id="umPersonalData" value="<%= personalData %>" <%= formConfig.personalData.required ? 'required' : ''%>>
+            <label for="umPersonalData"><%= formConfig.personalData.label %></label>
+        </div>
     <%}%>
 </fieldset>
 <button type="submit" class="um-btn um-btn--raised um-btn-primary js-create-order">Отправить заявку</button>
