@@ -33,7 +33,7 @@ $(document).ready(function() {
                     };
                 });
                 $.ajax({
-                    url: App.serverUrl + "/module/" + id,
+                    url: "//module.infcentre.ru/module/" + id,
                     success: function (template) {
                         var tmpl = template;
                         that.templates[id] = tmpl;
@@ -178,8 +178,8 @@ $(document).ready(function() {
         render: function () {
             var that = this;
             App.Helpers.TemplateManager.get(this.template, function (template) {
-                var temp = _.template(template);
                 var data = _.extend(that.model.toJSON());
+                var temp = _.template(template, data);
                 var html = $(temp(data));
                 that.$el.html(html);
                 that.setValue();
