@@ -36,7 +36,7 @@ $(document).ready(function() {
                     };
                 });
                 $.ajax({
-                    url: "//module.infcentre.ru/module/" + id,
+                    url: location.origin + '/module/' + id,
                     success: function (template) {
                         var tmpl = template;
                         that.templates[id] = tmpl;
