@@ -1,4 +1,10 @@
 @import 'colors';
+
+#Content {
+  in-width: 1000px;
+  min-width: 1280px;
+}
+
 body{
   >.progress{
     position: fixed;
