@@ -82,6 +82,7 @@ $(document).ready(function() {
         },
 
         initialize: function () {
+            this.createFormFieldGenerator();
             this.on('sync', this.log, this);
             this.on('change', this.createFormFieldGenerator, this);
             this.listenTo(this.formField, 'change', this.setFormConfig);
