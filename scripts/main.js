@@ -1,3 +1,5 @@
+var conf = require('../nconf.js');
+
 $(document).ready(function() {
     window.validate_field = function(){}; //отмена встроенного валидатора Materialize
 
@@ -7,7 +9,7 @@ $(document).ready(function() {
         Views: {},
         Router: {},
         Helpers: {},
-        serverUrl: '//module.infcentre.ru/um/umdata'
+        serverUrl: conf.server.url + '/um/umdata'
     };
 
     App.formFieldGenerator = [];
@@ -36,7 +38,7 @@ $(document).ready(function() {
                     };
                 });
                 $.ajax({
-                    url: location.origin + '/module/' + id,
+                    url: conf.server.url + '/module/' + id,
                     success: function (template) {
                         var tmpl = template;
                         that.templates[id] = tmpl;
@@ -67,7 +69,7 @@ $(document).ready(function() {
 
     App.Models.Config = Backbone.Ribs.Model.extend({
         defaults: {
-            serverUrl: '//module.infcentre.ru',
+            serverUrl: App.serverUrl,
             siteUrl: '',
             formType: 'calculation',
             formConfig: '',
@@ -142,13 +144,13 @@ $(document).ready(function() {
         },
 
         getScript: function () {
-            return '<script type="text/javascript" src="//module.infcentre.ru/public/js/marya-um.js"><\/script>' +
+            return '<script type="text/javascript" src="//' + location.hostname + '/public/js/marya-um.js"><\/script>' +
                 '<script>UM.init(' + JSON.stringify(this.toJSON()) + ');<\/script>';
         },
 
         getShortScript: function () {
             var data = {id: this.get('id')};
-            return '<script type="text/javascript" src="//module.infcentre.ru/public/js/marya-um.js"><\/script>' +
+            return '<script type="text/javascript" src="//' + location.hostname + '/public/js/marya-um.js"><\/script>' +
                 '<script>UM.init(' + JSON.stringify(data) + ');<\/script>';
         },
 
@@ -251,7 +253,9 @@ $(document).ready(function() {
         initialize: function () {
             this.render();
 
-            this.renderFormField();
+            if (this.model.get('formConfig')) {
+                this.renderFormField();
+            }
 
             this.listenTo(this.model, 'change', this.setValue);
             this.listenTo(this.model, 'sync', this.renderCode);

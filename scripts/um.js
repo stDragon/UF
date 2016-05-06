@@ -1,6 +1,7 @@
 var _ = require('underscore'),
     $ = require('jquery'),
-    Backbone = require('backbone');
+    Backbone = require('backbone'),
+    conf = require('../nconf.js');
 
 window._ = window._ || _;
 window.Backbone = window.Backbone || Backbone;
@@ -19,7 +20,7 @@ var UM = window.UM || {
         forms: [],
         buttons: [],
         cityCollections: [],
-        serverUrl: '//module.infcentre.ru/um/umdata'
+        serverUrl: conf.server.url + '/um/umdata'
     };
 
 window.UM = UM;
@@ -105,7 +106,7 @@ UM.TemplateManager = {
                 };
             });
             $.ajax({
-                url: "//module.infcentre.ru/module/" + id,
+                url: conf.server.url + '/module/' + id,
                 success: function (template) {
                     var tmpl = template;
                     that.templates[id] = tmpl;

@@ -54,7 +54,7 @@ app.get('/module/:id', function(req, res) {
     res.render(req.params.id, {layout: false});
 });
 
-app.post('/um/um/conf/', jsonParser, function(req, res) {
+app.post('/um/umdata/conf/', jsonParser, function(req, res) {
     var data = req.body;
     data.id = Date.now().toString();
     configs[data.id] = data;
@@ -62,7 +62,7 @@ app.post('/um/um/conf/', jsonParser, function(req, res) {
     res.status(201).json(data);
 });
 
-app.route('/um/um/conf/:id')
+app.route('/um/umdata/conf/:id')
     .get(jsonParser, function(req, res) {
         res.json(configs[req.params.id]);
     })
@@ -77,23 +77,23 @@ app.route('/um/um/conf/:id')
         res.status(200).json(configs[req.params.id]);
     });
 
-app.get('/um/um/umdata/cities', function(req, res) {
+app.get('/um/umdata/cities/', function(req, res) {
     res.json(cities);
 });
 
-app.get('/um/um/umdata/cities/:id', function(req, res) {
+app.get('/um/umdata/cities/:id', function(req, res) {
     res.json(cities);
 });
 
-app.get('/um/um/umdata/shops', function(req, res) {
+app.get('/um/umdata/shops', function(req, res) {
     res.json(shops);
 });
 
-app.get('/um/um/umdata/shops/:id', function(req, res) {
+app.get('/um/umdata/shops/:id', function(req, res) {
     res.json(shops);
 });
 
-app.post('/um/um/umclient/sendcode/', jsonParser, function(req, res) {
+app.post('/um/umdata/code/', jsonParser, function(req, res) {
     var data = req.body;
     setTimeout(function(){
         if(data.code == 5555){
@@ -106,7 +106,7 @@ app.post('/um/um/umclient/sendcode/', jsonParser, function(req, res) {
     }, 2000);
 });
 
-app.post('/um/um/umclient/add/', jsonParser, function(req, res) {
+app.post('/um/umdata/client/', jsonParser, function(req, res) {
     var data = req.body;
     data.id = Date.now().toString();
     users[data.id] = data;
@@ -116,6 +116,6 @@ app.post('/um/um/umclient/add/', jsonParser, function(req, res) {
     }, 2000);
 });
 
-app.get('/um/um/umclient/add/:id', jsonParser, function(req, res) {
+app.get('/um/umclient/add/:id', jsonParser, function(req, res) {
     res.json(users[req.params.id]);
 });

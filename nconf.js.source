@@ -1,0 +1,6 @@
+module.exports = {
+    server: {
+        type: 'dev || pre-prod || prod',
+        url: '//module.infcentre.ru || //umodule.marya.ru'
+    }
+};

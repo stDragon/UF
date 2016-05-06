@@ -4,7 +4,7 @@
 
 module.exports = Backbone.Ribs.Model.extend({
     defaults: {
-        serverUrl: '//module.infcentre.ru/um/umdata',
+        serverUrl: UM.serverUrl,
         siteUrl: '',
         formType: 'calculation',
         formConfig: '',
@@ -12,10 +12,6 @@ module.exports = Backbone.Ribs.Model.extend({
         initType: 'button',
         initPosition: 'fixed',
         phoneVerification: true
-        //showHeader: false,
-        //showMap: false,
-        //showShop: false,
-        //showPersonalDataCheckbox: true
     },
 
     initialize: function () {
