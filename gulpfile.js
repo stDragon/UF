@@ -66,7 +66,7 @@ gulp.task('server', function () {
     gulp.watch('./scripts/**/*.js', ['scripts']);
     gulp.watch('./styles/**/*.scss', ['sass']);
 
-    gulp.watch(['app.js'], [server.run]);
+    gulp.watch(['app.js','server.js', 'nconf.js'], [server.run]);
 });
 
 gulp.task('default', ['server']);
