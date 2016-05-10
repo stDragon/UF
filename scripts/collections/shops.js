@@ -13,7 +13,8 @@ module.exports = Backbone.Collection.extend({
         /** связываем поле с формой */
         this.form = UM.forms[this.options.configId];
 
-        this.listenTo(this.form, 'change', this.unsetActive);
+        this.listenTo(this.form, 'change:city', this.unsetActive);
+        this.listenTo(this.form, 'change:shop', this.formChanged);
     },
 
     url: function () {
@@ -42,12 +43,32 @@ module.exports = Backbone.Collection.extend({
         return new UM.Collections.Shops(filtered, this.options);
     },
 
-    unsetActive: function (form) {
-        var active = form.get('city');
+    getActive: function () {
+        var active = this.find(function(model) {
+            return model.get('active') == true;
+        });
+        if (active) {
+            return active.get('name');
+        }
+    },
+
+    formChanged: function () {
+        this.unsetActive();
+        this.setActive();
+    },
+
+    setActive: function () {
+        var active = this.form.get('shop');
+        var shop = this.find(function(model) {
+            return model.get('name') == active;
+        });
+        if (shop)
+            shop.set('active', true);
+    },
+
+    unsetActive: function () {
         this.each(function (model) {
-            if (model.get('name') + ', ' + model.get('address') != active) {
-                model.set('active', false);
-            }
+            model.set('active', false);
         }, this);
     }
 });

@@ -23,20 +23,22 @@ module.exports = Backbone.Ribs.View.extend({
     },
 
     initialize: function () {
-        UM.cityCollection = new UM.Collections.Citys([], this.model.toJSON());
-        UM.cityCollection.fetch().then(function () {
-            UM.cityCollectionView = new UM.Views.Citys({collection: UM.cityCollection});
+        var that = this;
+        this.cityCollection = new UM.Collections.Citys([], this.model.toJSON());
+        this.cityCollection.fetch().then(function () {
+            that.cityCollectionView = new UM.Views.Citys({collection: that.cityCollection});
         });
 
-        UM.shopCollection = new UM.Collections.Shops([], this.model.toJSON());
-        UM.shopCollection.fetch();
+        this.shopCollection = new UM.Collections.Shops([], this.model.toJSON());
+        this.shopCollection.fetch();
 
         this.render();
 
         this.model.on('change', this.setValue, this);
-        if (UM.configsCollection.get(this.model.get('configId')).get('showShop')) {
+
+        if (UM.configsCollection.get(this.model.get('configId')).get('formConfig').shop.show) {
             this.createYaMapModal();
-            this.model.on('change', this.createSelectShop, this);
+            this.model.on('change:city', this.createSelectShop, this);
         }
         this.listenTo(this.model, 'request', function () {
             UM.vent.trigger('page:showLoader', this.model.get('configId'));
@@ -52,6 +54,21 @@ module.exports = Backbone.Ribs.View.extend({
             this.enabledSubmit();
         });
         this.listenTo(this.model, 'invalid', this.invalid);
+
+        this.listenTo(this.cityCollection, 'change:active', function() {
+            this.model.set('shop', '');
+            var active = this.cityCollection.getActive();
+            if (active) this.model.set('city', active);
+        });
+
+        this.listenTo(this.shopCollection, 'change:active', function() {
+            var active = this.shopCollection.getActive();
+            if (active) this.model.set('shop', active);
+        });
+
+        this.listenTo(this.model, 'change:city', function () {
+            this.model.set('shop', '');
+        });
     },
 
     changed: function(e) {
@@ -77,43 +94,42 @@ module.exports = Backbone.Ribs.View.extend({
         var $el = this.$el.find('.um-dropdown-content.um-city-list');
 
         if (!$el.length)
-            this.$el.find('[name=city]').before(UM.cityCollectionView.el);
+            this.$el.find('[name=city]').before(this.cityCollectionView.el);
         else
-            UM.cityCollectionView.show();
+            this.cityCollectionView.show();
     },
 
     hideSelectCity: function () {
-        UM.cityCollectionView.hidden();
+        this.cityCollectionView.hidden();
     },
 
     createSelectShop: function () {
-        if (this.model.hasChanged("city")) {
-            var city = this.model.get('city'),
-                shop = this.model.get('shop');
+        var city = this.model.get('city'),
+            shop = this.model.get('shop');
 
-            this.removeSelectShop();
+        this.removeSelectShop();
 
-            if (city && UM.cityCollection.findWhere({'name': city}).get('showShop')) {
-                this.addSelectShop(city);
-                if (UM.configsCollection.get(this.model.get('configId')).get('showShop')) {
-                    this.createYaMap();
-                }
-            } else {
-                this.removeSelectShop();
-                this.removeYaMap();
-                this.model.set('shop', '');
+        /** Из коллекции городов находим город и если у него выведено свойство "showShop", добавляем поле с выбором студий */
+        if (city && this.cityCollection.findWhere({'name': city}) && this.cityCollection.findWhere({'name': city}).get('showShop')) {
+            this.addSelectShop(city);
+            if (UM.configsCollection.get(this.model.get('configId')).get('formConfig').shop.mapShow) {
+                this.createYaMap();
             }
+        } else {
+            this.removeSelectShop();
+            this.removeYaMap();
+            this.model.set('shop', '');
         }
     },
 
     addSelectShop: function (city) {
         var $el = this.$el.find('[name=shop]');
 
-        UM.cityShopCollection = UM.shopCollection.filterByCity(city);
-        UM.shopCollectionView = new UM.Views.Shops({collection: UM.cityShopCollection});
+        this.cityShopCollection = this.shopCollection.filterByCity(city);
+        this.shopCollectionView = new UM.Views.Shops({collection: this.cityShopCollection});
 
-        if (UM.shopCollectionView.$el.children().length) {
-            $el.before(UM.shopCollectionView.el);
+        if (this.shopCollectionView.$el.children().length) {
+            $el.before(this.shopCollectionView.el);
 
             $el[0].disabled = false;
             $el.parent('.um-form-group').removeClass('um-hidden');
@@ -130,11 +146,13 @@ module.exports = Backbone.Ribs.View.extend({
     },
 
     showSelectShop: function () {
-        UM.vent.trigger('shopList:show', this.model.toJSON());
+        if (this.shopCollectionView)
+            this.shopCollectionView.show();
     },
 
     hideSelectShop: function () {
-        UM.vent.trigger('shopList:hide', this.model.toJSON());
+        if (this.shopCollectionView)
+            this.shopCollectionView.hidden();
     },
 
     render: function () {
@@ -244,7 +262,7 @@ module.exports = Backbone.Ribs.View.extend({
 
         $elMap.children().remove();
 
-        var mapShopArr = UM.shopCollection.filterByCityForMap(this.model.get('city')).toJSON();
+        var mapShopArr = this.shopCollection.filterByCityForMap(this.model.get('city')).toJSON();
 
         var latSum = 0,
             lonSum = 0,
@@ -318,7 +336,8 @@ module.exports = Backbone.Ribs.View.extend({
     showYaMap: function () {
         if (UM.mapShopCollectionView) {
             $('.um-modal').removeClass('um-hidden');
-            UM.vent.trigger('shopList:hide', this.options.configId);
+            this.hideSelectShop();
+            //UM.vent.trigger('shopList:hide', this.options.configId);
         }
     },
 

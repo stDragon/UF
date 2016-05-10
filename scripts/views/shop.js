@@ -26,15 +26,9 @@ module.exports = Backbone.View.extend({
     },
 
     active: function () {
-        if (this.model.get('active'))
-            UM.vent.trigger('shopList:hide', this.options.configId);
-        else {
+        if (!this.model.get('active')) {
+            this.model.collection.unsetActive();
             this.model.set('active', true);
-
-            var shopName = this.model.get('name') + ', ' + this.model.get('address');
-
-            UM.vent.trigger('user:setShop', shopName);
         }
-
     }
 });

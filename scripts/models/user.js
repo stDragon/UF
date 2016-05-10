@@ -109,23 +109,9 @@ module.exports = Backbone.Model.extend({
     initialize: function () {
         if (this.get('debugger'))
             this.on('change', this.log, this);
-
-        UM.vent.on('user:setCity', this.setCity, this);
-        UM.vent.on('user:setShop', this.setShop, this);
     },
 
     log: function () {
         console.log(this.toJSON());
-    },
-
-    setCity: function (name) {
-        this.set({
-            'city': name,
-            'shop': ''
-        });
-    },
-
-    setShop: function (name) {
-        this.set('shop', name);
     }
 });

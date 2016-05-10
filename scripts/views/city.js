@@ -27,8 +27,8 @@ module.exports = Backbone.View.extend({
 
     active: function () {
         if (!this.model.get('active')) {
+            this.model.collection.unsetActive();
             this.model.set('active', true);
-            UM.vent.trigger('user:setCity', this.model.get('name'));
         }
     }
 });

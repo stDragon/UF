@@ -434,8 +434,9 @@ $(document).ready(function() {
         el: '#example',
 
         initialize: function () {
-            this.listenTo(this.model, 'sync', this.render);
             this.listenTo(this.model, 'invalid', this.unrender);
+            this.listenTo(this.model, 'error', this.unrender);
+            this.listenTo(this.model, 'sync', this.render);
         },
 
         render: function () {
@@ -452,15 +453,19 @@ $(document).ready(function() {
 
             } else this.$el.html('');
 
-            UM.init(this.model.toJSON());
+            UM.init({id: this.model.id});
         },
 
         unrender: function() {
-            if(UM.page)
-                UM.page.unrender();
+            if(UM.configsCollection) {
+                if(UM.pages[this.model.id])
+                    UM.pages[this.model.id].unrender();
 
-            if(UM.button && UM.button.$el.hasClass('um-btn-start--fixed'))
-                UM.button.unrender();
+                if(UM.buttons[this.model.id] && UM.buttons[this.model.id].$el.hasClass('um-btn-start--fixed'))
+                    UM.buttons[this.model.id].unrender();
+
+                UM.configsCollection.reset();
+            }
         }
 
     });
