@@ -77,6 +77,10 @@ module.exports = Backbone.Ribs.View.extend({
         var value;
         if (changed.type == 'checkbox') {
             value = changed.checked;
+            if (changed.checked)
+                $(changed).parent('label').addClass('um-checked');
+            else
+                $(changed).parent('label').removeClass('um-checked');
         } else {
             value = changed.value;
         }
