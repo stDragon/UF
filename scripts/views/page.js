@@ -6,17 +6,21 @@ module.exports = Backbone.Ribs.View.extend({
 
     tagName: 'article',
     className: 'um',
+    template: 'pageTpl',
 
     events: {
         'click .um-close': 'hide'
     },
 
     initialize: function () {
+
+        this.$el.addClass(this.model.get('style'));
+
         /** В фиксированном окне добваляется соответствующий класс DOM элементу */
         if (this.model.get('initType') == 'button' || this.model.get('initPosition') == 'fixed')
             this.$el.addClass('fixed');
 
-        this.render(this.showStartForm());
+        this.render();
 
         UM.vent.on('page:show', function (id) {
             if (id == this.model.id)
@@ -25,42 +29,44 @@ module.exports = Backbone.Ribs.View.extend({
 
         UM.vent.on('page:showLoader', function (id) {
             if (id == this.model.id)
-                this.render(this.showLoader());
+                this.renderStep(this.showLoader());
         }, this);
 
         UM.vent.on('page:hideLoader', function (id) {
             if (id == this.model.id)
-                this.render(this.hideLoader());
+                this.renderStep(this.hideLoader());
         }, this);
 
         UM.vent.on('page:showPhoneForm', function (id) {
             if (id == this.model.id) {
                 if (this.model.get('phoneVerification') === true)
-                    this.render(this.showPhoneForm());
+                    this.renderStep(this.showPhoneForm());
                 else
-                    this.render(this.showConfirm());
+                    this.renderStep(this.showConfirm());
             }
         }, this);
 
         UM.vent.on('page:showConfirm', function (id) {
             if (id == this.model.id)
-                this.render(this.showConfirm());
+                this.renderStep(this.showConfirm());
         }, this);
 
         this.listenTo(this.model, 'destroy', this.unrender);
     },
 
-    render: function (form) {
-        /** В фиксированном окне добваляется кнопка закрытия окна */
-        if (this.model.get('initType') == 'button' || this.model.get('initPosition') == 'fixed') {
-            var close =
-                '<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24" class="um-close">' +
-                '<path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>' +
-                '<path d="M0 0h24v24H0z" fill="none"/>' +
-                '</svg>';
-        }
-        this.$el.html(form);
-        this.$el.prepend(close);
+    render: function () {
+        var that = this;
+        UM.TemplateManager.get(this.template, function (template) {
+            var temp = _.template(template);
+            var html = $(temp(that.model.toJSON()));
+            that.$el.html(html);
+            that.$el.children('.um-body').html(that.showStartForm())
+        });
+        return this;
+    },
+
+    renderStep: function (form) {
+        this.$el.children('.um-body').html(form);
         return this;
     },
 
@@ -82,7 +88,7 @@ module.exports = Backbone.Ribs.View.extend({
     /** Добавление прелоудера для обмена данными с сервером */
     initLoader: function () {
         this.laoder = new UM.Views.Loader();
-        this.$el.prepend(this.laoder.el);
+        this.$el.children('.um-header').prepend(this.laoder.el);
     },
 
     showLoader: function () {

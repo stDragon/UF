@@ -1,0 +1,9 @@
+@mixin um-animation-show() {
+  opacity: 1;
+  visibility: visible;
+  -webkit-transition: opacity 0.3s, visibility 0s ease-in 0.3s;
+  -moz-transition: opacity 0.3s, visibility 0s ease-in 0.3s;
+  -o-transition: opacity 0.3s, visibility 0s ease-in 0.3s;
+  transition: opacity 0.3s, visibility 0s ease-in 0.3s;
+  transition-delay: 0s;
+}

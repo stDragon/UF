@@ -8,7 +8,7 @@ module.exports = Backbone.Ribs.Model.extend({
         siteUrl: '',
         formType: 'calculation',
         formConfig: '',
-        style: '/public/css/um-material.css',
+        style: 'um-material',
         initType: 'button',
         initPosition: 'fixed',
         phoneVerification: true

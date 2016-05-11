@@ -1,9 +1,4 @@
 $main-color: #e11a33;
-fieldset {
-  border: 0;
-  margin: 0;
-  padding: 0;
-}
 .um-hidden {
   display: none !important;
   visibility: hidden;
@@ -22,6 +17,31 @@ fieldset {
   cursor: pointer;
 }
 
+.um-close {
+  background-color: transparent;
+  fill: #000;
+  opacity: .3;
+  cursor: pointer;
+  z-index: 100;
+  :hover {
+    opacity: .5;
+  }
+}
+
+.um-title {
+  width: 100%;
+  margin: 0;
+  padding: 0 0 0.4em 0;
+  color: #666;
+  font-size: 2em;
+}
+
+.um-title-2 {
+  width: 100%;
+  margin: 0;
+  font-size: 1.3em;
+}
+
 .um {
   box-sizing: border-box;
   * {
@@ -36,6 +56,14 @@ fieldset {
     bottom: 5vh;
     right: 5vh;
     z-index: 2010;
+  }
+  legend{
+    margin-bottom: 1em;
+  }
+  fieldset {
+    border: 0;
+    margin: 0;
+    padding: 0;
   }
   [type="checkbox"]{
     &:checked+label:before {

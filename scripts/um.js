@@ -20,7 +20,8 @@ var UM = window.UM || {
         forms: [],
         buttons: [],
         cityCollections: [],
-        serverUrl: conf.server.url + '/um/umdata'
+        serverUrl: conf.server.url + '/um/umdata',
+        conf: conf
     };
 
 window.UM = UM;
