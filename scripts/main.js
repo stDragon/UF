@@ -84,10 +84,13 @@ $(document).ready(function() {
         },
 
         initialize: function () {
-            this.createFormFieldGenerator();
+            if (!this.id)
+                this.createFormFieldGenerator();
+            else
+                this.listenToOnce(this, 'sync', this.createFormFieldGenerator);
+
             this.on('sync', this.log, this);
-            this.on('change', this.createFormFieldGenerator, this);
-            this.listenTo(this.formField, 'change', this.setFormConfig);
+            this.on('change:formConfig', this.createFormFieldGenerator, this);
         },
 
         validate: function (attrs, options) {
@@ -120,11 +123,12 @@ $(document).ready(function() {
                     if (App.formFieldGenerator['calculation'])
                         this.formField = App.formFieldGenerator['calculation'];
                     else {
-                        App.formFieldGenerator['calculation'] = new App.Models.FormFieldGenerator();
+                        App.formFieldGenerator['calculation'] = new App.Models.FormFieldGenerator(this.toJSON().formConfig);
                         this.formField = App.formFieldGenerator['calculation'];
                     }
                     break;
             }
+            this.listenTo(this.formField, 'change', this.setFormConfig);
             this.setFormConfig()
         },
 
@@ -218,7 +222,8 @@ $(document).ready(function() {
             personalData: {
                 label: 'Согласен с обработкой персональных данных',
                 show: true,
-                required: false
+                required: true,
+                checked: true
             },
             wishes: {
                 label: 'Пожелания',

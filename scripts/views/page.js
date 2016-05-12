@@ -111,7 +111,7 @@ module.exports = Backbone.Ribs.View.extend({
     showStartForm: function () {
         if (this.model.get('formType') == 'calculation') {
 
-            this.form = new UM.Models.User({configId: this.model.id});
+            this.form = new UM.Models.User({configId: this.model.id}, this.model.get('formConfig'));
             UM.forms[this.model.id] = this.form;
             this.formView = new UM.Views.CalculationForm({model: this.form});
 

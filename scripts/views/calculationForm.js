@@ -17,6 +17,7 @@ module.exports = Backbone.Ribs.View.extend({
         'input input': 'setAttrs',
         'blur input': 'setAttr',
         'blur textarea': 'setAttr',
+        'blur': 'preValidation',
         'click .um-icon-add-location': 'showYaMap',
         'change input:checkbox': 'changed',
         'submit': 'save'
@@ -35,6 +36,7 @@ module.exports = Backbone.Ribs.View.extend({
         this.render();
 
         this.model.on('change', this.setValue, this);
+        this.model.on('change:personalData', this.preValidation, this);
 
         if (UM.configsCollection.get(this.model.get('configId')).get('formConfig').shop.show) {
             this.createYaMapModal();
@@ -166,6 +168,7 @@ module.exports = Backbone.Ribs.View.extend({
             var data = _.extend(that.model.toJSON(), UM.configsCollection.get(that.model.get('configId')).toJSON());
             var html = $(temp(data));
             that.$el.html(html);
+            that.preValidation();
         });
         return this;
     },
@@ -219,6 +222,15 @@ module.exports = Backbone.Ribs.View.extend({
      */
     enabledSubmit: function () {
         this.$el.find('button:submit')[0].disabled = false;
+    },
+
+    preValidation: function(){
+        if (this.model.options.personalData.required) {
+            if (this.model.get('personalData'))
+                this.enabledSubmit();
+            else
+                this.disabledSubmit();
+        }
     },
 
     valid: function () {

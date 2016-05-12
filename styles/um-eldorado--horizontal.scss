@@ -6,13 +6,15 @@
   max-width: 980px;
   padding: 0 25px;
   margin: 0 auto;
+  font: normal 14px /20px "PT Sans", sans-serif;
+
   .um-tooltip {
     padding: 3px;
   }
   .um-form {
     text-align: center;
     label {
-      font: normal 14px / 20px 'PT Sans', sans-serif;
+      font: inherit;
     }
     legend {
       width: 100%;
@@ -52,14 +54,20 @@
     .um-form-control {
       width: 100%;
       height: 30px;
+      line-height: 1em;
       border-radius: 2px;
       padding: 4px 6px;
       border: 1px solid #e8e8e8;
       background: #f3f3f3;
       color: #444444;
+      font: inherit;
       -webkit-transition: all linear 0.2s;
       transition: all linear 0.2s;
       -webkit-appearance: none;
+    }
+    input[type='text']:-ms-input-placeholder,
+    input[type='password']:-ms-input-placeholder{
+      color: #444444!important;
     }
     .um-form-group-surname {
       display: none;
@@ -74,6 +82,7 @@
       margin-top: 15px;
       overflow: auto;
       vertical-align: top;
+      font: inherit;
       text-align: center;
 
       border: 1px transparent dashed;
@@ -90,23 +99,14 @@
     .um-btn {
       margin-top: 15px;
       -webkit-appearance: none;
-      border: none;
       font: inherit;
       color: #ffffff;
       text-transform: none;
-      display: inline-block;
-      box-sizing: border-box;
       padding: 0 45px 0 21px;
       background-color: $main-color;
-      vertical-align: middle;
-      line-height: 35px;
-      min-height: 35px;
       font-size: 17px;
       font-family: 'Schlange', sans-serif;
-      text-decoration: none!important;
-      text-align: center;
       border-radius: 25px;
-      position: relative;
       overflow: hidden;
       z-index: 10;
       box-shadow: 0 0 5px rgba(0, 0, 0, 0.26) inset;
@@ -159,6 +159,14 @@
           -ms-transform: translate3d(110%,0,0) rotate(45deg);
           -o-transform: translate3d(110%,0,0) rotate(45deg);
           transform: translate3d(110%,0,0) rotate(45deg);
+        }
+      }
+      &:disabled {
+        background-color: #DEBCC1;
+        &:hover {
+          &::after {
+            display: none;
+          }
         }
       }
     }

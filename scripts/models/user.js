@@ -18,22 +18,32 @@ module.exports = Backbone.Model.extend({
         return UM.serverUrl + '/client/'
     },
 
+    initialize: function (model, options) {
+        if (options) {
+            this.options = options;
+            console.log(options.personalData.checked);
+            this.set('personalData', options.personalData.checked);
+        }
+
+        this.log();
+        this.on('change', this.log, this);
+    },
+
     /** @TODO временны отключены часть ошибок. используется браузерный валидатор */
-    validate: function (attrs, options) {
+    validate: function (attrs) {
         var emailFilter = /^[-\w.]+@([A-z0-9][-A-z0-9]+\.)+[A-z]{2,4}$/,
             lettersFilter = /^[а-яА-ЯёЁa-zA-Z]{1,20}$/,
             phoneFilter = /((8|\+7)-?)?\(?\d{3}\)?-?\d{1}-?\d{1}-?\d{1}-?\d{1}-?\d{1}-?\d{1}-?\d{1}/;
 
-        var errors = [],
-            options = UM.configsCollection.get(this.get('configId')).toJSON();
+        var errors = [];
 
-        if (options.formConfig.firstName.show) {
-            if (options.formConfig.firstName.required && !attrs.firstName) {
+        if (this.options.firstName.show) {
+            if (this.options.firstName.required && !attrs.firstName) {
                 errors.push({
                     text: "Вы не заполнили имя",
                     attr: 'firstName'
                 });
-            } else if (options.formConfig.firstName.required && !lettersFilter.test(attrs.firstName)) {
+            } else if (this.options.firstName.required && !lettersFilter.test(attrs.firstName)) {
                 errors.push({
                     text: "Имя должно содержать только буквы",
                     attr: 'firstName'
@@ -41,13 +51,13 @@ module.exports = Backbone.Model.extend({
             }
         }
 
-        if (options.formConfig.surname.show) {
-            if (options.formConfig.surname.required && !attrs.surname) {
+        if (this.options.surname.show) {
+            if (this.options.surname.required && !attrs.surname) {
                 errors.push({
                     text: "Вы не заполнили фамилию",
                     attr: 'surname'
                 });
-            } else if (options.formConfig.surname.required && !lettersFilter.test(attrs.surname)) {
+            } else if (this.options.surname.required && !lettersFilter.test(attrs.surname)) {
                 errors.push({
                     text: "Фамилия должна содержать только буквы",
                     attr: 'surname'
@@ -55,13 +65,13 @@ module.exports = Backbone.Model.extend({
             }
         }
 
-        /*if (options.formConfig.firstName.email) {
-            if (options.formConfig.email.required && !attrs.email) {
+        /*if (this.options.firstName.email) {
+            if (this.options.email.required && !attrs.email) {
                 errors.push({
                     text: "Вы не заполнили электронную почту",
                     attr: 'email'
                 });
-            } else if (options.formConfig.email.required && !emailFilter.test(attrs.email)) {
+            } else if (this.options.email.required && !emailFilter.test(attrs.email)) {
                 errors.push({
                     text: "Почтовый адресс не коректен",
                     attr: 'email'
@@ -69,13 +79,13 @@ module.exports = Backbone.Model.extend({
             }
         }*/
 
-        if (options.formConfig.phone.show) {
-            if (options.formConfig.phone.required && !attrs.phone) {
+        if (this.options.phone.show) {
+            if (this.options.phone.required && !attrs.phone) {
                 errors.push({
                     text: "Вы не заполнили телефон",
                     attr: 'phone'
                 });
-            } else if (options.formConfig.phone.required && !phoneFilter.test(attrs.phone)) {
+            } else if (this.options.phone.required && !phoneFilter.test(attrs.phone)) {
                 errors.push({
                     text: "Телефон не коректен",
                     attr: 'phone'
@@ -83,8 +93,8 @@ module.exports = Backbone.Model.extend({
             }
         }
 
-        if (options.formConfig.city.show) {
-            if (options.formConfig.city.required && !attrs.city) {
+        if (this.options.city.show) {
+            if (this.options.city.required && !attrs.city) {
                 errors.push({
                     text: "Вы не выбрали город",
                     attr: 'city'
@@ -92,8 +102,8 @@ module.exports = Backbone.Model.extend({
             }
         }
 
-        if (options.formConfig.personalData.show) {
-            if (options.formConfig.personalData.required && attrs.personalData == false) {
+        if (this.options.personalData.show) {
+            if (this.options.personalData.required && attrs.personalData == false) {
                 errors.push({
                     text: "Чтобы продолжить установите этот флажок",
                     attr: 'personalData'
@@ -101,14 +111,10 @@ module.exports = Backbone.Model.extend({
             }
         }
 
-        if (options.server == 'dev' && errors.length) console.warn(errors);
+        //if (this.options.server == 'dev' && errors.length)
+            console.warn(errors);
 
         if (errors.length) return errors;
-    },
-
-    initialize: function () {
-        if (this.get('debugger'))
-            this.on('change', this.log, this);
     },
 
     log: function () {
