@@ -3,5 +3,7 @@
  *  */
 
 module.exports = UM.Views.Button.extend({
-    el: $('#um-btn-init')
+    el: function () {
+        return $('[data-um-id=' + this.model.id + ']');
+    }
 });

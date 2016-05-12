@@ -136,11 +136,11 @@ $(document).ready(function() {
         },
 
         getButtonDOM: function() {
-            return '<button type="button" id="um-btn-init" class="um-btn um-btn--raised um-btn-red">Заказать кухню</button>'
+            return '<button type="button" data-um-id="' + this.id + '" class="um-btn um-btn--raised um-btn-red">Заказать кухню</button>'
         },
 
         getFormDOM: function() {
-            return '<div id="um-form-init"></div>'
+            return '<div data-um-id="' + this.id + '"></div>'
         },
 
         getScript: function () {

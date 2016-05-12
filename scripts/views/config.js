@@ -52,8 +52,22 @@ module.exports = Backbone.Ribs.View.extend({
 
             if (this.model.get('initPosition') == 'fixed') {
                 $body.append(this.page.el);
-            } else if (this.model.get('initPosition') == 'static')
-                $('#um-form-init').append(this.page.el);
+            } else if (this.model.get('initPosition') == 'static') {
+                /** @TODO обратная совместимость с вставлением формы по айдишнику*/
+                var $el = $('#um-form-init');
+                if ($el.length)
+                    $el.html(this.page.el);
+                else {
+                    this.page = [];
+                    var that = this;
+                    $('[data-um-id=' + this.model.id + ']').each(function(index){
+                        var page =  new UM.Views.Page({model: that.model});
+                        $(this).html(page.el);
+                        that.page[index] = page;
+                    });
+                }
+
+            }
         }
 
         UM.pages[this.model.id] = this.page;
