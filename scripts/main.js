@@ -9,7 +9,8 @@ $(document).ready(function() {
         Views: {},
         Router: {},
         Helpers: {},
-        serverUrl: conf.server.url + '/um/umdata'
+        serverUrl: conf.server.url + '/um/umdata',
+        conf: conf
     };
 
     App.formFieldGenerator = [];
@@ -89,8 +90,10 @@ $(document).ready(function() {
             else
                 this.listenToOnce(this, 'sync', this.createFormFieldGenerator);
 
-            this.on('sync', this.log, this);
             this.on('change:formConfig', this.createFormFieldGenerator, this);
+
+            if (App.conf.server.type != 'prod')
+                this.on('sync', this.log, this);
         },
 
         validate: function (attrs, options) {
@@ -186,35 +189,42 @@ $(document).ready(function() {
             header: {
                 label: 'Заголовок',
                 show: false,
-                value: 'Бесплатный дизайн-проект в&nbsp;три&nbsp;клика'
+                value1: 'Легко!',
+                value2: 'Бесплатный дизайн-проект в&nbsp;три&nbsp;клика'
             },
             surname: {
                 label: 'Фамилия',
+                placeholder: 'Ваша фамилия',
                 show: false,
                 required: false
             },
             firstName: {
                 label: 'Имя',
+                placeholder: 'Ваше имя',
                 show: true,
                 required: false
             },
             email: {
                 label: 'E-mail',
+                placeholder: 'Ваш e-mail',
                 show: true,
                 required: false
             },
             phone: {
                 label: 'Телефон',
+                placeholder: 'Ваш номер телефон',
                 show: true,
                 required: false
             },
             city: {
                 label: 'Город',
+                placeholder: 'Выберите город',
                 show: true,
                 required: false
             },
             shop: {
                 label: 'Студия',
+                placeholder: 'Выберите студию',
                 show: false,
                 mapShow: false,
                 required: false
@@ -227,13 +237,19 @@ $(document).ready(function() {
             },
             wishes: {
                 label: 'Пожелания',
+                placeholder: 'Пожелания',
                 show: true,
                 required: false
+            },
+            submit: {
+                label: 'Кнопка отправки',
+                text: 'Отправить заявку'
             }
         },
 
         initialize: function() {
-            this.on('change', this.log, this);
+            if (App.conf.server.type != 'prod')
+                this.on('change', this.log, this);
         },
 
         log: function () {

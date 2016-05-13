@@ -28,6 +28,16 @@ textarea.code{
   height: auto;
   background: #f5f2f0;
 }
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  border: 0;
+}
 .btn-default{
   color: #000;
   background-color: rgba(158,158,158,.2);
@@ -61,5 +71,15 @@ textarea.code{
   .material-icons{
     font-size: inherit;
     line-height: inherit;
+  }
+}
+.switch{
+  line-height: 3rem;
+  margin: 0 0 15px 0;
+}
+
+.form-field-generator {
+  .input-field {
+    margin-top: 0;
   }
 }

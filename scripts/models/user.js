@@ -21,12 +21,10 @@ module.exports = Backbone.Model.extend({
     initialize: function (model, options) {
         if (options) {
             this.options = options;
-            console.log(options.personalData.checked);
             this.set('personalData', options.personalData.checked);
         }
-
-        this.log();
-        this.on('change', this.log, this);
+        if (UM.conf.server.type != 'prod')
+            this.on('change', this.log, this);
     },
 
     /** @TODO временны отключены часть ошибок. используется браузерный валидатор */
@@ -111,7 +109,7 @@ module.exports = Backbone.Model.extend({
             }
         }
 
-        //if (this.options.server == 'dev' && errors.length)
+        if (UM.conf.server.type != 'prod' && errors.length)
             console.warn(errors);
 
         if (errors.length) return errors;
