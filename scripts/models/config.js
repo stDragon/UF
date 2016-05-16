@@ -14,8 +14,16 @@ module.exports = Backbone.Ribs.Model.extend({
         phoneVerification: true
     },
 
-    initialize: function () {
+    initialize: function (model, data) {
+        this.data = data || {
+                user: {
+                    configId : this.id
+                }
+            };
+        this.data.user.configId = this.id;
+
         this.on('sync', this.checkConfig, this);
+        this.on('sync', this.initForm, this);
     },
 
     checkConfig: function () {
@@ -31,5 +39,14 @@ module.exports = Backbone.Ribs.Model.extend({
             console.warn('Стили отключены');
         if (!this.get('showMap'))
             console.warn('Карта отключина');
+    },
+
+    initForm: function () {
+        if (this.get('formType') == 'calculation') {
+            this.form = new UM.Models.User(this.data.user, this.get('formConfig'));
+            UM.forms[this.id] = this.form;
+        } else {
+            throw new Error("Тип заявки '" + this.get('formType') + "' не поддерживается или не корректен");
+        }
     }
 });

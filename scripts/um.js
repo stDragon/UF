@@ -56,15 +56,16 @@ UM.Views.Shops = require('./views/shops.js');
 /**
  *  Запуск модуля
  *  @param  {string} option - Опции для инициализации модуля.
+ *  @param  {string} data - Данные передаваемые в модуль.
  *  */
-UM.init = function (option) {
+UM.init = function (option, data) {
     $(document).ready(function(){
         UM.option.push(option);
         /** создаем новую кллекцию конфигураций */
         if (!UM.configsCollection)
             UM.configsCollection = new UM.Collections.Configs([], option);
 
-        var config = new UM.Models.Config(option);
+        var config = new UM.Models.Config(option, data);
         UM.configsCollection.add(config);
 
         config.fetch().then(function () {

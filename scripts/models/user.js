@@ -11,7 +11,8 @@ module.exports = Backbone.Model.extend({
         city: '',
         shop: '',
         wishes: '',
-        personalData: true
+        personalData: true,
+        href: window.location.href
     },
 
     urlRoot: function () {

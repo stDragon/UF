@@ -109,22 +109,22 @@ module.exports = Backbone.Ribs.View.extend({
      * Рендер выбранной в конфигураторе формы
      * */
     showStartForm: function () {
-        if (this.model.get('formType') == 'calculation') {
+        if (this.model.form) {
+            if (this.model.get('formType') == 'calculation') {
 
-            this.form = new UM.Models.User({configId: this.model.id}, this.model.get('formConfig'));
-            UM.forms[this.model.id] = this.form;
-            this.formView = new UM.Views.CalculationForm({model: this.form});
+                this.formView = new UM.Views.CalculationForm({model: this.model.form});
 
-            return this.formView.el;
-        } else {
-            throw new Error("Тип заявки '" + this.model.get('formType') + "' не поддерживается или не корректен");
+                return this.formView.el;
+            } else {
+                throw new Error("Тип заявки '" + this.model.get('formType') + "' не поддерживается или не корректен");
+            }
         }
     },
     /**
      * Рендер формы подтверждения телефона
      * */
     showPhoneForm: function () {
-        var phone = this.form.get('phone');
+        var phone = this.model.form.get('phone');
         this.phone = new UM.Models.Phone({
             user: UM.forms[this.model.id].id,
             phone: phone,
