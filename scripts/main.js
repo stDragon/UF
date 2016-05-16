@@ -280,6 +280,7 @@ $(document).ready(function() {
 
             this.listenTo(this.model, 'change', this.setValue);
             this.listenTo(this.model, 'sync', this.renderCode);
+            //this.listenTo(this.model, 'sync', this.showMassageSave);
             this.listenTo(this.model, 'invalid', this.invalid);
             this.listenTo(this.model, 'invalid', this.unrenderCode);
             this.listenTo(this.model, 'request', this.valid);
@@ -379,6 +380,10 @@ $(document).ready(function() {
             } catch(err) {
                 console.error('Не удалось скопировать');
             }
+        },
+
+        showMassageSave: function () {
+            Materialize.toast('Изменения сохранены', 2000);
         },
 
         submit: function (e) {
