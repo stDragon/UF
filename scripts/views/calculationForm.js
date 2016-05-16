@@ -170,6 +170,7 @@ module.exports = Backbone.Ribs.View.extend({
             that.$el.html(html);
             that.preValidation();
         });
+        if (this.model.options.class) this.$el.addClass(this.model.options.class);
         return this;
     },
     /** Устанавливает значения полей формы*/

@@ -16,6 +16,8 @@ module.exports = Backbone.Ribs.View.extend({
 
         this.$el.addClass(this.model.get('style'));
 
+        if (this.model.get('class')) this.$el.addClass(this.model.get('class'));
+
         /** В фиксированном окне добваляется соответствующий класс DOM элементу */
         if (this.model.get('initType') == 'button' || this.model.get('initPosition') == 'fixed')
             this.$el.addClass('fixed');
