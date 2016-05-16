@@ -137,9 +137,6 @@ $(document).ready(function() {
 
         setFormConfig: function () {
             this.set('formConfig', this.formField.toJSON());
-            if (this.id) {
-                this.save();
-            }
         },
 
         getButtonDOM: function() {
@@ -280,7 +277,7 @@ $(document).ready(function() {
 
             this.listenTo(this.model, 'change', this.setValue);
             this.listenTo(this.model, 'sync', this.renderCode);
-            //this.listenTo(this.model, 'sync', this.showMassageSave);
+            this.listenTo(this.model, 'sync', this.showMassageSave);
             this.listenTo(this.model, 'invalid', this.invalid);
             this.listenTo(this.model, 'invalid', this.unrenderCode);
             this.listenTo(this.model, 'request', this.valid);
@@ -345,9 +342,8 @@ $(document).ready(function() {
 
             var obj = {};
             obj[changed.name] = value;
-            if (!this.model.save(obj)) {
-                this.model.set(obj);
-            }
+
+            this.model.set(obj);
         },
 
         valid: function () {
@@ -453,6 +449,7 @@ $(document).ready(function() {
 
         submit: function (e) {
             e.preventDefault();
+            App.config.save();
         }
     });
 

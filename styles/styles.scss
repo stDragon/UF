@@ -83,3 +83,16 @@ textarea.code{
     margin-top: 0;
   }
 }
+.tabs {
+  .tab {
+    a{
+      color: #26a69a;
+      &:hover {
+        color: #84c7c1;
+      }
+    }
+  }
+  .indicator {
+    background-color: #84c7c1;
+  }
+}
