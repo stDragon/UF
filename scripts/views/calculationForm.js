@@ -10,8 +10,8 @@ module.exports = Backbone.Ribs.View.extend({
 
     events: {
         'focus #umPhone': 'initMask',
-        'focus #umCity': 'showSelectCity',
-        'focus #umShop': 'showSelectShop',
+        //'focus #umCity': 'showSelectCity',
+        //'focus #umShop': 'showSelectShop',
         'focus input:not(#umCity)': 'hideSelectCity',
         'focus input:not(#umShop)': 'hideSelectShop',
         'input input': 'setAttrs',

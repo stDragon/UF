@@ -58,17 +58,19 @@ UM.Views.Shops = require('./views/shops.js');
  *  @param  {string} option - Опции для инициализации модуля.
  *  */
 UM.init = function (option) {
-    UM.option.push(option);
-    /** создаем новую кллекцию конфигураций */
-    if (!UM.configsCollection)
-        UM.configsCollection = new UM.Collections.Configs([], option);
+    $(document).ready(function(){
+        UM.option.push(option);
+        /** создаем новую кллекцию конфигураций */
+        if (!UM.configsCollection)
+            UM.configsCollection = new UM.Collections.Configs([], option);
 
-    var config = new UM.Models.Config(option);
-    UM.configsCollection.add(config);
+        var config = new UM.Models.Config(option);
+        UM.configsCollection.add(config);
 
-    config.fetch().then(function () {
-        new UM.Views.Config({model: config});
-    }, config);
+        config.fetch().then(function () {
+            new UM.Views.Config({model: config});
+        }, config);
+    });
 };
 
 /**

@@ -64,6 +64,9 @@
       -webkit-transition: all linear 0.2s;
       transition: all linear 0.2s;
       -webkit-appearance: none;
+      -webkit-box-shadow: none;
+      -moz-box-shadow: none;
+      box-shadow: none;
     }
     input[type='text']:-ms-input-placeholder,
     input[type='password']:-ms-input-placeholder{
@@ -94,6 +97,9 @@
         outline: 0;
         color: #444444;
         border-color: #e8e8e8;
+        -webkit-box-shadow: none;
+        -moz-box-shadow: none;
+        box-shadow: none;
       }
     }
     .um-btn {

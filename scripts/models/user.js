@@ -29,9 +29,9 @@ module.exports = Backbone.Model.extend({
 
     /** @TODO временны отключены часть ошибок. используется браузерный валидатор */
     validate: function (attrs) {
-        var emailFilter = /^[-\w.]+@([A-z0-9][-A-z0-9]+\.)+[A-z]{2,4}$/,
-            lettersFilter = /^[а-яА-ЯёЁa-zA-Z]{1,20}$/,
-            phoneFilter = /((8|\+7)-?)?\(?\d{3}\)?-?\d{1}-?\d{1}-?\d{1}-?\d{1}-?\d{1}-?\d{1}-?\d{1}/;
+         //emailFilter = /^[-\w.]+@([A-z0-9][-A-z0-9]+\.)+[A-z]{2,4}$/,
+            //lettersFilter = /^[а-яА-ЯёЁa-zA-Z]{1,20}$/,
+        var   phoneFilter = /((8|\+7)-?)?\(?\d{3}\)?-?\d{1}-?\d{1}-?\d{1}-?\d{1}-?\d{1}-?\d{1}-?\d{1}/;
 
         var errors = [];
 
@@ -41,12 +41,13 @@ module.exports = Backbone.Model.extend({
                     text: "Вы не заполнили имя",
                     attr: 'firstName'
                 });
-            } else if (this.options.firstName.required && !lettersFilter.test(attrs.firstName)) {
-                errors.push({
-                    text: "Имя должно содержать только буквы",
-                    attr: 'firstName'
-                });
             }
+            //else if (this.options.firstName.required && !lettersFilter.test(attrs.firstName)) {
+            //    errors.push({
+            //        text: "Имя должно содержать только буквы",
+            //        attr: 'firstName'
+            //    });
+            //}
         }
 
         if (this.options.surname.show) {
@@ -55,12 +56,13 @@ module.exports = Backbone.Model.extend({
                     text: "Вы не заполнили фамилию",
                     attr: 'surname'
                 });
-            } else if (this.options.surname.required && !lettersFilter.test(attrs.surname)) {
-                errors.push({
-                    text: "Фамилия должна содержать только буквы",
-                    attr: 'surname'
-                });
             }
+            //else if (this.options.surname.required && !lettersFilter.test(attrs.surname)) {
+            //    errors.push({
+            //        text: "Фамилия должна содержать только буквы",
+            //        attr: 'surname'
+            //    });
+            //}
         }
 
         /*if (this.options.firstName.email) {
