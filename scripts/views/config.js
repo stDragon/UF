@@ -23,7 +23,7 @@ module.exports = Backbone.Ribs.View.extend({
         if (this.model.get('style'))
             head += this.getStyle();
 
-        if (this.model.get('showMap'))
+        if (this.model.get('formConfig').shop.mapShow)
             head += this.getYaMap();
 
         if (head)

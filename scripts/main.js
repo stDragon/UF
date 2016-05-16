@@ -340,6 +340,9 @@ $(document).ready(function() {
                 value = changed.value;
             }
 
+            if (value === 'false') value = false;
+            if (value === 'true') value = true;
+
             var obj = {};
             obj[changed.name] = value;
 
@@ -440,6 +443,9 @@ $(document).ready(function() {
             } else {
                 value = changed.value;
             }
+
+            if (value === 'false') value = false;
+            if (value === 'true') value = true;
 
             var obj = {};
             obj[changed.name] = value;
