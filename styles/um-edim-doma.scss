@@ -4,7 +4,7 @@
 @import 'tooltip';
 @import 'modal';
 
-.um-btn{
+.um-btn.um-edim-doma{
     display: block;
     margin: 0 auto;
     padding: 0 15px;
@@ -13,6 +13,9 @@
     border-radius: 3em;
     color: #fff;
     font: normal 14px /20px "PT Sans", sans-serif;
+    &:disabled {
+        background-color: rgba(32,165,85,.3);;
+    }
 }
 
 .um.um-edim-doma{
@@ -68,6 +71,9 @@
               -o-transform: scale(0.7);
               transform: scale(0.7);
             }
+        }
+        &:disabled {
+            background-color: rgba(32,165,85,.3);;
         }
     }
     .um-form-group {
