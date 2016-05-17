@@ -86,8 +86,10 @@
                 display: block!important;
                 visibility: visible;
             }
+            &.um-with-map {
             .um-form-control{
-                width: 80%;
+                    width: 80%;
+                }
             }
             .um-icon-add-location{
                 position: absolute;

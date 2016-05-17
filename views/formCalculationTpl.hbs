@@ -36,7 +36,7 @@
         </div>
     <%}%>
     <%if(formConfig.shop.show){%>
-        <div class="um-form-group um-form-group-shop um-hidden">
+        <div class="um-form-group um-form-group-shop um-hidden<%= formConfig.shop.mapShow ? ' um-with-map' : ''%>">
             <label for="umShop"><%= formConfig.shop.label %></label>
             <input type="text" name="shop" class="um-form-control" id="umShop" placeholder="<%= formConfig.shop.placeholder %>" value="<%= shop %>" disabled <%= formConfig.shop.required ? 'required' : ''%>>
             <%if(formConfig.shop.mapShow){%>
