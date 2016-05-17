@@ -7,37 +7,37 @@
     <%}%>
     <%if(formConfig.surname.show){%>
         <div class="um-form-group um-form-group-surname">
-            <label class="um-sr-only" for="umSurname"><%= formConfig.surname.label %></label>
+            <label for="umSurname"><%= formConfig.surname.label %></label>
             <input type="text" name="surname" class="um-form-control" id="umSurname" placeholder="<%= formConfig.surname.placeholder %>" value="<%= surname %>" <%= formConfig.surname.required ? 'required' : ''%>>
         </div>
     <%}%>
     <%if(formConfig.firstName.show){%>
         <div class="um-form-group um-form-group-firstname">
-            <label class="um-sr-only" for="umFirstname"><%= formConfig.firstName.label %></label>
+            <label for="umFirstname"><%= formConfig.firstName.label %></label>
             <input type="text" name="firstName" class="um-form-control" id="umFirstname" placeholder="<%= formConfig.firstName.placeholder %>" value="<%= firstName %>" <%= formConfig.firstName.required ? 'required' : ''%>>
         </div>
     <%}%>
     <%if(formConfig.email.show){%>
         <div class="um-form-group um-form-group-email">
-            <label class="um-sr-only" for="umEmail"><%= formConfig.email.label %></label>
+            <label for="umEmail"><%= formConfig.email.label %></label>
             <input type="email" name="email" class="um-form-control" id="umEmail" placeholder="<%= formConfig.email.placeholder %>" value="<%= email %>" <%= formConfig.email.required ? 'required' : ''%>>
         </div>
     <%}%>
     <%if(formConfig.phone.show){%>
         <div class="um-form-group um-form-group-phone">
-            <label class="um-sr-only" for="umPhone"><%= formConfig.phone.label %></label>
+            <label for="umPhone"><%= formConfig.phone.label %></label>
             <input type="text" name="phone" class="um-form-control" id="umPhone" placeholder="<%= formConfig.phone.placeholder %>" value="<%= phone %>" <%= formConfig.phone.required ? 'required' : ''%>>
         </div>
     <%}%>
     <%if(formConfig.city.show){%>
         <div class="um-form-group um-form-group-city">
-            <label class="um-sr-only" for="umCity"><%= formConfig.city.label %></label>
+            <label for="umCity"><%= formConfig.city.label %></label>
             <input type="text" name="city" class="um-form-control" id="umCity" placeholder="<%= formConfig.city.placeholder %>" value="<%= city %>" <%= formConfig.city.required ? 'required' : ''%>>
         </div>
     <%}%>
     <%if(formConfig.shop.show){%>
         <div class="um-form-group um-form-group-shop um-hidden">
-            <label class="um-sr-only" for="umShop"><%= formConfig.shop.label %></label>
+            <label for="umShop"><%= formConfig.shop.label %></label>
             <input type="text" name="shop" class="um-form-control" id="umShop" placeholder="<%= formConfig.shop.placeholder %>" value="<%= shop %>" disabled <%= formConfig.shop.required ? 'required' : ''%>>
             <%if(formConfig.shop.mapShow){%>
                 <svg height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg" class="um-icon-add-location">
@@ -49,7 +49,7 @@
     <%}%>
     <%if(formConfig.wishes.show){%>
         <div class="um-form-group um-form-group-wishes">
-            <label class="um-sr-only" for="umWishes"><%= formConfig.wishes.label %></label>
+            <label for="umWishes"><%= formConfig.wishes.label %></label>
             <textarea id="umWishes" type="text" name="wishes" class="um-form-control" placeholder="<%= formConfig.wishes.placeholder %>"><%= wishes %></textarea>
         </div>
     <%}%>

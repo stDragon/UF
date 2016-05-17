@@ -1,7 +1,8 @@
 @import 'colors';
 @import 'mixins';
-@import 'tooltip';
+@import 'reset';
 @import 'base';
+@import 'tooltip';
 @import 'modal';
 @import 'load-bar';
 
@@ -23,10 +24,7 @@ $font-stack: Helvetica, sans-serif;
     width: 2em;
     height: 2em;
   }
-  fieldset {
-    border: 0;
-  }
-
+  
   .um-title,
   .um-title-2{
     display: block;
@@ -38,6 +36,7 @@ $font-stack: Helvetica, sans-serif;
     padding: 3em 1.5em 1.5em;
 
     label {
+      @include um-sr-only();
       display: inline-block;
       max-width: 100%;
       margin-bottom: 5px;

@@ -1,3 +1,5 @@
+@import 'mixins';
+@import 'reset';
 @import 'base';
 @import 'tooltip';
 @import 'modal';
@@ -13,9 +15,7 @@
   }
   .um-form {
     text-align: center;
-    label {
-      font: inherit;
-    }
+
     legend {
       width: 100%;
       border: 0;
@@ -24,6 +24,9 @@
       line-height: 30px;
       font-family: 'Schlange', sans-serif;
       color: $main-color;
+    }
+    label {
+      @include um-sr-only();
     }
     .um-login{
       margin-left: -5px;
