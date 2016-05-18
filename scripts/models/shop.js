@@ -12,6 +12,7 @@ module.exports = Backbone.Model.extend({
     },
 
     initialize: function () {
-        this.set('title', this.get('name') + ', ' + this.get('address'));
+        if (!this.get('title'))
+            this.set('title', this.get('name') + ', ' + this.get('address'));
     }
 });

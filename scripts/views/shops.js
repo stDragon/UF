@@ -7,16 +7,13 @@ module.exports = Backbone.View.extend({
     tagName: 'ul',
     className: 'um-dropdown-content um-shop-list',
 
+    events: {
+        'click li': 'hidden'
+    },
+
     initialize: function () {
         this.render();
-        UM.vent.on('shopList:show', function (options) {
-            if (this.collection.options.configId == options.configId)
-                this.show();
-        }, this);
-        UM.vent.on('shopList:hide', function (options) {
-            if (this.collection.options.configId == options.configId)
-                this.hidden();
-        }, this);
+
         this.collection.on('change', this.hidden, this);
     },
 

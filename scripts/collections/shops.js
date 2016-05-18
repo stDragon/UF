@@ -22,18 +22,22 @@ module.exports = Backbone.Collection.extend({
     },
     /**
      * Создает новый экземпляр Shops по названию города.
-     * @param  {string} city - Диаметр окружности.
+     * @param  {string} cityId - Город который ищем.
+     * @param  {object} option - Опции поиска.
      * @return {UM.Collections.Shops} Новый объект Shops.
      */
-    filterByCity: function (city) {
+    filterByCity: function (cityId, option) {
         var filtered = this.filter(function (model) {
-            return model.get("city") === city;
-        });
+            if (option.default == true)
+                return model.get("mr3cityid") === cityId || model.get("city") === 'all';
+
+            return model.get("mr3cityid") === cityId;
+        }, this);
         return new UM.Collections.Shops(filtered, this.options);
     },
     /**
      * Создает новый экземпляр Shops по названию города содержащих координаты для карты.
-     * @param  {string} city - Диаметр окружности.
+     * @param  {string} city - Студия которую ищем.
      * @return {UM.Collections.Shops} Новый объект Shops.
      */
     filterByCityForMap: function (city) {
@@ -48,7 +52,7 @@ module.exports = Backbone.Collection.extend({
             return model.get('active') == true;
         });
         if (active) {
-            return active.get('name');
+            return active.toJSON();
         }
     },
 

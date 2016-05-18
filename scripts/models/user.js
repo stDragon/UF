@@ -24,6 +24,40 @@ module.exports = Backbone.Model.extend({
             this.options = options;
             this.set('personalData', options.personalData.checked);
         }
+
+        this.cityCollection = new UM.Collections.Citys([], this.toJSON());
+        this.cityCollection.fetch();
+
+        var defaultShop = {
+            name: 'Все студии',
+            city: 'all',
+            title: 'Все студии'
+        };
+        this.shopCollection = new UM.Collections.Shops([defaultShop], this.toJSON());
+        this.shopCollection.fetch({remove: false});
+
+        this.listenTo(this.cityCollection, 'change:active', function() {
+            this.set('shop', '');
+            this.set('shopId', '');
+            var active = this.cityCollection.getActive();
+            if (active) {
+                this.set('city', active.name);
+                this.set('cityId', active.mr3id);
+            }
+        });
+
+        this.listenTo(this.shopCollection, 'change:active', function() {
+            var active = this.shopCollection.getActive();
+            if (active) {
+                this.set('shop', active.title);
+                this.set('shopId', active.mr3id);
+            }
+        });
+
+        this.listenTo(this, 'change:cityId', function () {
+            this.model.set('shop', '');
+        });
+
         if (UM.conf.server.type != 'prod')
             this.on('change', this.log, this);
     },

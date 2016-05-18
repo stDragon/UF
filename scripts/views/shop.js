@@ -5,7 +5,7 @@ module.exports = Backbone.View.extend({
     },
 
     tagName: "li",
-    template: _.template('<span><%= name %>, <%= address %></span>'),
+    template: _.template('<span><%= title %></span>'),
 
     initialize: function () {
         this.render();

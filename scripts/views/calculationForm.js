@@ -10,8 +10,8 @@ module.exports = Backbone.Ribs.View.extend({
 
     events: {
         'focus #umPhone': 'initMask',
-        //'focus #umCity': 'showSelectCity',
-        //'focus #umShop': 'showSelectShop',
+        'focus #umCity': 'showSelectCity',
+        'focus #umShop': 'showSelectShop',
         'focus input:not(#umCity)': 'hideSelectCity',
         'focus input:not(#umShop)': 'hideSelectShop',
         'input input': 'setAttrs',
@@ -24,23 +24,17 @@ module.exports = Backbone.Ribs.View.extend({
     },
 
     initialize: function () {
-        var that = this;
-        this.cityCollection = new UM.Collections.Citys([], this.model.toJSON());
-        this.cityCollection.fetch().then(function () {
-            that.cityCollectionView = new UM.Views.Citys({collection: that.cityCollection});
-        });
 
-        this.shopCollection = new UM.Collections.Shops([], this.model.toJSON());
-        this.shopCollection.fetch();
+        this.cityCollectionView = new UM.Views.Citys({collection: this.model.cityCollection});
 
         this.render();
 
         this.model.on('change', this.setValue, this);
         this.model.on('change:personalData', this.preValidation, this);
 
-        if (UM.configsCollection.get(this.model.get('configId')).get('formConfig').shop.show) {
+        if (this.model.options.shop.show) {
             this.createYaMapModal();
-            this.model.on('change:city', this.createSelectShop, this);
+            this.model.on('change:cityId', this.createSelectShop, this);
         }
         this.listenTo(this.model, 'request', function () {
             UM.vent.trigger('page:showLoader', this.model.get('configId'));
@@ -56,21 +50,6 @@ module.exports = Backbone.Ribs.View.extend({
             this.enabledSubmit();
         });
         this.listenTo(this.model, 'invalid', this.invalid);
-
-        this.listenTo(this.cityCollection, 'change:active', function() {
-            this.model.set('shop', '');
-            var active = this.cityCollection.getActive();
-            if (active) this.model.set('city', active);
-        });
-
-        this.listenTo(this.shopCollection, 'change:active', function() {
-            var active = this.shopCollection.getActive();
-            if (active) this.model.set('shop', active);
-        });
-
-        this.listenTo(this.model, 'change:city', function () {
-            this.model.set('shop', '');
-        });
     },
 
     changed: function(e) {
@@ -110,15 +89,14 @@ module.exports = Backbone.Ribs.View.extend({
     },
 
     createSelectShop: function () {
-        var city = this.model.get('city'),
-            shop = this.model.get('shop');
+        var cityId = this.model.get('cityId');
 
         this.removeSelectShop();
 
         /** Из коллекции городов находим город и если у него выведено свойство "showShop", добавляем поле с выбором студий */
-        if (city && this.cityCollection.findWhere({'name': city}) && this.cityCollection.findWhere({'name': city}).get('showShop')) {
-            this.addSelectShop(city);
-            if (UM.configsCollection.get(this.model.get('configId')).get('formConfig').shop.mapShow) {
+        if (cityId && this.model.cityCollection.findWhere({'mr3id': cityId}) && this.model.cityCollection.findWhere({'mr3id': cityId}).get('showShop')) {
+            this.addSelectShop();
+            if (this.model.options.shop.mapShow) {
                 this.createYaMap();
             }
         } else {
@@ -128,10 +106,11 @@ module.exports = Backbone.Ribs.View.extend({
         }
     },
 
-    addSelectShop: function (city) {
-        var $el = this.$el.find('[name=shop]');
+    addSelectShop: function () {
+        var $el = this.$el.find('[name=shop]'),
+            cityId = this.model.get('cityId');
 
-        this.cityShopCollection = this.shopCollection.filterByCity(city);
+        this.cityShopCollection = this.model.shopCollection.filterByCity(cityId, {default: true});
         this.shopCollectionView = new UM.Views.Shops({collection: this.cityShopCollection});
 
         if (this.shopCollectionView.$el.children().length) {
@@ -279,7 +258,7 @@ module.exports = Backbone.Ribs.View.extend({
 
         $elMap.children().remove();
 
-        var mapShopArr = this.shopCollection.filterByCityForMap(this.model.get('city')).toJSON();
+        var mapShopArr = this.model.shopCollection.filterByCityForMap(this.model.get('city')).toJSON();
 
         var latSum = 0,
             lonSum = 0,
@@ -354,7 +333,6 @@ module.exports = Backbone.Ribs.View.extend({
         if (UM.mapShopCollectionView) {
             $('.um-modal').removeClass('um-hidden');
             this.hideSelectShop();
-            //UM.vent.trigger('shopList:hide', this.options.configId);
         }
     },
 

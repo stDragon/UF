@@ -31,7 +31,7 @@ module.exports = Backbone.Collection.extend({
             return model.get('active') == true;
         });
         if (active) {
-            return active.get('name');
+            return active.toJSON();
         }
     },
 

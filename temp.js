@@ -52,6 +52,7 @@ var db ={
         {
             name: 'Кухонная студия "Мария"',
             mr3id: '11',
+            mr3cityid: '7',
             brand: 'Мария',
             dealer: '',
             status: 'Продает',
@@ -64,7 +65,8 @@ var db ={
         },
         {
             name: 'Кухонная студия "Мария"',
-            mr3id: '11',
+            mr3id: '12',
+            mr3cityid: '1',
             brand: 'Мария',
             dealer: '',
             status: 'Закрыт',
@@ -77,7 +79,8 @@ var db ={
         },
         {
             name: 'Кухонная студия "Мария"',
-            mr3id: '15',
+            mr3id: '13',
+            mr3cityid: '1',
             brand: 'Мария',
             dealer: '',
             status: 'Продает',
@@ -90,7 +93,8 @@ var db ={
         },
         {
             name: 'Кухонная студия "Мария"',
-            mr3id: '11',
+            mr3id: '14',
+            mr3cityid: '3',
             brand: 'Мария',
             dealer: '',
             status: 'Продает',
