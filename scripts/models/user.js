@@ -55,7 +55,7 @@ module.exports = Backbone.Model.extend({
         });
 
         this.listenTo(this, 'change:cityId', function () {
-            this.model.set('shop', '');
+            this.set('shop', '');
         });
 
         if (UM.conf.server.type != 'prod')
