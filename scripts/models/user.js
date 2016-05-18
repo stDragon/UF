@@ -12,7 +12,7 @@ module.exports = Backbone.Model.extend({
         shop: '',
         wishes: '',
         personalData: true,
-        href: window.location.href
+        //href: window.location.href
     },
 
     urlRoot: function () {
