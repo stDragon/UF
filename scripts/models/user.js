@@ -11,8 +11,7 @@ module.exports = Backbone.Model.extend({
         city: '',
         shop: '',
         wishes: '',
-        personalData: true,
-        //href: window.location.href
+        personalData: true
     },
 
     urlRoot: function () {
@@ -20,6 +19,8 @@ module.exports = Backbone.Model.extend({
     },
 
     initialize: function (model, options) {
+        this.set('href',JSON.stringify(window.location.href));
+
         if (options) {
             this.options = options;
             this.set('personalData', options.personalData.checked);

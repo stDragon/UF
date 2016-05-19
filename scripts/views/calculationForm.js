@@ -15,6 +15,7 @@ module.exports = Backbone.Ribs.View.extend({
         'focus input:not(#umCity)': 'hideSelectCity',
         'focus input:not(#umShop)': 'hideSelectShop',
         'input input': 'setAttrs',
+        'keyup [name="city"]': 'search',
         'blur input': 'setAttr',
         'blur textarea': 'setAttr',
         'blur': 'preValidation',
@@ -105,6 +106,16 @@ module.exports = Backbone.Ribs.View.extend({
             this.removeSelectShop();
             this.removeYaMap();
             this.model.set('shop', '');
+        }
+    },
+
+    search: function (e) {
+        var input = e.target;
+        var city = this.model.cityCollection.search(input.value);
+
+        if (city.length) {
+            this.cityCollectionView = new UM.Views.Citys({collection: city});
+            this.showSelectCity();
         }
     },
 

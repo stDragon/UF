@@ -53,5 +53,16 @@ module.exports = Backbone.Collection.extend({
         this.each(function (model) {
             model.set('active', false);
         }, this);
+    },
+
+    search : function(letters) {
+        if(letters == "") return this;
+
+        var pattern = new RegExp(letters,"gi");
+        var filter = this.filter(function(data) {
+            return pattern.test(data.get("name"));
+        });
+
+        return new UM.Collections.Citys(filter, this.options) ;
     }
 });
