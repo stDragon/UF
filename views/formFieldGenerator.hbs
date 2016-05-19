@@ -202,6 +202,39 @@
     </div>
 </div>
 
+<h3><%= address.label %></h3>
+<div class="row">
+    <div class="col s2">
+        <p>Показывать</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="address.show" <%= address.show ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s2">
+        <p>Обязательное</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="address.required" <%= address.required ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s3">
+        <p>Placeholder</p>
+        <div class="input-field">
+            <input id="address.placeholder" type="text" name="address.placeholder" value="<%= address.placeholder %>">
+            <label for="address.placeholder" class="active sr-only">Текст 2</label>
+        </div>
+    </div>
+</div>
+
 <h3><%= shop.label %></h3>
 <div class="row">
     <div class="col s2">
@@ -215,7 +248,7 @@
             </label>
         </div>
     </div>
-    <div class="col s2 hiddendiv">
+    <div class="col s2">
         <p>Обязательное</p>
         <div class="switch">
             <label>
@@ -226,7 +259,7 @@
             </label>
         </div>
     </div>
-    <div class="col s2 hiddendiv">
+    <div class="col s2">
         <p>Выбор на карте</p>
         <div class="switch">
             <label>

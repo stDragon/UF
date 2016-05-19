@@ -1,12 +1,12 @@
 /**
- *  Форма заявки на просчет
+ *  Форма заявок
  *  */
 
 module.exports = Backbone.Ribs.View.extend({
 
     tagName: 'form',
     className: 'um-form',
-    template: 'formCalculationTpl',
+    template: 'formUser',
 
     events: {
         'focus #umPhone': 'initMask',

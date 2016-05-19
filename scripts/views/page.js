@@ -112,19 +112,11 @@ module.exports = Backbone.Ribs.View.extend({
      * */
     showStartForm: function () {
         if (this.model.form) {
-            if (this.model.get('formType') == 'calculation') {
+            if (this.model.get('formType') == 'calculation'
+                || this.model.get('formType') == 'measurement'
+                || this.model.get('formType') == 'credit') {
 
-                this.formView = new UM.Views.CalculationForm({model: this.model.form});
-
-                return this.formView.el;
-            } else if (this.model.get('formType') == 'measurement') {
-
-                this.formView = new UM.Views.MeasurementForm({model: this.model.form});
-
-                return this.formView.el;
-            } else if (this.model.get('formType') == 'credit') {
-
-                this.formView = new UM.Views.CreditForm({model: this.model.form});
+                this.formView = new UM.Views.FormUser({model: this.model.form});
 
                 return this.formView.el;
             } else {
@@ -142,7 +134,7 @@ module.exports = Backbone.Ribs.View.extend({
             phone: phone,
             configId: this.model.id
         });
-        this.phoneView = new UM.Views.UserPhoneForm({model: this.phone});
+        this.phoneView = new UM.Views.FormUserPhone({model: this.phone});
         return this.phoneView.el;
     },
     /**

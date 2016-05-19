@@ -121,15 +121,11 @@ $(document).ready(function() {
         },
 
         createFormFieldGenerator: function() {
-            switch (this.get('formType')) {
-                case 'calculation':
-                    if (App.formFieldGenerator['calculation'])
-                        this.formField = App.formFieldGenerator['calculation'];
-                    else {
-                        App.formFieldGenerator['calculation'] = new App.Models.FormFieldGenerator(this.toJSON().formConfig);
-                        this.formField = App.formFieldGenerator['calculation'];
-                    }
-                    break;
+            if (App.formFieldGenerator)
+                this.formField = App.formFieldGenerator;
+            else {
+                App.formFieldGenerator = new App.Models.FormFieldGenerator(this.toJSON().formConfig);
+                this.formField = App.formFieldGenerator;
             }
             this.listenTo(this.formField, 'change', this.setFormConfig);
             this.setFormConfig()
@@ -190,36 +186,49 @@ $(document).ready(function() {
                 value2: 'Бесплатный дизайн-проект в&nbsp;три&nbsp;клика'
             },
             surname: {
+                type: 'text',
                 label: 'Фамилия',
                 placeholder: 'Ваша фамилия',
                 show: false,
                 required: false
             },
             firstName: {
+                type: 'text',
                 label: 'Имя',
                 placeholder: 'Ваше имя',
                 show: true,
                 required: false
             },
             email: {
+                type: 'email',
                 label: 'E-mail',
                 placeholder: 'Ваш e-mail',
                 show: true,
                 required: false
             },
             phone: {
+                type: 'tel',
                 label: 'Телефон',
                 placeholder: 'Ваш номер телефон',
                 show: true,
                 required: false
             },
             city: {
+                type: 'text',
                 label: 'Город',
                 placeholder: 'Выберите город',
                 show: true,
                 required: false
             },
+            address: {
+                type: 'text',
+                label: 'Адрес',
+                placeholder: 'Введите адрес',
+                show: false,
+                required: false
+            },
             shop: {
+                type: 'text',
                 label: 'Студия',
                 placeholder: 'Выберите студию',
                 show: false,
@@ -227,18 +236,21 @@ $(document).ready(function() {
                 required: false
             },
             personalData: {
+                type: 'checkbox',
                 label: 'Согласен с обработкой персональных данных',
                 show: true,
                 required: true,
                 checked: true
             },
             wishes: {
+                type: 'textarea',
                 label: 'Пожелания',
                 placeholder: 'Пожелания',
                 show: true,
                 required: false
             },
             submit: {
+                type: 'submit',
                 label: 'Кнопка отправки',
                 text: 'Отправить заявку'
             }

@@ -35,10 +35,21 @@
             <input type="text" name="city" class="um-form-control" id="umCity" placeholder="<%= formConfig.city.placeholder %>" value="<%= city %>" <%= formConfig.city.required ? 'required' : ''%>>
         </div>
     <%}%>
+    <%if(formConfig.address.show){%>
+        <div class="um-form-group um-form-group-city">
+            <label for="umAddress"><%= formConfig.address.label %></label>
+            <input type="text" name="address" class="um-form-control" id="umAddress"
+                   placeholder="<%= formConfig.address.placeholder %>"
+                   value="<%= typeof address !== 'undefined' ? address : '' %>"
+                   <%= formConfig.address.required ? 'required' : ''%>>
+        </div>
+    <%}%>
     <%if(formConfig.shop.show){%>
         <div class="um-form-group um-form-group-shop um-hidden<%= formConfig.shop.mapShow ? ' um-with-map' : ''%>">
             <label for="umShop"><%= formConfig.shop.label %></label>
-            <input type="text" name="shop" class="um-form-control" id="umShop" placeholder="<%= formConfig.shop.placeholder %>" value="<%= shop %>" disabled <%= formConfig.shop.required ? 'required' : ''%>>
+            <input type="text" name="shop" class="um-form-control" id="umShop"
+                   placeholder="<%= formConfig.shop.placeholder %>"
+                   value="<%= typeof shop !== 'undefined' ? shop : '' %>" disabled <%= formConfig.shop.required ? 'required' : ''%>>
             <%if(formConfig.shop.mapShow){%>
                 <svg height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg" class="um-icon-add-location">
                     <path d="M0 0h24v24H0V0z" fill="none"/>
