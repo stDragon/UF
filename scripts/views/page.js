@@ -117,6 +117,16 @@ module.exports = Backbone.Ribs.View.extend({
                 this.formView = new UM.Views.CalculationForm({model: this.model.form});
 
                 return this.formView.el;
+            } else if (this.model.get('formType') == 'measurement') {
+
+                this.formView = new UM.Views.MeasurementForm({model: this.model.form});
+
+                return this.formView.el;
+            } else if (this.model.get('formType') == 'credit') {
+
+                this.formView = new UM.Views.CreditForm({model: this.model.form});
+
+                return this.formView.el;
             } else {
                 throw new Error("Тип заявки '" + this.model.get('formType') + "' не поддерживается или не корректен");
             }

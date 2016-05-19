@@ -29,6 +29,8 @@ module.exports = Backbone.Ribs.View.extend({
 
         this.render();
 
+        if (this.model.options.class) this.$el.addClass(this.model.options.class);
+
         this.model.on('change', this.setValue, this);
         this.model.on('change:personalData', this.preValidation, this);
 
@@ -149,7 +151,6 @@ module.exports = Backbone.Ribs.View.extend({
             that.$el.html(html);
             that.preValidation();
         });
-        if (this.model.options.class) this.$el.addClass(this.model.options.class);
         return this;
     },
     /** Устанавливает значения полей формы*/

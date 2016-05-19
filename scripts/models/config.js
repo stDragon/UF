@@ -6,7 +6,7 @@ module.exports = Backbone.Ribs.Model.extend({
     defaults: {
         serverUrl: UM.serverUrl,
         siteUrl: '',
-        formType: 'calculation',
+        formType: '',
         formConfig: '',
         style: 'um-material',
         initType: 'button',
@@ -17,7 +17,8 @@ module.exports = Backbone.Ribs.Model.extend({
     initialize: function (model, data) {
         this.data = data || {
                 user: {
-                    configId : this.id
+                    configId : this.id,
+                    type : this.get('formType')
                 }
             };
         this.data.user.configId = this.id;
@@ -42,7 +43,8 @@ module.exports = Backbone.Ribs.Model.extend({
     },
 
     initForm: function () {
-        if (this.get('formType') == 'calculation') {
+        this.data.user.type = this.get('formType');
+        if (this.get('formType') == 'calculation' || this.get('formType') == 'measurement' || this.get('formType') == 'credit') {
             this.form = new UM.Models.User(this.data.user, this.get('formConfig'));
             UM.forms[this.id] = this.form;
         } else {
