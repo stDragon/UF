@@ -13,8 +13,6 @@ $(document).ready(function() {
         conf: conf
     };
 
-    App.formFieldGenerator = [];
-
     /**
      *  Ajax подгрузка шаблона
      *  */
