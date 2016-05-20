@@ -118,6 +118,19 @@
     right: 5vh;
     background: #fff;
     z-index: 2010;
+    &[draggable] {
+      -moz-user-select: none;
+      -khtml-user-select: none;
+      -webkit-user-select: none;
+      user-select: none;
+      /* Required to make elements draggable in old WebKit */
+      -khtml-user-drag: element;
+      -webkit-user-drag: element;
+    }
+    .um-header{
+      min-height: 2em;
+      cursor: move;
+    }
   }
   
   .um-label-checkbox {

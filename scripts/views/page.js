@@ -20,7 +20,7 @@ module.exports = Backbone.Ribs.View.extend({
 
         /** В фиксированном окне добваляется соответствующий класс DOM элементу */
         if (this.model.get('initType') == 'button' || this.model.get('initPosition') == 'fixed')
-            this.$el.addClass('fixed');
+            this.$el.addClass('fixed').attr('draggable', true);
 
         this.render();
 
