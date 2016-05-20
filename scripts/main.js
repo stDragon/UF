@@ -308,12 +308,8 @@ $(document).ready(function() {
         },
 
         renderFormField: function() {
-            switch (this.model.get('formType')) {
-                case 'calculation':
-                    App.formFieldGeneratorView = new App.Views.FormFieldGenerator({model: this.model.formField});
-                    $('#formFieldGenerator').html(App.formFieldGeneratorView.el);
-                    break;
-            }
+            App.formFieldGeneratorView = new App.Views.FormFieldGenerator({model: this.model.formField});
+            $('#formFieldGenerator').html(App.formFieldGeneratorView.el);
         },
 
         setValue: function () {
