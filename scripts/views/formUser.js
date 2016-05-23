@@ -2,7 +2,7 @@
  *  Форма заявок
  *  */
 
-module.exports = Backbone.Ribs.View.extend({
+module.exports = UM.Views.Form.extend({
 
     tagName: 'form',
     className: 'um-form',
@@ -10,10 +10,7 @@ module.exports = Backbone.Ribs.View.extend({
 
     events: {
         'focus #umPhone': 'initMask',
-        'focus #umCity': 'showSelectCity',
-        'focus #umShop': 'showSelectShop',
-        'focus input:not(#umCity)': 'hideSelectCity',
-        'focus input:not(#umShop)': 'hideSelectShop',
+        'focus input': 'showOptionList',
         'input input': 'setAttrs',
         'keyup [name="city"]': 'search',
         'blur input': 'setAttr',
@@ -27,6 +24,8 @@ module.exports = Backbone.Ribs.View.extend({
     initialize: function () {
 
         this.cityCollectionView = new UM.Views.Citys({collection: this.model.cityCollection});
+
+        this.kitchenCollectionView = new UM.Views.Kitchens({collection: this.model.kitchenCollection});
 
         this.render();
 
@@ -55,40 +54,8 @@ module.exports = Backbone.Ribs.View.extend({
         this.listenTo(this.model, 'invalid', this.invalid);
     },
 
-    changed: function(e) {
-        var changed = e.currentTarget;
-
-        var value;
-        if (changed.type == 'checkbox') {
-            value = changed.checked;
-            if (changed.checked)
-                $(changed).parent('label').addClass('um-checked');
-            else
-                $(changed).parent('label').removeClass('um-checked');
-        } else {
-            value = changed.value;
-        }
-
-        var obj = {};
-        obj[changed.name] = value;
-        this.model.set(obj);
-    },
-
     initMask: function () {
         this.$el.find('[name=phone]').inputmask({"mask": "+7(999)999-99-99"});
-    },
-
-    showSelectCity: function () {
-        var $el = this.$el.find('.um-dropdown-content.um-city-list');
-
-        if (!$el.length)
-            this.$el.find('[name=city]').before(this.cityCollectionView.el);
-        else
-            this.cityCollectionView.show();
-    },
-
-    hideSelectCity: function () {
-        this.cityCollectionView.hidden();
     },
 
     createSelectShop: function () {
@@ -160,60 +127,16 @@ module.exports = Backbone.Ribs.View.extend({
             var data = _.extend(that.model.toJSON(), UM.configsCollection.get(that.model.get('configId')).toJSON());
             var html = $(temp(data));
             that.$el.html(html);
+            that.addSelectList('city', that.cityCollectionView);
+            that.addSelectList('kitchen', that.kitchenCollectionView);
             that.preValidation();
         });
         return this;
     },
-    /** Устанавливает значения полей формы*/
-    setValue: function () {
-        var attr = this.model.toJSON();
-        _.each(attr, function (num, key) {
-            this.$el.find('[name=' + key + ']').val(num);
-        }, this);
-    },
-    /**
-     * Сохраняет изменения поля в модель.
-     */
-    setAttr: function (e) {
-        var name = $(e.target).attr('name'),
-            val = $(e.target).val();
-        this.model.set(name, val);
-    },
-    /**
-     * Сохраняет все поля в модель.
-     */
-    setAttrs: function () {
-        var data = {};
-        this.$el.find('.um-form-control').each(function () {
-            data[this.name] = $(this).val();
-        });
 
-        this.model.set(data);
-    },
-    /**
-     * Сохраняет все поля на сервер.
-     */
-    save: function (e) {
-        e.preventDefault();
-
-        var data = {};
-        this.$el.find('.um-form-control').each(function () {
-            data[this.name] = $(this).val();
-        });
-
-        this.model.save(data);
-    },
-    /**
-     * Кнопка отправки становится неактивной
-     */
-    disabledSubmit: function () {
-        this.$el.find('button:submit')[0].disabled = true;
-    },
-    /**
-     * Кнопка отправки становится активной
-     */
-    enabledSubmit: function () {
-        this.$el.find('button:submit')[0].disabled = false;
+    addSelectList: function (inputName, collectionView) {
+        this.$el.find('[name=' + inputName + ']').before(collectionView.el);
+        return this;
     },
 
     preValidation: function(){
@@ -225,30 +148,6 @@ module.exports = Backbone.Ribs.View.extend({
         }
     },
 
-    valid: function () {
-        this.$el.find('input')
-            .closest('.um-form-group').removeClass('um-has-error')
-            .children('.um-tooltip').remove();
-    },
-    /**
-     * Вывод ошибок
-     * @param  {object} model.
-     * @param  {object} errors.
-     */
-    invalid: function (model, errors) {
-        this.$el.find('input')
-            .closest('.um-form-group').removeClass('um-has-error')
-            .children('.um-tooltip').remove();
-        _.each(errors, function (error) {
-            var $el = this.$el.find('[name=' + error.attr + ']'),
-                $group = $el.closest('.um-form-group');
-
-            $group.addClass('um-has-error');
-            var tooltip = new UM.Views.Tooltip();
-            tooltip.$el.html(error.text);
-            $group.append(tooltip.el);
-        }, this);
-    },
     /**
      * Создание модального окна для Яндекс карты
      */

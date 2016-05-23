@@ -236,6 +236,12 @@
       &.active {
         background-color: #eee;
       }
+      >.um-dropdown-img {
+        height: 1.5rem;
+        width: 1.5rem;
+        margin: 12px 15px;
+        float: right;
+      }
       &.disabled {
         color: rgba(0, 0, 0, 0.3);
         background-color: transparent;

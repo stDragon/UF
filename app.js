@@ -23,6 +23,7 @@ var cities = tmp.tmpDb.cities;
 var shops = tmp.tmpDb.shops;
 var users = tmp.tmpDb.users;
 var configs = tmp.tmpDb.configs;
+var kitchens = tmp.tmpDb.kitchens;
 
 var jsonParser = bodyParser.json();
 
@@ -91,6 +92,14 @@ app.get('/um/umdata/shops', function(req, res) {
 
 app.get('/um/umdata/shops/:id', function(req, res) {
     res.json(shops);
+});
+
+app.get('/um/umdata/kitchens/', function(req, res) {
+    res.json(kitchens);
+});
+
+app.get('/um/umdata/kitchens/:id', function(req, res) {
+    res.json(kitchens);
 });
 
 app.post('/um/umdata/code/', jsonParser, function(req, res) {

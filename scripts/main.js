@@ -233,6 +233,13 @@ $(document).ready(function() {
                 mapShow: false,
                 required: false
             },
+            kitchen: {
+                type: 'text',
+                label: 'Модель кухни',
+                placeholder: 'Выберите модель кухни',
+                show: false,
+                required: false
+            },
             personalData: {
                 type: 'checkbox',
                 label: 'Согласен с обработкой персональных данных',

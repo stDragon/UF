@@ -36,6 +36,8 @@ module.exports = Backbone.Ribs.Model.extend({
             throw new Error("Не указан тип модуля initType:'" + this.get('initType') + "' проверьте конфигурацию");
         if (!this.get('initPosition'))
             throw new Error("Не указан способ инициализации initPosition:'" + this.get('initPosition') + "' проверьте конфигурацию");
+        if (this.get('siteUrl') != window.location.hostname && this.get('siteUrl') != window.location.href)
+            console.warn('Ваш сайт URL "' + window.location.hostname + '" не соответствует указанному в конфигураторе "' + this.get('siteUrl') +'"');
         if (!this.get('style'))
             console.warn('Стили отключены');
         if (!this.get('showMap'))

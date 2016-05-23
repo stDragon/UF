@@ -1,6 +1,7 @@
 module.exports = Backbone.Ribs.View.extend({
     events: {
         'input input': 'setAttrs',
+        'focus .um-dropdown-content + input': 'showOptionList',
         'blur input': 'setAttr',
         'blur textarea': 'setAttr',
         'change input:checkbox': 'changed',
@@ -82,6 +83,19 @@ module.exports = Backbone.Ribs.View.extend({
         });
 
         this.model.save(data);
+    },
+
+    showOptionList: function (e) {
+        this.hiddenOptionList();
+        $(e.target).siblings('.um-dropdown-content').removeClass('um-hidden');
+    },
+
+    hiddenOptionList: function (e) {
+        if (e) {
+            $(e.target).siblings('.um-dropdown-content').addClass('um-hidden');
+        } else {
+            this.$el.find('.um-dropdown-content').addClass('um-hidden');
+        }
     },
     /**
      * Кнопка отправки становится неактивной

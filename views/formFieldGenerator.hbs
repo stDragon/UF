@@ -65,7 +65,7 @@
         <p>Placeholder</p>
         <div class="input-field">
             <input id="surname.placeholder" type="text" name="surname.placeholder" value="<%= surname.placeholder %>">
-            <label for="surname.placeholder" class="active sr-only">Текст 2</label>
+            <label for="surname.placeholder" class="active sr-only">Placeholder</label>
         </div>
     </div>
 </div>
@@ -98,7 +98,7 @@
         <p>Placeholder</p>
         <div class="input-field">
             <input id="firstName.placeholder" type="text" name="firstName.placeholder" value="<%= firstName.placeholder %>">
-            <label for="firstName.placeholder" class="active sr-only">Текст 2</label>
+            <label for="firstName.placeholder" class="active sr-only">Placeholder</label>
         </div>
     </div>
 </div>
@@ -131,7 +131,7 @@
         <p>Placeholder</p>
         <div class="input-field">
             <input id="email.placeholder" type="text" name="email.placeholder" value="<%= email.placeholder %>">
-            <label for="email.placeholder" class="active sr-only">Текст 2</label>
+            <label for="email.placeholder" class="active sr-only">Placeholder</label>
         </div>
     </div>
 </div>
@@ -164,7 +164,7 @@
         <p>Placeholder</p>
         <div class="input-field">
             <input id="phone.placeholder" type="text" name="phone.placeholder" value="<%= phone.placeholder %>">
-            <label for="phone.placeholder" class="active sr-only">Текст 2</label>
+            <label for="phone.placeholder" class="active sr-only">Placeholder</label>
         </div>
     </div>
 </div>
@@ -197,7 +197,7 @@
         <p>Placeholder</p>
         <div class="input-field">
             <input id="city.placeholder" type="text" name="city.placeholder" value="<%= city.placeholder %>">
-            <label for="city.placeholder" class="active sr-only">Текст 2</label>
+            <label for="city.placeholder" class="active sr-only">Placeholder</label>
         </div>
     </div>
 </div>
@@ -230,7 +230,7 @@
         <p>Placeholder</p>
         <div class="input-field">
             <input id="address.placeholder" type="text" name="address.placeholder" value="<%= address.placeholder %>">
-            <label for="address.placeholder" class="active sr-only">Текст 2</label>
+            <label for="address.placeholder" class="active sr-only">Placeholder</label>
         </div>
     </div>
 </div>
@@ -274,12 +274,45 @@
         <p>Placeholder</p>
         <div class="input-field">
             <input id="shop.placeholder" type="text" name="shop.placeholder" value="<%= shop.placeholder %>">
-            <label for="shop.placeholder" class="active sr-only">Текст 2</label>
+            <label for="shop.placeholder" class="active sr-only">Placeholder</label>
         </div>
     </div>
 </div>
 
-<h3><%= personalData.label %></h3>
+<h3><%= kitchen.label %></h3>
+<div class="row">
+    <div class="col s2">
+        <p>Показывать</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="kitchen.show" <%= kitchen.show ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s2">
+        <p>Обязательное</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="kitchen.required" <%= kitchen.required ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s3">
+        <p>Placeholder</p>
+        <div class="input-field">
+            <input id="kitchen.placeholder" type="text" name="kitchen.placeholder" value="<%= kitchen.placeholder %>">
+            <label for="kitchen.placeholder" class="active sr-only">Placeholder</label>
+        </div>
+    </div>
+</div>
+
+<h3>Пользовательское соглашение</h3>
 <div class="row">
     <div class="col s2">
         <p>Показывать</p>
@@ -340,7 +373,7 @@
         <p>Placeholder</p>
         <div class="input-field">
             <input id="wishes.placeholder" type="text" name="wishes.placeholder" value="<%= wishes.placeholder %>">
-            <label for="wishes.placeholder" class="active sr-only">Текст 2</label>
+            <label for="wishes.placeholder" class="active sr-only">Placeholder</label>
         </div>
     </div>
 </div>

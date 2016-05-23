@@ -37,6 +37,9 @@ module.exports = Backbone.Model.extend({
         this.shopCollection = new UM.Collections.Shops([defaultShop], this.toJSON());
         this.shopCollection.fetch({remove: false});
 
+        this.kitchenCollection = new UM.Collections.Kitchens([], this.toJSON());
+        this.kitchenCollection.fetch();
+
         this.listenTo(this.cityCollection, 'change:active', function() {
             this.set('shop', '');
             this.set('shopId', '');
@@ -57,6 +60,14 @@ module.exports = Backbone.Model.extend({
 
         this.listenTo(this, 'change:cityId', function () {
             this.set('shop', '');
+        });
+
+        this.listenTo(this.kitchenCollection, 'change:active', function() {
+            var active = this.kitchenCollection.getActive();
+            if (active) {
+                this.set('kitchen', active.name);
+                this.set('kitchenId', active.mr3id);
+            }
         });
 
         if (UM.conf.server.type != 'prod')

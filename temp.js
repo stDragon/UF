@@ -104,6 +104,56 @@ var db ={
             priceZone: ''
         }
     ],
+    kitchens: [
+        {
+            mr3id: '1',
+            name: 'Federica',
+            description: '',
+            type: 'classic',
+            material: 'MDF, membrana',
+            preview: 'http://www.marya.ru/upload/Federica-01_06_A3.jpg'
+        },
+        {
+            mr3id: '2',
+            name: 'Rosa',
+            description: '',
+            type: 'classic',
+            material: 'massif',
+            preview: 'http://www.marya.ru/upload/rosa-white-h-01_.jpg'
+        },
+        {
+            mr3id: '3',
+            name: 'Farm',
+            description: '',
+            type: 'classic',
+            material: 'massif',
+            preview: 'http://www.marya.ru/upload/farm-blu-h-02_prev_1.jpg'
+        },
+        {
+            mr3id: '4',
+            name: 'Acatcia',
+            description: '',
+            type: 'classic',
+            material: 'massif',
+            preview: 'http://www.marya.ru/upload/Acatcia2-h-01_prev.jpg'
+        },
+        {
+            mr3id: '5',
+            name: 'Gloria',
+            description: '',
+            type: 'classic',
+            material: 'massif',
+            preview: 'http://www.marya.ru/upload/Gloria1-h-01_prev.jpg'
+        },
+        {
+            mr3id: '6',
+            name: 'Jazz Plus',
+            description: '',
+            type: 'modern',
+            material: 'MDF, enamel',
+            preview: 'http://www.marya.ru/upload/JazzPlus-02_prev.jpg'
+        }
+    ],
     users: [],
     configs: []
 };

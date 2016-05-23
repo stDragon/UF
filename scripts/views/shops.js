@@ -2,20 +2,9 @@
  *  Список студий
  *  */
 
-module.exports = Backbone.View.extend({
+module.exports = UM.Views.InputSelect.extend({
 
-    tagName: 'ul',
-    className: 'um-dropdown-content um-shop-list',
-
-    events: {
-        'click li': 'hidden'
-    },
-
-    initialize: function () {
-        this.render();
-
-        this.collection.on('change', this.hidden, this);
-    },
+    className: 'um-dropdown-content um-shop-list um-hidden',
 
     render: function () {
         this.collection.each(function (model) {
@@ -24,13 +13,5 @@ module.exports = Backbone.View.extend({
         }, this);
 
         return this;
-    },
-
-    hidden: function () {
-        this.$el.addClass('um-hidden');
-    },
-
-    show: function () {
-        this.$el.removeClass('um-hidden');
     }
 });
