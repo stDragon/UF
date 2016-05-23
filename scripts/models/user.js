@@ -26,7 +26,7 @@ module.exports = Backbone.Model.extend({
             this.set('personalData', options.personalData.checked);
         }
 
-        if (options.city.show) {
+        if (typeof options.city !== 'undefined' && options.city.show) {
             this.cityCollection = new UM.Collections.Citys([], this.toJSON());
             this.cityCollection.fetch();
 
@@ -45,7 +45,7 @@ module.exports = Backbone.Model.extend({
             });
         }
 
-        if (options.shop.show) {
+        if (typeof options.shop !== 'undefined' && options.shop.show) {
             var defaultShop = {
                 name: 'Все студии',
                 city: 'all',
@@ -63,7 +63,7 @@ module.exports = Backbone.Model.extend({
             });
         }
 
-        if (options.kitchen.show) {
+        if (typeof options.kitchen !== 'undefined' && options.kitchen.show) {
             this.kitchenCollection = new UM.Collections.Kitchens([], this.toJSON());
             this.kitchenCollection.fetch();
 

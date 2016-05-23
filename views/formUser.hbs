@@ -35,7 +35,7 @@
             <input type="text" name="city" class="um-form-control" id="umCity" placeholder="<%= formConfig.city.placeholder %>" value="<%= city %>" <%= formConfig.city.required ? 'required' : ''%>>
         </div>
     <%}%>
-    <%if(formConfig.address.show){%>
+    <%if(typeof formConfig.address !== 'undefined' && formConfig.address.show){%>
         <div class="um-form-group um-form-group-address">
             <label for="umAddress"><%= formConfig.address.label %></label>
             <input type="text" name="address" class="um-form-control" id="umAddress"
@@ -58,7 +58,7 @@
             <%}%>
         </div>
     <%}%>
-    <%if(formConfig.kitchen.show){%>
+    <%if(typeof formConfig.kitchen !== 'undefined' && formConfig.kitchen.show){%>
         <div class="um-form-group um-form-group-kitchen">
             <label for="umKitchen"><%= formConfig.kitchen.label %></label>
             <input type="text" name="kitchen" class="um-form-control" id="umKitchen"
