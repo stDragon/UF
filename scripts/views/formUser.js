@@ -23,9 +23,13 @@ module.exports = UM.Views.Form.extend({
 
     initialize: function () {
 
-        this.cityCollectionView = new UM.Views.Citys({collection: this.model.cityCollection});
+        if (this.model.cityCollection) {
+            this.cityCollectionView = new UM.Views.Citys({collection: this.model.cityCollection});
+        }
 
-        this.kitchenCollectionView = new UM.Views.Kitchens({collection: this.model.kitchenCollection});
+        if (this.model.kitchenCollection) {
+            this.kitchenCollectionView = new UM.Views.Kitchens({collection: this.model.kitchenCollection});
+        }
 
         this.render();
 
@@ -82,7 +86,6 @@ module.exports = UM.Views.Form.extend({
 
         if (city.length) {
             this.cityCollectionView = new UM.Views.Citys({collection: city});
-            this.showSelectCity();
         }
     },
 
@@ -127,8 +130,12 @@ module.exports = UM.Views.Form.extend({
             var data = _.extend(that.model.toJSON(), UM.configsCollection.get(that.model.get('configId')).toJSON());
             var html = $(temp(data));
             that.$el.html(html);
-            that.addSelectList('city', that.cityCollectionView);
-            that.addSelectList('kitchen', that.kitchenCollectionView);
+            if (that.cityCollectionView) {
+                that.addSelectList('city', that.cityCollectionView);
+            }
+            if (that.kitchenCollectionView) {
+                that.addSelectList('kitchen', that.kitchenCollectionView);
+            }
             that.preValidation();
         });
         return this;
