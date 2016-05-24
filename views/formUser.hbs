@@ -45,11 +45,13 @@
         </div>
     <%}%>
     <%if(formConfig.shop.show){%>
-        <div class="um-form-group um-form-group-shop um-hidden<%= formConfig.shop.mapShow ? ' um-with-map' : ''%>">
+        <div class="um-form-group um-form-group-shop
+            <%= formConfig.shop.mapShow ? ' um-with-map' : ''%>">
             <label for="umShop"><%= formConfig.shop.label %></label>
             <input type="text" name="shop" class="um-form-control" id="umShop"
                    placeholder="<%= formConfig.shop.placeholder %>"
-                   value="<%= typeof shop !== 'undefined' ? shop : '' %>" disabled <%= formConfig.shop.required ? 'required' : ''%>>
+                   value="<%= shop ? _.escape(shop) : '' %>"
+                   <%= formConfig.shop.required ? 'required' : '' %>>
             <%if(formConfig.shop.mapShow){%>
                 <svg height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg" class="um-icon-add-location">
                     <path d="M0 0h24v24H0V0z" fill="none"/>

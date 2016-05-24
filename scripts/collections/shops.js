@@ -61,13 +61,14 @@ module.exports = Backbone.Collection.extend({
         this.setActive();
     },
 
-    setActive: function () {
-        var active = this.form.get('shop');
+    setActive: function (active) {
+        active = active || this.form.get('shopId');
         var shop = this.find(function(model) {
-            return model.get('name') == active;
+            return model.get('mr3id') == active;
         });
         if (shop)
             shop.set('active', true);
+        return this;
     },
 
     unsetActive: function () {

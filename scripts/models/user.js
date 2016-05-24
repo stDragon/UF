@@ -19,6 +19,9 @@ module.exports = Backbone.Model.extend({
     },
 
     initialize: function (model, options) {
+        UM.forms[this.get('configId')] = this;
+        var that = this;
+
         this.set('href',JSON.stringify(window.location.href));
 
         if (options) {
@@ -28,20 +31,20 @@ module.exports = Backbone.Model.extend({
 
         if (typeof options.city !== 'undefined' && options.city.show) {
             this.cityCollection = new UM.Collections.Citys([], this.toJSON());
-            this.cityCollection.fetch();
+            this.cityCollection.fetch().then(function(){
+                if (model.cityId) {
+                    that.cityCollection.setActive(model.cityId);
+                }
+            });
+
+
 
             this.listenTo(this.cityCollection, 'change:active', function() {
-                this.set('shop', '');
-                this.set('shopId', '');
                 var active = this.cityCollection.getActive();
                 if (active) {
                     this.set('city', active.name);
                     this.set('cityId', active.mr3id);
                 }
-            });
-
-            this.listenTo(this, 'change:cityId', function () {
-                this.set('shop', '');
             });
         }
 
@@ -52,7 +55,16 @@ module.exports = Backbone.Model.extend({
                 title: 'Все студии'
             };
             this.shopCollection = new UM.Collections.Shops([defaultShop], this.toJSON());
-            this.shopCollection.fetch({remove: false});
+            this.shopCollection.fetch({remove: false}).then(function(){
+                if (model.shopId) {
+                    that.shopCollection.setActive(model.shopId);
+                }
+            });
+
+            this.listenTo(this, 'change:cityId', function () {
+                this.set('shop', '');
+                this.set('shopId', '');
+            });
 
             this.listenTo(this.shopCollection, 'change:active', function() {
                 var active = this.shopCollection.getActive();

@@ -99,7 +99,7 @@ module.exports = UM.Views.Form.extend({
         if (this.shopCollectionView.$el.children().length) {
             $el.before(this.shopCollectionView.el);
 
-            $el[0].disabled = false;
+            $el.prop('disabled', false );
             $el.parent('.um-form-group').removeClass('um-hidden');
         }
     },
@@ -109,7 +109,7 @@ module.exports = UM.Views.Form.extend({
 
         $el.siblings('.um-dropdown-content').remove();
 
-        $el[0].disabled = true;
+        $el.prop('disabled', true );
         $el.parent('.um-form-group').addClass('um-hidden');
     },
 
@@ -132,6 +132,7 @@ module.exports = UM.Views.Form.extend({
             that.$el.html(html);
             if (that.cityCollectionView) {
                 that.addSelectList('city', that.cityCollectionView);
+                that.createSelectShop();
             }
             if (that.kitchenCollectionView) {
                 that.addSelectList('kitchen', that.kitchenCollectionView);

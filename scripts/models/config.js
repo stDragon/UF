@@ -48,7 +48,6 @@ module.exports = Backbone.Ribs.Model.extend({
         this.data.user.type = this.get('formType');
         if (this.get('formType') == 'calculation' || this.get('formType') == 'measurement' || this.get('formType') == 'credit') {
             this.form = new UM.Models.User(this.data.user, this.get('formConfig'));
-            UM.forms[this.id] = this.form;
         } else {
             throw new Error("Тип заявки '" + this.get('formType') + "' не поддерживается или не корректен");
         }
