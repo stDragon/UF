@@ -7,7 +7,7 @@ module.exports = Backbone.Model.extend({
         surname: '',
         firstName: '',
         email: '',
-        phone: '',
+        phone: '7',
         city: '',
         shop: '',
         wishes: '',
@@ -37,13 +37,11 @@ module.exports = Backbone.Model.extend({
                 }
             });
 
-
-
             this.listenTo(this.cityCollection, 'change:active', function() {
                 var active = this.cityCollection.getActive();
                 if (active) {
-                    this.set('city', active.name);
                     this.set('cityId', active.mr3id);
+                    this.set('city', active.name);
                 }
             });
         }
@@ -52,7 +50,8 @@ module.exports = Backbone.Model.extend({
             var defaultShop = {
                 name: 'Все студии',
                 city: 'all',
-                title: 'Все студии'
+                title: 'Все студии',
+                active: true
             };
             this.shopCollection = new UM.Collections.Shops([defaultShop], this.toJSON());
             this.shopCollection.fetch({remove: false}).then(function(){
@@ -62,15 +61,21 @@ module.exports = Backbone.Model.extend({
             });
 
             this.listenTo(this, 'change:cityId', function () {
-                this.set('shop', '');
                 this.set('shopId', '');
+                this.set('shop', 'Все студии');
             });
 
             this.listenTo(this.shopCollection, 'change:active', function() {
                 var active = this.shopCollection.getActive();
                 if (active) {
-                    this.set('shop', active.title);
                     this.set('shopId', active.mr3id);
+                }
+            });
+
+            this.listenTo(this, 'change:shopId', function() {
+                var active = this.shopCollection.getActive();
+                if (active) {
+                    this.set('shop', active.title);
                 }
             });
         }

@@ -9,16 +9,26 @@ module.exports = UM.Views.Form.extend({
     template: 'formUser',
 
     events: {
-        'focus #umPhone': 'initMask',
+        'focus input[name=phone]': 'initMask',
         'focus input': 'showOptionList',
         'input input': 'setAttrs',
-        'keyup [name="city"]': 'search',
+        //'keyup [name="city"]': 'search',
         'blur input': 'setAttr',
         'blur textarea': 'setAttr',
         'blur': 'preValidation',
         'click .um-icon-add-location': 'showYaMap',
         'change input:checkbox': 'changed',
-        'submit': 'save'
+        'submit': 'save',
+        'click': 'click'
+    },
+
+    click: function(e) {
+        var $el = $(e.target);
+        if($el.hasClass('um-form-control')) {
+            return;
+        } else if(!$el.closest('.um-dropdown-content').length) {
+            this.hiddenOptionList()
+        }
     },
 
     initialize: function () {
@@ -56,10 +66,15 @@ module.exports = UM.Views.Form.extend({
             this.enabledSubmit();
         });
         this.listenTo(this.model, 'invalid', this.invalid);
+
+        var that = this;
+        $(document).on('click', function(e) {
+            that.click(e);
+        });
     },
 
     initMask: function () {
-        this.$el.find('[name=phone]').inputmask({"mask": "+7(999)999-99-99"});
+        this.$el.find('[name=phone]').inputmask({"mask": "+9(999)999-99-99"});
     },
 
     createSelectShop: function () {
@@ -137,6 +152,7 @@ module.exports = UM.Views.Form.extend({
             if (that.kitchenCollectionView) {
                 that.addSelectList('kitchen', that.kitchenCollectionView);
             }
+            that.initMask();
             that.preValidation();
         });
         return this;
