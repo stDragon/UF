@@ -140,10 +140,12 @@ surname      | string         | +        | Фамилия
 firstName    | string         | +        | Имя
 email        | string         | +        | Электронная почта
 phone        | string         | +        | Телефон
-city         | string         | +        | Город
-cityId       | string         | +        | Город ID
-shop         | string         | -        | Студия
-shopId       | string         | -        | Студия ID
+city         | string         | +        | Название города
+cityId       | string         | +        | ID города
+shop         | string         | -        | Название студии
+shopId       | string         | -        | ID студии
+kitchen      | string         | -        | Название модели
+kitchenId    | string         | -        | ID модели
 personalData | boolean        | +        | Согласие обработки персональных данных
 wishes       | string         | -        | Пожелания
 mr3id        | number         | -        | ID в базе MR3
@@ -231,7 +233,11 @@ UM.forms[id].toJSON();
 
 Передать в форму данные пользовател.
 
+Список передаваемых данны можно получить из таблици модели [User](#user)
+Если вы хотите передать город, студию, модель кухни, лучше передваать только cityId, shopId, kitchenId. Названия будут выставлены автоматически по ID.
+
 * когда форма уже загружена
+Не пытайтесь использовать до отработки UM.init, этот вариант работает только когда форма уже отрендарена
 
 ```js
 var user = {
@@ -270,7 +276,7 @@ UM.init({"id":"29BA15DA-DE36-170B-7BD4-570303E6C321"}, {user : user});
 UM.vent.on('event', function, context);
 ```
 
-Список глобальных событий
+Список глобальных событий ('event')
 
 event              | data           | description 
 ------------------ | -------------- | -----------

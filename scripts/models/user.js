@@ -82,13 +82,17 @@ module.exports = Backbone.Model.extend({
 
         if (typeof options.kitchen !== 'undefined' && options.kitchen.show) {
             this.kitchenCollection = new UM.Collections.Kitchens([], this.toJSON());
-            this.kitchenCollection.fetch();
+            this.kitchenCollection.fetch().then(function(){
+                if (model.kitchenId) {
+                    that.cityCollection.setActive(model.kitchenId);
+                }
+            });
 
             this.listenTo(this.kitchenCollection, 'change:active', function() {
                 var active = this.kitchenCollection.getActive();
                 if (active) {
-                    this.set('kitchen', active.name);
                     this.set('kitchenId', active.mr3id);
+                    this.set('kitchen', active.name);
                 }
             });
         }
