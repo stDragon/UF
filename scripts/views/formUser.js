@@ -71,6 +71,13 @@ module.exports = UM.Views.Form.extend({
         $(document).on('click', function(e) {
             that.click(e);
         });
+
+        /*Костыль со скрывающимися комментариями для старого все для дома*/
+        this.$el.on('click', '.um-form-group-wishes>label', function(e) {
+            if ($(e.target).closest('um-edim-doma-old'))
+                that.concealed(e);
+        })
+
     },
 
     initMask: function () {
@@ -147,13 +154,19 @@ module.exports = UM.Views.Form.extend({
             that.$el.html(html);
             if (that.cityCollectionView) {
                 that.addSelectList('city', that.cityCollectionView);
-                that.createSelectShop();
+                if(that.model.shopCollection)
+                    that.createSelectShop();
             }
             if (that.kitchenCollectionView) {
                 that.addSelectList('kitchen', that.kitchenCollectionView);
             }
             that.initMask();
             that.preValidation();
+
+            /*Костыль со скрывающимися комментариями для старого все для дома*/
+            if (that.$el.closest('um-edim-doma-old')) {
+                that.$el.find('[name="wishes"]').addClass('um-hidden');
+            }
         });
         return this;
     },
@@ -273,5 +286,15 @@ module.exports = UM.Views.Form.extend({
 
     hideYaMap: function () {
         $('.um-modal').addClass('um-hidden');
+    },
+
+    concealed: function (e) {
+        var $label = $(e.target),
+            $input = $label.siblings('.um-form-control');
+
+        if ($input.hasClass('um-hidden'))
+            $input.removeClass('um-hidden');
+        else
+            $input.addClass('um-hidden')
     }
 });
