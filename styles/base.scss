@@ -132,7 +132,20 @@
       cursor: move;
     }
   }
-  
+
+  a {
+    color: #039be5;
+    text-decoration: none;
+    background-color: transparent;
+    -webkit-tap-highlight-color: transparent;
+    border: none;
+    &:active,
+    &:hover{
+      outline: 0;
+    }
+
+  }
+
   .um-label-checkbox {
     position: relative;
     padding-left: 20px;

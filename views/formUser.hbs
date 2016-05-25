@@ -81,7 +81,12 @@
                 <input type="checkbox" name="personalData" value="<%= personalData %>"
                     <%= formConfig.personalData.required ? ' required' : ''%>
                     <%= personalData ? ' checked' : ''%>>
-                <span class="um-label-text"><%= formConfig.personalData.label %></span>
+                <span class="um-label-text">
+                    <%= formConfig.personalData.label %>
+                    <%if(typeof formConfig.personalData.href !== 'undefined' && formConfig.personalData.href.show) {%>
+                        <a target="_blank" href="<%= formConfig.personalData.href.pathname %>"><%= formConfig.personalData.href.text %></a>
+                    <%}%>
+                </span>
             </label>
         </div>
     <%}%>

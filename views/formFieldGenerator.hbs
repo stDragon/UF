@@ -355,6 +355,34 @@
         </div>
     </div>
 </div>
+<h3>Ссылка на пользовательское соглашение</h3>
+<div class="row">
+    <div class="col s2">
+        <p>Показывать</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="personalData.href.show" <%= personalData.href.show ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s4">
+        <p>Текст</p>
+        <div class="input-field">
+            <input id="personalData.href.text" type="text" name="personalData.href.text" value="<%= personalData.href.text %>">
+            <label for="personalData.href.text" class="active sr-only">Текст</label>
+        </div>
+    </div>
+    <div class="col s4">
+        <p>Путь</p>
+        <div class="input-field">
+            <input id="personalData.href.pathname" type="text" name="personalData.href.pathname" value="<%= personalData.href.pathname %>">
+            <label for="personalData.href.pathname" class="active sr-only">Путь</label>
+        </div>
+    </div>
+</div>
 
 <h3><%= wishes.label %></h3>
 <div class="row">

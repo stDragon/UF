@@ -245,7 +245,13 @@ $(document).ready(function() {
                 label: 'Согласен с обработкой персональных данных',
                 show: true,
                 required: true,
-                checked: true
+                checked: true,
+                target: '_blank',
+                href: {
+                    show: false,
+                    text: 'Политикой конфиденциальности',
+                    pathname: '#'
+                }
             },
             wishes: {
                 type: 'textarea',
