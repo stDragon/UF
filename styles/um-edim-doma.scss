@@ -14,7 +14,7 @@
     color: #fff;
     font: normal 14px /20px "PT Sans", sans-serif;
     &:disabled {
-        background-color: rgba(32,165,85,.3);;
+        background-color: rgba(32,165,85,.3);
     }
 }
 
@@ -55,7 +55,8 @@
         background: #20A555;
         border-radius: 3em;
         color: #fff;
-        &.um-btn--raised{
+        &.um-btn-primary,
+        &.um-btn-contrast{
             padding: 0 30px 0 15px;
             &::before {
               position: absolute;

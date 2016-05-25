@@ -17,3 +17,14 @@
     clip: rect(0, 0, 0, 0);
     border: 0;
 }
+
+@mixin um-clearfix() {
+  &::before,
+  &::after {
+    content: " ";
+    display: table;
+  }
+  &::after {
+    clear: both;
+  }
+}

@@ -3,7 +3,7 @@
  *  */
 
 module.exports = UM.Views.Button.extend({
-    className: 'um-btn um-btn--raised um-btn-red um-btn-start--fixed',
+    className: 'um-btn um-btn-contrast um-btn-start--fixed',
     tagName: 'button',
 
     initialize: function () {
