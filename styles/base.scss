@@ -84,7 +84,7 @@
   position: absolute;
   top: 1em;
   right: 1em;
-  :hover {
+  &:hover {
     opacity: .5;
   }
 }
