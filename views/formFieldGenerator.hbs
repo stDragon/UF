@@ -362,7 +362,8 @@
         <div class="switch">
             <label>
                 Off
-                <input type="checkbox" name="personalData.href.show" <%= personalData.href.show ? 'checked' : ''%>>
+                <input type="checkbox" name="personalData.href.show"
+                    <%= typeof personalData.href !== 'undefined' &&  personalData.href.show ? 'checked' : ''%>>
                 <span class="lever"></span>
                 On
             </label>
@@ -371,14 +372,16 @@
     <div class="col s4">
         <p>Текст</p>
         <div class="input-field">
-            <input id="personalData.href.text" type="text" name="personalData.href.text" value="<%= personalData.href.text %>">
+            <input id="personalData.href.text" type="text" name="personalData.href.text"
+                   value="<%= typeof personalData.text !== 'undefined' &&  personalData.href.text %>">
             <label for="personalData.href.text" class="active sr-only">Текст</label>
         </div>
     </div>
     <div class="col s4">
         <p>Путь</p>
         <div class="input-field">
-            <input id="personalData.href.pathname" type="text" name="personalData.href.pathname" value="<%= personalData.href.pathname %>">
+            <input id="personalData.href.pathname" type="text" name="personalData.href.pathname"
+                   value="<%= typeof personalData.pathname !== 'undefined' &&  personalData.href.pathname %>">
             <label for="personalData.href.pathname" class="active sr-only">Путь</label>
         </div>
     </div>
