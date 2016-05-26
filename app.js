@@ -19,6 +19,7 @@ app.set('view engine', 'hbs');
  * @todo временные массивы, удалить после появления БД
  * */
 var tmp = require('./temp');
+var logs = tmp.tmpDb.logs;
 var cities = tmp.tmpDb.cities;
 var shops = tmp.tmpDb.shops;
 var users = tmp.tmpDb.users;
@@ -127,4 +128,12 @@ app.post('/um/umdata/client/', jsonParser, function(req, res) {
 
 app.get('/um/umclient/add/:id', jsonParser, function(req, res) {
     res.json(users[req.params.id]);
+});
+
+app.post('/um/umdata/log/', jsonParser, function(req, res) {
+    var data = req.body;
+    data.id = Date.now().toString();
+    logs[data.id] = data;
+
+    res.status(201).json(data);
 });

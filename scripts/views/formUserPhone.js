@@ -88,7 +88,7 @@ module.exports = Backbone.View.extend({
             data[this.name] = $(this).val();
         });
 
-        this.model.save(data);
+        this.model.save(data).error(UM.ajaxError);
     },
 
     confirm: function () {

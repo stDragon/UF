@@ -26,6 +26,7 @@ var UM = window.UM || {
 
 window.UM = UM;
 
+UM.Models.Logger = require('./models/logger.js');
 UM.Models.Config = require('./models/config.js');
 UM.Models.City = require('./models/city.js');
 UM.Models.User = require('./models/user.js');
@@ -76,8 +77,8 @@ UM.init = function (option, data) {
         UM.configsCollection.add(config);
 
         config.fetch().then(function () {
-            new UM.Views.Config({model: config});
-        }, config);
+                new UM.Views.Config({model: config});
+            }, UM.ajaxError);
     });
 };
 
@@ -122,11 +123,21 @@ UM.TemplateManager = {
                     var tmpl = template;
                     that.templates[id] = tmpl;
                     callback(tmpl);
-                }
+                },
+                error: UM.ajaxError
             });
 
         }
 
     }
 
+};
+
+UM.ajaxError = function(jqXHR, textStatus, errorThrown) {
+    var error = {
+        responseText: jqXHR.responseText,
+        status: jqXHR.status,
+        statusText: jqXHR.statusText
+    };
+    new UM.Models.Logger({message: error})
 };

@@ -154,6 +154,7 @@ var db ={
             preview: 'http://www.marya.ru/upload/JazzPlus-02_prev.jpg'
         }
     ],
+    logs: [],
     users: [],
     configs: []
 };

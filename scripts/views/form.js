@@ -82,7 +82,7 @@ module.exports = Backbone.Ribs.View.extend({
             data[this.name] = $(this).val();
         });
 
-        this.model.save(data);
+        this.model.save(data).error(UM.ajaxError);
     },
 
     showOptionList: function (e) {
