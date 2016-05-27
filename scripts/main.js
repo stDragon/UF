@@ -75,7 +75,7 @@ $(document).ready(function() {
             style: 'um-material',
             initType: 'button',
             initPosition: 'fixed',
-            phoneVerification: true
+            phoneVerification: false
         },
 
         urlRoot: function () {
@@ -88,10 +88,23 @@ $(document).ready(function() {
             else
                 this.listenToOnce(this, 'sync', this.createFormFieldGenerator);
 
-            this.on('change:formConfig', this.createFormFieldGenerator, this);
+            this.on('change:phoneVerification', this.activePhoneField, this);
 
             if (App.conf.server.type != 'prod')
-                this.on('sync', this.log, this);
+                this.on('change', this.log, this);
+        },
+
+        activePhoneField: function () {
+            if(this.get('phoneVerification')) {
+                this.formField.set('phone.show', true);
+                this.formField.set('phone.required', true);
+            }
+        },
+
+        unactivePhoneField: function () {
+            if(!this.get('formConfig.phone.required')) {
+                this.set('phoneVerification', false);
+            }
         },
 
         validate: function (attrs, options) {
@@ -119,14 +132,15 @@ $(document).ready(function() {
         },
 
         createFormFieldGenerator: function() {
-            if (App.formFieldGenerator)
-                this.formField = App.formFieldGenerator;
-            else {
-                App.formFieldGenerator = new App.Models.FormFieldGenerator(this.toJSON().formConfig);
-                this.formField = App.formFieldGenerator;
-            }
+            var options = {};
+            if (this.get('phoneVerification'))
+                options ={
+                phoneVerification: true
+            };
+            this.formField = new App.Models.FormFieldGenerator(this.toJSON().formConfig, options);
             this.listenTo(this.formField, 'change', this.setFormConfig);
-            this.setFormConfig()
+            this.listenTo(this.formField, 'change', this.unactivePhoneField);
+            this.setFormConfig();
         },
 
         setFormConfig: function () {
@@ -267,7 +281,13 @@ $(document).ready(function() {
             }
         },
 
-        initialize: function() {
+        initialize: function(model, options) {
+
+            if (options && options.phoneVerification) {
+                this.set('phone.show', true);
+                this.set('phone.required', true);
+            }
+
             if (App.conf.server.type != 'prod')
                 this.on('change', this.log, this);
         },
@@ -425,7 +445,8 @@ $(document).ready(function() {
         initialize: function () {
             this.render();
 
-            //this.listenTo(this.model, 'change', this.setValue);
+            this.listenTo(this.model, 'change', this.setValues);
+
             _.bindAll(this, 'changed');
         },
 
@@ -436,21 +457,34 @@ $(document).ready(function() {
                 var data = that.model.toJSON();
                 var html = $(temp(data));
                 that.$el.html(html);
-                if(that.model.id) that.renderCode();
             });
             return this;
         },
 
-        setValue: function () {
+        setValues: function () {
+            /** @TODO Костыль из за вложенного объекта, надо найти нормальное решение*/
             var attr = this.model.toJSON();
             _.each(attr, function (num, key) {
-                var $el = this.$el.find('[name=' + key + ']');
-                if ($el.is(':checkbox'))
-                    $el.prop("checked", num);
-                else
-                    $el.val(num);
+                if (typeof num == 'object') {
+                    var parentKey = key;
+                    _.each(num, function (num, key) {
+                        var $el = this.$el.find('[name="' + parentKey + '.' + key + '"]');
+                        this.setValue($el, num);
+                    },this);
+                } else {
+                    var $el = this.$el.find('[name="' + key + '"]');
+                    this.setValue($el, num);
+                }
+
             }, this);
             this.$el.find('select').material_select();
+        },
+
+        setValue: function ($el, val) {
+            if ($el.is(':checkbox'))
+                $el.prop("checked", val);
+            else
+                $el.val(val);
         },
 
         changed: function(e) {
