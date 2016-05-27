@@ -307,7 +307,6 @@ $(document).ready(function() {
             "input input:text"    : "changed",
             "change input"        : "changed",
             "change select"       : "changed",
-            "click .js-copy-code" : "copyCode",
             "submit"              : "submit"
         },
 
@@ -325,6 +324,17 @@ $(document).ready(function() {
             this.listenTo(this.model, 'invalid', this.unrenderCode);
             this.listenTo(this.model, 'request', this.valid);
             _.bindAll(this, 'changed');
+
+            var clipboard = new Clipboard('.js-copy-code');
+
+            clipboard.on('success', function(e) {
+                console.log(e);
+                Materialize.toast('Код скопирован в буфер обмена', 2000);
+            });
+            clipboard.on('error', function(e) {
+                console.log(e);
+                console.error('Не удалось скопировать');
+            });
         },
 
         render: function () {
@@ -404,20 +414,6 @@ $(document).ready(function() {
                 $el.removeClass('valid')
                     .addClass('invalid');
             }, this);
-        },
-
-        copyCode: function () {
-            var el = this.el.querySelector('[name=code]');
-            var range = document.createRange();
-            range.selectNode(el);
-            window.getSelection().addRange(range);
-            try {
-                var successful = document.execCommand('copy');
-                if (successful)
-                    Materialize.toast('Код скопирован в буфер обмена', 2000);
-            } catch(err) {
-                console.error('Не удалось скопировать');
-            }
         },
 
         showMassageSave: function () {
