@@ -13,6 +13,6 @@ module.exports = Backbone.Model.extend({
 
     initialize: function () {
         if (!this.get('title'))
-            this.set('title', this.get('name') + ', ' + this.get('address'));
+            this.set('title', this.get('address'));
     }
 });

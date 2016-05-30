@@ -41,7 +41,7 @@ module.exports = Backbone.Ribs.Model.extend({
         if (!this.get('style'))
             console.warn('Стили отключены');
         if (!this.get('showMap'))
-            console.warn('Карта отключина');
+            console.warn('Карта отключена');
     },
 
     initForm: function () {
