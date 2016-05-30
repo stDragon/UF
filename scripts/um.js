@@ -1,6 +1,6 @@
-var _ = require('../public/libs/underscore/underscore.js'),
-    $ = require('../public/libs/jquery/dist/jquery.js'),
-    Backbone = require('../public/libs/backbone/backbone.js'),
+var _ = require('underscore'),
+    $ = require('jquery'),
+    Backbone = require('backbone'),
     conf = require('../nconf.js');
 
 window._ = window._ || _;

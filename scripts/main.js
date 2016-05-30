@@ -95,7 +95,7 @@ $(document).ready(function() {
         },
 
         activePhoneField: function () {
-            if(this.get('phoneVerification')) {
+            if(this.get('phoneVerification') && this.formField) {
                 this.formField.set('phone.show', true);
                 this.formField.set('phone.required', true);
             }
