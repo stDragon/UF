@@ -8,20 +8,27 @@ module.exports = Backbone.Ribs.View.extend({
         this.initBody();
     },
 
-    getStyle: function () {
-        return '<link rel="stylesheet" type="text/css" href="' + UM.conf.server.url + '/public/css/' + this.model.get('style') + '.css">';
+    getStyle: function (href) {
+        return '<link rel="stylesheet" type="text/css" href="' + href + '">';
+    },
+
+    getScript: function (href) {
+        return '<script src="' + href + '" type="text/javascript">';
     },
 
     getYaMap: function () {
-        return '<script src="//api-maps.yandex.ru/2.1/?lang=ru_RU&mode=debug" type="text/javascript">';
+        var YaMapHref = '//api-maps.yandex.ru/2.1/?lang=ru_RU&mode=debug';
+        return $('script[src$="' + YaMapHref + '"]').length ? this.getScript(YaMapHref) : '';
     },
 
     initHead: function () {
         var $head = $('head'),
             head = '';
 
-        if (this.model.get('style'))
-            head += this.getStyle();
+        if (this.model.get('style') && !$('link[href$="' + this.model.get('style') + '.css"]').length) {
+            var styleHref = UM.conf.server.url + '/public/css/' + this.model.get('style') + '.css';
+            head += this.getStyle(styleHref);
+        }
 
         if (this.model.get('formConfig').shop.mapShow)
             head += this.getYaMap();

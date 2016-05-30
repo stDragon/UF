@@ -57,12 +57,12 @@ $(document).ready(function() {
             App.config.fetch().then(function(){
                 App.formCodeView = new App.Views.CodeGeneratorForm({model: App.config});
                 $('#formCodeGenerator').html(App.formCodeView.el);
-                //App.example = new App.Views.Example({model: App.config});
+                App.example = new App.Views.Example({model: App.config});
             });
         else {
             App.formCodeView = new App.Views.CodeGeneratorForm({model: App.config});
             $('#formCodeGenerator').html(App.formCodeView.el);
-            //App.example = new App.Views.Example({model: App.config});
+            App.example = new App.Views.Example({model: App.config});
         }
     }
 
