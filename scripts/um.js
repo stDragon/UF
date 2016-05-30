@@ -1,12 +1,12 @@
-var _ = require('underscore'),
-    $ = require('jquery'),
-    Backbone = require('backbone'),
+var _ = require('../public/libs/underscore/underscore.js'),
+    $ = require('../public/libs/jquery/dist/jquery.js'),
+    Backbone = require('../public/libs/backbone/backbone.js'),
     conf = require('../nconf.js');
 
 window._ = window._ || _;
 window.Backbone = window.Backbone || Backbone;
 
-require('jquery.inputmask');
+require('../public/libs/jquery.inputmask/dist/inputmask/jquery.inputmask.js');
 require('../public/libs/backbone.ribs/backbone.ribs.js');
 require('./Backbone.Ymaps.js');
 

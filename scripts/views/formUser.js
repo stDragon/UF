@@ -81,7 +81,13 @@ module.exports = UM.Views.Form.extend({
     },
 
     initMask: function () {
-        this.$el.find('[name=phone]').inputmask({"mask": "+9(999)999-99-99"});
+        /* От работы через jquery пришлось отказатся из-за некоректной работной работы inputmask через browserify */
+        var selector = this.$el.find('[name=phone]'),
+            im = new Inputmask("+9(999)999-99-99");
+
+        if (selector.length) {
+            im.mask(selector[0]);
+        }
     },
 
     createSelectShop: function () {
