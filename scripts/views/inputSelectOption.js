@@ -29,6 +29,7 @@ module.exports = Backbone.View.extend({
         if (!this.model.get('active')) {
             this.model.collection.unsetActive();
             this.model.set('active', true);
+            this.model.trigger('active');
         }
     }
 });

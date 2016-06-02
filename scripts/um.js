@@ -19,7 +19,6 @@ var UM = window.UM || {
         pages: [],
         forms: [],
         buttons: [],
-        cityCollections: [],
         serverUrl: conf.server.url + '/um/umdata',
         conf: conf
     };
@@ -34,11 +33,13 @@ UM.Models.Phone = require('./models/phone.js');
 UM.Models.Shop = require('./models/shop.js');
 UM.Models.Modal = require('./models/modal.js');
 UM.Models.Kitchen = require('./models/kitchen.js');
+UM.Models.PhoneCode = require('./models/phoneCode.js');
 
 UM.Collections.Configs = require('./collections/configs.js');
 UM.Collections.Citys = require('./collections/citys.js');
 UM.Collections.Shops = require('./collections/shops.js');
 UM.Collections.Kitchens = require('./collections/kitchens.js');
+UM.Collections.PhoneCodeCollection = require('./collections/phoneCodes.js');
 
 UM.Views.Tooltip = require('./views/tooltip.js');
 UM.Views.Loader = require('./views/loader.js');
@@ -60,6 +61,54 @@ UM.Views.Shop = require('./views/shop.js');
 UM.Views.Shops = require('./views/shops.js');
 UM.Views.Kitchen = require('./views/kitchen.js');
 UM.Views.Kitchens = require('./views/kitchens.js');
+UM.Views.PhoneInput = require('./views/phoneInput.js');
+UM.Views.PhoneCode = require('./views/phoneCode.js');
+UM.Views.PhoneCodeCollection = require('./views/phoneCodeCollection.js');
+
+/** @todo Надо определить куда это определить */
+UM.codes = [
+    {
+        name: 'RU',
+        country: 'Россия',
+        code: '7',
+        regExp: '\+7\s\d{3}\-\d{3}\-\d{2}\-\d{2}',
+        mask: '999-999-99-99',
+        img: '/public/img/flags/ru.gif',
+        active: true
+    },
+    {
+        name: 'BY',
+        country: 'Белоруссия',
+        code: '375',
+        regExp: '\+375\s\d{3}\-\d{2}\-\d{2}\-\d{2}',
+        mask: '99-999-99-99',
+        img: '/public/img/flags/by.gif'
+    },
+    {
+        name: 'UA',
+        country: 'Украина',
+        code: '380',
+        regExp: '\+380\s\d{3}\-\d{2}\-\d{2}\-\d{2}',
+        mask: '99-999-99-99',
+        img: '/public/img/flags/ua.gif'
+    },
+    {
+        name: 'KZ',
+        country: 'Казахстан',
+        code: '77',
+        regExp: '\+77\s\d{2}\-\d{3}\-\d{2}\-\d{2}',
+        mask: '99-999-99-99',
+        img: '/public/img/flags/kz.gif'
+    },
+    {
+        name: 'KG',
+        country: 'Киргизия',
+        code: '996',
+        regExp: '\+996\s\d{3}\-\d{3}\-\d{3}',
+        mask: '999-999-999',
+        img: '/public/img/flags/kg.gif'
+    }
+];
 
 /**
  *  Запуск модуля

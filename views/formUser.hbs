@@ -24,13 +24,13 @@
         </div>
     <%}%>
     <%if(formConfig.phone.show){%>
-        <div class="um-form-group um-form-group-phone">
+        <div class="um-form-group um-form-group-phone um-select um-select-left">
             <label for="umPhone"><%= formConfig.phone.label %></label>
             <input type="text" name="phone" class="um-form-control" id="umPhone" placeholder="<%= formConfig.phone.placeholder %>" value="<%= phone %>" <%= formConfig.phone.required ? 'required' : ''%>>
         </div>
     <%}%>
     <%if(formConfig.city.show){%>
-        <div class="um-form-group um-form-group-city">
+        <div class="um-form-group um-form-group-city um-select">
             <label for="umCity"><%= formConfig.city.label %></label>
             <input type="text" name="city" class="um-form-control" id="umCity" placeholder="<%= formConfig.city.placeholder %>" value="<%= city %>" <%= formConfig.city.required ? 'required' : ''%>>
         </div>
@@ -45,7 +45,7 @@
         </div>
     <%}%>
     <%if(formConfig.shop.show){%>
-        <div class="um-form-group um-form-group-shop
+        <div class="um-form-group um-form-group-shop um-select
             <%= formConfig.shop.mapShow ? ' um-with-map' : ''%>">
             <label for="umShop"><%= formConfig.shop.label %></label>
             <input type="text" name="shop" class="um-form-control" id="umShop"
@@ -61,7 +61,7 @@
         </div>
     <%}%>
     <%if(typeof formConfig.kitchen !== 'undefined' && formConfig.kitchen.show){%>
-        <div class="um-form-group um-form-group-kitchen">
+        <div class="um-form-group um-form-group-kitchen um-select">
             <label for="umKitchen"><%= formConfig.kitchen.label %></label>
             <input type="text" name="kitchen" class="um-form-control" id="umKitchen"
                    placeholder="<%= formConfig.kitchen.placeholder %>"

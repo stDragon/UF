@@ -87,14 +87,14 @@ module.exports = Backbone.Ribs.View.extend({
 
     showOptionList: function (e) {
         this.hiddenOptionList();
-        $(e.target).siblings('.um-dropdown-content').removeClass('um-hidden');
+        $(e.target).closest('.um-form-group').addClass('um-open-select');
     },
 
     hiddenOptionList: function (e) {
         if (e) {
-            $(e.target).siblings('.um-dropdown-content').addClass('um-hidden');
+            $(e.target).closest('.um-form-group').removeClass('um-open-select');
         } else {
-            this.$el.find('.um-dropdown-content').addClass('um-hidden');
+            this.$el.find('.um-form-group').removeClass('um-open-select');
         }
     },
     /**
@@ -133,5 +133,5 @@ module.exports = Backbone.Ribs.View.extend({
             tooltip.$el.html(error.text);
             $group.append(tooltip.el);
         }, this);
-    },
+    }
 });

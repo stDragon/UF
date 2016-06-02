@@ -4,7 +4,7 @@
 
 module.exports = UM.Views.InputSelect.extend({
 
-    className: 'um-dropdown-content um-city-list um-hidden',
+    className: 'um-dropdown-content um-city-list',
 
     render: function () {
         this.collection.each(function (model) {

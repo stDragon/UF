@@ -9,7 +9,6 @@ module.exports = UM.Views.Form.extend({
     template: 'formUser',
 
     events: {
-        'focus input[name=phone]': 'initMask',
         'focus input': 'showOptionList',
         'input input': 'setAttrs',
         //'keyup [name="city"]': 'search',
@@ -80,13 +79,11 @@ module.exports = UM.Views.Form.extend({
 
     },
 
-    initMask: function () {
-        /* От работы через jquery пришлось отказатся из-за некоректной работной работы inputmask через browserify */
-        var selector = this.$el.find('[name=phone]'),
-            im = new Inputmask("+9(999)999-99-99");
+    initPhoneMask: function () {
+        var selector = this.$el.find('.um-form-group-phone');
 
-        if (selector.length) {
-            im.mask(selector[0]);
+        if (selector.length && !this.phoneView) {
+            this.phoneView = new UM.Views.PhoneInput({el: selector});
         }
     },
 
@@ -166,7 +163,7 @@ module.exports = UM.Views.Form.extend({
             if (that.kitchenCollectionView) {
                 that.addSelectList('kitchen', that.kitchenCollectionView);
             }
-            that.initMask();
+            that.initPhoneMask();
             that.preValidation();
 
             /*Костыль со скрывающимися комментариями для старого все для дома*/
