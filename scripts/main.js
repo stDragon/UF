@@ -537,7 +537,10 @@ $(document).ready(function() {
         unrender: function() {
             if(UM.configsCollection) {
                 if(UM.pages[this.model.id])
-                    UM.pages[this.model.id].unrender();
+                    if (Array.isArray(UM.pages[this.model.id]))
+                        UM.pages[this.model.id][0].unrender();
+                    else
+                        UM.pages[this.model.id].unrender();
 
                 if(UM.buttons[this.model.id] && UM.buttons[this.model.id].$el.hasClass('um-btn-start--fixed'))
                     UM.buttons[this.model.id].unrender();

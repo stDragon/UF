@@ -6,10 +6,6 @@ var _ = require('underscore'),
 window._ = window._ || _;
 window.Backbone = window.Backbone || Backbone;
 
-require('../public/libs/jquery.inputmask/dist/inputmask/jquery.inputmask.js');
-require('../public/libs/backbone.ribs/backbone.ribs.js');
-require('./Backbone.Ymaps.js');
-
 var UM = window.UM || {
         Models: {},
         Collections: {},
@@ -22,6 +18,12 @@ var UM = window.UM || {
         serverUrl: conf.server.url + '/um/umdata',
         conf: conf
     };
+
+UM.Inputmask = require('../public/libs/jquery.inputmask/dist/inputmask/inputmask.js');
+require('../public/libs/jquery.inputmask/dist/inputmask/jquery.inputmask.js');
+require('../public/libs/jquery.inputmask/dist/inputmask/inputmask.extensions.js');
+require('../public/libs/backbone.ribs/backbone.ribs.js');
+require('./Backbone.Ymaps.js');
 
 window.UM = UM;
 
@@ -73,7 +75,7 @@ UM.codes = [
         code: '7',
         regExp: '\+7\s\d{3}\-\d{3}\-\d{2}\-\d{2}',
         mask: '999-999-99-99',
-        img: '/public/img/flags/ru.gif',
+        img: UM.conf.server.url + '/public/img/flags/ru.gif',
         active: true
     },
     {
@@ -82,7 +84,7 @@ UM.codes = [
         code: '375',
         regExp: '\+375\s\d{3}\-\d{2}\-\d{2}\-\d{2}',
         mask: '99-999-99-99',
-        img: '/public/img/flags/by.gif'
+        img: UM.conf.server.url + '/public/img/flags/by.gif'
     },
     {
         name: 'UA',
@@ -90,7 +92,7 @@ UM.codes = [
         code: '380',
         regExp: '\+380\s\d{3}\-\d{2}\-\d{2}\-\d{2}',
         mask: '99-999-99-99',
-        img: '/public/img/flags/ua.gif'
+        img: UM.conf.server.url + '/public/img/flags/ua.gif'
     },
     {
         name: 'KZ',
@@ -98,7 +100,7 @@ UM.codes = [
         code: '77',
         regExp: '\+77\s\d{2}\-\d{3}\-\d{2}\-\d{2}',
         mask: '99-999-99-99',
-        img: '/public/img/flags/kz.gif'
+        img: UM.conf.server.url + '/public/img/flags/kz.gif'
     },
     {
         name: 'KG',
@@ -106,7 +108,7 @@ UM.codes = [
         code: '996',
         regExp: '\+996\s\d{3}\-\d{3}\-\d{3}',
         mask: '999-999-999',
-        img: '/public/img/flags/kg.gif'
+        img: UM.conf.server.url + '/public/img/flags/kg.gif'
     }
 ];
 

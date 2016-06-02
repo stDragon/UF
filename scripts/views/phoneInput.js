@@ -28,7 +28,7 @@ module.exports = Backbone.View.extend({
     setMask: function (option) {
         var mask = this.phoneCodeCollection.getMask();
         /* От работы через jquery пришлось отказатся из-за некоректной работной работы inputmask через browserify */
-        var im = new Inputmask(mask);
+        var im = new UM.Inputmask(mask);
         im.mask(this.input);
 
         if (option && option.clear === true)
