@@ -103,6 +103,23 @@
         &.um-form-group-personal-data {
             width: 100%;
         }
+        &.um-select {
+          &::before {
+            top: auto;
+          bottom: 18px;
+            right: 30px
+          }
+          &.um-select-left {
+            &::before {
+            left: 30px;
+            }
+          }
+        }
+      >.um-phone-flag{
+        left: 45px;
+        top: auto;
+        bottom: 14px;
+      }
     }
     .um-form-control{
         width: 100%;

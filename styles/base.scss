@@ -244,8 +244,7 @@
     }
     &.um-form-group-phone {
       >.um-form-control {
-        width: calc(100% - 60px);
-        padding-left: 60px;
+        padding-left: 55px;
       }
     }
     >.um-phone-flag{
@@ -257,6 +256,9 @@
     }
   }
 
+  .um-form-control {
+    box-sizing: inherit;
+  }
   .um-dropdown-content {
     padding: 0;
     background-color: #fff;
@@ -294,13 +296,9 @@
         background-color: #eee;
       }
       >.um-dropdown-img {
-        //height: 1.5rem;
         width: 1.5rem;
-        margin: 12px 15px 12px 0;
+        margin: 4px 6px;
         float: right;
-        &.img-flag {
-          margin-top: 17px;
-        }
       }
       >.um-phone-code{
         float: right;

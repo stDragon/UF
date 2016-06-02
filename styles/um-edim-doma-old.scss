@@ -203,10 +203,7 @@
   }
   .um-form-group-city,
   .um-form-group-shop {
-    >.um-form-control,
-    >.um-dropdown-content {
-      max-width: 150px;
-    }
+    max-width: 150px;
   }
   .um-form-group-wishes {
     >label {

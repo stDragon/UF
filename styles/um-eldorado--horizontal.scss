@@ -70,6 +70,21 @@ $main-color: #e11a33;
       width: 25%;
       float: left;
       padding: 0 5px;
+      &.um-select {
+        &::before {
+          right: 12px;
+        }
+        &.um-select-left {
+          &::before {
+            left: 12px;
+          }
+        }
+      }
+      &.um-form-group-phone {
+        >.um-form-control {
+          padding-left: 60px;
+        }
+      }
       .um-dropdown-content {
         left: 5px;
         width: calc(100% - 10px);
