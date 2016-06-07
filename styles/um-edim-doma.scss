@@ -88,8 +88,14 @@
                 visibility: visible;
             }
             &.um-with-map {
-            .um-form-control{
+                &::before {
+                    right: 65px;
+                }
+                .um-form-control{
                     width: 80%;
+                }
+                .um-dropdown-content {
+                    right: 70px;
                 }
             }
             .um-icon-add-location{

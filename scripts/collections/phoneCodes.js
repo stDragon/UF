@@ -12,7 +12,11 @@ module.exports = Backbone.Collection.extend({
     },
 
     filterAvailable: function () {
-        var arrAvailable = JSON.parse(this.options.available);
+        var arrAvailable;
+        if (this.options.available)
+            arrAvailable = JSON.parse(this.options.available);
+        else
+            arrAvailable = ["RU"];
 
         return this.filter( function (model) {
             return  _.find(arrAvailable, function (isoCode) {
@@ -22,7 +26,9 @@ module.exports = Backbone.Collection.extend({
     },
 
     filterNotAvailable: function () {
-        var arrNotAvailable = JSON.parse(this.options.notAvailable);
+        var arrNotAvailable;
+        if (this.options.notAvailable)
+            arrNotAvailable = JSON.parse(this.options.notAvailable);
 
         return this.filter( function (model) {
             return  !_.find(arrNotAvailable, function (isoCode) {
