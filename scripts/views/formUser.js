@@ -170,7 +170,7 @@ module.exports = UM.Views.Form.extend({
             that.preValidation();
 
             /*Костыль со скрывающимися комментариями для старого все для дома*/
-            if (that.$el.closest('um-edim-doma-old')) {
+            if (that.$el.closest('.um-edim-doma-old').length) {
                 that.$el.find('[name="wishes"]').addClass('um-hidden');
             }
         });
