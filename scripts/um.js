@@ -179,7 +179,7 @@ UM.TemplateManager = {
 
 };
 
-UM.ajaxError = function(jqXHR, textStatus, errorThrown) {
+UM.ajaxError = function(jqXHR) {
     var error = {
         responseText: jqXHR.responseText,
         status: jqXHR.status,
