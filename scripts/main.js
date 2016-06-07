@@ -13,6 +13,44 @@ $(document).ready(function() {
         conf: conf
     };
 
+    App.codes = [
+        {
+            isoCode: 'RU',
+            name: 'Россия',
+            code: '7',
+            mask: '999-999-99-99',
+            img: '/public/img/flags/ru.gif'
+        },
+        {
+            isoCode: 'BY',
+            name: 'Белоруссия',
+            code: '375',
+            mask: '999-99-99-99',
+            img: '/public/img/flags/by.gif'
+        },
+        {
+            isoCode: 'UA',
+            name: 'Украина',
+            code: '380',
+            mask: '999-99-99-99',
+            img: '/public/img/flags/ua.gif'
+        },
+        {
+            isoCode: 'KZ',
+            name: 'Казахстан',
+            code: '77',
+            mask: '99-999-99-99',
+            img: '/public/img/flags/kz.gif'
+        },
+        {
+            isoCode: 'KG',
+            name: 'Киргизия',
+            code: '996',
+            mask: '999-999-999',
+            img: '/public/img/flags/kg.gif'
+        }
+    ];
+
     App.Models.PhoneCode = require('./models/phoneCode.js');
     App.Collections.PhoneCodes = require('./collections/phoneCodes.js');
     App.Views.SelectOption = require('./views/selectOption.js');
@@ -298,14 +336,22 @@ $(document).ready(function() {
             this.phoneCodesCollection = new App.Collections.PhoneCodes({model: App.Models.PhoneCode});
 
             var that = this;
-            this.phoneCodesCollection.fetch().then(function() {
-                that.phoneCodesAvailableCollection = new App.Collections.PhoneCodes(that.phoneCodesCollection.toJSON());
-                that.phoneCodesNotAvailableCollection = new App.Collections.PhoneCodes(that.phoneCodesCollection.toJSON());
-                that.setActivePhone();
-            });
+
+            /** @todo надо перенести данные на сервер */
+            this.phoneCodesCollection.set(App.codes);
+            this.createPhoneCodes();
+            /*this.phoneCodesCollection.fetch().then(function() {
+                that.createPhoneCodes();
+            });*/
 
             if (App.conf.server.type != 'prod')
                 this.on('change', this.log, this);
+        },
+
+        createPhoneCodes: function () {
+            this.phoneCodesAvailableCollection = new App.Collections.PhoneCodes(this.phoneCodesCollection.toJSON());
+            this.phoneCodesNotAvailableCollection = new App.Collections.PhoneCodes(this.phoneCodesCollection.toJSON());
+            this.setActivePhone();
         },
 
         setActivePhone: function () {
