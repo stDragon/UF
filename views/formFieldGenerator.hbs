@@ -167,6 +167,21 @@
             <label for="phone.placeholder" class="active sr-only">Placeholder</label>
         </div>
     </div>
+    <div class="col s4">
+        <p>Доступные коды стран</p>
+        <div class="input-field">
+            <select id="phone.available" name="phone.available" multiple></select>
+            <label for="phone.available" class="sr-only">Доступные коды стран</label>
+        </div>
+    </div>
+    <!-- исключающий фильтр выключен из-за малого числа стран -->
+    <div class="col s4 hiddendiv">
+        <p>Не доступные коды стран</p>
+        <div class="input-field">
+            <select id="phone.notAvailable" name="phone.notAvailable" multiple></select>
+            <label for="phone.notAvailable" class="sr-only">Не доступные коды стран</label>
+        </div>
+    </div>
 </div>
 
 <h3><%= city.label %></h3>

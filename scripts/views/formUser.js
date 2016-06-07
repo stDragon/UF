@@ -83,7 +83,7 @@ module.exports = UM.Views.Form.extend({
         var selector = this.$el.find('.um-form-group-phone');
 
         if (selector.length && !this.phoneView) {
-            this.phoneView = new UM.Views.PhoneInput({el: selector});
+            this.phoneView = new UM.Views.PhoneInput({el: selector, form: this});
         }
     },
 

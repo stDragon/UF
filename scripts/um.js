@@ -70,43 +70,38 @@ UM.Views.PhoneCodeCollection = require('./views/phoneCodeCollection.js');
 /** @todo Надо определить куда это определить */
 UM.codes = [
     {
-        name: 'RU',
-        country: 'Россия',
+        isoCode: 'RU',
+        name: 'Россия',
         code: '7',
-        regExp: '\+7\s\d{3}\-\d{3}\-\d{2}\-\d{2}',
         mask: '999-999-99-99',
         img: UM.conf.server.url + '/public/img/flags/ru.gif',
         active: true
     },
     {
-        name: 'BY',
-        country: 'Белоруссия',
+        isoCode: 'BY',
+        name: 'Белоруссия',
         code: '375',
-        regExp: '\+375\s\d{3}\-\d{2}\-\d{2}\-\d{2}',
-        mask: '99-999-99-99',
+        mask: '999-99-99-99',
         img: UM.conf.server.url + '/public/img/flags/by.gif'
     },
     {
-        name: 'UA',
-        country: 'Украина',
+        isoCode: 'UA',
+        name: 'Украина',
         code: '380',
-        regExp: '\+380\s\d{3}\-\d{2}\-\d{2}\-\d{2}',
-        mask: '99-999-99-99',
+        mask: '999-99-99-99',
         img: UM.conf.server.url + '/public/img/flags/ua.gif'
     },
     {
-        name: 'KZ',
-        country: 'Казахстан',
+        isoCode: 'KZ',
+        name: 'Казахстан',
         code: '77',
-        regExp: '\+77\s\d{2}\-\d{3}\-\d{2}\-\d{2}',
         mask: '99-999-99-99',
         img: UM.conf.server.url + '/public/img/flags/kz.gif'
     },
     {
-        name: 'KG',
-        country: 'Киргизия',
+        isoCode: 'KG',
+        name: 'Киргизия',
         code: '996',
-        regExp: '\+996\s\d{3}\-\d{3}\-\d{3}',
         mask: '999-999-999',
         img: UM.conf.server.url + '/public/img/flags/kg.gif'
     }

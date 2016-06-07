@@ -1,15 +1,15 @@
 module.exports = Backbone.Model.extend({
     defaults: {
+        isoCode: '',
         name: '',
-        country: '',
         code: '',
-        regExp: '',
-        mask: ''
+        mask: '',
+        active: false
     },
 
     active: function () {
         if (!this.get('active')) {
-            if (this.collection)
+            if (this.collection && !this.collection.options.multiple)
                 this.collection.unsetActive();
 
             this.set('active', true);

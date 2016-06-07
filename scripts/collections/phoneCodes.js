@@ -1,12 +1,50 @@
 module.exports = Backbone.Collection.extend({
     model: UM.Models.PhoneCode,
 
+    url: function () {
+        return '/api/phoneCodes/'
+    },
+
+    initialize: function(models, options) {
+
+        this.options = options || {};
+
+    },
+
+    filterAvailable: function () {
+        var arrAvailable = JSON.parse(this.options.available);
+
+        return this.filter( function (model) {
+            return  _.find(arrAvailable, function (isoCode) {
+                return model.get('isoCode') === isoCode;
+            });
+        });
+    },
+
+    filterNotAvailable: function () {
+        var arrNotAvailable = JSON.parse(this.options.notAvailable);
+
+        return this.filter( function (model) {
+            return  !_.find(arrNotAvailable, function (isoCode) {
+                return model.get('isoCode') === isoCode;
+            });
+        });
+    },
+
+
+    setActive: function (arrActive) {
+        _.each(arrActive, function (active) {
+            var model = this.find(function(model){ return model.get('isoCode') == active; });
+            model.set('active', true);
+        }, this);
+    },
+
     getActive: function () {
         var active = this.find(function(model) {
             return model.get('active') == true;
         });
         if (active) {
-            return active.toJSON();
+            return active;
         }
     },
 
@@ -18,6 +56,6 @@ module.exports = Backbone.Collection.extend({
 
     getMask: function () {
         var active = this.getActive();
-        return '+' + active.code.replace(/[0-9]/g, '9') + ' ' + active.mask;
+        return '+' + active.get('code').replace(/[0-9]/g, '9') + ' ' + active.get('mask');
     }
 });

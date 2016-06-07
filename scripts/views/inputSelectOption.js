@@ -10,6 +10,7 @@ module.exports = Backbone.View.extend({
     initialize: function () {
         this.render();
         this.model.on('change', this.render, this);
+        this.model.on('remove', this.unrender, this);
     },
 
     render: function () {
@@ -23,6 +24,10 @@ module.exports = Backbone.View.extend({
         this.$el.html(this.template(this.model.toJSON()));
 
         return this;
+    },
+
+    unrender: function () {
+        this.remove(); // this.$el.remove()
     },
 
     active: function () {

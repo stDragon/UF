@@ -7,10 +7,21 @@ module.exports = Backbone.View.extend({
         'keyup input[name=phone]': 'setCode'
     },
 
-    initialize: function () {
+    initialize: function (options) {
         this.input = this.$el.find('input');
 
-        this.phoneCodeCollection = new UM.Collections.PhoneCodeCollection( UM.codes );
+        if (options.form)
+            this.form = options.form;
+
+        var phoneCodeCollection = new UM.Collections.PhoneCodeCollection(
+            UM.codes,
+            {
+                available: this.form.model.options.phone.available,
+                notAvailable: this.form.model.options.phone.notAvailable
+            }
+        );
+
+        this.phoneCodeCollection = new UM.Collections.PhoneCodeCollection(phoneCodeCollection.filterAvailable());
         this.phoneCodeCollectionView = new UM.Views.PhoneCodeCollection({ collection: this.phoneCodeCollection});
         this.$el.prepend(this.phoneCodeCollectionView.el);
 
@@ -31,8 +42,12 @@ module.exports = Backbone.View.extend({
         var im = new UM.Inputmask(mask);
         im.mask(this.input);
 
-        if (option && option.clear === true)
-            this.input.val(this.phoneCodeCollection.getActive().code);
+        var active = this.phoneCodeCollection.getActive();
+
+        if (option && option.clear === true) {
+            this.input.val(active.get('code'));
+            this.form.model.options.phone.pattern = active.get('isoCode');
+        }
 
         this.setFlag();
     },
@@ -89,6 +104,6 @@ module.exports = Backbone.View.extend({
     setFlag: function () {
         var active = this.phoneCodeCollection.getActive();
         this.$el.children('.um-phone-flag').remove();
-        this.$el.append('<img src="' + active.img + '" alt="' + active.country + '" class="um-phone-flag">')
+        this.$el.append('<img src="' + active.get('img') + '" alt="' + active.get('name') + '" class="um-phone-flag">')
     }
 });

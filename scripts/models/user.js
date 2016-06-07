@@ -105,7 +105,14 @@ module.exports = Backbone.Model.extend({
     validate: function (attrs) {
          //emailFilter = /^[-\w.]+@([A-z0-9][-A-z0-9]+\.)+[A-z]{2,4}$/,
             //lettersFilter = /^[а-яА-ЯёЁa-zA-Z]{1,20}$/,
-        var   phoneFilter = /((8|\+7)-?)?\(?\d{3}\)?-?\d{1}-?\d{1}-?\d{1}-?\d{1}-?\d{1}-?\d{1}-?\d{1}/;
+        var phonePattern = {
+            'RU': /\+7\s\d{3}\-\d{3}\-\d{2}\-\d{2}/,
+            'BY': /\+375\s\d{3}\-\d{2}\-\d{2}\-\d{2}/,
+            'UA': /\+380\s\d{3}\-\d{2}\-\d{2}\-\d{2}/,
+            'KZ': /\+77\s\d{2}\-\d{3}\-\d{2}\-\d{2}/,
+            'KG': /\+996\s\d{3}\-\d{3}\-\d{3}/
+        };
+        var phoneFilter = new RegExp(phonePattern[this.options.phone.pattern]);
 
         var errors = [];
 
@@ -153,13 +160,13 @@ module.exports = Backbone.Model.extend({
             }
         }*/
 
-        if (this.options.phone.show) {
-            if (this.options.phone.required && !attrs.phone) {
+        if (this.options.phone.show && this.options.phone.required) {
+            if (!attrs.phone) {
                 errors.push({
                     text: "Вы не заполнили телефон",
                     attr: 'phone'
                 });
-            } else if (this.options.phone.required && !phoneFilter.test(attrs.phone)) {
+            } else if (!phoneFilter.test(attrs.phone)) {
                 errors.push({
                     text: "Телефон не коректен",
                     attr: 'phone'

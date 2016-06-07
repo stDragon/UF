@@ -13,6 +13,11 @@ $(document).ready(function() {
         conf: conf
     };
 
+    App.Models.PhoneCode = require('./models/phoneCode.js');
+    App.Collections.PhoneCodes = require('./collections/phoneCodes.js');
+    App.Views.SelectOption = require('./views/selectOption.js');
+    App.Views.Select = require('./views/select.js');
+
     /**
      *  Ajax подгрузка шаблона
      *  */
@@ -223,7 +228,9 @@ $(document).ready(function() {
                 label: 'Телефон',
                 placeholder: 'Ваш номер телефон',
                 show: true,
-                required: false
+                required: false,
+                pattern: 'RU',
+                available: '["RU"]'
             },
             city: {
                 type: 'text',
@@ -288,8 +295,26 @@ $(document).ready(function() {
                 this.set('phone.required', true);
             }
 
+            this.phoneCodesCollection = new App.Collections.PhoneCodes({model: App.Models.PhoneCode});
+
+            var that = this;
+            this.phoneCodesCollection.fetch().then(function() {
+                that.phoneCodesAvailableCollection = new App.Collections.PhoneCodes(that.phoneCodesCollection.toJSON());
+                that.phoneCodesNotAvailableCollection = new App.Collections.PhoneCodes(that.phoneCodesCollection.toJSON());
+                that.setActivePhone();
+            });
+
             if (App.conf.server.type != 'prod')
                 this.on('change', this.log, this);
+        },
+
+        setActivePhone: function () {
+            if (this.get('phone.available')) {
+                this.phoneCodesAvailableCollection.setActive($.parseJSON(this.get('phone.available')));
+            }
+            if (this.get('phone.notAvailable')) {
+                this.phoneCodesNotAvailableCollection.setActive($.parseJSON(this.get('phone.notAvailable')));
+            }
         },
 
         log: function () {
@@ -453,6 +478,8 @@ $(document).ready(function() {
                 var data = that.model.toJSON();
                 var html = $(temp(data));
                 that.$el.html(html);
+                that.selectPhoneCodesAvailable = new App.Views.Select({el: '[name="phone.available"]', collection: that.model.phoneCodesAvailableCollection}).render();
+                that.selectPhoneCodesNotAvailable = new App.Views.Select({el: '[name="phone.notAvailable"]', collection: that.model.phoneCodesNotAvailableCollection}).render();
             });
             return this;
         },
@@ -479,6 +506,15 @@ $(document).ready(function() {
         setValue: function ($el, val) {
             if ($el.is(':checkbox'))
                 $el.prop("checked", val);
+            if ($el.children('option').length){
+
+                $el.children('option').attr('selected', false);
+
+                val = $.parseJSON(val);
+                _.each(val, function(n){
+                    $el.children('option[value="' + n + '"]')[0].selected = true;
+                });
+            }
             else
                 $el.val(val);
         },
@@ -489,12 +525,22 @@ $(document).ready(function() {
             var value;
             if (changed.type == 'checkbox') {
                 value = changed.checked;
+            } else if(changed.type == 'select-multiple'){
+                value = [];
+                _.each(changed, function(option){
+                    if (option.selected)
+                        value.push(option.value);
+                });
             } else {
                 value = changed.value;
             }
 
             if (value === 'false') value = false;
             if (value === 'true') value = true;
+
+            if (Array.isArray(value)) {
+                value = JSON.stringify(value);
+            }
 
             var obj = {};
             obj[changed.name] = value;
