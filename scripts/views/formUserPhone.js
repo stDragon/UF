@@ -100,7 +100,8 @@ module.exports = Backbone.View.extend({
             UM.vent.trigger('page:showConfirm', this.model.get('configId'));
         } else {
             this.enabledSubmit();
-            throw new Error("Сервер прислал некоректное значение confirm:'" + this.model.get('confirm'));
+            this.error(this.model);
+            console.warn("Сервер прислал некоректное значение confirm:'" + this.model.get('confirm'));
         }
     },
 
