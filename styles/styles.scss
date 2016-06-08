@@ -65,6 +65,13 @@ textarea.code{
 .valid + .btn-textarea{
   opacity: 1;
 }
+.warning-text{
+  color: #FB8C00;
+  .material-icons{
+    font-size: inherit;
+    line-height: inherit;
+  }
+}
 .error-text{
   color: #E57373;
   .material-icons{
