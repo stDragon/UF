@@ -146,6 +146,9 @@
         border: 2px solid #7b7b79;
         border-radius: 5px;
         background: #fff;
+        &:disabled {
+            border: 2px solid #bbbbbb;
+        }
         &:focus {
             border: 2px solid #99baca;
             outline: 0;
