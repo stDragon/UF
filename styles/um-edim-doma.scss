@@ -4,6 +4,8 @@
 @import 'tooltip';
 @import 'modal';
 
+@import url(https://fonts.googleapis.com/css?family=Fira+Sans:400,400italic,700,700italic&subset=latin,cyrillic);
+
 .um-btn.um-edim-doma{
     display: block;
     margin: 0 auto;
@@ -12,38 +14,41 @@
     background: #20A555;
     border-radius: 3em;
     color: #fff;
-    font: normal 14px /20px "PT Sans", sans-serif;
+    font: normal 14px /20px "Conv_Chianti-Bold", "Fira Sans",sans-serif;
     &:disabled {
         background-color: rgba(32,165,85,.3);
     }
 }
 
 .um.um-edim-doma{
-    max-width: 455px;
-    background: #E8E8EA;
-    padding: 25px 30px;
-    font: normal 14px /20px "PT Sans", sans-serif;
-    &.fixed {
-        padding-top: 50px;
-    }
-
-    fieldset{
-        margin: 0 -15px;
-    }
+    max-width: 324px;
+    padding: 20px 30px;
+    border: 2px solid #fff;
+    font: normal 14px /20px "Conv_Chianti-Bold","Fira Sans",sans-serif;
+    background: #f7ab65 url('http://new.kuhni-edimdoma.ru/images/bg-wood1.jpg');
+    background-size: cover;
+    box-shadow: 0px 0px 70px;
     legend {
-        border: 0;
-        padding: 0 15px;
+        margin-bottom: 27px;
+        color: #fff;
+        font-family: "Conv_Chianti-Bold","Fira Sans",sans-serif;
+        font-size: 26px;
+        text-align: center;
+        text-shadow: 0px 0px 10px #333;
         .um-title,
         .um-title-2 {
             display: block;
+            color: inherit;
+            font-size: inherit;
         }
     }
     label {
-        font: inherit;
-        padding: 0 10px;
         display: inline-block;
-        margin-bottom: 3px;
+        color: #fff;
+        font: inherit;
+        text-shadow: 0px 0px 10px #666;
         &.um-label-checkbox {
+            border-color: #fff;
             padding-left: 20px;
         }
     }
@@ -55,6 +60,7 @@
         background: #20A555;
         border-radius: 3em;
         color: #fff;
+        font-family: "Conv_Chianti-Bold","Fira Sans",sans-serif;
         &.um-btn-primary,
         &.um-btn-contrast{
             padding: 0 30px 0 15px;
@@ -65,12 +71,15 @@
               width: 35px;
               height: 35px;
               line-height: 35px;
-              content: url(data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDI2IDI2IiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCAyNiAyNiIgd2lkdGg9IjE2cHgiIGhlaWdodD0iMTZweCI+CiAgPHBhdGggZD0ibS4zLDE0Yy0wLjItMC4yLTAuMy0wLjUtMC4zLTAuN3MwLjEtMC41IDAuMy0wLjdsMS40LTEuNGMwLjQtMC40IDEtMC40IDEuNCwwbC4xLC4xIDUuNSw1LjljMC4yLDAuMiAwLjUsMC4yIDAuNywwbDEzLjQtMTMuOWgwLjF2LTguODgxNzhlLTE2YzAuNC0wLjQgMS0wLjQgMS40LDBsMS40LDEuNGMwLjQsMC40IDAuNCwxIDAsMS40bDAsMC0xNiwxNi42Yy0wLjIsMC4yLTAuNCwwLjMtMC43LDAuMy0wLjMsMC0wLjUtMC4xLTAuNy0wLjNsLTcuOC04LjQtLjItLjN6IiBmaWxsPSIjRkZGRkZGIi8+Cjwvc3ZnPgo=);
+              opacity: 0.8;
+              content: url(data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTYuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgd2lkdGg9IjE2cHgiIGhlaWdodD0iMTZweCIgdmlld0JveD0iMCAwIDQ5My41NzggNDkzLjU3OCIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgNDkzLjU3OCA0OTMuNTc4OyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+CjxnPgoJPHBhdGggZD0iTTQ4Ny4yNjcsMjI1Ljk4MWMwLTE3LjM2NS0xMy45OTktMzEuNTE4LTMxLjUxOC0zMS41MThIMTk0LjUwMUwzMDUuMzUsODMuNjE1YzEyLjI0LTEyLjI0LDEyLjI0LTMyLjIwNywwLTQ0LjY3NiAgIEwyNzUuNTkyLDkuMThjLTEyLjI0LTEyLjI0LTMyLjIwNy0xMi4yNC00NC42NzYsMEwxNS41NjgsMjI0LjUyN2MtNi4xMiw2LjEyLTkuMjU2LDE0LjE1My05LjI1NiwyMi4yNjIgICBjMCw4LjAzMiwzLjEzNiwxNi4xNDIsOS4yNTYsMjIuMjYybDIxNS4zNDgsMjE1LjM0OGMxMi4yNCwxMi4yMzksMzIuMjA3LDEyLjIzOSw0NC42NzYsMGwyOS43NTgtMjkuNzU5ICAgYzEyLjI0LTEyLjI0LDEyLjI0LTMyLjIwNywwLTQ0LjY3NkwxOTQuNTAxLDI5OS40OThoMjYxLjA5NGMxNy4zNjYsMCwzMS41MTktMTQuMTUzLDMxLjUxOS0zMS41MTlMNDg3LjI2NywyMjUuOTgxeiIgZmlsbD0iI0ZGRkZGRiIvPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+Cjwvc3ZnPgo=);
+              content: url(data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTYuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgd2lkdGg9IjE2cHgiIGhlaWdodD0iMTZweCIgdmlld0JveD0iMCAwIDQ0NC44MTUgNDQ0LjgxNSIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgNDQ0LjgxNSA0NDQuODE1OyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+CjxnPgoJPHBhdGggZD0iTTQyMS45NzYsMTk2LjcxMkwyMzYuMTExLDEwLjg0OEMyMjguODg0LDMuNjE1LDIyMC4yMTksMCwyMTAuMTMxLDBjLTkuOSwwLTE4LjQ2NCwzLjYxNS0yNS42OTcsMTAuODQ4TDE2My4wMjMsMzIuMjYgICBjLTcuMjM0LDYuODUzLTEwLjg1LDE1LjQxOC0xMC44NSwyNS42OTdjMCwxMC4yNzcsMy42MTYsMTguODQyLDEwLjg1LDI1LjY5N2w4My42NTMsODMuOTM3SDQ1LjY3NyAgIGMtOS44OTUsMC0xNy45MzcsMy41NjgtMjQuMTIzLDEwLjcwN3MtOS4yNzksMTUuNzUyLTkuMjc5LDI1LjgzN3YzNi41NDZjMCwxMC4wODgsMy4wOTQsMTguNjk4LDkuMjc5LDI1LjgzNyAgIHMxNC4yMjgsMTAuNzA0LDI0LjEyMywxMC43MDRoMjAwLjk5NUwxNjMuMDIsMzYwLjg4Yy03LjIzNCw3LjIyOC0xMC44NSwxNS44OS0xMC44NSwyNS45ODFjMCwxMC4wODksMy42MTYsMTguNzUsMTAuODUsMjUuOTc4ICAgbDIxLjQxMSwyMS40MTJjNy40MjYsNy4wNDMsMTUuOTksMTAuNTY0LDI1LjY5NywxMC41NjRjOS44OTksMCwxOC41NjItMy41MjEsMjUuOTgxLTEwLjU2NGwxODUuODY0LTE4NS44NjQgICBjNy4wNDMtNy4wNDMsMTAuNTY3LTE1LjcwMSwxMC41NjctMjUuOTgxQzQzMi41NCwyMTEuOTM5LDQyOS4wMTYsMjAzLjM3LDQyMS45NzYsMTk2LjcxMnoiIGZpbGw9IiNGRkZGRkYiLz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8L3N2Zz4K);
               -webkit-transform: scale(0.7);
               -moz-transform: scale(0.7);
               -ms-transform: scale(0.7);
               -o-transform: scale(0.7);
               transform: scale(0.7);
+
             }
         }
         &:disabled {
@@ -78,10 +87,13 @@
         }
     }
     .um-form-group {
-        width: 50%;
-        float: left;
-        padding: 0 15px;
+        width: 100%;
         margin-bottom: 1em;
+        &.um-form-group-phone {
+            > .um-form-control {
+                padding-left: 60px;
+            }
+        }
         &.um-form-group-shop {
             &.um-hidden {
                 display: block!important;
@@ -112,37 +124,40 @@
         &.um-select {
           &::before {
             top: auto;
-          bottom: 18px;
-            right: 30px
+            bottom: 18px;
+            right: 15px
           }
           &.um-select-left {
             &::before {
-            left: 30px;
+            left: 15px;
             }
           }
         }
       >.um-phone-flag{
-        left: 45px;
+        left: 30px;
         top: auto;
         bottom: 14px;
       }
     }
     .um-form-control{
         width: 100%;
-        padding: 9px 12px;
-        min-height: 3em;
-        border: 2px solid #565656;
-        border-radius: 3em;
+        height: 40px;
+        padding: 8px 15px;
+        border: 2px solid #7b7b79;
+        border-radius: 5px;
+        background: #fff;
         &:focus {
-            outline: none;
+            border: 2px solid #99baca;
+            outline: 0;
+            background: #f5fbfe;
+            color: #444;
         }
-    }
-    textarea.um-form-control{
-        height: 2.8em;
     }
     .um-dropdown-content{
         width: auto;
-        left: 30px;
-        right: 30px;
+        left: 0;
+        right: 0;
+        border: solid #7b7b79;
+        border-width: 0 2px 2px;
     }
 }

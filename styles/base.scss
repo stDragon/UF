@@ -251,13 +251,14 @@
       position: absolute;
       left: 25px;
       top: 50%;
-      width: 1.5rem;
+      width: 1.5em;
       margin-top: -7px;
     }
   }
 
   .um-form-control {
     box-sizing: inherit;
+    margin-bottom: 0;
   }
   .um-dropdown-content {
     padding: 0;
