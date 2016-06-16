@@ -104,6 +104,6 @@ module.exports = Backbone.View.extend({
     setFlag: function () {
         var active = this.phoneCodeCollection.getActive();
         this.$el.children('.um-phone-flag').remove();
-        this.$el.append('<img src="' + active.get('img') + '" alt="' + active.get('name') + '" class="um-phone-flag">')
+        this.$el.prepend('<img src="' + active.get('img') + '" alt="' + active.get('name') + '" class="um-phone-flag">');
     }
 });

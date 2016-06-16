@@ -75,7 +75,7 @@ module.exports = UM.Views.Form.extend({
         this.$el.on('click', '.um-form-group-wishes>label', function(e) {
             if ($(e.target).closest('um-edim-doma-old'))
                 that.concealed(e);
-        })
+        });
 
     },
 
@@ -169,6 +169,11 @@ module.exports = UM.Views.Form.extend({
             /*Костыль со скрывающимися комментариями для старого все для дома*/
             if (that.$el.closest('.um-edim-doma-old').length) {
                 that.$el.find('[name="wishes"]').addClass('um-hidden');
+            }
+
+            /* Костыль для пошаговой формы едим дома */
+            if (UM.configsCollection.get(that.model.get('configId')).get('style') === 'um-edim-doma') {
+                that.addSteps();
             }
         });
         return this;
@@ -299,5 +304,37 @@ module.exports = UM.Views.Form.extend({
             $input.removeClass('um-hidden');
         else
             $input.addClass('um-hidden')
+    },
+
+    addSteps: function () {
+        this.$el.addClass('um-form-step um-form-step-1');
+        this.$el.find('.um-form-group-firstname').addClass('um-form-group-step-1');
+        this.$el.find('.um-form-group-email').addClass('um-form-group-step-1');
+        this.$el.find('.um-form-group-phone').addClass('um-form-group-step-1');
+        this.$el.find('.um-form-group-city').addClass('um-form-group-step-2');
+        this.$el.find('.um-form-group-shop').addClass('um-form-group-step-2');
+        this.$el.find('.um-form-group-wishes').addClass('um-form-group-step-2');
+        this.$el.find('.um-btn[type="submit"]').addClass('um-btn-step-2');
+
+        this.$el.find('.um-btn[type="submit"]')
+            .before('<button type="button" class="um-btn um-btn-primary um-btn-next um-btn-step-1">Дальше</button>' +
+                '<button type="button" class="um-btn um-btn-primary um-btn-prev um-btn-step-2">Назад</button>');
+
+        var that = this;
+        this.$el.on('click', '.um-btn-next', function (e) {
+            that.nextStep();
+        });
+
+        this.$el.on('click', '.um-btn-prev', function (e) {
+            that.prevStep();
+        });
+    },
+
+    nextStep: function () {
+        this.$el.removeClass('um-form-step-1').addClass('um-form-step-2');
+    },
+
+    prevStep: function () {
+        this.$el.removeClass('um-form-step-2').addClass('um-form-step-1');
     }
 });
