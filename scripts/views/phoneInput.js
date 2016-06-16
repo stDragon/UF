@@ -94,7 +94,7 @@ module.exports = Backbone.View.extend({
             $group.addClass('um-has-error');
 
             var tooltip = new UM.Views.Tooltip();
-            tooltip.$el.html('Телефонные номера с заданным кодом не поддерживаются');
+            //tooltip.$el.html('Телефонные номера с заданным кодом не поддерживаются');
             $group.append(tooltip.el);
 
             console.warn('Телефонные номера с заданным кодом не поддерживаются')
