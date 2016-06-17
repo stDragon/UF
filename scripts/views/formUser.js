@@ -71,9 +71,9 @@ module.exports = UM.Views.Form.extend({
             that.click(e);
         });
 
-        /*Костыль со скрывающимися комментариями для старого все для дома*/
+        /* Костыль со скрывающимися комментариями для старого все для дома и питера */
         this.$el.on('click', '.um-form-group-wishes>label', function(e) {
-            if ($(e.target).closest('um-edim-doma-old'))
+            if ($(e.target).closest('um-edim-doma-old') || $(e.target).closest('um-piter'))
                 that.concealed(e);
         });
 
@@ -166,14 +166,14 @@ module.exports = UM.Views.Form.extend({
             that.initPhoneMask();
             that.preValidation();
 
-            /*Костыль со скрывающимися комментариями для старого все для дома*/
-            if (that.$el.closest('.um-edim-doma-old').length) {
+            /* Костыль со скрывающимися комментариями для старого все для дома и питера */
+            if (that.$el.closest('.um-edim-doma-old').length || that.$el.closest('.um-piter').length) {
                 that.$el.find('[name="wishes"]').addClass('um-hidden');
             }
 
-            /* Костыль для пошаговой формы едим дома */
-            if (UM.configsCollection.get(that.model.get('configId')).get('style') === 'um-edim-doma') {
-                that.addSteps();
+            /* Костыль для питера */
+            if (that.$el.closest('.um-piter').length) {
+                that.$el.find('[name="shop"]').prop('readonly', true);
             }
         });
         return this;

@@ -6,37 +6,37 @@
         </legend>
     <%}%>
     <%if(formConfig.surname.show){%>
-        <div class="um-form-group um-form-group-surname">
+        <div class="um-form-group um-form-group-surname<%= formConfig.surname.required ? ' um-form-group-required' : ''%>">
             <label for="umSurname"><%= formConfig.surname.label %></label>
             <input type="text" name="surname" class="um-form-control" id="umSurname" placeholder="<%= formConfig.surname.placeholder %>" value="<%= surname %>" <%= formConfig.surname.required ? 'required' : ''%>>
         </div>
     <%}%>
     <%if(formConfig.firstName.show){%>
-        <div class="um-form-group um-form-group-firstname">
+        <div class="um-form-group um-form-group-firstname<%= formConfig.firstName.required ? ' um-form-group-required' : ''%>">
             <label for="umFirstname"><%= formConfig.firstName.label %></label>
             <input type="text" name="firstName" class="um-form-control" id="umFirstname" placeholder="<%= formConfig.firstName.placeholder %>" value="<%= firstName %>" <%= formConfig.firstName.required ? 'required' : ''%>>
         </div>
     <%}%>
     <%if(formConfig.email.show){%>
-        <div class="um-form-group um-form-group-email">
+        <div class="um-form-group um-form-group-email<%= formConfig.email.required ? ' um-form-group-required' : ''%>">
             <label for="umEmail"><%= formConfig.email.label %></label>
             <input type="email" name="email" class="um-form-control" id="umEmail" placeholder="<%= formConfig.email.placeholder %>" value="<%= email %>" <%= formConfig.email.required ? 'required' : ''%>>
         </div>
     <%}%>
     <%if(formConfig.phone.show){%>
-        <div class="um-form-group um-form-group-phone um-select um-select-left">
+        <div class="um-form-group um-form-group-phone um-select um-select-left<%= formConfig.phone.required ? ' um-form-group-required' : ''%>">
             <label for="umPhone"><%= formConfig.phone.label %></label>
             <input type="text" name="phone" class="um-form-control" id="umPhone" placeholder="<%= formConfig.phone.placeholder %>" value="<%= phone %>" <%= formConfig.phone.required ? 'required' : ''%>>
         </div>
     <%}%>
     <%if(formConfig.city.show){%>
-        <div class="um-form-group um-form-group-city um-select">
+        <div class="um-form-group um-form-group-city um-select<%= formConfig.city.required ? ' um-form-group-required' : ''%>">
             <label for="umCity"><%= formConfig.city.label %></label>
             <input type="text" name="city" class="um-form-control" id="umCity" placeholder="<%= formConfig.city.placeholder %>" value="<%= city %>" <%= formConfig.city.required ? 'required' : ''%>>
         </div>
     <%}%>
     <%if(typeof formConfig.address !== 'undefined' && formConfig.address.show){%>
-        <div class="um-form-group um-form-group-address">
+        <div class="um-form-group um-form-group-address<%= formConfig.address.required ? ' um-form-group-required' : ''%>">
             <label for="umAddress"><%= formConfig.address.label %></label>
             <input type="text" name="address" class="um-form-control" id="umAddress"
                    placeholder="<%= formConfig.address.placeholder %>"
@@ -45,8 +45,7 @@
         </div>
     <%}%>
     <%if(formConfig.shop.show){%>
-        <div class="um-form-group um-form-group-shop um-select
-            <%= formConfig.shop.mapShow ? ' um-with-map' : ''%>">
+        <div class="um-form-group um-form-group-shop um-select<%= formConfig.shop.required ? ' um-form-group-required' : ''%><%= formConfig.shop.mapShow ? ' um-with-map' : ''%>">
             <label for="umShop"><%= formConfig.shop.label %></label>
             <input type="text" name="shop" class="um-form-control" id="umShop"
                    placeholder="<%= formConfig.shop.placeholder %>"
@@ -61,7 +60,7 @@
         </div>
     <%}%>
     <%if(typeof formConfig.kitchen !== 'undefined' && formConfig.kitchen.show){%>
-        <div class="um-form-group um-form-group-kitchen um-select">
+        <div class="um-form-group um-form-group-kitchen um-select<%= formConfig.kitchen.required ? ' um-form-group-required' : ''%>">
             <label for="umKitchen"><%= formConfig.kitchen.label %></label>
             <input type="text" name="kitchen" class="um-form-control" id="umKitchen"
                    placeholder="<%= formConfig.kitchen.placeholder %>"
@@ -76,7 +75,7 @@
         </div>
     <%}%>
     <%if(formConfig.personalData.show){%>
-        <div class="um-form-group um-form-group-personal-data">
+        <div class="um-form-group um-form-group-personal-data<%= formConfig.personalData.required ? ' um-form-group-required' : ''%>">
             <label class="um-label-checkbox <%= personalData ? ' um-checked' : ''%>">
                 <input type="checkbox" name="personalData" value="<%= personalData %>"
                     <%= formConfig.personalData.required ? ' required' : ''%>

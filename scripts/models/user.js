@@ -51,7 +51,7 @@ module.exports = Backbone.Model.extend({
                 name: 'Все студии',
                 city: 'all',
                 title: 'Все студии',
-                active: true
+                //active: true
             };
             this.shopCollection = new UM.Collections.Shops([defaultShop], this.toJSON());
             this.shopCollection.fetch({remove: false}).then(function(){
@@ -62,7 +62,7 @@ module.exports = Backbone.Model.extend({
 
             this.listenTo(this, 'change:cityId', function () {
                 this.set('shopId', '');
-                this.set('shop', 'Все студии');
+                //this.set('shop', 'Все студии');
             });
 
             this.listenTo(this.shopCollection, 'change:active', function() {

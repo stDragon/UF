@@ -46,6 +46,13 @@ module.exports = Backbone.Ribs.Model.extend({
 
     initForm: function () {
         this.data.user.type = this.get('formType');
+
+        /* Костыль для питера устанавливает аактивным */
+        if (this.get('style') === 'um-piter') {
+            this.data.user.city = 'Питер';
+            this.data.user.cityId = 3;
+        }
+
         if (this.get('formType') == 'calculation' || this.get('formType') == 'measurement' || this.get('formType') == 'credit') {
             this.form = new UM.Models.User(this.data.user, this.get('formConfig'));
         } else {
