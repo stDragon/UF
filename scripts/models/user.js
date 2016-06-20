@@ -107,8 +107,8 @@ module.exports = Backbone.Model.extend({
 
     /** @TODO временны отключены часть ошибок. используется браузерный валидатор */
     validate: function (attrs) {
-        var emailFilter = /^[-\w.]+@([A-z0-9][-A-z0-9]+\.)+[A-z]{2,4}$/,
-            lettersFilter = /^[а-яА-ЯёЁa-zA-Z]{1,20}$/;
+        var emailFilter = /^[-\w.]+@([A-z0-9][-A-z0-9]+\.)+[A-z]{2,4}$/;
+            //lettersFilter = /^[а-яА-ЯёЁa-zA-Z]{1,20}$/;
         var phonePattern = {
             'RU': /\+7\s\d{3}\-\d{3}\-\d{2}\-\d{2}/,
             'BY': /\+375\s\d{3}\-\d{2}\-\d{2}\-\d{2}/,
@@ -131,14 +131,13 @@ module.exports = Backbone.Model.extend({
                                 attr: 'firstName'
                             };
                             errors.push(err);
-                        } else if (this.options.firstName.required && !lettersFilter.test(value)) {
-                            err = {
-                                text: "Имя должно содержать только буквы",
-                                attr: 'firstName'
-                            };
-                            errors.push(err);
-                        }
-                        else {
+                        //} else if (this.options.firstName.required && !lettersFilter.test(value)) {
+                        //    err = {
+                        //        text: "Имя должно содержать только буквы",
+                        //        attr: 'firstName'
+                        //    };
+                        //    errors.push(err);
+                        } else {
                             this.trigger('valid', 'firstName');
                         }
                     }
@@ -151,11 +150,11 @@ module.exports = Backbone.Model.extend({
                                 attr: 'surname'
                             };
                             errors.push(err);
-                        } else if (this.options.surname.required && !lettersFilter.test(value)) {
-                            errors.push({
-                                text: "Фамилия должна содержать только буквы",
-                                attr: 'surname'
-                            });
+                        //} else if (this.options.surname.required && !lettersFilter.test(value)) {
+                        //    errors.push({
+                        //        text: "Фамилия должна содержать только буквы",
+                        //        attr: 'surname'
+                        //    });
                         } else {
                             this.trigger('valid', 'surname');
                         }
