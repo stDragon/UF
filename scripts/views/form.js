@@ -10,6 +10,7 @@ module.exports = Backbone.Ribs.View.extend({
 
     initialize: function () {
         this.listenTo(this.model, 'invalid', this.invalid);
+        this.listenTo(this.model, 'valid', this.valid);
 
         this.listenTo(this.model, 'request', function () {
             UM.vent.trigger('page:showLoader', this.model.get('configId'));
@@ -42,7 +43,9 @@ module.exports = Backbone.Ribs.View.extend({
 
         var obj = {};
         obj[changed.name] = value;
+        /* кажется так делать не надо, но что поделать =) */
         this.model.set(obj);
+        this.model.set(obj, {validate:true});
     },
 
     /** Устанавливает значения полей формы*/
@@ -59,6 +62,7 @@ module.exports = Backbone.Ribs.View.extend({
         var name = $(e.target).attr('name'),
             val = $(e.target).val();
         this.model.set(name, val);
+        this.model.set(name, val, {validate:true});
     },
     /**
      * Сохраняет все поля в модель.
@@ -70,6 +74,7 @@ module.exports = Backbone.Ribs.View.extend({
         });
 
         this.model.set(data);
+        this.model.set(data, {validate:true});
     },
     /**
      * Сохраняет все поля на сервер.
@@ -114,10 +119,19 @@ module.exports = Backbone.Ribs.View.extend({
         this.$el.find('button:submit')[0].disabled = false;
     },
 
-    valid: function () {
-        this.$el.find('input')
-            .closest('.um-form-group').removeClass('um-has-error').addClass('um-has-success')
-            .children('.um-tooltip').remove();
+    valid: function (attr) {
+        if (typeof attr !== 'undefined') {
+            var $el = this.$el.find('[name=' + attr + ']'),
+                $group = $el.closest('.um-form-group');
+            $group
+                .removeClass('um-has-error')
+                .addClass('um-has-success')
+                .children('.um-tooltip').remove();
+        } else {
+            this.$el.find('input')
+                .closest('.um-form-group').removeClass('um-has-error').addClass('um-has-success')
+                .children('.um-tooltip').remove();
+        }
     },
     /**
      * Вывод ошибок
