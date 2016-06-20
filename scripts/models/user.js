@@ -97,14 +97,18 @@ module.exports = Backbone.Model.extend({
             });
         }
 
+        this.on('change', function () {
+            this.validate(this.changed);
+        }, this);
+
         if (UM.conf.server.type != 'prod')
             this.on('change', this.log, this);
     },
 
     /** @TODO временны отключены часть ошибок. используется браузерный валидатор */
     validate: function (attrs) {
-         //emailFilter = /^[-\w.]+@([A-z0-9][-A-z0-9]+\.)+[A-z]{2,4}$/,
-            //lettersFilter = /^[а-яА-ЯёЁa-zA-Z]{1,20}$/,
+        var emailFilter = /^[-\w.]+@([A-z0-9][-A-z0-9]+\.)+[A-z]{2,4}$/,
+            lettersFilter = /^[а-яА-ЯёЁa-zA-Z]{1,20}$/;
         var phonePattern = {
             'RU': /\+7\s\d{3}\-\d{3}\-\d{2}\-\d{2}/,
             'BY': /\+375\s\d{3}\-\d{2}\-\d{2}\-\d{2}/,
@@ -115,82 +119,112 @@ module.exports = Backbone.Model.extend({
         var phoneFilter = new RegExp(phonePattern[this.options.phone.pattern]);
 
         var errors = [];
+        var err;
 
-        if (this.options.firstName.show) {
-            if (this.options.firstName.required && !attrs.firstName) {
-                errors.push({
-                    text: "Вы не заполнили имя",
-                    attr: 'firstName'
-                });
+        _.each(attrs, function(value, key) {
+            switch (key) {
+                case 'firstName':
+                    if (this.options.firstName.show) {
+                        if (this.options.firstName.required && !value) {
+                            err = {
+                                text: "Вы не заполнили имя",
+                                attr: 'firstName'
+                            };
+                            errors.push(err);
+                        } else if (this.options.firstName.required && !lettersFilter.test(value)) {
+                            err = {
+                                text: "Имя должно содержать только буквы",
+                                attr: 'firstName'
+                            };
+                            errors.push(err);
+                        }
+                        else {
+                            this.trigger('valid', 'firstName');
+                        }
+                    }
+                    break;
+                case 'surname':
+                    if (this.options.surname.show) {
+                        if (this.options.surname.required && !value) {
+                            err = {
+                                text: "Вы не заполнили фамилию",
+                                attr: 'surname'
+                            };
+                            errors.push(err);
+                        } else if (this.options.surname.required && !lettersFilter.test(value)) {
+                            errors.push({
+                                text: "Фамилия должна содержать только буквы",
+                                attr: 'surname'
+                            });
+                        } else {
+                            this.trigger('valid', 'surname');
+                        }
+                    }
+                    break;
+                case 'email':
+                    if (this.options.email.show) {
+                        if (this.options.email.required && !value) {
+                            errors.push({
+                                text: "Вы не заполнили электронную почту",
+                                attr: 'email'
+                            });
+                        } else if (this.options.email.required && !emailFilter.test(value)) {
+                            errors.push({
+                                text: "Почтовый адресс не коректен",
+                                attr: 'email'
+                            });
+                        } else {
+                            this.trigger('valid', 'email');
+                        }
+                    }
+                    break;
+                case 'phone':
+                    if (this.options.phone.show) {
+                        if (this.options.phone.required && !value) {
+                            err = {
+                                text: "Вы не заполнили телефон",
+                                attr: 'phone'
+                            };
+                            errors.push(err);
+                        } else if (!phoneFilter.test(value)) {
+                            err = {
+                                text: "Телефон не коректен",
+                                attr: 'phone'
+                            };
+                            errors.push(err);
+                        } else {
+                            this.trigger('valid', 'phone');
+                        }
+                    }
+                    break;
+                case 'city':
+                    if (this.options.city.show) {
+                        if (this.options.city.required && !value) {
+                            err = {
+                                text: "Вы не выбрали город",
+                                attr: 'city'
+                            };
+                            errors.push(err);
+                        } else {
+                            this.trigger('valid', 'city');
+                        }
+                    }
+                    break;
+                case 'personalData':
+                    if (this.options.personalData.show) {
+                        if (this.options.personalData.required && value == false) {
+                            err = {
+                                text: "Чтобы продолжить установите этот флажок",
+                                attr: 'personalData'
+                            };
+                            errors.push(err);
+                        } else {
+                            this.trigger('valid', 'personalData');
+                        }
+                    }
+                    break;
             }
-            //else if (this.options.firstName.required && !lettersFilter.test(attrs.firstName)) {
-            //    errors.push({
-            //        text: "Имя должно содержать только буквы",
-            //        attr: 'firstName'
-            //    });
-            //}
-        }
-
-        if (this.options.surname.show) {
-            if (this.options.surname.required && !attrs.surname) {
-                errors.push({
-                    text: "Вы не заполнили фамилию",
-                    attr: 'surname'
-                });
-            }
-            //else if (this.options.surname.required && !lettersFilter.test(attrs.surname)) {
-            //    errors.push({
-            //        text: "Фамилия должна содержать только буквы",
-            //        attr: 'surname'
-            //    });
-            //}
-        }
-
-        /*if (this.options.firstName.email) {
-            if (this.options.email.required && !attrs.email) {
-                errors.push({
-                    text: "Вы не заполнили электронную почту",
-                    attr: 'email'
-                });
-            } else if (this.options.email.required && !emailFilter.test(attrs.email)) {
-                errors.push({
-                    text: "Почтовый адресс не коректен",
-                    attr: 'email'
-                });
-            }
-        }*/
-
-        if (this.options.phone.show && this.options.phone.required) {
-            if (!attrs.phone) {
-                errors.push({
-                    text: "Вы не заполнили телефон",
-                    attr: 'phone'
-                });
-            } else if (!phoneFilter.test(attrs.phone)) {
-                errors.push({
-                    text: "Телефон не коректен",
-                    attr: 'phone'
-                });
-            }
-        }
-
-        if (this.options.city.show) {
-            if (this.options.city.required && !attrs.city) {
-                errors.push({
-                    text: "Вы не выбрали город",
-                    attr: 'city'
-                })
-            }
-        }
-
-        if (this.options.personalData.show) {
-            if (this.options.personalData.required && attrs.personalData == false) {
-                errors.push({
-                    text: "Чтобы продолжить установите этот флажок",
-                    attr: 'personalData'
-                })
-            }
-        }
+        }, this);
 
         if (UM.conf.server.type != 'prod' && errors.length)
             console.warn(errors);

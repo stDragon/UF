@@ -65,6 +65,7 @@ module.exports = UM.Views.Form.extend({
             this.enabledSubmit();
         });
         this.listenTo(this.model, 'invalid', this.invalid);
+        this.listenTo(this.model, 'valid', this.valid);
 
         var that = this;
         $(document).on('click', function(e) {
