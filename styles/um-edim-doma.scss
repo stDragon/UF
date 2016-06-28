@@ -28,11 +28,20 @@
     background: #f7ab65 url('http://new.kuhni-edimdoma.ru/images/bg-wood1.jpg');
     background-size: cover;
     box-shadow: 0px 0px 70px;
+    fieldset {
+        margin-bottom: 20px;
+    }
+    .um-form-step-2 {
+        fieldset {
+        margin-bottom: 10px;
+    }
+    }
     legend {
-        margin-bottom: 27px;
+        margin-bottom: 12px;
         color: #fff;
         font-family: "Conv_Chianti-Bold","Fira Sans",sans-serif;
         font-size: 26px;
+        line-height: 1;
         text-align: center;
         text-shadow: 0px 0px 10px #333;
         .um-title,
@@ -49,14 +58,21 @@
         text-shadow: 0px 0px 10px #666;
         &.um-label-checkbox {
             border-color: #fff;
-            padding-left: 20px;
+            padding-left: 18px;
+            color: black;
+            font-size: 11px;
+            line-height: 16px;
+            letter-spacing: -0.5px;
+            &::after {
+                background-color: #fff;
+            }
         }
     }
     .um-btn {
         display: block;
         margin: 0 auto;
         padding: 0 15px;
-        line-height: 2.9em;
+        line-height: 41px;
         background: #20A555;
         border-radius: 3em;
         color: #fff;
@@ -73,10 +89,29 @@
     }
     .um-form-group {
         width: 100%;
-        margin-bottom: 1em;
+        margin-bottom: 15px;
+        &.um-form-group-city,
+        &.um-form-group-shop,
+        &.um-form-group-wishes {
+            max-height: 54px;
+            margin-bottom: 13px;
+            .um-form-control {
+                height: 34px;
+            }
+        }
         &.um-form-group-phone {
-            > .um-form-control {
-                padding-left: 60px;
+            &::before {
+                display: none;
+            }
+            &.um-with-phone-flag {
+                > .um-form-control {
+                    padding-left: 60px;
+                }
+                >.um-phone-flag{
+                    left: 30px;
+                    top: auto;
+                    bottom: 14px;
+                }
             }
         }
         &.um-form-group-shop {
@@ -101,29 +136,25 @@
         }
         &.um-form-group-personal-data {
             width: 100%;
+            margin-bottom: 0;
         }
         &.um-select {
           &::before {
             top: auto;
-            bottom: 18px;
-            right: 15px
+            bottom: 14px;
+            right: 10px
           }
           &.um-select-left {
             &::before {
-            left: 15px;
+                left: 10px;
             }
           }
         }
-      >.um-phone-flag{
-        left: 30px;
-        top: auto;
-        bottom: 14px;
-      }
     }
     .um-form-control{
         width: 100%;
         height: 40px;
-        padding: 8px 15px;
+        padding: 5px 15px;
         border: 2px solid #7b7b79;
         border-radius: 5px;
         background: #fff;
@@ -137,12 +168,25 @@
             color: #444;
         }
     }
+    textarea {
+        resize: none;
+    }
     .um-dropdown-content{
         width: auto;
         left: 0;
         right: 0;
         border: solid #7b7b79;
         border-width: 0 2px 2px;
+    }
+
+    .um-privacy {
+        color: #a31632;
+        text-decoration: underline;
+        &::focus,
+        &::hover {
+            color: #b14a4e;
+            text-decoration: none;
+        }
     }
 
     /* костыль с шагами */

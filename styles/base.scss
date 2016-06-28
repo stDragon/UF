@@ -244,17 +244,19 @@
       }
     }
     &.um-form-group-phone {
-      >.um-form-control {
-        padding-left: 55px;
+      &.um-with-phone-flag {
+        >.um-form-control {
+          padding-left: 55px;
+        }
+        >.um-phone-flag {
+          position: absolute;
+          left: 25px;
+          top: 50%;
+          width: 1.5em;
+          margin-top: -7px;
+          z-index: 10;
+        }
       }
-    }
-    >.um-phone-flag{
-      position: absolute;
-      left: 25px;
-      top: 50%;
-      width: 1.5em;
-      margin-top: -7px;
-      z-index: 10;
     }
   }
 

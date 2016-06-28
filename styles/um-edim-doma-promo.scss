@@ -131,6 +131,11 @@ $main-color: #d85349;
           @include um-sr-only();
         }
       }
+      &.um-form-group-phone {
+        &::before {
+          display: none;
+        }
+      }
       &.um-form-group-shop {
         width: 66.6666666666%;
       }

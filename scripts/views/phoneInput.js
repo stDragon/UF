@@ -49,7 +49,8 @@ module.exports = Backbone.View.extend({
             this.form.model.options.phone.pattern = active.get('isoCode');
         }
 
-        this.setFlag();
+        if (typeof this.form.model.options.phone.showFlag !== 'undefined' && this.form.model.options.phone.showFlag)
+            this.setFlag();
     },
 
     setCode: function () {
@@ -105,5 +106,6 @@ module.exports = Backbone.View.extend({
         var active = this.phoneCodeCollection.getActive();
         this.$el.children('.um-phone-flag').remove();
         this.$el.prepend('<img src="' + active.get('img') + '" alt="' + active.get('name') + '" class="um-phone-flag">');
+        this.$el.addClass('um-with-phone-flag')
     }
 });

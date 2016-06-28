@@ -83,7 +83,7 @@
                 <span class="um-label-text">
                     <%= formConfig.personalData.label %>
                     <%if(typeof formConfig.personalData.href !== 'undefined' && formConfig.personalData.href.show) {%>
-                        <a target="_blank" href="<%= formConfig.personalData.href.pathname %>"><%= formConfig.personalData.href.text %></a>
+                        <a target="_blank" href="<%= formConfig.personalData.href.pathname %>" class="um-privacy"><%= formConfig.personalData.href.text %></a>
                     <%}%>
                 </span>
             </label>

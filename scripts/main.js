@@ -267,6 +267,7 @@ $(document).ready(function() {
                 placeholder: 'Ваш номер телефон',
                 show: true,
                 required: false,
+                showFlag: true,
                 pattern: 'RU',
                 available: '["RU"]'
             },

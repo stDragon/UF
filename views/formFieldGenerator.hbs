@@ -167,7 +167,18 @@
             <label for="phone.placeholder" class="active sr-only">Placeholder</label>
         </div>
     </div>
-    <div class="col s4">
+    <div class="col s2">
+        <p>Показывать флаг</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="phone.showFlag" <%= phone.showFlag ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s3">
         <p>Доступные коды стран</p>
         <div class="input-field">
             <select id="phone.available" name="phone.available" multiple></select>

@@ -176,6 +176,11 @@ module.exports = UM.Views.Form.extend({
             if (that.$el.closest('.um-piter').length) {
                 that.$el.find('[name="shop"]').prop('readonly', true);
             }
+
+            /* Костыль для пошаговой формы едим дома */
+            if (UM.configsCollection.get(that.model.get('configId')).get('style') === 'um-edim-doma') {
+                that.addSteps();
+            }
         });
         return this;
     },
@@ -315,6 +320,7 @@ module.exports = UM.Views.Form.extend({
         this.$el.find('.um-form-group-city').addClass('um-form-group-step-2');
         this.$el.find('.um-form-group-shop').addClass('um-form-group-step-2');
         this.$el.find('.um-form-group-wishes').addClass('um-form-group-step-2');
+        this.$el.find('.um-form-group-personal-data').addClass('um-form-group-step-2');
         this.$el.find('.um-btn[type="submit"]').addClass('um-btn-step-2');
 
         this.$el.find('.um-btn[type="submit"]')
