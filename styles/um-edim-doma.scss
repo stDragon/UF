@@ -113,6 +113,9 @@
                     bottom: 14px;
                 }
             }
+            >.um-dropdown-content {
+                display: none!important;
+            }
         }
         &.um-form-group-shop {
             &.um-with-map {
@@ -194,7 +197,7 @@
     .um-btn-prev {
         &::before {
             position: absolute;
-            top: 8px;
+            top: 6px;
             width: 35px;
             height: 35px;
             line-height: 35px;
