@@ -28,6 +28,7 @@ var logs = tmp.tmpDb.logs,
     phoneCodes = tmp.tmpDb.phoneCodes;
 
 var jsonParser = bodyParser.json();
+var cacheTime = 7 * 24 * 60 * 60;
 
 app.all('*', function(req, res, next) {
     var serverName = '*';
@@ -39,6 +40,8 @@ app.all('*', function(req, res, next) {
     res.header("Access-Control-Allow-Origin", serverName);
     res.header("Access-Control-Allow-Credentials", "true");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.setHeader('Cache-Control', 'public, max-age=' + cacheTime);
+    res.setHeader("Expires", new Date(Date.now() + cacheTime).toUTCString());
     next();
 });
 
