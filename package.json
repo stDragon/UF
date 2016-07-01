@@ -8,6 +8,8 @@
     "body-parser": "^1.15.0",
     "errorhandler": "^1.4.3",
     "express": "^4.13.4",
+    "express-robots": "^0.1.6",
+    "express3-handlebars": "^0.5.2",
     "fs": "0.0.2",
     "http": "0.0.0",
     "https": "^1.0.0",

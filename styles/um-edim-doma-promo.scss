@@ -61,12 +61,13 @@ $main-color: #d85349;
 
 .um.um-edim-doma-promo{
   max-width: 980px;
-  padding: 25px;
+  padding: 10px 25px 25px;
   margin: 0 auto;
   border: 1px solid #DDD9CF;
   border-radius: 2px;
   box-shadow: 2px 3px 15px rgba(0, 0, 0, 0.07);
   font: normal 14px / 20px "Trebuchet MS", Verdana, Arial, sans-serif;
+  background-color: #fff;
   &.fixed {
     .um-header {
       min-height: 0;
@@ -125,6 +126,16 @@ $main-color: #d85349;
       margin-bottom: 10px;
       label {
         color: #444444;
+        &.um-label-checkbox {
+          font-size: 12px;
+          color: #999;
+          &.um-checked {
+            &::before {
+              border-right: 2px solid $main-color;
+              border-bottom: 2px solid $main-color;
+            }
+          }
+        }
       }
       &:not(.um-form-group-city):not(.um-form-group-shop) {
         label:not(.um-label-checkbox) {
@@ -153,6 +164,12 @@ $main-color: #d85349;
       &.um-has-error {
         .um-form-control {
           border-color: $main-color;
+        }
+      }
+      &.um-select {
+        &:before {
+          top: 34px;
+          right: 12px;
         }
       }
     }
@@ -254,16 +271,6 @@ $main-color: #d85349;
           &::after {
             display: none;
           }
-        }
-      }
-    }
-    .um-label-checkbox {
-      font-size: 12px;
-      color: #999;
-      &.um-checked {
-        &::before {
-          border-right: 2px solid $main-color;
-          border-bottom: 2px solid $main-color;
         }
       }
     }

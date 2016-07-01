@@ -181,6 +181,11 @@ module.exports = UM.Views.Form.extend({
             if (UM.configsCollection.get(that.model.get('configId')).get('style') === 'um-edim-doma') {
                 that.addSteps();
             }
+
+            /* Костыль для промо едим дома */
+            if (UM.configsCollection.get(that.model.get('configId')).get('style') === 'um-edim-doma-promo') {
+                that.$el.find('.um-form-group-wishes').appendTo(that.$el.find('.um-login'));
+            }
         });
         return this;
     },
