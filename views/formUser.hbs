@@ -46,6 +46,12 @@
             </div>
         </div>
     <%}%>
+    <%if(formConfig.adphone.show){%>
+        <div class="um-form-group um-form-group-adphone<%= formConfig.adphone.required ? ' um-form-group-required' : ''%>">
+            <label for="umAdphone"><%= formConfig.adphone.label %></label>
+            <input type="text" name="Adphone" class="um-form-control" id="umAdphone" placeholder="<%= formConfig.adphone.placeholder %>" value="<%= adphone %>" <%= formConfig.adphone.required ? 'required' : ''%>>
+        </div>
+    <%}%>
     <%if(formConfig.city.show){%>
         <div class="um-form-group um-form-group-city um-select<%= formConfig.city.required ? ' um-form-group-required' : ''%>">
             <label for="umCity"><%= formConfig.city.label %></label>
@@ -61,6 +67,49 @@
                    placeholder="<%= formConfig.address.placeholder %>"
                    value="<%= typeof address !== 'undefined' ? address : '' %>"
                    <%= formConfig.address.required ? 'required' : ''%>>
+        </div>
+    <%}%>
+    <%if(formConfig.pref.show){%>
+        <div class="um-form-group um-form-group-pref um-select<%= formConfig.pref.required ? ' um-form-group-required' : ''%>">
+            <label for="umPref"><%= formConfig.pref.label %></label>
+             <ul class="um-dropdown-content um-pref-list"><li><span>Мобильный</span></li><li><span>30%</span></li><li><span>Email</span></li><li><span>Городской</span></li></ul>
+            <input type="text" name="pref" class="um-form-control" id="umPref"
+            placeholder="<%= formConfig.pref.placeholder %>" value="<%= pref %>"
+            <%= formConfig.pref.required ? 'required' : ''%>>
+        </div>
+    <%}%>
+    <%if(formConfig.product.show){%>
+        <div class="um-form-group um-form-group-product um-select<%= formConfig.product.required ? ' um-form-group-required' : ''%>">
+            <label for="umProduct"><%= formConfig.product.label %></label>
+             <ul class="um-dropdown-content um-product-list"><li><span>Кухня</span></li><li><span>30%</span></li><li><span>иное</span></li></ul>
+            <input type="text" name="product" class="um-form-control" id="umProduct"
+            placeholder="<%= formConfig.product.placeholder %>" value="<%= product %>"
+            <%= formConfig.product.required ? 'required' : ''%>>
+        </div>
+    <%}%>
+    <%if(formConfig.price.show){%>
+        <div class="um-form-group um-form-group-price <%= formConfig.price.required ? ' um-form-group-required' : ''%>">
+            <label for="umPrice"><%= formConfig.cost.label %></label>
+            <input type="text" name="price" class="um-form-control" id="umPrice"
+            placeholder="<%= formConfig.price.placeholder %>" value="<%= price %>"
+            <%= formConfig.price.required ? 'required' : ''%>>
+        </div>
+    <%}%>
+    <%if(formConfig.pay.show){%>
+        <div class="um-form-group um-form-group-pay um-select<%= formConfig.pay.required ? ' um-form-group-required' : ''%>">
+            <label for="umPay"><%= formConfig.pay.label %></label>
+            <ul class="um-dropdown-content um-pay-list"><li><span>30%</span></li><li><span>30%</span></li><li><span>40%</span></li><li><span>50%</span></li><li><span>60%</span></li></ul>
+            <input type="text" name="product" class="um-form-control" id="umPay"
+            placeholder="<%= formConfig.pay.placeholder %>" value="<%= pay %>"
+            <%= formConfig.pay.required ? 'required' : ''%>>
+        </div>
+    <%}%>
+    <%if(formConfig.term.show){%>
+        <div class="um-form-group um-form-group-term <%= formConfig.term.required ? ' um-form-group-required' : ''%>">
+            <label for="umTerm"><%= formConfig.firstName.label %></label>
+            <input type="text" name="term" class="um-form-control" id="umTerm"
+            placeholder="<%= formConfig.term.placeholder %>" value="<%= term %>"
+            <%= formConfig.term.required ? 'required' : ''%>>
         </div>
     <%}%>
     <%if(formConfig.shop.show){%>

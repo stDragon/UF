@@ -157,7 +157,7 @@ $(document).ready(function() {
             var errors = [];
             if (!attrs.siteUrl) {
                 errors.push({
-                    text: 'Вы не заполнили поле "Сайт на котором будет использоваться модуль',
+                    text: 'Вы не заполнили поле "Сайт, на котором будет использоваться модуль',
                     attr: 'siteUrl'
                 });
             } else if (!regURL.test(attrs.siteUrl)) {
@@ -272,6 +272,13 @@ $(document).ready(function() {
                 pattern: 'RU',
                 available: '["RU"]'
             },
+            adphone: {
+                type: 'text',
+                label: 'Дополнительные телефоны',
+                placeholder: 'Дополнительные телефоны',
+                show: false,
+                required: false
+            },
             city: {
                 type: 'text',
                 label: 'Город',
@@ -294,6 +301,41 @@ $(document).ready(function() {
                 mapShow: false,
                 required: false,
                 wrap: false
+            },
+            pref: {
+                type: 'text',
+                label: 'Предпочтительный способ связи',
+                placeholder: 'Предпочтительный способ связи',
+                show: false,
+                required: false
+            },
+            product: {
+                type: 'text',
+                label: 'Товар',
+                placeholder: 'Товар',
+                show: false,
+                required: true
+            },
+            price: {
+                type: 'text',
+                label: 'Стоимость',
+                placeholder: 'Стоимость',
+                show: false,
+                required: true
+            },
+            pay: {
+                type: 'text',
+                label: 'Первый взнос',
+                placeholder: 'Первый взнос',
+                show: false,
+                required: true
+            },
+            term: {
+                type: 'text',
+                label: 'Желаемый срок кредита (мес.)',
+                placeholder: 'Желаемый срок кредита (мес.)',
+                show: false,
+                required: true
             },
             kitchen: {
                 type: 'text',
