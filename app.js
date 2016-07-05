@@ -39,8 +39,8 @@ app.all('*', function(req, res, next) {
     res.header("Access-Control-Allow-Origin", serverName);
     res.header("Access-Control-Allow-Credentials", "true");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    res.setHeader('Cache-Control', 'public, max-age=' + 604800);
-    res.setHeader("Expires", new Date(Date.now() + 604800000).toUTCString());
+    //res.setHeader('Cache-Control', 'public, max-age=' + 604800);
+    //res.setHeader("Expires", new Date(Date.now() + 604800000).toUTCString());
     next();
 });
 

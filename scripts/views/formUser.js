@@ -72,14 +72,8 @@ module.exports = UM.Views.Form.extend({
             that.click(e);
         });
 
-        /* Костыль со скрывающимися комментариями для старого все для дома и питера */
-        this.$el.on('click', '.um-form-group-wishes>label', function(e) {
-            if ($(e.target).closest('um-edim-doma-old') || $(e.target).closest('um-piter'))
-                that.concealed(e);
-        });
-
         /* toggle hidden blocks on promo pages */
-        this.$el.on('click', '.um-wrapper>label', function(e) {
+        this.$el.on('click', '.um-wrapper>label, .um-edim-doma-old .um-form-group-wishes>label', function(e) {
             that.concealed(e);
         });
     },
@@ -314,8 +308,10 @@ module.exports = UM.Views.Form.extend({
     concealed: function (e) {
         var $label = $(e.target),
             $parent = $label.parent(),
-            $input = $parent.hasClass('um-wrapper') ? $label.siblings('.um-field') : $label.siblings('.um-form-control');
-
+            $input = $parent[0].classList.contains('um-wrapper-hidden') ?
+                $parent.find('.um-field') : ($parent[0].classList.contains('um-wrapper') ?
+                $parent.find('.um-field-wrap') : $label.siblings('.um-form-control'));
+        console.log($input);
         if ($input.hasClass('um-hidden'))
             $input.removeClass('um-hidden');
         else

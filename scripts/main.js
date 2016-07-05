@@ -162,7 +162,7 @@ $(document).ready(function() {
                 });
             } else if (!regURL.test(attrs.siteUrl)) {
                 errors.push({
-                    text: "Сайт не коректен",
+                    text: "Сайт не корректен",
                     attr: 'siteUrl'
                 });
             }
