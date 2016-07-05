@@ -7,14 +7,26 @@
     <%}%>
     <%if(formConfig.surname.show){%>
         <div class="um-form-group um-form-group-surname<%= formConfig.surname.required ? ' um-form-group-required' : ''%>">
-            <label for="umSurname"><%= formConfig.surname.label %></label>
-            <input type="text" name="surname" class="um-form-control" id="umSurname" placeholder="<%= formConfig.surname.placeholder %>" value="<%= surname %>" <%= formConfig.surname.required ? 'required' : ''%>>
+            <label for=" <%= formConfig.firstName.combine ? 'umName' : 'umSurname'%>"><%= formConfig.surname.label %></label>
+            <%if(formConfig.firstName.combine){%>
+                <input type="text" name="surname" class="um-form-control" id="umName"
+                placeholder="<%= formConfig.surname.placeholder %>"
+                value="<%= surname %> <%= firstName %>" <%= formConfig.surname.required ? 'required' : ''%>>
+            <%}%>
+            <input type="text" name="surname" class="um-form-control
+            <%= formConfig.firstName.combine ? 'um-hidden' : ''%>" id="umSurname"
+            placeholder="<%= formConfig.surname.placeholder %>" value="<%= surname %>"
+            <%= formConfig.surname.required ? 'required' : ''%>>
         </div>
     <%}%>
     <%if(formConfig.firstName.show){%>
-        <div class="um-form-group um-form-group-firstname<%= formConfig.firstName.required ? ' um-form-group-required' : ''%>">
+        <div class="um-form-group um-form-group-firstname
+        <%= formConfig.firstName.required ? ' um-form-group-required' : ''%>
+        <%= formConfig.firstName.combine ? 'um-hidden' : ''%>">
             <label for="umFirstname"><%= formConfig.firstName.label %></label>
-            <input type="text" name="firstName" class="um-form-control" id="umFirstname" placeholder="<%= formConfig.firstName.placeholder %>" value="<%= firstName %>" <%= formConfig.firstName.required ? 'required' : ''%>>
+            <input type="text" name="firstName" class="um-form-control" id="umFirstname"
+            placeholder="<%= formConfig.firstName.placeholder %>" value="<%= firstName %>"
+             <%= formConfig.firstName.required ? 'required' : ''%>>
         </div>
     <%}%>
     <%if(formConfig.email.show){%>
@@ -45,8 +57,12 @@
         </div>
     <%}%>
     <%if(formConfig.shop.show){%>
-        <div class="um-form-group um-form-group-shop um-select<%= formConfig.shop.required ? ' um-form-group-required' : ''%><%= formConfig.shop.mapShow ? ' um-with-map' : ''%>">
+        <div class="um-form-group um-form-group-shop um-select
+        <%= formConfig.shop.required ? ' um-form-group-required' : ''%>
+        <%= formConfig.shop.mapShow ? ' um-with-map' : ''%>
+        <%= formConfig.shop.wrap ? 'um-wrapper' : ''%>">
             <label for="umShop"><%= formConfig.shop.label %></label>
+            <%if(formConfig.shop.wrap){%><div class="um-field um-hidden"><%}%>
             <input type="text" name="shop" class="um-form-control" id="umShop"
                    placeholder="<%= formConfig.shop.placeholder %>"
                    value="<%= shop ? _.escape(shop) : '' %>"
@@ -57,6 +73,7 @@
                     <path d="M12 2C8.14 2 5 5.14 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.86-3.14-7-7-7zm4 8h-3v3h-2v-3H8V8h3V5h2v3h3v2z"/>
                 </svg>
             <%}%>
+             <%if(formConfig.shop.wrap){%></div><%}%>
         </div>
     <%}%>
     <%if(typeof formConfig.kitchen !== 'undefined' && formConfig.kitchen.show){%>
@@ -69,9 +86,11 @@
         </div>
     <%}%>
     <%if(formConfig.wishes.show){%>
-        <div class="um-form-group um-form-group-wishes">
+        <div class="um-form-group um-form-group-wishes <%= formConfig.wishes.wrap ? 'um-wrapper' : ''%>">
             <label for="umWishes"><%= formConfig.wishes.label %></label>
+            <%if(formConfig.wishes.wrap){%><div class="um-field um-hidden"><%}%>
             <textarea id="umWishes" type="text" name="wishes" class="um-form-control" placeholder="<%= formConfig.wishes.placeholder %>"><%= wishes %></textarea>
+            <%if(formConfig.wishes.wrap){%> </div><%}%>
         </div>
     <%}%>
     <%if(formConfig.personalData.show){%>

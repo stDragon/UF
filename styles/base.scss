@@ -319,3 +319,21 @@
 #umMap {
   height: 500px;
 }
+
+.um-wrapper {
+  label{
+    &:before {
+      content: "";
+      display: inline-block;
+      vertical-align: middle;
+      width: 17px;
+      height: 17px;
+      background: url(../img/01.png) no-repeat 0 0;
+      opacity: 0.5;
+      margin-right: 10px;
+    }
+    &:hover:before {
+      opacity:1;
+    }
+  }
+}

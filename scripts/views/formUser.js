@@ -24,7 +24,7 @@ module.exports = UM.Views.Form.extend({
     click: function(e) {
         var $el = $(e.target);
         if($el.hasClass('um-form-control')) {
-            return;
+
         } else if(!$el.closest('.um-dropdown-content').length) {
             this.hiddenOptionList()
         }
@@ -78,6 +78,10 @@ module.exports = UM.Views.Form.extend({
                 that.concealed(e);
         });
 
+        /* toggle hidden blocks on promo pages */
+        this.$el.on('click', '.um-wrapper>label', function(e) {
+            that.concealed(e);
+        });
     },
 
     initPhoneMask: function () {
@@ -309,7 +313,8 @@ module.exports = UM.Views.Form.extend({
 
     concealed: function (e) {
         var $label = $(e.target),
-            $input = $label.siblings('.um-form-control');
+            $parent = $label.parent(),
+            $input = $parent.hasClass('um-wrapper') ? $label.siblings('.um-field') : $label.siblings('.um-form-control');
 
         if ($input.hasClass('um-hidden'))
             $input.removeClass('um-hidden');

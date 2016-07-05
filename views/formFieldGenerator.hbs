@@ -101,6 +101,17 @@
             <label for="firstName.placeholder" class="active sr-only">Placeholder</label>
         </div>
     </div>
+    <div class="col s3">
+        <p>Фамилия и имя в одном поле</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="firstName.combine" <%= firstName.combine ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
 </div>
 
 <h3><%= email.label %></h3>
@@ -303,6 +314,17 @@
             <label for="shop.placeholder" class="active sr-only">Placeholder</label>
         </div>
     </div>
+    <div class="col s3">
+        <p>Обернуть в div</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="shop.wrap" <%= shop.wrap ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
 </div>
 
 <h3 class="hiddendiv"><%= kitchen.label %></h3>
@@ -431,6 +453,17 @@
         <div class="input-field">
             <input id="wishes.placeholder" type="text" name="wishes.placeholder" value="<%= wishes.placeholder %>">
             <label for="wishes.placeholder" class="active sr-only">Placeholder</label>
+        </div>
+    </div>
+    <div class="col s3">
+        <p>Обернуть в div</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="wishes.wrap" <%= wishes.wrap ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
         </div>
     </div>
 </div>

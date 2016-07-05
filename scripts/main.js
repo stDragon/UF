@@ -252,7 +252,8 @@ $(document).ready(function() {
                 label: 'Имя',
                 placeholder: 'Ваше имя',
                 show: true,
-                required: false
+                required: false,
+                combine: false
             },
             email: {
                 type: 'email',
@@ -291,7 +292,8 @@ $(document).ready(function() {
                 placeholder: 'Выберите студию',
                 show: false,
                 mapShow: false,
-                required: false
+                required: false,
+                wrap: false
             },
             kitchen: {
                 type: 'text',
@@ -318,7 +320,8 @@ $(document).ready(function() {
                 label: 'Пожелания',
                 placeholder: 'Пожелания',
                 show: true,
-                required: false
+                required: false,
+                wrap: false
             },
             submit: {
                 type: 'submit',
@@ -580,6 +583,8 @@ $(document).ready(function() {
                 });
             } else {
                 value = changed.value;
+
+                console.log(changed);
             }
 
             if (value === 'false') value = false;
