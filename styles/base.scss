@@ -213,7 +213,8 @@
   .um-form-group {
     position: relative;
     &.um-select {
-      &::before {
+      .um-field-wrap {position: relative;}
+      .um-field-wrap::before {
         content: "";
         border-color: #888 transparent transparent transparent;
         border-style: solid;
@@ -227,12 +228,12 @@
         z-index: 10;
       }
       &.um-select-left {
-        &::before {
+        .um-field-wrap::before {
           left: 6px;
         }
       }
       &.um-open-select {
-        &:before {
+        .um-field-wrap:before {
           border-color: transparent transparent #888 transparent;
           border-width: 0 4px 5px 4px;
         }
@@ -245,10 +246,10 @@
     }
     &.um-form-group-phone {
       &.um-with-phone-flag {
-        >.um-form-control {
+        .um-form-control {
           padding-left: 55px;
         }
-        >.um-phone-flag {
+        .um-phone-flag {
           position: absolute;
           left: 25px;
           top: 50%;
@@ -320,13 +321,14 @@
   height: 500px;
 }
 
-.um-wrapper {
+.um-wrapper-hidden {
   label{
+    cursor: pointer;
     &:before {
       content: "";
       display: inline-block;
       vertical-align: middle;
-      width: 17px;
+      width: 18px;
       height: 17px;
       background: url(../img/01.png) no-repeat 0 0;
       opacity: 0.5;

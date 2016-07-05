@@ -49,7 +49,7 @@
     <%if(formConfig.city.show){%>
         <div class="um-form-group um-form-group-city um-select<%= formConfig.city.required ? ' um-form-group-required' : ''%>">
             <label for="umCity"><%= formConfig.city.label %></label>
-            <div class="um-select-wrap">
+            <div class="um-select-wrap um-field-wrap">
             <input type="text" name="city" class="um-form-control" id="umCity" placeholder="<%= formConfig.city.placeholder %>" value="<%= city %>" <%= formConfig.city.required ? 'required' : ''%>>
             </div>
         </div>

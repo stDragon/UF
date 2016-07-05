@@ -23,8 +23,9 @@ module.exports = UM.Views.Form.extend({
 
     click: function(e) {
         var $el = $(e.target);
-        if($el.hasClass('um-form-control')) {
-
+        if($el.hasClass('um-form-control') || $el.hasClass('um-phone-flag') || $el.hasClass('um-field-wrap')) {
+            this.showOptionList(e);
+            return;
         } else if(!$el.closest('.um-dropdown-content').length) {
             this.hiddenOptionList()
         }
@@ -167,7 +168,7 @@ module.exports = UM.Views.Form.extend({
 
             /* Костыль со скрывающимися комментариями для старого все для дома и питера */
             if (that.$el.closest('.um-edim-doma-old').length || that.$el.closest('.um-piter').length) {
-                that.$el.find('[name="wishes"]').addClass('um-hidden');
+                //that.$el.find('[name="wishes"]').addClass('um-hidden');
             }
 
             /* Костыль для питера */
@@ -309,8 +310,7 @@ module.exports = UM.Views.Form.extend({
         var $label = $(e.target),
             $parent = $label.parent(),
             $input = $parent[0].classList.contains('um-wrapper-hidden') ?
-                $parent.find('.um-field') : ($parent[0].classList.contains('um-wrapper') ?
-                $parent.find('.um-field-wrap') : $label.siblings('.um-form-control'));
+                $parent.find('.um-field') : $label.siblings('.um-form-control');
         console.log($input);
         if ($input.hasClass('um-hidden'))
             $input.removeClass('um-hidden');
