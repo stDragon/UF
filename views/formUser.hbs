@@ -38,13 +38,19 @@
     <%if(formConfig.phone.show){%>
         <div class="um-form-group um-form-group-phone um-select um-select-left<%= formConfig.phone.required ? ' um-form-group-required' : ''%>">
             <label for="umPhone"><%= formConfig.phone.label %></label>
-            <input type="text" name="phone" class="um-form-control" id="umPhone" placeholder="<%= formConfig.phone.placeholder %>" value="<%= phone %>" <%= formConfig.phone.required ? 'required' : ''%>>
+            <div class="um-phone-wrap">
+            <input type="text" name="phone" class="um-form-control" id="umPhone"
+            placeholder="<%= formConfig.phone.placeholder %>" value="<%= phone %>"
+            <%= formConfig.phone.required ? 'required' : ''%>>
+            </div>
         </div>
     <%}%>
     <%if(formConfig.city.show){%>
         <div class="um-form-group um-form-group-city um-select<%= formConfig.city.required ? ' um-form-group-required' : ''%>">
             <label for="umCity"><%= formConfig.city.label %></label>
+            <div class="um-select-wrap">
             <input type="text" name="city" class="um-form-control" id="umCity" placeholder="<%= formConfig.city.placeholder %>" value="<%= city %>" <%= formConfig.city.required ? 'required' : ''%>>
+            </div>
         </div>
     <%}%>
     <%if(typeof formConfig.address !== 'undefined' && formConfig.address.show){%>
@@ -62,7 +68,7 @@
         <%= formConfig.shop.mapShow ? ' um-with-map' : ''%>
         <%= formConfig.shop.wrap ? 'um-wrapper' : ''%>">
             <label for="umShop"><%= formConfig.shop.label %></label>
-            <%if(formConfig.shop.wrap){%><div class="um-field um-hidden"><%}%>
+            <div class="um-select-wrap<%= formConfig.shop.wrap ? ' um-field um-hidden' : ''%>">
             <input type="text" name="shop" class="um-form-control" id="umShop"
                    placeholder="<%= formConfig.shop.placeholder %>"
                    value="<%= shop ? _.escape(shop) : '' %>"
@@ -73,7 +79,7 @@
                     <path d="M12 2C8.14 2 5 5.14 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.86-3.14-7-7-7zm4 8h-3v3h-2v-3H8V8h3V5h2v3h3v2z"/>
                 </svg>
             <%}%>
-             <%if(formConfig.shop.wrap){%></div><%}%>
+            </div>
         </div>
     <%}%>
     <%if(typeof formConfig.kitchen !== 'undefined' && formConfig.kitchen.show){%>
@@ -88,9 +94,9 @@
     <%if(formConfig.wishes.show){%>
         <div class="um-form-group um-form-group-wishes <%= formConfig.wishes.wrap ? 'um-wrapper' : ''%>">
             <label for="umWishes"><%= formConfig.wishes.label %></label>
-            <%if(formConfig.wishes.wrap){%><div class="um-field um-hidden"><%}%>
+            <div class="um-select-wrap<%= formConfig.wishes.wrap ? ' um-field um-hidden' : ''%>">
             <textarea id="umWishes" type="text" name="wishes" class="um-form-control" placeholder="<%= formConfig.wishes.placeholder %>"><%= wishes %></textarea>
-            <%if(formConfig.wishes.wrap){%> </div><%}%>
+            </div>
         </div>
     <%}%>
     <%if(formConfig.personalData.show){%>

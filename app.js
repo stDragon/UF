@@ -32,7 +32,7 @@ var jsonParser = bodyParser.json();
 app.all('*', function(req, res, next) {
     var serverName = '*';
     if(req.headers.origin) {
-        serverName = req.headers.origin;
+        //serverName = req.headers.origin;
     }
 
     //res.header("Content-Type", "application/json; charset=utf-8");

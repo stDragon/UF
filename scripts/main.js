@@ -535,7 +535,7 @@ $(document).ready(function() {
         },
 
         setValues: function () {
-            /** @TODO Костыль из за вложенного объекта, надо найти нормальное решение*/
+            /** @TODO Костыль из-за вложенного объекта, надо найти нормальное решение*/
             var attr = this.model.toJSON();
             _.each(attr, function (num, key) {
                 if (typeof num == 'object') {
