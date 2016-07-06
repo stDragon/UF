@@ -69,7 +69,7 @@
                    <%= formConfig.address.required ? 'required' : ''%>>
         </div>
     <%}%>
-    <%if(formConfig.pref.show){%>
+    <%if(typeof formConfig.pref !== 'undefined' && formConfig.pref.show){%>
         <div class="um-form-group um-form-group-pref um-select<%= formConfig.pref.required ? ' um-form-group-required' : ''%>">
             <label for="umPref"><%= formConfig.pref.label %></label>
              <ul class="um-dropdown-content um-pref-list"><li><span>Мобильный</span></li><li><span>30%</span></li><li><span>Email</span></li><li><span>Городской</span></li></ul>
@@ -78,7 +78,7 @@
             <%= formConfig.pref.required ? 'required' : ''%>>
         </div>
     <%}%>
-    <%if(formConfig.product.show){%>
+    <%if(typeof formConfig.product !== 'undefined' && formConfig.product.show){%>
         <div class="um-form-group um-form-group-product um-select<%= formConfig.product.required ? ' um-form-group-required' : ''%>">
             <label for="umProduct"><%= formConfig.product.label %></label>
              <ul class="um-dropdown-content um-product-list"><li><span>Кухня</span></li><li><span>30%</span></li><li><span>иное</span></li></ul>
@@ -87,7 +87,7 @@
             <%= formConfig.product.required ? 'required' : ''%>>
         </div>
     <%}%>
-    <%if(formConfig.price.show){%>
+    <%if(typeof formConfig.price !== 'undefined' && formConfig.price.show){%>
         <div class="um-form-group um-form-group-price <%= formConfig.price.required ? ' um-form-group-required' : ''%>">
             <label for="umPrice"><%= formConfig.cost.label %></label>
             <input type="text" name="price" class="um-form-control" id="umPrice"
@@ -95,7 +95,7 @@
             <%= formConfig.price.required ? 'required' : ''%>>
         </div>
     <%}%>
-    <%if(formConfig.pay.show){%>
+    <%if(typeof formConfig.pay !== 'undefined' && formConfig.pay.show){%>
         <div class="um-form-group um-form-group-pay um-select<%= formConfig.pay.required ? ' um-form-group-required' : ''%>">
             <label for="umPay"><%= formConfig.pay.label %></label>
             <ul class="um-dropdown-content um-pay-list"><li><span>30%</span></li><li><span>30%</span></li><li><span>40%</span></li><li><span>50%</span></li><li><span>60%</span></li></ul>
@@ -104,7 +104,7 @@
             <%= formConfig.pay.required ? 'required' : ''%>>
         </div>
     <%}%>
-    <%if(formConfig.term.show){%>
+    <%if(typeof formConfig.term !== 'undefined' && formConfig.term.show){%>
         <div class="um-form-group um-form-group-term <%= formConfig.term.required ? ' um-form-group-required' : ''%>">
             <label for="umTerm"><%= formConfig.firstName.label %></label>
             <input type="text" name="term" class="um-form-control" id="umTerm"
