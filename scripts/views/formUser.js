@@ -91,10 +91,8 @@ module.exports = UM.Views.Form.extend({
         var cityId = this.model.get('cityId');
 
         this.removeSelectShop();
-        console.log(cityId);
         /** Из коллекции городов находим город и если у него выведено свойство "showShop", добавляем поле с выбором студий */
         if (cityId && this.model.cityCollection.findWhere({'mr3id': cityId}) && this.model.cityCollection.findWhere({'mr3id': cityId}).get('showShop')) {
-            console.log('create shops select');
             this.addSelectShop();
             if (this.model.options.shop.mapShow) {
                 this.createYaMap();
@@ -157,11 +155,9 @@ module.exports = UM.Views.Form.extend({
             var html = $(temp(data));
             that.$el.html(html);
             if (that.cityCollectionView) {
-                console.log(that.cityCollectionView);
                 that.addSelectList('city', that.cityCollectionView);
                 if(that.model.shopCollection)
                     that.createSelectShop();
-                console.log(that.model.shopCollection);
             }
             if (that.kitchenCollectionView) {
                 that.addSelectList('kitchen', that.kitchenCollectionView);
