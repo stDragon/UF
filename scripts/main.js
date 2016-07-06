@@ -265,7 +265,7 @@ $(document).ready(function() {
             phone: {
                 type: 'tel',
                 label: 'Телефон',
-                placeholder: 'Ваш номер телефон',
+                placeholder: 'Ваш номер телефона',
                 show: true,
                 required: false,
                 showFlag: true,
