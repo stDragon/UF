@@ -82,16 +82,18 @@ $main-color: #e11a33;
         }
       }
       &.um-form-group-phone {
-        &::before {
-          display: none!important;
-        }
-        >.um-form-control {
-          //padding-left: 60px;
+        .um-field-wrap {
+          &::before {
+            display: none !important;
+          }
+          >.um-phone-flag {
+            display: none!important;
+          }
+          >.um-form-control {
+            //padding-left: 60px;
+          }
         }
         >.um-dropdown-content {
-          display: none!important;
-        }
-        >.um-phone-flag {
           display: none!important;
         }
       }

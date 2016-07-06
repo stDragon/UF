@@ -91,9 +91,10 @@ module.exports = UM.Views.Form.extend({
         var cityId = this.model.get('cityId');
 
         this.removeSelectShop();
-
+        console.log(cityId);
         /** Из коллекции городов находим город и если у него выведено свойство "showShop", добавляем поле с выбором студий */
         if (cityId && this.model.cityCollection.findWhere({'mr3id': cityId}) && this.model.cityCollection.findWhere({'mr3id': cityId}).get('showShop')) {
+            console.log('create shops select');
             this.addSelectShop();
             if (this.model.options.shop.mapShow) {
                 this.createYaMap();
@@ -125,17 +126,17 @@ module.exports = UM.Views.Form.extend({
             $el.before(this.shopCollectionView.el);
 
             $el.prop('disabled', false );
-            $el.parent('.um-form-group').removeClass('um-hidden');
+            $el.parents('.um-form-group').removeClass('um-hidden');
         }
     },
 
     removeSelectShop: function () {
         var $el = this.$el.find('[name=shop]');
 
-        $el.siblings('.um-dropdown-content').remove();
+        $el.parents('.um-form-group').find('.um-dropdown-content').remove();
 
         $el.prop('disabled', true );
-        $el.parent('.um-form-group').addClass('um-hidden');
+        $el.parents('.um-form-group').addClass('um-hidden');
     },
 
     showSelectShop: function () {
@@ -156,9 +157,11 @@ module.exports = UM.Views.Form.extend({
             var html = $(temp(data));
             that.$el.html(html);
             if (that.cityCollectionView) {
+                console.log(that.cityCollectionView);
                 that.addSelectList('city', that.cityCollectionView);
                 if(that.model.shopCollection)
                     that.createSelectShop();
+                console.log(that.model.shopCollection);
             }
             if (that.kitchenCollectionView) {
                 that.addSelectList('kitchen', that.kitchenCollectionView);
@@ -311,7 +314,7 @@ module.exports = UM.Views.Form.extend({
             $parent = $label.parent(),
             $input = $parent[0].classList.contains('um-wrapper-hidden') ?
                 $parent.find('.um-field') : $label.siblings('.um-form-control');
-        console.log($input);
+
         if ($input.hasClass('um-hidden'))
             $input.removeClass('um-hidden');
         else
