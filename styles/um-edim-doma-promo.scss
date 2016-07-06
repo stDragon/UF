@@ -143,8 +143,10 @@ $main-color: #d85349;
         }
       }
       &.um-form-group-phone {
-        &::before {
-          display: none;
+        .um-field-wrap {
+          &::before {
+            display: none;
+          }
         }
       }
       &.um-form-group-shop {
