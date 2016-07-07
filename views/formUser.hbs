@@ -89,7 +89,7 @@
     <%}%>
     <%if(typeof formConfig.price !== 'undefined' && formConfig.price.show){%>
         <div class="um-form-group um-form-group-price <%= formConfig.price.required ? ' um-form-group-required' : ''%>">
-            <label for="umPrice"><%= formConfig.cost.label %></label>
+            <label for="umPrice"><%= formConfig.price.label %></label>
             <input type="text" name="price" class="um-form-control" id="umPrice"
             placeholder="<%= formConfig.price.placeholder %>" value="<%= price %>"
             <%= formConfig.price.required ? 'required' : ''%>>

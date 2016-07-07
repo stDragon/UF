@@ -8,8 +8,14 @@ module.exports = Backbone.Model.extend({
         firstName: '',
         email: '',
         phone: '',
+        adphone:'',
         city: '',
         shop: '',
+        pref: '',
+        product: '',
+        price: '',
+        pay: '',
+        term: '',
         wishes: '',
         personalData: true
     },
@@ -219,6 +225,85 @@ module.exports = Backbone.Model.extend({
                             errors.push(err);
                         } else {
                             this.trigger('valid', 'personalData');
+                        }
+                    }
+                    break;
+                /* new fields */
+                case 'adphone':
+                    if (this.options.adphone.show) {
+                        if (this.options.adphone.required && !value) {
+                            err = {
+                                text: "Вы не указали дополнительный телефон",
+                                attr: 'adphone'
+                            };
+                            errors.push(err);
+                        } else {
+                            this.trigger('valid', 'adphone');
+                        }
+                    }
+                    break;
+                case 'pref':
+                    if (this.options.pref.show) {
+                        if (this.options.pref.required && !value) {
+                            err = {
+                                text: "Вы не указали предпочтительный способ связи",
+                                attr: 'pref'
+                            };
+                            errors.push(err);
+                        } else {
+                            this.trigger('valid', 'pref');
+                        }
+                    }
+                    break;
+                case 'product':
+                    if (this.options.product.show) {
+                        if (this.options.product.required && !value) {
+                            err = {
+                                text: "Вы не указали товар",
+                                attr: 'product'
+                            };
+                            errors.push(err);
+                        } else {
+                            this.trigger('valid', 'product');
+                        }
+                    }
+                    break;
+                case 'price':
+                    if (this.options.price.show) {
+                        if (this.options.price.required && !value) {
+                            err = {
+                                text: "Вы не указали стоимость",
+                                attr: 'price'
+                            };
+                            errors.push(err);
+                        } else {
+                            this.trigger('valid', 'price');
+                        }
+                    }
+                    break;
+                case 'pay':
+                    if (this.options.pay.show) {
+                        if (this.options.pay.required && !value) {
+                            err = {
+                                text: "Вы не указали величину первого взноса",
+                                attr: 'pay'
+                            };
+                            errors.push(err);
+                        } else {
+                            this.trigger('valid', 'pay');
+                        }
+                    }
+                    break;
+                case 'term':
+                    if (this.options.term.show) {
+                        if (this.options.term.required && !value) {
+                            err = {
+                                text: "Вы не указали желаемый срок кредита",
+                                attr: 'term'
+                            };
+                            errors.push(err);
+                        } else {
+                            this.trigger('valid', 'term');
                         }
                     }
                     break;
