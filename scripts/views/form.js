@@ -5,7 +5,8 @@ module.exports = Backbone.Ribs.View.extend({
         'blur input': 'setAttr',
         'blur textarea': 'setAttr',
         'change input:checkbox': 'changed',
-        'submit': 'save'
+        'submit': 'save',
+        'input #umName' : 'parseName'
     },
 
     initialize: function () {
@@ -76,6 +77,22 @@ module.exports = Backbone.Ribs.View.extend({
         this.model.set(data);
         this.model.set(data, {validate:true});
     },
+
+    /**
+     * При объедининеии полей Фамилия и Имя при вводе значения с клавиатуры разделяет значения имени и фамилии
+     */
+    parseName: function(e) {
+        var val = ($(e.target).val()).trim(),
+            id = $(e.target).attr('id'),
+            i = val.trim().indexOf(' '),
+            surname = val.substr(0, i),
+            name = val.substr((i + 1), val.length);
+
+        $('#umSurname').val(surname);
+        $('#umFirstname').val(name);
+        this.setAttrs();
+    },
+
     /**
      * Сохраняет все поля на сервер.
      */

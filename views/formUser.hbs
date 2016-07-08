@@ -5,14 +5,15 @@
             <span class="um-title-2"><%= formConfig.header.value2 %></span>
         </legend>
     <%}%>
-    <%if(formConfig.surname.show){%>
+    <%if(formConfig.surname.show || (typeof formConfig.firstName.combine !== 'undefined' && formConfig.firstName.combine)){%>
         <div class="um-form-group um-form-group-surname<%= formConfig.surname.required ? ' um-form-group-required' : ''%>">
-            <label for=" <%= (typeof formConfig.firstName.combine !== 'undefined' && formConfig.firstName.combine) ? 'umName' : 'umSurname'%>">
+            <label for="<%= (typeof formConfig.firstName.combine !== 'undefined' && formConfig.firstName.combine) ? 'umName' : 'umSurname'%>">
             <%= formConfig.surname.label %></label>
             <%if(typeof formConfig.firstName.combine !== 'undefined' && formConfig.firstName.combine){%>
-                <input type="text" name="surname" class="um-form-control" id="umName"
+                <input type="text" name="<%= (typeof formConfig.firstName.combine !== 'undefined' && formConfig.firstName.combine) ? 'name' : 'surname'%>"
+                class="um-form-control" id="umName"
                 placeholder="<%= formConfig.surname.placeholder %>"
-                value="<%= surname %> <%= firstName %>" <%= formConfig.surname.required ? 'required' : ''%>>
+                value="<%= surname!= '' ? surname + ' ' : '' %><%= firstName %>" <%= formConfig.surname.required ? 'required' : ''%>>
             <%}%>
             <input type="text" name="surname" class="um-form-control
             <%= (typeof formConfig.firstName.combine !== 'undefined' && formConfig.firstName.combine) ? 'um-hidden' : ''%>" id="umSurname"
@@ -20,7 +21,7 @@
             <%= formConfig.surname.required ? 'required' : ''%>>
         </div>
     <%}%>
-    <%if(formConfig.firstName.show){%>
+    <%if(formConfig.firstName.show || (typeof formConfig.firstName.combine !== 'undefined' && formConfig.firstName.combine)){%>
         <div class="um-form-group um-form-group-firstname
         <%= formConfig.firstName.required ? ' um-form-group-required' : ''%>
         <%= (typeof formConfig.firstName.combine !== 'undefined' && formConfig.firstName.combine) ? 'um-hidden' : ''%>">

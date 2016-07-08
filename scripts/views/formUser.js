@@ -18,7 +18,8 @@ module.exports = UM.Views.Form.extend({
         'click .um-icon-add-location': 'showYaMap',
         'change input:checkbox': 'changed',
         'submit': 'save',
-        'click': 'click'
+        'click': 'click',
+        'input #umName' : 'parseName'
     },
 
     click: function(e) {
