@@ -17,7 +17,7 @@ module.exports = UM.Views.Form.extend({
         'blur': 'preValidation',
         'click .um-icon-add-location': 'showYaMap',
         'change input:checkbox': 'changed',
-        'click .um-static-select li': "chooseValue",
+        'click .um-static-select li': 'chooseValue',
         'submit': 'save',
         'click': 'click',
         'input #umName' : 'parseName'

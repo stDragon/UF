@@ -6,6 +6,7 @@ module.exports = Backbone.Ribs.View.extend({
         'blur textarea': 'setAttr',
         'change input:checkbox': 'changed',
         'submit': 'save',
+        'click .um-static-select li': 'chooseValue',
         'input #umName' : 'parseName'
     },
 
@@ -56,7 +57,7 @@ module.exports = Backbone.Ribs.View.extend({
             input = list.siblings('input');
 
         input.val(val);
-        list.addClass('um-hidden');
+        list.parents('.um-form-group').removeClass('um-open-select');
         this.setAttrs();
     },
 
