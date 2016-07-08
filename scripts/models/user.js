@@ -230,7 +230,7 @@ module.exports = Backbone.Model.extend({
                     break;
                 /* new fields */
                 case 'adphone':
-                    if (this.options.adphone.show) {
+                    if (typeof this.options.adphone !== 'undefined' && this.options.adphone.show) {
                         if (this.options.adphone.required && !value) {
                             err = {
                                 text: "Вы не указали дополнительный телефон",
@@ -243,7 +243,7 @@ module.exports = Backbone.Model.extend({
                     }
                     break;
                 case 'pref':
-                    if (this.options.pref.show) {
+                    if (typeof this.options.pref !== 'undefined' && this.options.pref.show) {
                         if (this.options.pref.required && !value) {
                             err = {
                                 text: "Вы не указали предпочтительный способ связи",
@@ -256,7 +256,7 @@ module.exports = Backbone.Model.extend({
                     }
                     break;
                 case 'product':
-                    if (this.options.product.show) {
+                    if (typeof this.options.product !== 'undefined' && this.options.product.show) {
                         if (this.options.product.required && !value) {
                             err = {
                                 text: "Вы не указали товар",
@@ -269,7 +269,7 @@ module.exports = Backbone.Model.extend({
                     }
                     break;
                 case 'price':
-                    if (this.options.price.show) {
+                    if (typeof this.options.price !== 'undefined' && this.options.price.show) {
                         if (this.options.price.required && !value) {
                             err = {
                                 text: "Вы не указали стоимость",
@@ -282,7 +282,7 @@ module.exports = Backbone.Model.extend({
                     }
                     break;
                 case 'pay':
-                    if (this.options.pay.show) {
+                    if (typeof this.options.pay !== 'undefined' && this.options.pay.show) {
                         if (this.options.pay.required && !value) {
                             err = {
                                 text: "Вы не указали величину первого взноса",
@@ -295,7 +295,7 @@ module.exports = Backbone.Model.extend({
                     }
                     break;
                 case 'term':
-                    if (this.options.term.show) {
+                    if (typeof this.options.term !== 'undefined' && this.options.term.show) {
                         if (this.options.term.required && !value) {
                             err = {
                                 text: "Вы не указали желаемый срок кредита",
