@@ -49,6 +49,17 @@ module.exports = Backbone.Ribs.View.extend({
         this.model.set(obj, {validate:true});
     },
 
+    /** Запись в input выбранного значения статичного списка */
+    chooseValue: function(e) {
+        var list = $(e.target).parents('ul'),
+            val = $(e.target).text(),
+            input = list.siblings('input');
+
+        input.val(val);
+        list.addClass('um-hidden');
+        this.setAttrs();
+    },
+
     /** Устанавливает значения полей формы*/
     setValue: function () {
         var attr = this.model.toJSON();

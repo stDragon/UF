@@ -73,8 +73,8 @@
     <%if(typeof formConfig.pref !== 'undefined' && formConfig.pref.show){%>
         <div class="um-form-group um-form-group-pref um-select<%= formConfig.pref.required ? ' um-form-group-required' : ''%>">
             <label for="umPref"><%= formConfig.pref.label %></label>
-            <div class="um-select-wrap um-field-wrap">
-            <ul class="um-dropdown-content um-pref-list"><li><span>Мобильный</span></li><li><span>30%</span></li><li><span>Email</span></li><li><span>Городской</span></li></ul>
+            <div class="um-select-wrap um-field-wrap um-static-select">
+            <ul class="um-dropdown-content um-pref-list"><li><span>Мобильный</span></li><li><span>Email</span></li><li><span>Городской</span></li></ul>
             <input type="text" name="pref" class="um-form-control" id="umPref"
             placeholder="<%= formConfig.pref.placeholder %>" value="<%= pref %>"
             <%= formConfig.pref.required ? 'required' : ''%>>
@@ -84,8 +84,8 @@
     <%if(typeof formConfig.product !== 'undefined' && formConfig.product.show){%>
         <div class="um-form-group um-form-group-product um-select<%= formConfig.product.required ? ' um-form-group-required' : ''%>">
             <label for="umProduct"><%= formConfig.product.label %></label>
-            <div class="um-select-wrap um-field-wrap">
-            <ul class="um-dropdown-content um-product-list"><li><span>Кухня</span></li><li><span>30%</span></li><li><span>иное</span></li></ul>
+            <div class="um-select-wrap um-field-wrap um-static-select">
+            <ul class="um-dropdown-content um-product-list"><li><span>Кухня</span></li><li><span>иное</span></li></ul>
             <input type="text" name="product" class="um-form-control" id="umProduct"
             placeholder="<%= formConfig.product.placeholder %>" value="<%= product %>"
             <%= formConfig.product.required ? 'required' : ''%>>
@@ -103,9 +103,9 @@
     <%if(typeof formConfig.pay !== 'undefined' && formConfig.pay.show){%>
         <div class="um-form-group um-form-group-pay um-select<%= formConfig.pay.required ? ' um-form-group-required' : ''%>">
             <label for="umPay"><%= formConfig.pay.label %></label>
-            <div class="um-select-wrap um-field-wrap">
+            <div class="um-select-wrap um-field-wrap um-static-select">
             <ul class="um-dropdown-content um-pay-list"><li><span>30%</span></li><li><span>30%</span></li><li><span>40%</span></li><li><span>50%</span></li><li><span>60%</span></li></ul>
-            <input type="text" name="product" class="um-form-control" id="umPay"
+            <input type="text" name="pay" class="um-form-control" id="umPay"
             placeholder="<%= formConfig.pay.placeholder %>" value="<%= pay %>"
             <%= formConfig.pay.required ? 'required' : ''%>>
             </div>
