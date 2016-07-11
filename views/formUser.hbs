@@ -57,7 +57,9 @@
         <div class="um-form-group um-form-group-city um-select<%= formConfig.city.required ? ' um-form-group-required' : ''%>">
             <label for="umCity"><%= formConfig.city.label %></label>
             <div class="um-select-wrap um-field-wrap">
-            <input type="text" name="city" class="um-form-control" id="umCity" placeholder="<%= formConfig.city.placeholder %>" value="<%= city %>" <%= formConfig.city.required ? 'required' : ''%>>
+            <input type="text" name="city" class="um-form-control" id="umCity"
+            placeholder="<%= formConfig.city.placeholder %>" value="<%= city %>"
+            <%= formConfig.city.required ? 'required' : ''%> readonly>
             </div>
         </div>
     <%}%>
@@ -145,7 +147,7 @@
             <input type="text" name="kitchen" class="um-form-control" id="umKitchen"
                    placeholder="<%= formConfig.kitchen.placeholder %>"
                    value="<%= typeof kitchen !== 'undefined' ? kitchen : '' %>"
-            <%= formConfig.kitchen.required ? 'required' : ''%>>
+            <%= formConfig.kitchen.required ? 'required' : ''%> readonly>
         </div>
     <%}%>
     <%if(formConfig.wishes.show){%>
