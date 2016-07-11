@@ -77,7 +77,7 @@
             <ul class="um-dropdown-content um-pref-list"><li><span>Мобильный</span></li><li><span>Email</span></li><li><span>Городской</span></li></ul>
             <input type="text" name="pref" class="um-form-control" id="umPref"
             placeholder="<%= formConfig.pref.placeholder %>" value="<%= pref %>"
-            <%= formConfig.pref.required ? 'required' : ''%>>
+            <%= formConfig.pref.required ? 'required' : ''%> readonly>
             </div>
         </div>
     <%}%>
@@ -88,14 +88,14 @@
             <ul class="um-dropdown-content um-product-list"><li><span>Кухня</span></li><li><span>иное</span></li></ul>
             <input type="text" name="product" class="um-form-control" id="umProduct"
             placeholder="<%= formConfig.product.placeholder %>" value="<%= product %>"
-            <%= formConfig.product.required ? 'required' : ''%>>
+            <%= formConfig.product.required ? 'required' : ''%> readonly>
             </div>
         </div>
     <%}%>
     <%if(typeof formConfig.price !== 'undefined' && formConfig.price.show){%>
         <div class="um-form-group um-form-group-price <%= formConfig.price.required ? ' um-form-group-required' : ''%>">
             <label for="umPrice"><%= formConfig.price.label %></label>
-            <input type="text" name="price" class="um-form-control" id="umPrice"
+            <input type="number" name="price" class="um-form-control" id="umPrice"
             placeholder="<%= formConfig.price.placeholder %>" value="<%= price %>"
             <%= formConfig.price.required ? 'required' : ''%>>
         </div>
@@ -104,17 +104,17 @@
         <div class="um-form-group um-form-group-pay um-select<%= formConfig.pay.required ? ' um-form-group-required' : ''%>">
             <label for="umPay"><%= formConfig.pay.label %></label>
             <div class="um-select-wrap um-field-wrap um-static-select">
-            <ul class="um-dropdown-content um-pay-list"><li><span>30%</span></li><li><span>30%</span></li><li><span>40%</span></li><li><span>50%</span></li><li><span>60%</span></li></ul>
+            <ul class="um-dropdown-content um-pay-list"><li><span>30%</span></li><li><span>40%</span></li><li><span>50%</span></li><li><span>60%</span></li></ul>
             <input type="text" name="pay" class="um-form-control" id="umPay"
             placeholder="<%= formConfig.pay.placeholder %>" value="<%= pay %>"
-            <%= formConfig.pay.required ? 'required' : ''%>>
+            <%= formConfig.pay.required ? 'required' : ''%> readonly>
             </div>
         </div>
     <%}%>
     <%if(typeof formConfig.term !== 'undefined' && formConfig.term.show){%>
         <div class="um-form-group um-form-group-term <%= formConfig.term.required ? ' um-form-group-required' : ''%>">
-            <label for="umTerm"><%= formConfig.firstName.label %></label>
-            <input type="text" name="term" class="um-form-control" id="umTerm"
+            <label for="umTerm"><%= formConfig.term.label %></label>
+            <input type="number" name="term" class="um-form-control" id="umTerm"
             placeholder="<%= formConfig.term.placeholder %>" value="<%= term %>"
             <%= formConfig.term.required ? 'required' : ''%>>
         </div>
@@ -129,7 +129,7 @@
             <input type="text" name="shop" class="um-form-control" id="umShop"
                    placeholder="<%= formConfig.shop.placeholder %>"
                    value="<%= shop ? _.escape(shop) : '' %>"
-                   <%= formConfig.shop.required ? 'required' : '' %>>
+                   <%= formConfig.shop.required ? 'required' : '' %> readonly>
             <%if(formConfig.shop.mapShow){%>
                 <svg height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg" class="um-icon-add-location">
                     <path d="M0 0h24v24H0V0z" fill="none"/>

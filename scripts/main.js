@@ -317,7 +317,7 @@ $(document).ready(function() {
                 required: true
             },
             price: {
-                type: 'text',
+                type: 'number',
                 label: 'Стоимость',
                 placeholder: 'Стоимость',
                 show: false,
@@ -331,7 +331,7 @@ $(document).ready(function() {
                 required: true
             },
             term: {
-                type: 'text',
+                type: 'number',
                 label: 'Желаемый срок кредита (мес.)',
                 placeholder: 'Желаемый срок кредита (мес.)',
                 show: false,
