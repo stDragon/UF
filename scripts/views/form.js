@@ -5,9 +5,9 @@ module.exports = Backbone.Ribs.View.extend({
         'blur input': 'setAttr',
         'blur textarea': 'setAttr',
         'change input:checkbox': 'changed',
-        'submit': 'save',
         'click .um-static-select li': 'chooseValue',
-        'input #umName' : 'parseName'
+        'input #umName' : 'parseName',
+        'submit': 'save'
     },
 
     initialize: function () {
