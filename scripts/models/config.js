@@ -49,8 +49,8 @@ module.exports = Backbone.Ribs.Model.extend({
 
         /* Костыль для питера устанавливает аактивным */
         if (this.get('style') === 'um-piter') {
-            this.data.user.city = 'Питер';
-            this.data.user.cityId = 3;
+            this.data.user.city = 'Санкт-Петербург';
+            this.data.user.cityId = 1394549;
         }
 
         if (this.get('formType') == 'calculation' || this.get('formType') == 'measurement' || this.get('formType') == 'credit') {
