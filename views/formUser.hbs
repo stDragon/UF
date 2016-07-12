@@ -10,16 +10,15 @@
             <label for="<%= (typeof formConfig.firstName.combine !== 'undefined' && formConfig.firstName.combine) ? 'umName' : 'umSurname'%>">
             <%= formConfig.surname.label %></label>
             <%if(typeof formConfig.firstName.combine !== 'undefined' && formConfig.firstName.combine){%>
-                <input type="text" name="<%= (typeof formConfig.firstName.combine !== 'undefined' && formConfig.firstName.combine) ? 'userName' : 'surname'%>"
+                <input type="text" name="<%= (typeof formConfig.firstName.combine !== 'undefined' && formConfig.firstName.combine) ? 'name' : 'surname'%>"
                 class="um-form-control" id="umName"
                 placeholder="<%= formConfig.surname.placeholder %>"
                 value="<%= surname!= '' ? surname + ' ' : '' %><%= firstName %>" <%= formConfig.surname.required ? 'required' : ''%>>
             <%}%>
-            <input type="<%= (typeof formConfig.firstName.combine !== 'undefined' && formConfig.firstName.combine)? 'hidden' : 'text'%>"
-            name="surname" class="um-form-control
+            <input type="text" name="surname" class="um-form-control
             <%= (typeof formConfig.firstName.combine !== 'undefined' && formConfig.firstName.combine) ? 'um-hidden' : ''%>" id="umSurname"
             placeholder="<%= formConfig.surname.placeholder %>" value="<%= surname %>"
-            <%= (formConfig.surname.required && (typeof formConfig.firstName.combine !== 'undefined' && !formConfig.firstName.combine)) ? 'required' : ''%>>
+            <%= formConfig.surname.required ? 'required' : ''%>>
         </div>
     <%}%>
     <%if(formConfig.firstName.show || (typeof formConfig.firstName.combine !== 'undefined' && formConfig.firstName.combine)){%>
@@ -27,10 +26,9 @@
         <%= formConfig.firstName.required ? ' um-form-group-required' : ''%>
         <%= (typeof formConfig.firstName.combine !== 'undefined' && formConfig.firstName.combine) ? 'um-hidden' : ''%>">
             <label for="umFirstname"><%= formConfig.firstName.label %></label>
-            <input type="<%= (typeof formConfig.firstName.combine !== 'undefined' && formConfig.firstName.combine)? 'hidden' : 'text'%>"
-            name="firstName" class="um-form-control" id="umFirstname"
+            <input type="text" name="firstName" class="um-form-control" id="umFirstname"
             placeholder="<%= formConfig.firstName.placeholder %>" value="<%= firstName %>"
-             <%= (formConfig.firstName.required && (typeof formConfig.firstName.combine !== 'undefined' && !formConfig.firstName.combine))? 'required' : ''%>>
+             <%= formConfig.firstName.required ? 'required' : ''%>>
         </div>
     <%}%>
     <%if(formConfig.email.show){%>

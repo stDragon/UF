@@ -83,7 +83,6 @@ module.exports = Backbone.Ribs.View.extend({
     setAttrs: function () {
         var data = {};
         this.$el.find('.um-form-control').each(function () {
-            if(this.name == 'userName') return;
             data[this.name] = $(this).val();
         });
 
@@ -95,7 +94,7 @@ module.exports = Backbone.Ribs.View.extend({
      * При объедининеии полей Фамилия и Имя при вводе значения с клавиатуры разделяет значения имени и фамилии
      */
     parseName: function(e) {
-        var val = $(e.target).val(),
+        var val = ($(e.target).val()).trim(),
             id = $(e.target).attr('id'),
             i = val.trim().indexOf(' '),
             surname = val.substr(0, i),
@@ -103,6 +102,7 @@ module.exports = Backbone.Ribs.View.extend({
 
         $('#umSurname').val(surname);
         $('#umFirstname').val(name);
+        this.setAttrs();
     },
 
     /**
@@ -113,7 +113,6 @@ module.exports = Backbone.Ribs.View.extend({
 
         var data = {};
         this.$el.find('.um-form-control').each(function () {
-            if(this.name == 'userName') return;
             data[this.name] = $(this).val();
         });
 
