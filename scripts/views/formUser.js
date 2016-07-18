@@ -10,10 +10,9 @@ module.exports = UM.Views.Form.extend({
 
     events: {
         'focus input': 'showOptionList',
-        'input input': 'setAttrs',
         //'keyup [name="city"]': 'search',
-        'blur input': 'setAttr',
-        'blur textarea': 'setAttr',
+        'change input': 'setAttr',
+        'change textarea': 'setAttr',
         'blur': 'preValidation',
         'click .um-icon-add-location': 'showYaMap',
         'change input:checkbox': 'changed',

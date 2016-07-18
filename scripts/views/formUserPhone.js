@@ -10,7 +10,6 @@ module.exports = Backbone.View.extend({
 
     events: {
         'focus #umPhone': 'initMask',
-        'input input': 'setAttr',
         'submit': 'save'
     },
 

@@ -7,7 +7,7 @@ module.exports = Backbone.Model.extend({
         surname: '',
         firstName: '',
         email: '',
-        phone: '',
+        phone: '7',
         adphone:'',
         city: '',
         shop: '',

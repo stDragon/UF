@@ -1,9 +1,8 @@
 module.exports = Backbone.Ribs.View.extend({
     events: {
-        'input input': 'setAttrs',
         'focus .um-dropdown-content + input': 'showOptionList',
-        'blur input': 'setAttr',
-        'blur textarea': 'setAttr',
+        'change input': 'setAttr',
+        'change textarea': 'setAttr',
         'change input:checkbox': 'changed',
         'click .um-static-select li': 'chooseValue',
         'input #umName' : 'parseName',

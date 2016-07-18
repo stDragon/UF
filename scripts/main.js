@@ -421,7 +421,6 @@ $(document).ready(function() {
         template: 'formCodeGeneratorTpl',
 
         events: {
-            "input input:text"    : "changed",
             "change input"        : "changed",
             "change select"       : "changed",
             "submit"              : "submit"
@@ -549,7 +548,6 @@ $(document).ready(function() {
         template: 'formFieldGenerator',
 
         events: {
-            "input input:text"    : "changed",
             "change input"        : "changed",
             "change select"       : "changed",
             "submit"              : "submit"
@@ -625,8 +623,6 @@ $(document).ready(function() {
                 });
             } else {
                 value = changed.value;
-
-                console.log(changed);
             }
 
             if (value === 'false') value = false;
