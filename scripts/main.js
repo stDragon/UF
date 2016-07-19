@@ -199,14 +199,21 @@ $(document).ready(function() {
             return '<div data-um-id="' + this.id + '"></div>'
         },
 
+        getScriptHref: function () {
+            if (App.conf.server.type == 'dev')
+                return '//' + location.hostname + '/public/js/marya-um.js';
+            else
+                return '//' + location.hostname + '/public/js/marya-um.min.js';
+        },
+
         getScript: function () {
-            return '<script type="text/javascript" src="//' + location.hostname + '/public/js/marya-um.js"><\/script>' +
+            return '<script type="text/javascript" src="' + this.getScriptHref() + '"><\/script>' +
                 '<script>UM.init(' + JSON.stringify(this.toJSON()) + ');<\/script>';
         },
 
         getShortScript: function () {
             var data = {id: this.get('id')};
-            return '<script type="text/javascript" src="//' + location.hostname + '/public/js/marya-um.js"><\/script>' +
+            return '<script type="text/javascript" src="' + this.getScriptHref() + '"><\/script>' +
                 '<script>UM.init(' + JSON.stringify(data) + ');<\/script>';
         },
 
