@@ -201,9 +201,9 @@ $(document).ready(function() {
 
         getScriptHref: function () {
             if (App.conf.server.type == 'dev')
-                return '//' + location.hostname + '/public/js/marya-um.js';
+                return '//' + location.hostname + '/public/js/marya-um.full.js';
             else
-                return '//' + location.hostname + '/public/js/marya-um.min.js';
+                return '//' + location.hostname + '/public/js/marya-um.js';
         },
 
         getScript: function () {

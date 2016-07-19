@@ -18,11 +18,12 @@ gulp.task('concatMain', function() {
         .pipe(gulp.dest('public/js'));
 });
 
+/* несжатый скрипт модуля*/
 gulp.task('concatUm', function() {
     return gulp.src([
             'scripts/um.js'
         ])
-        .pipe(concat('marya-um.js'))
+        .pipe(concat('marya-um.full.js'))
         .pipe(browserify({
             insertGlobals : true,
             debug : !gulp.env.production
@@ -39,11 +40,12 @@ gulp.task('compressMain', ['concatMain'], function() {
         .pipe(gulp.dest('public/js'));
 });
 
+/* сжатый скрипт модуля */
 gulp.task('compressUm', ['concatUm'], function() {
-    return gulp.src(['public/js/marya-um.js'])
+    return gulp.src(['public/js/marya-um.full.js'])
         .pipe(uglify())
         .pipe(rename({
-            suffix: '.min'
+            basename: 'marya-um'
         }))
         .pipe(gulp.dest('public/js'));
 });
