@@ -185,5 +185,5 @@ UM.ajaxError = function(jqXHR) {
         status: jqXHR.status,
         statusText: jqXHR.statusText
     };
-    new UM.Models.Logger({message: error})
+    new UM.Models.Logger({message: JSON.stringify(error)});
 };
