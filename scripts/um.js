@@ -3,6 +3,7 @@ var _ = require('underscore'),
     Backbone = require('backbone'),
     conf = require('../nconf.js');
 
+window.$ = window.$ || $;
 window._ = window._ || _;
 window.Backbone = window.Backbone || Backbone;
 
