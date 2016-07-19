@@ -11,6 +11,7 @@ module.exports = UM.Views.Form.extend({
     events: {
         'focus input': 'showOptionList',
         //'keyup [name="city"]': 'search',
+        'input [name="phone"]': 'setAttr',
         'change input': 'setAttr',
         'change textarea': 'setAttr',
         'blur': 'preValidation',
