@@ -192,13 +192,12 @@ img          | string         | ""       | +        | Флаг страны
 На странице http://module.infcentre.ru/um/ партнер получает код скрипта вида:
 
 ```html
-<script type="text/javascript" src="http://module.infcentre.ru/public/js/marya-um.js"></script>
+<script type="text/javascript" src="http://module.infcentre.ru/public/js/marya-um.min.js"></script>
 <script>UM.init({"id":"29BA15DA-DE36-170B-7BD4-570303E6C321"});</script>
 ```
 
 Который необходимо вставить в подвал перед "body" на сайтах партнера.
 Если необходимо запустить скрипт на определенной странице, скрипт необходимо добавить только на этой странице.
-При изменении настроик в конфигураторе изменения будут автоматически сохранены.
 
 Код состоит из двух или трех частей в зависимости от конфигурации
 
@@ -207,6 +206,7 @@ img          | string         | ""       | +        | Флаг страны
 ```html
 <script type="text/javascript" src="http://module.infcentre.ru/public/js/marya-um.js"></script>
 ```
+Если на сайте используется jQuery, underscore или backbone скрипт необходимо подключать после них.
 
 * Запуск модуля с определенными настройками. Настройки превязаны к ID. 
 
