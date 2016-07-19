@@ -50,7 +50,7 @@
     <%if(typeof formConfig.adphone !== 'undefined' && formConfig.adphone.show){%>
         <div class="um-form-group um-form-group-adphone<%= formConfig.adphone.required ? ' um-form-group-required' : ''%>">
             <label for="umAdphone"><%= formConfig.adphone.label %></label>
-            <input type="text" name="Adphone" class="um-form-control" id="umAdphone" placeholder="<%= formConfig.adphone.placeholder %>" value="<%= adphone %>" <%= formConfig.adphone.required ? 'required' : ''%>>
+            <input type="text" name="adphone" class="um-form-control" id="umAdphone" placeholder="<%= formConfig.adphone.placeholder %>" value="<%= adphone %>" <%= formConfig.adphone.required ? 'required' : ''%>>
         </div>
     <%}%>
     <%if(formConfig.city.show){%>
