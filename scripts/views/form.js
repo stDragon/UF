@@ -154,11 +154,11 @@ module.exports = Backbone.Ribs.View.extend({
             $group
                 .removeClass('um-has-error')
                 .addClass('um-has-success')
-                .children('.um-tooltip').remove();
+                .find('.um-tooltip').remove();
         } else {
             this.$el.find('input')
                 .closest('.um-form-group').removeClass('um-has-error').addClass('um-has-success')
-                .children('.um-tooltip').remove();
+                .find('.um-tooltip').remove();
         }
     },
     /**
@@ -169,15 +169,17 @@ module.exports = Backbone.Ribs.View.extend({
     invalid: function (model, errors) {
         this.$el.find('input')
             .closest('.um-form-group').removeClass('um-has-error')
-            .children('.um-tooltip').remove();
+            .find('.um-tooltip').remove();
         _.each(errors, function (error) {
             var $el = this.$el.find('[name=' + error.attr + ']'),
                 $group = $el.closest('.um-form-group');
 
             $group.addClass('um-has-error').removeClass('um-has-success');
-            var tooltip = new UM.Views.Tooltip();
-            tooltip.$el.html(error.text);
-            $group.append(tooltip.el);
+            if (document.inputEncoding == "UTF-8") {
+                var tooltip = new UM.Views.Tooltip();
+                tooltip.$el.html(error.text);
+                $group.find('.um-form-control').after(tooltip.el);
+            }
         }, this);
     }
 });

@@ -22,6 +22,7 @@ module.exports = Backbone.View.extend({
         );
 
         this.phoneCodeCollection = new UM.Collections.PhoneCodeCollection(phoneCodeCollection.filterAvailable());
+        this.form.model.phoneCodeCollection = this.phoneCodeCollection;
         this.phoneCodeCollectionView = new UM.Views.PhoneCodeCollection({ collection: this.phoneCodeCollection});
         this.$el.prepend(this.phoneCodeCollectionView.el);
 
@@ -57,7 +58,7 @@ module.exports = Backbone.View.extend({
         /* убираем ошибку  */
         this.input
             .closest('.um-form-group').removeClass('um-has-error')
-            .children('.um-tooltip').remove();
+            .find('.um-tooltip').remove();
 
         var val = this.input.val().replace(/[^0-9]/g, '');
 
@@ -73,14 +74,15 @@ module.exports = Backbone.View.extend({
         var isFound = false;
 
         /* поиск введенного кода в коллекции */
+        var inputCode;
         for(var i = 3; i > 0; i--) {
-            var inputCode = val.substr(0, i);
+            inputCode = val.substr(0, i);
 
             var model = this.phoneCodeCollection.find(function(model) {
                 return model.get('code') == inputCode;
             });
 
-            if (model) {
+            if (model && model.get('available') !== false) {
                 model.active();
                 this.setMask();
                 isFound = true;
@@ -94,9 +96,11 @@ module.exports = Backbone.View.extend({
             var $group = this.input.closest('.um-form-group');
             $group.addClass('um-has-error');
 
-            var tooltip = new UM.Views.Tooltip();
-            //tooltip.$el.html('Телефонные номера с заданным кодом не поддерживаются');
-            $group.append(tooltip.el);
+            if (document.inputEncoding == "UTF-8") { // обход проблемы с кодировкой
+                var tooltip = new UM.Views.Tooltip();
+                tooltip.$el.html('Телефонные номера с заданным кодом не поддерживаются');
+                $group.find('.um-form-control').after(tooltip.el);
+            }
 
             console.warn('Телефонные номера с заданным кодом не поддерживаются')
         }

@@ -29,6 +29,7 @@ $(document).ready(function() {
             img: '/public/img/flags/by.gif'
         },
         {
+            available: false,
             isoCode: 'UA',
             name: 'Украина',
             code: '380',

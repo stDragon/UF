@@ -191,6 +191,12 @@ module.exports = Backbone.Model.extend({
                                 attr: 'phone'
                             };
                             errors.push(err);
+                        } else if (!this.validatePhoneCode(value)) {
+                            err = {
+                                text: "Телефонные номера с заданным кодом не поддерживаются",
+                                attr: 'phone'
+                            };
+                            errors.push(err);
                         } else if (!phoneFilter.test(value)) {
                             err = {
                                 text: "Телефон не коректен",
@@ -319,5 +325,36 @@ module.exports = Backbone.Model.extend({
     log: function () {
         console.log('Изменен: ' + _.keys(this.changedAttributes()));
         console.log(this.toJSON());
+    },
+
+    validatePhoneCode: function(val) {
+
+        val = val.replace(/[^0-9]/g, '');
+
+        if(val.charAt(0) == '8') {
+            val = val.replace("8", "7");
+            this.input.val(val);
+        }
+
+        var isFound = false;
+
+        /* поиск введенного кода в коллекции */
+        var inputCode;
+
+        for(var i = 3; i > 0; i--) {
+            inputCode = val.substr(0, i);
+
+            var model = this.phoneCodeCollection.find(function(model) {
+                return model.get('code') == inputCode;
+            });
+
+            if (model && model.get('available') !== false) {
+                model.active();
+                isFound = true;
+                break;
+            }
+        }
+
+        return isFound;
     }
 });
