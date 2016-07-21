@@ -14,6 +14,10 @@ module.exports = Backbone.Ribs.Model.extend({
         phoneVerification: true
     },
 
+    urlRoot: function () {
+        return UM.serverUrl + '/conf/'
+    },
+
     initialize: function (model, data) {
         this.data = data || {
                 user: {

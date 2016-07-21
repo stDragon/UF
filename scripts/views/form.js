@@ -1,11 +1,11 @@
 module.exports = Backbone.Ribs.View.extend({
     events: {
         'focus .um-dropdown-content + input': 'showOptionList',
-        'change input': 'setAttr',
-        'change textarea': 'setAttr',
+        'change input': 'setAttrs',
+        'change textarea': 'setAttrs',
         'change input:checkbox': 'changed',
         'click .um-static-select li': 'chooseValue',
-        'input #umName' : 'parseName',
+        'input [name="name"]' : 'parseName',
         'submit': 'save'
     },
 
@@ -99,8 +99,8 @@ module.exports = Backbone.Ribs.View.extend({
             surname = val.substr(0, i),
             name = val.substr((i + 1), val.length);
 
-        $('#umSurname').val(surname);
-        $('#umFirstname').val(name);
+        this.$el.find('[name=surname]').val(surname);
+        this.$el.find('[name=firstName]').val(name);
         this.setAttrs();
     },
 

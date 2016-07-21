@@ -11,16 +11,16 @@ module.exports = UM.Views.Form.extend({
     events: {
         'focus input': 'showOptionList',
         //'keyup [name="city"]': 'search',
-        'input [name="phone"]': 'setAttr',
-        'change input': 'setAttr',
-        'change textarea': 'setAttr',
+        'keyup [name="phone"]': 'setAttrs',
+        'change input': 'setAttrs',
+        'change textarea': 'setAttrs',
         'blur': 'preValidation',
         'click .um-icon-add-location': 'showYaMap',
         'change input:checkbox': 'changed',
         'click .um-static-select li': 'chooseValue',
         'submit': 'save',
         'click': 'click',
-        'input #umName' : 'parseName'
+        'input [name="name"]' : 'parseName'
     },
 
     click: function(e) {
