@@ -186,6 +186,13 @@ module.exports = UM.Views.Form.extend({
             if (UM.configsCollection.get(that.model.get('configId')).get('style') === 'um-edim-doma-promo') {
                 that.$el.find('.um-form-group-wishes').appendTo(that.$el.find('.um-login'));
             }
+
+            /* Костыль для кридитной формы твой дом */
+            if (UM.configsCollection.get(that.model.get('configId')).get('style') === 'um-your-house'
+                && UM.configsCollection.get(that.model.get('configId')).get('formType') === 'credit') {
+                that.$el.find('.um-form-group-firstname, .um-form-group-email, .um-form-group-phone ').wrapAll("<div class='um-form-col'></div>");
+                that.$el.find('.um-form-group-wishes , .um-form-group-personal-data').wrapAll("<div class='um-form-col'></div>");
+            }
         });
         return this;
     },

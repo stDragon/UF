@@ -1,0 +1,180 @@
+@import 'mixins';
+@import 'reset';
+@import 'base';
+@import 'tooltip';
+@import 'modal';
+
+.um-btn.um-your-house{
+  background-color: orange;
+  border: none;
+  color: white;
+  padding: 10px;
+  font-size: 14px;
+  letter-spacing: 1px;
+  line-height: normal;
+  font: normal 14px / 20px "Helvetica Neue", Helvetica, Arial, sans-serif;
+  &:disabled {
+    //background-color: rgba(32,165,85,.3);
+  }
+}
+
+.um.um-your-house {
+  max-width: 525px;
+  padding: 20px 30px;
+  color: #999;
+  font: normal 14px / 20px "Helvetica Neue", Helvetica, Arial, sans-serif;
+  background-color: rgba(255,255,255,0.6);
+  .um-form {
+    @include um-clearfix();
+    position: relative;
+  }
+  fieldset{
+    margin: 0 -5px;
+  }
+  legend {
+    width: 100%;
+    padding: 0 5px;
+    color: #444444;
+    .um-title,
+    .um-title-2 {
+      margin-bottom: 10px;
+      font-size: 22px;
+      line-height: 30px;
+      text-transform: none;
+    }
+  }
+  .um-form-group {
+    display: block;
+    margin-bottom: 10px;
+    .um-field-wrap {
+      display: block;
+    }
+    label {
+      font-size: 12px;
+    }
+    &.um-form-group-wishes {
+      width: 100%;
+      display: block;
+      background: #fff;
+      label {
+        display: block;
+        cursor: pointer;
+        vertical-align: top;
+        &::before {
+          content: "";
+          display: inline-block;
+          width: 12px;
+          height: 12px;
+          margin-right: 3px;
+          background-image: url("data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTYuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgd2lkdGg9IjEycHgiIGhlaWdodD0iMTJweCIgdmlld0JveD0iMCAwIDQzOC41MzMgNDM4LjUzMyIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgNDM4LjUzMyA0MzguNTMzOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+CjxnPgoJPHBhdGggZD0iTTQwOS4xMzMsMTA5LjIwM2MtMTkuNjA4LTMzLjU5Mi00Ni4yMDUtNjAuMTg5LTc5Ljc5OC03OS43OTZDMjk1LjczNiw5LjgwMSwyNTkuMDU4LDAsMjE5LjI3MywwICAgYy0zOS43ODEsMC03Ni40Nyw5LjgwMS0xMTAuMDYzLDI5LjQwN2MtMzMuNTk1LDE5LjYwNC02MC4xOTIsNDYuMjAxLTc5LjgsNzkuNzk2QzkuODAxLDE0Mi44LDAsMTc5LjQ4OSwwLDIxOS4yNjcgICBjMCwzOS43OCw5LjgwNCw3Ni40NjMsMjkuNDA3LDExMC4wNjJjMTkuNjA3LDMzLjU5Miw0Ni4yMDQsNjAuMTg5LDc5Ljc5OSw3OS43OThjMzMuNTk3LDE5LjYwNSw3MC4yODMsMjkuNDA3LDExMC4wNjMsMjkuNDA3ICAgczc2LjQ3LTkuODAyLDExMC4wNjUtMjkuNDA3YzMzLjU5My0xOS42MDIsNjAuMTg5LTQ2LjIwNiw3OS43OTUtNzkuNzk4YzE5LjYwMy0zMy41OTYsMjkuNDAzLTcwLjI4NCwyOS40MDMtMTEwLjA2MiAgIEM0MzguNTMzLDE3OS40ODUsNDI4LjczMiwxNDIuNzk1LDQwOS4xMzMsMTA5LjIwM3ogTTM0Ny4xNzksMjM3LjUzOWMwLDQuOTQ4LTEuODExLDkuMjM2LTUuNDI4LDEyLjg0NyAgIGMtMy42MiwzLjYxNC03LjkwMSw1LjQyOC0xMi44NDcsNS40MjhoLTczLjA5MXY3My4wODRjMCw0Ljk0OC0xLjgxMyw5LjIzMi01LjQyOCwxMi44NTRjLTMuNjEzLDMuNjEzLTcuODk3LDUuNDIxLTEyLjg0Nyw1LjQyMSAgIGgtMzYuNTQzYy00Ljk0OCwwLTkuMjMxLTEuODA4LTEyLjg0Ny01LjQyMWMtMy42MTctMy42MjEtNS40MjYtNy45MDUtNS40MjYtMTIuODU0di03My4wODRoLTczLjA4OSAgIGMtNC45NDgsMC05LjIyOS0xLjgxMy0xMi44NDctNS40MjhjLTMuNjE2LTMuNjEtNS40MjQtNy44OTgtNS40MjQtMTIuODQ3di0zNi41NDdjMC00Ljk0OCwxLjgwOS05LjIzMSw1LjQyNC0xMi44NDcgICBjMy42MTctMy42MTcsNy44OTgtNS40MjYsMTIuODQ3LTUuNDI2aDczLjA5MnYtNzMuMDg5YzAtNC45NDksMS44MDktOS4yMjksNS40MjYtMTIuODQ3YzMuNjE2LTMuNjE2LDcuODk4LTUuNDI0LDEyLjg0Ny01LjQyNCAgIGgzNi41NDdjNC45NDgsMCw5LjIzMywxLjgwOSwxMi44NDcsNS40MjRjMy42MTQsMy42MTcsNS40MjgsNy44OTgsNS40MjgsMTIuODQ3djczLjA4OWg3My4wODRjNC45NDgsMCw5LjIzMiwxLjgwOSwxMi44NDcsNS40MjYgICBjMy42MTcsMy42MTUsNS40MjgsNy44OTgsNS40MjgsMTIuODQ3VjIzNy41Mzl6IiBmaWxsPSIjOTk5Ii8+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPC9zdmc+Cg==");
+          -webkit-transform: scale(0.9);
+          -moz-transform: scale(0.9);
+          -ms-transform: scale(0.9);
+          -o-transform: scale(0.9);
+          transform: scale(0.9);
+
+        }
+      }
+      .um-form-control {
+        height: 90px;
+      }
+    }
+    &:not(.um-form-group-wishes) {
+      label {
+        &:not(.um-label-checkbox) {
+          @include um-sr-only();
+        }
+      }
+    }
+  }
+  .um-label-checkbox{
+    line-height: 1.4;
+  }
+  .um-select {
+    .um-field-wrap::before{
+      z-index: auto;
+    }
+    &.um-select-left .um-field-wrap::before{
+      display: none;
+    }
+  }
+  .um-form-control {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    color: #999;
+    background-color: #fff;
+  }
+  .um-dropdown-content {
+    border: #a1c3f9 1px solid;
+  }
+  .um-btn {
+    background-color: orange;
+    border: none;
+    color: white;
+    padding: 10px;
+    font-size: 14px;
+    letter-spacing: 1px;
+    line-height: normal;
+    &[type="submit"] {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+    }
+  }
+
+  &.um-calculation {
+    float: left;
+    border: 1px solid #38b14a;
+    .um-form-group {
+      padding: 0 5px;
+      &.um-form-group-wishes {
+        margin-top: -10px;
+        .um-field-wrap {
+          position: absolute;
+          left: 5px;
+          right: 5px;
+          bottom: 100%;
+        }
+      }
+      &:not(.um-form-group-wishes) {
+        width: 50%;
+      }
+    }
+  }
+  &.um-credit {
+    max-width: 525px;
+    padding: 25px;
+
+    legend {
+      color: #ff9800;
+    }
+    .um-form-col {
+      width: 50%;
+      float: left;
+      padding: 0 5px;
+      .um-form-group{
+        &:last-child {
+          margin-bottom: 0;
+        }
+        &.um-form-group-wishes {
+          .um-form-control {
+            height: 120px;
+          }
+        }
+        &.um-form-group-personal-data {
+          margin-bottom: 40px;
+        }
+      }
+    }
+    .um-form-group {
+      min-height: 40px;
+      &.um-form-group-personal-data {
+        margin-bottom: 50px;
+      }
+    }
+    .um-btn {
+      background-color: #38B14A;
+    }
+  }
+}

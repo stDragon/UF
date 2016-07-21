@@ -14,7 +14,9 @@ module.exports = Backbone.Ribs.View.extend({
 
     initialize: function () {
 
-        this.$el.addClass(this.model.get('style'));
+        this.$el
+            .addClass(this.model.get('style'))
+            .addClass('um-' + this.model.get('formType'));
 
         if (this.model.get('class')) this.$el.addClass(this.model.get('class'));
 
