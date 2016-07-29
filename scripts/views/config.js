@@ -40,8 +40,6 @@ module.exports = Backbone.Ribs.View.extend({
     initBody: function () {
         var $body = $('body');
 
-        this.page = new UM.Views.Page({model: this.model});
-
         if (this.model.get('initType') == 'button') {
 
             if (this.model.get('initPosition') == 'fixed') {
@@ -52,6 +50,7 @@ module.exports = Backbone.Ribs.View.extend({
 
             UM.buttons[this.model.id] = this.button;
 
+            this.page = new UM.Views.Page({model: this.model});
             $body.append(this.page.el);
             this.page.hide();
 

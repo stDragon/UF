@@ -64,7 +64,10 @@ module.exports = Backbone.Ribs.View.extend({
             var temp = _.template(template);
             var html = $(temp(that.model.toJSON()));
             that.$el.html(html);
-            that.$el.children('.um-body').html(that.showStartForm())
+            that.$el.children('.um-body').html(that.showStartForm());
+            setTimeout(function(){
+                UM.vent.trigger('form.added', that.model.id);
+            }, 1000);
         });
         return this;
     },
