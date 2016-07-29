@@ -57,12 +57,15 @@ module.exports = Backbone.Ribs.View.extend({
         } else if (this.model.get('initType') == 'form') {
 
             if (this.model.get('initPosition') == 'fixed') {
+                this.page = new UM.Views.Page({model: this.model});
                 $body.append(this.page.el);
             } else if (this.model.get('initPosition') == 'static') {
                 /** @TODO обратная совместимость с вставлением формы по айдишнику*/
                 var $el = $('#um-form-init');
-                if ($el.length)
+                if ($el.length) {
+                    this.page = new UM.Views.Page({model: this.model});
                     $el.html(this.page.el);
+                }
                 else {
                     this.page = [];
                     var that = this;
