@@ -56,6 +56,8 @@ module.exports = Backbone.Ribs.View.extend({
         }, this);
 
         this.listenTo(this.model, 'destroy', this.unrender);
+
+        this.keyhandler();
     },
 
     render: function () {
@@ -110,6 +112,39 @@ module.exports = Backbone.Ribs.View.extend({
             this.initLoader();
         }
         this.laoder.hide();
+    },
+
+    showInfoConsole: function() {
+        var version = "1.0";
+        window.cpd = console.info('Версия универсального модуля - "%s". Сервер хранения данных - "%s". Тип сервера - "%s". ID используемого конфига - "%s"', version, UM.conf.server.url, UM.conf.server.type, this.model.id);
+    },
+
+    showInfoModal: function() {
+        if (!this.modalInfoView) {
+            var version = "1.0";
+            var text = '<p>Версия универсального модуля - "'+version+'".</p>' +
+                '<p>Сервер хранения данных - "'+UM.conf.server.url+'".</p>' +
+                '<p>Тип сервера - "'+UM.conf.server.type+'".</p>' +
+                '<p>ID используемого конфига - "'+this.model.id+'"</p>';
+            this.modalInfo = new UM.Models.Modal({'content': text, class: 'um-modal-info'});
+            this.modalInfoView = new UM.Views.Modal({model: this.modalInfo});
+            $('body').append(this.modalInfoView.el);
+        }
+        this.modalInfoView.show();
+    },
+
+    keyhandler: function () {
+        var that = this;
+        document.onkeydown = function(e){
+            e = e || window.event;
+            if(e.ctrlKey && e.altKey && e.keyCode == 77){ //ctrl+alt+m
+                that.showInfoModal();
+                return false;
+            } else if(e.ctrlKey && e.keyCode == 77){ //ctrl+m
+                that.showInfoConsole();
+                return false;
+            }
+        }
     },
 
     /**

@@ -13,6 +13,7 @@ module.exports = Backbone.View.extend({
 
     initialize: function () {
         this.render();
+        if (this.model.get('class')) this.$el.addClass(this.model.get('class'));
     },
 
     render: function () {
