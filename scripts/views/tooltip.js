@@ -7,8 +7,8 @@ module.exports = Backbone.View.extend({
     tagName: 'span',
     className: 'um-tooltip bottom',
 
-    initialize: function (text) {
-        this.render(text);
+    initialize: function (options) {
+        this.render(options.text);
     },
 
     render: function (text) {

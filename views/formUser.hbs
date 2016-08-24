@@ -22,14 +22,14 @@
         </div>
     <%}%>
     <%if(formConfig.firstName.show || (typeof formConfig.firstName.combine !== 'undefined' && formConfig.firstName.combine)){%>
-        <div class="um-form-group um-form-group-firstname
+    <div class="um-form-group um-form-group-firstname
         <%= formConfig.firstName.required ? ' um-form-group-required' : ''%>
         <%= (typeof formConfig.firstName.combine !== 'undefined' && formConfig.firstName.combine) ? 'um-hidden' : ''%>">
-            <label for="umFirstname"><%= formConfig.firstName.label %></label>
-            <input type="text" name="firstName" class="um-form-control" id="umFirstname"
-            placeholder="<%= formConfig.firstName.placeholder %>" value="<%= firstName %>"
-             <%= formConfig.firstName.required ? 'required' : ''%>>
-        </div>
+        <label for="umFirstname"><%= formConfig.firstName.label %></label>
+        <input type="text" name="firstName" class="um-form-control" id="umFirstname"
+               placeholder="<%= formConfig.firstName.placeholder %>" value="<%= firstName %>"
+        <%= formConfig.firstName.required ? 'required' : ''%>>
+    </div>
     <%}%>
     <%if(formConfig.email.show){%>
         <div class="um-form-group um-form-group-email<%= formConfig.email.required ? ' um-form-group-required' : ''%>">
@@ -155,7 +155,7 @@
         <%= (typeof formConfig.wishes.wrap !== 'undefined' && formConfig.wishes.wrap) ? 'um-wrapper-hidden' : ''%>">
             <label for="umWishes"><%= formConfig.wishes.label %></label>
             <div class="um-select-wrap um-field-wrap<%= (typeof formConfig.wishes.wrap !== 'undefined' && formConfig.wishes.wrap) ? ' um-field um-hidden' : ''%>">
-            <textarea id="umWishes" type="text" name="wishes" class="um-form-control" placeholder="<%= formConfig.wishes.placeholder %>"><%= wishes %></textarea>
+                <textarea id="umWishes" type="text" name="wishes" class="um-form-control" placeholder="<%= formConfig.wishes.placeholder %>"><%= wishes %></textarea>
             </div>
         </div>
     <%}%>

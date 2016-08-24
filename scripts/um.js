@@ -30,6 +30,7 @@ window.UM = UM;
 
 UM.Models.Logger = require('./models/logger.js');
 UM.Models.Config = require('./models/config.js');
+UM.Models.Option = require('./models/option.js');
 UM.Models.City = require('./models/city.js');
 UM.Models.User = require('./models/user.js');
 UM.Models.Phone = require('./models/phone.js');
@@ -39,6 +40,7 @@ UM.Models.Kitchen = require('./models/kitchen.js');
 UM.Models.PhoneCode = require('./models/phoneCode.js');
 
 UM.Collections.Configs = require('./collections/configs.js');
+UM.Collections.Options = require('./collections/options.js');
 UM.Collections.Citys = require('./collections/citys.js');
 UM.Collections.Shops = require('./collections/shops.js');
 UM.Collections.Kitchens = require('./collections/kitchens.js');
@@ -106,6 +108,39 @@ UM.codes = [
         code: '996',
         mask: '999-999-999',
         img: UM.conf.server.url + '/public/img/flags/kg.gif'
+    }
+];
+UM.pref = [
+    {
+        name: 'Мобильный'
+    },
+    {
+        name: 'Email'
+    },
+    {
+        name: 'Городской'
+    }
+];
+UM.product = [
+    {
+        name: 'Кухня'
+    },
+    {
+        name: 'Иное'
+    }
+];
+UM.pay = [
+    {
+        name: '30%'
+    },
+    {
+        name: '40%'
+    },
+    {
+        name: '50%'
+    },
+    {
+        name: '60%'
     }
 ];
 

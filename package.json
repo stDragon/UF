@@ -1,6 +1,6 @@
 {
   "name": "um",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "",
   "main": "app.js",
   "dependencies": {
@@ -30,6 +30,7 @@
   },
   "scripts": {
     "start-dev": "gulp",
+    "start-pre-prod": "PORT=3000 PORTSSL=3001 node node_modules/gulp/bin/gulp.js",
     "start-prod": "PORT=3000 PORTSSL=3001 gulp",
     "scripts": "gulp scripts",
     "styles": "gulp styles",

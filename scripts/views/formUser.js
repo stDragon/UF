@@ -6,7 +6,7 @@ module.exports = UM.Views.Form.extend({
 
     tagName: 'form',
     className: 'um-form',
-    template: 'formUser',
+    template: 'form',
 
     events: {
         'focus input': 'showOptionList',
@@ -41,6 +41,18 @@ module.exports = UM.Views.Form.extend({
 
         if (this.model.kitchenCollection) {
             this.kitchenCollectionView = new UM.Views.Kitchens({collection: this.model.kitchenCollection});
+        }
+
+        if (this.model.prefCollection) {
+            this.prefCollectionView = new UM.Views.InputSelect({collection: this.model.prefCollection});
+        }
+
+        if (this.model.productCollection) {
+            this.productCollectionView = new UM.Views.InputSelect({collection: this.model.productCollection});
+        }
+
+        if (this.model.payCollection) {
+            this.payCollectionView = new UM.Views.InputSelect({collection: this.model.payCollection});
         }
 
         this.render();
@@ -152,10 +164,13 @@ module.exports = UM.Views.Form.extend({
     render: function () {
         var that = this;
         UM.TemplateManager.get(this.template, function (template) {
-            var temp = _.template(template);
-            var data = _.extend(that.model.toJSON(), UM.configsCollection.get(that.model.get('configId')).toJSON());
-            var html = $(temp(data));
+            var data = {
+                value: that.model.toJSON(),
+                options: _.sortBy(that.model.options, function(opt){ return opt.sort; }) // сортировка опций
+            };
+            var html = _.template(template, data);
             that.$el.html(html);
+
             if (that.cityCollectionView) {
                 that.addSelectList('city', that.cityCollectionView);
                 if(that.model.shopCollection)
@@ -163,6 +178,15 @@ module.exports = UM.Views.Form.extend({
             }
             if (that.kitchenCollectionView) {
                 that.addSelectList('kitchen', that.kitchenCollectionView);
+            }
+            if (that.prefCollectionView) {
+                that.addSelectList('pref', that.prefCollectionView);
+            }
+            if (that.productCollectionView) {
+                that.addSelectList('product', that.productCollectionView);
+            }
+            if (that.payCollectionView) {
+                that.addSelectList('pay', that.payCollectionView);
             }
             that.initPhoneMask();
             that.preValidation();
@@ -209,6 +233,21 @@ module.exports = UM.Views.Form.extend({
             else
                 this.disabledSubmit();
         }
+    },
+
+    /**
+     * При объедининеии полей Фамилия и Имя при вводе значения с клавиатуры разделяет значения имени и фамилии
+     */
+    parseName: function(e) {
+        var val = ($(e.target).val()).trim(),
+            id = $(e.target).attr('id'),
+            i = val.trim().indexOf(' '),
+            surname = val.substr(0, i),
+            name = val.substr((i + 1), val.length);
+
+        this.$el.find('[name=surname]').val(surname);
+        this.$el.find('[name=firstName]').val(name);
+        this.setAttrs();
     },
 
     /**

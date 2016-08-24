@@ -243,12 +243,17 @@ $(document).ready(function() {
 
         defaults: {
             header: {
+                name: 'header',
+                sort: 1,
+                type: 'html',
                 label: 'Заголовок',
                 show: false,
                 value1: 'Легко!',
                 value2: 'Бесплатный дизайн-проект в&nbsp;три&nbsp;клика'
             },
             surname: {
+                name: 'surname',
+                sort: 2,
                 type: 'text',
                 label: 'Фамилия',
                 placeholder: 'Ваша фамилия',
@@ -256,14 +261,19 @@ $(document).ready(function() {
                 required: false
             },
             firstName: {
+                name: 'firstName',
+                sort: 3,
                 type: 'text',
                 label: 'Имя',
                 placeholder: 'Ваше имя',
                 show: true,
                 required: false,
+                combineFrom: 'surname',
                 combine: false
             },
             email: {
+                name: 'email',
+                sort: 4,
                 type: 'email',
                 label: 'E-mail',
                 placeholder: 'Ваш e-mail',
@@ -271,6 +281,8 @@ $(document).ready(function() {
                 required: false
             },
             phone: {
+                name: 'phone',
+                sort: 5,
                 type: 'tel',
                 label: 'Телефон',
                 placeholder: 'Ваш номер телефона',
@@ -281,6 +293,8 @@ $(document).ready(function() {
                 available: '["RU"]'
             },
             adphone: {
+                name: 'adphone',
+                sort: 6,
                 type: 'text',
                 label: 'Дополнительные телефоны',
                 placeholder: 'Дополнительные телефоны',
@@ -288,6 +302,8 @@ $(document).ready(function() {
                 required: false
             },
             city: {
+                name: 'city',
+                sort: 7,
                 type: 'text',
                 label: 'Город',
                 placeholder: 'Выберите город',
@@ -295,6 +311,8 @@ $(document).ready(function() {
                 required: false
             },
             address: {
+                name: 'address',
+                sort: 8,
                 type: 'text',
                 label: 'Адрес',
                 placeholder: 'Введите адрес',
@@ -302,15 +320,20 @@ $(document).ready(function() {
                 required: false
             },
             shop: {
+                name: 'shop',
+                sort: 9,
                 type: 'text',
                 label: 'Студия',
                 placeholder: 'Выберите студию',
                 show: false,
+                dependence: 'city',
                 mapShow: false,
                 required: false,
                 wrap: false
             },
             pref: {
+                name: 'pref',
+                sort: 10,
                 type: 'text',
                 label: 'Предпочтительный способ связи',
                 placeholder: 'Предпочтительный способ связи',
@@ -318,6 +341,8 @@ $(document).ready(function() {
                 required: false
             },
             product: {
+                name: 'product',
+                sort: 11,
                 type: 'text',
                 label: 'Товар',
                 placeholder: 'Товар',
@@ -325,6 +350,8 @@ $(document).ready(function() {
                 required: true
             },
             price: {
+                sort: 12,
+                name: 'price',
                 type: 'number',
                 label: 'Стоимость',
                 placeholder: 'Стоимость',
@@ -332,6 +359,8 @@ $(document).ready(function() {
                 required: true
             },
             pay: {
+                name: 'pay',
+                sort: 13,
                 type: 'text',
                 label: 'Первый взнос',
                 placeholder: 'Первый взнос',
@@ -339,6 +368,8 @@ $(document).ready(function() {
                 required: true
             },
             term: {
+                name: 'term',
+                sort: 14,
                 type: 'number',
                 label: 'Желаемый срок кредита (мес.)',
                 placeholder: 'Желаемый срок кредита (мес.)',
@@ -346,6 +377,8 @@ $(document).ready(function() {
                 required: true
             },
             kitchen: {
+                name: 'kitchen',
+                sort: 15,
                 type: 'text',
                 label: 'Модель кухни',
                 placeholder: 'Выберите модель кухни',
@@ -353,6 +386,8 @@ $(document).ready(function() {
                 required: false
             },
             personalData: {
+                name: 'personalData',
+                sort: 17,
                 type: 'checkbox',
                 label: 'Согласен с обработкой персональных данных',
                 show: true,
@@ -366,6 +401,8 @@ $(document).ready(function() {
                 }
             },
             wishes: {
+                name: 'wishes',
+                sort: 16,
                 type: 'textarea',
                 label: 'Пожелания',
                 placeholder: 'Пожелания',
@@ -374,8 +411,11 @@ $(document).ready(function() {
                 wrap: false
             },
             submit: {
+                name: 'submit',
+                sort: 18,
                 type: 'submit',
                 label: 'Кнопка отправки',
+                show: true,
                 text: 'Отправить заявку'
             }
         },

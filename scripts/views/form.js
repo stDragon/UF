@@ -1,11 +1,13 @@
 module.exports = Backbone.Ribs.View.extend({
+
+    template: 'form',
+
     events: {
         'focus .um-dropdown-content + input': 'showOptionList',
         'change input': 'setAttrs',
         'change textarea': 'setAttrs',
         'change input:checkbox': 'changed',
         'click .um-static-select li': 'chooseValue',
-        'input [name="name"]' : 'parseName',
         'submit': 'save'
     },
 
@@ -90,21 +92,6 @@ module.exports = Backbone.Ribs.View.extend({
     },
 
     /**
-     * При объедининеии полей Фамилия и Имя при вводе значения с клавиатуры разделяет значения имени и фамилии
-     */
-    parseName: function(e) {
-        var val = ($(e.target).val()).trim(),
-            id = $(e.target).attr('id'),
-            i = val.trim().indexOf(' '),
-            surname = val.substr(0, i),
-            name = val.substr((i + 1), val.length);
-
-        this.$el.find('[name=surname]').val(surname);
-        this.$el.find('[name=firstName]').val(name);
-        this.setAttrs();
-    },
-
-    /**
      * Сохраняет все поля на сервер.
      */
     save: function (e) {
@@ -138,13 +125,13 @@ module.exports = Backbone.Ribs.View.extend({
      * Кнопка отправки становится неактивной
      */
     disabledSubmit: function () {
-        this.$el.find('button:submit')[0].disabled = true;
+        this.$el.find('button:submit').prop('disabled', true);
     },
     /**
      * Кнопка отправки становится активной
      */
     enabledSubmit: function () {
-        this.$el.find('button:submit')[0].disabled = false;
+        this.$el.find('button:submit').prop('disabled', false) ;
     },
 
     valid: function (attr) {
@@ -170,14 +157,14 @@ module.exports = Backbone.Ribs.View.extend({
         this.$el.find('input')
             .closest('.um-form-group').removeClass('um-has-error')
             .find('.um-tooltip').remove();
+
         _.each(errors, function (error) {
             var $el = this.$el.find('[name=' + error.attr + ']'),
                 $group = $el.closest('.um-form-group');
 
             $group.addClass('um-has-error').removeClass('um-has-success');
             if (document.inputEncoding == "UTF-8") {
-                var tooltip = new UM.Views.Tooltip();
-                tooltip.$el.html(error.text);
+                var tooltip = new UM.Views.Tooltip({text: error.text});
                 $group.find('.um-form-control').after(tooltip.el);
             }
         }, this);

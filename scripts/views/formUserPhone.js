@@ -36,8 +36,7 @@ module.exports = Backbone.View.extend({
     render: function () {
         var that = this;
         UM.TemplateManager.get(this.template, function (template) {
-            var temp = _.template(template);
-            var html = $(temp(that.model.toJSON()));
+            var html = _.template(template, that.model.toJSON());
             that.$el.html(html);
         });
         return this;
@@ -51,11 +50,11 @@ module.exports = Backbone.View.extend({
     },
 
     disabledSubmit: function () {
-        this.$el.find('button:submit')[0].disabled = true;
+        this.$el.find('button:submit').prop('disabled', true);
     },
 
     enabledSubmit: function () {
-        this.$el.find('button:submit')[0].disabled = false;
+        this.$el.find('button:submit').prop('disabled', false);
     },
 
     valid: function () {
@@ -73,8 +72,7 @@ module.exports = Backbone.View.extend({
                 $group = $el.closest('.um-form-group');
 
             $group.addClass('um-has-error');
-            var tooltip = new UM.Views.Tooltip();
-            tooltip.$el.html(error.text);
+            var tooltip = new UM.Views.Tooltip({text: error.text});
             $group.append(tooltip.el);
         }, this);
     },

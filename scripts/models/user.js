@@ -103,6 +103,39 @@ module.exports = Backbone.Model.extend({
             });
         }
 
+        if (typeof options.pref !== 'undefined' && options.pref.show) {
+            this.prefCollection = new UM.Collections.Options(UM.pref, this.toJSON());
+
+            this.listenTo(this.prefCollection, 'change:active', function() {
+                var active = this.prefCollection.getActive();
+                if (active) {
+                    this.set('pref', active.name);
+                }
+            });
+        }
+
+        if (typeof options.product !== 'undefined' && options.product.show) {
+            this.productCollection = new UM.Collections.Options(UM.product, this.toJSON());
+
+            this.listenTo(this.productCollection, 'change:active', function() {
+                var active = this.productCollection.getActive();
+                if (active) {
+                    this.set('product', active.name);
+                }
+            });
+        }
+
+        if (typeof options.pay !== 'undefined' && options.pay.show) {
+            this.payCollection = new UM.Collections.Options(UM.pay, this.toJSON());
+
+            this.listenTo(this.payCollection, 'change:active', function() {
+                var active = this.payCollection.getActive();
+                if (active) {
+                    this.set('pay', active.name);
+                }
+            });
+        }
+
         this.on('change', function () {
             this.validate(this.changed);
         }, this);
