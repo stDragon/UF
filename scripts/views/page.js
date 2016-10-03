@@ -123,7 +123,7 @@ module.exports = Backbone.Ribs.View.extend({
         if (!this.modalInfoView) {
             var version = "1.0";
             var text = '<p>Версия универсального модуля - "'+version+'".</p>' +
-                '<p>Сервер хранения данных - "'+UM.conf.server.url+'".</p>' +
+                '<p>Сервер хранения данных - "<a href="'+UM.conf.server.url+'">'+UM.conf.server.url+'</a>".</p>' +
                 '<p>Тип сервера - "'+UM.conf.server.type+'".</p>' +
                 '<p>ID используемого конфига - "'+this.model.id+'"</p>';
             this.modalInfo = new UM.Models.Modal({'content': text, class: 'um-modal-info'});
