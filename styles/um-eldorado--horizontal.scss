@@ -60,7 +60,7 @@ $main-color: #e11a33;
       color: $main-color;
     }
     label:not(.um-label-checkbox) {
-      @include um-sr-only();
+      @include sr-only();
     }
     .um-login{
       margin-left: -5px;

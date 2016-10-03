@@ -139,7 +139,7 @@ $main-color: #d85349;
       }
       &:not(.um-form-group-city):not(.um-form-group-shop) {
         label:not(.um-label-checkbox) {
-          @include um-sr-only();
+          @include sr-only();
         }
       }
       &.um-form-group-phone {

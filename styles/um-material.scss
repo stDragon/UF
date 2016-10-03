@@ -96,7 +96,7 @@ $font-stack: Helvetica, sans-serif;
       margin-bottom: 5px;
       font-weight: 700;
       &:not(.um-label-checkbox) {
-        @include um-sr-only();
+        @include sr-only();
       }
     }
     .um-btn {

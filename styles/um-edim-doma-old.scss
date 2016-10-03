@@ -164,11 +164,11 @@
     color: black;
   }
   .um-form {
-    @include um-clearfix();
+    @include clearfix();
     .um-form-group:not(.um-form-group-wishes) {
       label {
         &:not(.um-label-checkbox) {
-          @include um-sr-only();
+          @include sr-only();
         }
       }
     }

@@ -25,7 +25,7 @@
   font: normal 14px / 20px "Helvetica Neue", Helvetica, Arial, sans-serif;
   background-color: rgba(255,255,255,0.6);
   .um-form {
-    @include um-clearfix();
+    @include clearfix();
     position: relative;
   }
   fieldset{
@@ -82,7 +82,7 @@
     &:not(.um-form-group-wishes) {
       label {
         &:not(.um-label-checkbox) {
-          @include um-sr-only();
+          @include sr-only();
         }
       }
     }
