@@ -1,0 +1,163 @@
+@import 'mixins';
+@import 'reset';
+@import 'base';
+@import 'tooltip';
+@import 'modal';
+@import 'dropdown-select';
+
+$color-red: #f45941;
+
+@mixin btn() {
+  -webkit-appearance: none;
+  margin: 0;
+  border: none;
+  overflow: visible;
+  font: inherit;
+  text-transform: none;
+  display: inline-block;
+  box-sizing: border-box;
+  vertical-align: middle;
+  text-decoration: none;
+  text-align: center;
+  font-family: 'Conv_als_schlange_sans_bold',Sans-Serif;
+  letter-spacing: .5px;
+  background: #eeeeee linear-gradient(to bottom, rgb(244, 188, 137) 10%,#f44b36 100%);
+  box-shadow: 0 4px 4px rgba(0,0,0,0.2);
+  border-radius: 75px;
+  color: #fff;
+  padding: 0 25px;
+  line-height: 40px;
+  min-height: 40px;
+  font-size: 15px;
+  text-shadow: 1px 1px 1px #ce5044;
+  -webkit-transition: .35s ease-in-out;
+  transition: .35s ease-in-out;
+  &:focus,
+  &:hover {
+    box-shadow: 0 2px 2px rgba(0,0,0,0.4), 0 5px 35px rgba(210, 83, 72, 0.5) inset;
+    text-shadow: 1px 1px 1px #ce5044, 0 0 25px rgb(241, 146, 87);
+  }
+}
+
+.um-btn.um-mia{
+  @include btn();
+}
+
+.um.um-mia{
+  padding: 15px;
+  color: #444;
+  background: #fff url('http://mia.um.la/css/demo-blur.jpg') 75% 25% no-repeat;
+  background-size: 290%;
+  max-width: 370px;
+  border-radius: 3px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(146, 86, 75, 0.16);
+
+  legend {
+    margin-bottom: 15px;
+  }
+
+  .um-title,
+  .um-title-2{
+    display: block;
+    font-family: 'Conv_als_schlange_sans_bold',Sans-Serif;
+    padding: 0 5px;
+    color: #d12323;
+    background-color: rgba(255,255,255,0.4);
+  }
+  .um-title{
+    font-size: 36px;
+    line-height: 42px;
+    margin-bottom: 3px;
+  }
+  .um-title-2{
+    font-size: 24px;
+    line-height: 30px;
+  }
+
+  .um-form {
+    label {
+      display: inline-block;
+      max-width: 100%;
+      margin-bottom: 5px;
+      font-weight: 700;
+      &:not(.um-label-checkbox) {
+        @include sr-only();
+      }
+    }
+  }
+
+  .um-phone-wrap,
+  .um-select-wrap{
+    display: block;
+  }
+
+  .um-form-group {
+    margin-bottom: 15px;
+    &.um-has-error {
+      .um-form-control {
+        border-color: $color-red;
+        box-shadow: none;
+      }
+    }
+    &.um-select.um-select-left .um-field-wrap::before{
+      display: none;
+    }
+    svg[class^='um-icon-'] {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 2.5em;
+      background-color: #fff;
+      line-height: 100%;
+      fill: #757575;
+      cursor: pointer;
+    }
+  }
+
+  .um-form-control {
+    display: block;
+    margin: 0;
+    height: 35px;
+    width: 100%;
+    padding: 4px 6px;
+    color: #444444;
+    -webkit-transition: all 0.2s linear;
+    -webkit-transition-property: border, background, color, box-shadow, padding;
+    transition: all 0.2s linear;
+    transition-property: border, background, color, box-shadow, padding;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 3px;
+    &:focus {
+      outline: none;
+    }
+  }
+  textarea.um-form-control {
+    border-color: transparent;
+    background: none;
+    resize: none;
+    &:focus{
+      border-color: #fff;
+      box-shadow: 0 0 4px rgba(0, 0, 0, 0.25);
+      background: rgba(255, 255, 255, 0.8);
+    }
+  }
+
+  .um-btn {
+    @include btn();
+  }
+
+  .um-label-text {
+    font-size: 11px;
+    font-weight: normal;
+    margin-top: -3px;
+    display: inherit;
+  }
+
+  .um-label-checkbox.um-checked::before {
+    border-right-color: $color-red;
+    border-bottom-color: $color-red;
+  }
+
+}
