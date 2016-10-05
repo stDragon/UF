@@ -44,6 +44,7 @@ $color-red: #f45941;
 }
 
 .um.um-mia{
+  font: normal 14px / 20px "Trebuchet MS", Verdana, Arial, sans-serif;
   padding: 15px;
   color: #444;
   background: #fff url('http://mia.um.la/css/demo-blur.jpg') 75% 25% no-repeat;
@@ -59,7 +60,8 @@ $color-red: #f45941;
 
   .um-title,
   .um-title-2{
-    display: block;
+    display: inline-block;
+    width: auto;
     font-family: 'Conv_als_schlange_sans_bold',Sans-Serif;
     padding: 0 5px;
     color: #d12323;
@@ -103,6 +105,11 @@ $color-red: #f45941;
     &.um-select.um-select-left .um-field-wrap::before{
       display: none;
     }
+    &.um-form-group-phone {
+      .um-dropdown-content {
+        display: none!important;// не показываем выпадающий список с кодами стран
+      }
+    }
     svg[class^='um-icon-'] {
       position: absolute;
       top: 0;
@@ -120,7 +127,7 @@ $color-red: #f45941;
     margin: 0;
     height: 35px;
     width: 100%;
-    padding: 4px 6px;
+    padding: 6px;
     color: #444444;
     -webkit-transition: all 0.2s linear;
     -webkit-transition-property: border, background, color, box-shadow, padding;
@@ -131,6 +138,13 @@ $color-red: #f45941;
     border-radius: 3px;
     &:focus {
       outline: none;
+      border-color: #ffffff;
+      background: #ffffff;
+      box-shadow: 0 0 4px rgba(0, 0, 0, 0.25);
+      &::-webkit-input-placeholder {color: transparent}
+      &::-moz-placeholder          {color: transparent}
+      &:-moz-placeholder           {color: transparent}
+      &:-ms-input-placeholder      {color: transparent}
     }
   }
   textarea.um-form-control {
@@ -160,4 +174,25 @@ $color-red: #f45941;
     border-bottom-color: $color-red;
   }
 
+  .um-dropdown-content {
+    will-change: width, height;
+    li {
+      color: #444444;
+      padding: 0 6px;
+      > span,
+      > a {
+        //color: #26a69a;
+        //font-size: 16px;
+        //line-height: 22px;
+
+      }
+      &.active{
+        background-color: transparent;
+      }
+      &:hover {
+        color: #fff;
+        background-color: #d12323;
+      }
+    }
+  }
 }
