@@ -4,14 +4,17 @@
 @import 'tooltip';
 @import 'modal';
 
-@import url(https://fonts.googleapis.com/css?family=Fira+Sans:400,400italic,700,700italic&subset=latin,cyrillic);
+@import url('https://fonts.googleapis.com/css?family=Fira+Sans:400,400italic,700,700italic&subset=latin,cyrillic');
+
+$color-btn: #20A555;
+$color-red: #a31632;
 
 .um-btn.um-edim-doma{
     display: block;
     margin: 0 auto;
     padding: 0 15px;
     line-height: 2.9em;
-    background: #20A555;
+    background: $color-btn;
     border-radius: 3em;
     color: #fff;
     font: normal 14px /20px "Conv_Chianti-Bold", "Fira Sans",sans-serif;
@@ -27,7 +30,7 @@
     font: normal 14px /20px "Conv_Chianti-Bold","Fira Sans",sans-serif;
     background: #f7ab65 url('../img/bg-wood1.jpg');
     background-size: cover;
-    box-shadow: 0px 0px 70px;
+    box-shadow: 0 0 70px;
     fieldset {
         margin-bottom: 20px;
     }
@@ -43,7 +46,7 @@
         font-size: 26px;
         line-height: 1;
         text-align: center;
-        text-shadow: 0px 0px 10px #333;
+        text-shadow: 0 0 10px #333;
         .um-title,
         .um-title-2 {
             display: block;
@@ -55,7 +58,7 @@
         display: inline-block;
         color: #fff;
         font: inherit;
-        text-shadow: 0px 0px 10px #666;
+        text-shadow: 0 0 10px #666;
         &.um-label-checkbox {
             border-color: #fff;
             padding-left: 18px;
@@ -84,12 +87,18 @@
             padding: 0 5px;
         }
         &:disabled {
-            background-color: rgba(32,165,85,.3);;
+            background-color: rgba(32,165,85,.3);
         }
     }
     .um-form-group {
         width: 100%;
         margin-bottom: 15px;
+        &.um-has-error {
+          .um-form-control {
+            border-color: $color-red;
+            box-shadow: none;
+          }
+        }
         &.um-form-group-city,
         &.um-form-group-shop,
         &.um-form-group-wishes {
@@ -136,7 +145,7 @@
                 right: 10px;
                 width: 3em;
                 height: 3em;
-                fill: #A21533;
+                fill: $color-red;
             }
         }
         &.um-form-group-personal-data {
@@ -185,10 +194,10 @@
     }
 
     .um-privacy {
-        color: #a31632;
+        color: $color-red;
         text-decoration: underline;
-        &::focus,
-        &::hover {
+        &:focus,
+        &:hover {
             color: #b14a4e;
             text-decoration: none;
         }

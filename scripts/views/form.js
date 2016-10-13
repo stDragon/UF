@@ -181,5 +181,16 @@ module.exports = Backbone.Ribs.View.extend({
                 $group.find('.um-form-control').after(tooltip.el);
             }
         }, this);
+    },
+    /**
+     * Формирует видемые данные формы в объект
+     * return {object} attr
+     */
+    getVisibleFormControl: function () {
+        var attr = {};
+        this.$el.find('.um-form-control:visible').each(function () {
+            attr[this.name] = $(this).val();
+        });
+        return attr;
     }
 });

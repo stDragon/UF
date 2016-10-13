@@ -343,7 +343,12 @@ module.exports = UM.Views.Form.extend({
 
         var that = this;
         this.$el.on('click', '.um-btn-next', function (e) {
-            that.nextStep();
+            /** Предварительная проверка на валидность видемых элементов формы */
+            var errors = that.model.validate(that.getVisibleFormControl());
+            if (errors)
+                that.invalid(that.model, errors);
+            else
+                that.nextStep();
         });
 
         this.$el.on('click', '.um-btn-prev', function (e) {
