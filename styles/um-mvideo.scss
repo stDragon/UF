@@ -81,6 +81,11 @@ $color-red: #ed1c24;
         &.um-select.um-select-left .um-field-wrap::before{
           display: none;
         }
+        &.um-form-group-phone.um-open-select {
+          .um-dropdown-content {
+            display:none;
+          }
+        }
     }
     .um-form-control {
         font-size: 1.4rem;
@@ -133,6 +138,9 @@ $color-red: #ed1c24;
             margin-bottom: .5rem;
 
             color: #333;
+            &:not(.um-label-checkbox) {
+                @include sr-only();
+            }
         }
     }
 }
