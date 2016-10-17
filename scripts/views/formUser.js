@@ -164,11 +164,13 @@ module.exports = UM.Views.Form.extend({
     render: function () {
         var that = this;
         UM.TemplateManager.get(this.template, function (template) {
+            var temp = _.template(template);
             var data = {
                 value: that.model.toJSON(),
                 options: _.sortBy(that.model.options, function(opt){ return opt.sort; }) // сортировка опций
             };
-            var html = _.template(template, data);
+
+            var html = temp(data);
             that.$el.html(html);
 
             if (that.cityCollectionView) {

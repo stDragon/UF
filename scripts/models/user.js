@@ -3,22 +3,6 @@
  *  */
 
 module.exports = Backbone.Model.extend({
-    defaults: {
-        surname: '',
-        firstName: '',
-        email: '',
-        phone: '',
-        adphone:'',
-        city: '',
-        shop: '',
-        pref: '',
-        product: '',
-        price: '',
-        pay: '',
-        term: '',
-        wishes: '',
-        personalData: true
-    },
 
     urlRoot: function () {
         return UM.serverUrl + '/client/'

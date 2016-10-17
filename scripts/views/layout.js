@@ -6,7 +6,7 @@ module.exports = Backbone.Ribs.View.extend({
 
     tagName: 'article',
     className: 'um',
-    template: 'pageTpl',
+    template: 'layoutTpl',
 
     events: {
         'click .um-close': 'hide'
