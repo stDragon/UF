@@ -18,16 +18,16 @@ module.exports = Backbone.View.extend({
         this.listenTo(this.model, 'change', this.setValue);
         this.listenTo(this.model, 'invalid', this.invalid);
         this.listenTo(this.model, 'request', function () {
-            UM.vent.trigger('page:showLoader', this.model.get('configId'));
+            UM.vent.trigger('layout:showLoader', this.model.get('configId'));
             this.valid();
             this.disabledSubmit();
         });
         this.listenTo(this.model, 'sync', function () {
-            UM.vent.trigger('page:hideLoader', this.model.get('configId'));
+            UM.vent.trigger('layout:hideLoader', this.model.get('configId'));
             this.confirm();
         });
         this.listenTo(this.model, 'error', function (obj, name, callback) {
-            UM.vent.trigger('page:hideLoader', this.model.get('configId'));
+            UM.vent.trigger('layout:hideLoader', this.model.get('configId'));
             this.enabledSubmit();
             this.error(obj, name, callback);
         }, this);
@@ -94,7 +94,7 @@ module.exports = Backbone.View.extend({
 
     confirm: function () {
         if (this.model.get('confirm')) {
-            UM.vent.trigger('page:showConfirm', this.model.get('configId'));
+            UM.vent.trigger('layout:showConfirm', this.model.get('configId'));
         } else {
             this.enabledSubmit();
             this.error(this.model);

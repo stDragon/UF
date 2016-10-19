@@ -16,7 +16,7 @@ module.exports = Backbone.Model.extend({
 
         if (options) {
             this.options = options;
-            this.set('personalData', options.personalData.checked);
+            //this.set('personalData', options.personalData.checked);
         }
 
         if (typeof options.city !== 'undefined' && options.city.show) {

@@ -13,7 +13,7 @@ var UM = window.UM || {
         Views: {},
         Router: {},
         option: [],
-        pages: [],
+        layouts: [],
         forms: [],
         buttons: [],
         serverUrl: conf.server.url + '/um/umdata',
@@ -50,7 +50,7 @@ UM.Views.Tooltip = require('./views/tooltip.js');
 UM.Views.Loader = require('./views/loader.js');
 UM.Views.Modal = require('./views/modal.js');
 UM.Views.Config = require('./views/config.js');
-UM.Views.Page = require('./views/layout.js');
+UM.Views.Layout = require('./views/layout.js');
 UM.Views.Button = require('./views/button.js');
 UM.Views.ButtonStatic = require('./views/buttonStatic.js');
 UM.Views.ButtonFixed = require('./views/buttonFixed.js');
@@ -110,39 +110,10 @@ UM.codes = [
         img: UM.conf.server.url + '/public/img/flags/kg.gif'
     }
 ];
-UM.pref = [
-    {
-        name: 'Мобильный'
-    },
-    {
-        name: 'Email'
-    },
-    {
-        name: 'Городской'
-    }
-];
-UM.product = [
-    {
-        name: 'Кухня'
-    },
-    {
-        name: 'Иное'
-    }
-];
-UM.pay = [
-    {
-        name: '30%'
-    },
-    {
-        name: '40%'
-    },
-    {
-        name: '50%'
-    },
-    {
-        name: '60%'
-    }
-];
+UM.pref = require('../pref.js');
+UM.product = require('../product.js');
+UM.pay = require('../pay.js');
+UM.formTypes = require('../formTypes.js');
 
 /**
  *  Запуск модуля

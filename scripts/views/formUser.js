@@ -62,21 +62,21 @@ module.exports = UM.Views.Form.extend({
         this.model.on('change', this.setValue, this);
         this.model.on('change:personalData', this.preValidation, this);
 
-        if (this.model.options.shop.show) {
-            this.createYaMapModal();
-            this.model.on('change:cityId', this.createSelectShop, this);
-        }
+        //if (this.model.options.shop.show) {
+        //    this.createYaMapModal();
+        //    this.model.on('change:cityId', this.createSelectShop, this);
+        //}
         this.listenTo(this.model, 'request', function () {
-            UM.vent.trigger('page:showLoader', this.model.get('configId'));
+            UM.vent.trigger('layout:showLoader', this.model.get('configId'));
             this.valid();
             this.disabledSubmit();
         });
         this.listenTo(this.model, 'sync', function () {
-            UM.vent.trigger('page:hideLoader', this.model.get('configId'));
-            UM.vent.trigger('page:showPhoneForm', this.model.get('configId'));
+            UM.vent.trigger('layout:hideLoader', this.model.get('configId'));
+            UM.vent.trigger('layout:showPhoneForm', this.model.get('configId'));
         });
         this.listenTo(this.model, 'error', function () {
-            UM.vent.trigger('page:hideLoader', this.model.get('configId'));
+            UM.vent.trigger('layout:hideLoader', this.model.get('configId'));
             this.enabledSubmit();
         });
         this.listenTo(this.model, 'invalid', this.invalid);
@@ -162,12 +162,13 @@ module.exports = UM.Views.Form.extend({
     },
 
     render: function () {
+        this.model.options.fields = _.sortBy(this.model.options.fields, function(opt){ return Number(opt.sort); });
         var that = this;
         UM.TemplateManager.get(this.template, function (template) {
             var temp = _.template(template);
             var data = {
                 value: that.model.toJSON(),
-                options: _.sortBy(that.model.options, function(opt){ return opt.sort; }) // сортировка опций
+                options: that.model.options
             };
 
             var html = temp(data);
@@ -191,7 +192,7 @@ module.exports = UM.Views.Form.extend({
                 that.addSelectList('pay', that.payCollectionView);
             }
             that.initPhoneMask();
-            that.preValidation();
+            //that.preValidation();
 
             /* Костыль со скрывающимися комментариями для старого все для дома и питера */
             if (that.$el.closest('.um-edim-doma-old').length || that.$el.closest('.um-piter').length) {
@@ -215,7 +216,7 @@ module.exports = UM.Views.Form.extend({
 
             /* Костыль для кридитной формы твой дом */
             if (UM.configsCollection.get(that.model.get('configId')).get('style') === 'um-your-house'
-                && UM.configsCollection.get(that.model.get('configId')).get('formType') === 'credit') {
+                && UM.configsCollection.get(that.model.get('configId')).get('global.type') === 'credit') {
                 that.$el.find('.um-form-group-firstname, .um-form-group-email, .um-form-group-phone ').wrapAll("<div class='um-form-col'></div>");
                 that.$el.find('.um-form-group-wishes , .um-form-group-personal-data').wrapAll("<div class='um-form-col'></div>");
             }

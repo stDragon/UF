@@ -16,16 +16,16 @@ module.exports = Backbone.Ribs.View.extend({
         this.listenTo(this.model, 'valid', this.valid);
 
         this.listenTo(this.model, 'request', function () {
-            UM.vent.trigger('page:showLoader', this.model.get('configId'));
+            UM.vent.trigger('layout:showLoader', this.model.get('configId'));
             this.valid();
             this.disabledSubmit();
         });
         this.listenTo(this.model, 'sync', function () {
-            UM.vent.trigger('page:hideLoader', this.model.get('configId'));
-            UM.vent.trigger('page:showPhoneForm', this.model.get('configId'));
+            UM.vent.trigger('layout:hideLoader', this.model.get('configId'));
+            UM.vent.trigger('layout:showPhoneForm', this.model.get('configId'));
         });
         this.listenTo(this.model, 'error', function () {
-            UM.vent.trigger('page:hideLoader', this.model.get('configId'));
+            UM.vent.trigger('layout:hideLoader', this.model.get('configId'));
             this.enabledSubmit();
         });
     },

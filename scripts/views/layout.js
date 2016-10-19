@@ -15,33 +15,33 @@ module.exports = Backbone.Ribs.View.extend({
     initialize: function () {
 
         this.$el
-            .addClass(this.model.get('style'))
-            .addClass('um-' + this.model.get('formType'));
+            .addClass(this.model.get('layout.style'))
+            .addClass('um-' + this.model.get('global.type'));
 
-        if (this.model.get('class')) this.$el.addClass(this.model.get('class'));
+        if (this.model.has('layout.class')) this.$el.addClass(this.model.get('layout.class'));
 
         /** В фиксированном окне добваляется соответствующий класс DOM элементу */
-        if (this.model.get('initType') == 'button' || this.model.get('initPosition') == 'fixed')
+        if (this.model.get('layout.init.type') == 'button' || this.model.get('layout.init.position') == 'fixed')
             this.$el.addClass('fixed').attr('draggable', true);
 
         this.render();
 
-        UM.vent.on('page:show', function (id) {
+        UM.vent.on('layout:show', function (id) {
             if (id == this.model.id)
                 this.show();
         }, this);
 
-        UM.vent.on('page:showLoader', function (id) {
+        UM.vent.on('layout:showLoader', function (id) {
             if (id == this.model.id)
                 this.renderStep(this.showLoader());
         }, this);
 
-        UM.vent.on('page:hideLoader', function (id) {
+        UM.vent.on('layout:hideLoader', function (id) {
             if (id == this.model.id)
                 this.renderStep(this.hideLoader());
         }, this);
 
-        UM.vent.on('page:showPhoneForm', function (id) {
+        UM.vent.on('layout:showPhoneForm', function (id) {
             if (id == this.model.id) {
                 if (this.model.get('phoneVerification') === true)
                     this.renderStep(this.showPhoneForm());
@@ -50,7 +50,7 @@ module.exports = Backbone.Ribs.View.extend({
             }
         }, this);
 
-        UM.vent.on('page:showConfirm', function (id) {
+        UM.vent.on('layout:showConfirm', function (id) {
             if (id == this.model.id)
                 this.renderStep(this.showConfirm());
         }, this);
@@ -149,6 +149,7 @@ module.exports = Backbone.Ribs.View.extend({
 
     /**
      * Рендер выбранной в конфигураторе формы
+     * @todo тут надо описать шаги
      * */
     showStartForm: function () {
         if (this.model.form) {
@@ -160,7 +161,7 @@ module.exports = Backbone.Ribs.View.extend({
 
                 return this.formView.el;
             } else {
-                throw new Error("Тип заявки '" + this.model.get('formType') + "' не поддерживается или не корректен");
+                throw new Error("Тип заявки '" + this.model.get('global.type') + "' не поддерживается или не корректен");
             }
         }
     },

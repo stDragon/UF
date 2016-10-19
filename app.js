@@ -20,6 +20,7 @@ app.set('view engine', 'hbs');
  * */
 var tmp = require('./temp');
 var logs = tmp.tmpDb.logs,
+    fields = tmp.tmpDb.fields,
     cities = tmp.tmpDb.cities,
     shops = tmp.tmpDb.shops,
     users = tmp.tmpDb.users,
@@ -81,6 +82,10 @@ app.route('/um/umdata/conf/:id')
         //res.json(success ? 200 : 404);
         res.status(200).json(configs[req.params.id]);
     });
+
+app.get('/um/umdata/fields/', function(req, res) {
+    res.json(fields);
+});
 
 app.get('/um/umdata/cities/', function(req, res) {
     res.json(cities);

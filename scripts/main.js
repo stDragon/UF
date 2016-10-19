@@ -13,44 +13,8 @@ $(document).ready(function() {
         conf: conf
     };
 
-    App.codes = [
-        {
-            isoCode: 'RU',
-            name: 'Россия',
-            code: '7',
-            mask: '999-999-99-99',
-            img: '/public/img/flags/ru.gif'
-        },
-        {
-            isoCode: 'BY',
-            name: 'Белоруссия',
-            code: '375',
-            mask: '999-99-99-99',
-            img: '/public/img/flags/by.gif'
-        },
-        {
-            available: false,
-            isoCode: 'UA',
-            name: 'Украина',
-            code: '380',
-            mask: '999-99-99-99',
-            img: '/public/img/flags/ua.gif'
-        },
-        {
-            isoCode: 'KZ',
-            name: 'Казахстан',
-            code: '77',
-            mask: '99-999-99-99',
-            img: '/public/img/flags/kz.gif'
-        },
-        {
-            isoCode: 'KG',
-            name: 'Киргизия',
-            code: '996',
-            mask: '999-999-999',
-            img: '/public/img/flags/kg.gif'
-        }
-    ];
+    App.codes = require('../codes.js');
+    App.fields = require('../fields.js');
 
     App.Models.PhoneCode = require('./models/phoneCode.js');
     App.Collections.PhoneCodes = require('./collections/phoneCodes.js');
@@ -112,13 +76,22 @@ $(document).ready(function() {
 
     App.Models.Config = Backbone.Ribs.Model.extend({
         defaults: {
-            serverUrl: App.serverUrl,
-            siteUrl: '',
-            formType: 'calculation',
-            formConfig: '',
-            style: 'um-material',
-            initType: 'button',
-            initPosition: 'fixed',
+            global: {
+                debug: false,
+                server: conf.server,
+                type: 'calculation',
+                site: {
+                    url:""
+                }
+            },
+            layout: {
+                style:"um-default",
+                class: "",
+                init: {
+                    "type":"form",
+                    "position":"fixed"
+                }
+            },
             phoneVerification: false
         },
 
@@ -139,14 +112,14 @@ $(document).ready(function() {
         },
 
         activePhoneField: function () {
-            if(this.get('phoneVerification') && this.formField) {
-                this.formField.set('phone.show', true);
-                this.formField.set('phone.required', true);
+            if(this.get('phoneVerification') && this.forms) {
+                this.forms.set('forms.fields.phone.show', true);
+                this.forms.set('forms.fields.phone.required', true);
             }
         },
 
         unactivePhoneField: function () {
-            if(!this.get('formConfig.phone.required')) {
+            if(!this.get('forms.fields.phone.required')) {
                 this.set('phoneVerification', false);
             }
         },
@@ -156,15 +129,15 @@ $(document).ready(function() {
             var regURL = /^(https?:\/\/)?([\S\.]+)\.(\S{2,6}\.?)(\/[\S\.]*)*\/?$/;
 
             var errors = [];
-            if (!attrs.siteUrl) {
+            if (!attrs.global.site.url) {
                 errors.push({
                     text: 'Вы не заполнили поле "Сайт, на котором будет использоваться модуль',
-                    attr: 'siteUrl'
+                    attr: 'global.site.url'
                 });
-            } else if (!regURL.test(attrs.siteUrl)) {
+            } else if (!regURL.test(attrs.global.site.url)) {
                 errors.push({
-                    text: "Сайт не корректен",
-                    attr: 'siteUrl'
+                    text: 'Сайт не корректен',
+                    attr: 'global.site.url'
                 });
             }
 
@@ -181,14 +154,14 @@ $(document).ready(function() {
                 options ={
                 phoneVerification: true
             };
-            this.formField = new App.Models.FormFieldGenerator(this.toJSON().formConfig, options);
-            this.listenTo(this.formField, 'change', this.setFormConfig);
-            this.listenTo(this.formField, 'change', this.unactivePhoneField);
+            this.forms = new App.Models.FormFieldGenerator(this.toJSON().forms, options);
+            this.listenTo(this.forms, 'change', this.setFormConfig);
+            this.listenTo(this.forms, 'change', this.unactivePhoneField);
             this.setFormConfig();
         },
 
         setFormConfig: function () {
-            this.set('formConfig', this.formField.toJSON());
+            this.set('forms', this.forms.toJSON());
         },
 
         getButtonDOM: function() {
@@ -220,20 +193,20 @@ $(document).ready(function() {
         getCode: function () {
             var code = this.getShortScript();
 
-            if (this.get('initPosition') == 'fixed') {
+            if (this.get('layout.init.position') == 'fixed') {
 
                 return  code;
 
-            } else if (this.get('initPosition') == 'static') {
+            } else if (this.get('layout.init.position') == 'static') {
 
-                if (this.get('initType') == 'button')
+                if (this.get('layout.init.type') == 'button')
                     return this.getButtonDOM() + code;
-                else if(this.get('initType') == 'form')
+                else if(this.get('layout.init.type') == 'form')
                     return this.getFormDOM() + code;
 
             } else {
 
-                throw new Error("Не указано initPosition '" + this.get('initPosition') + "' проверьте конфигурацию");
+                throw new Error("Не указано layout.init.type '" + this.get('layout.init.type') + "' проверьте конфигурацию");
 
             }
         }
@@ -242,189 +215,25 @@ $(document).ready(function() {
     App.Models.FormFieldGenerator = Backbone.Ribs.Model.extend({
 
         defaults: {
-            header: {
-                name: 'header',
-                sort: 1,
-                type: 'html',
-                label: 'Заголовок',
-                show: false,
-                value1: 'Легко!',
-                value2: 'Бесплатный дизайн-проект в&nbsp;три&nbsp;клика'
-            },
-            surname: {
-                name: 'surname',
-                sort: 2,
-                type: 'text',
-                label: 'Фамилия',
-                placeholder: 'Ваша фамилия',
-                show: false,
-                required: false
-            },
-            firstName: {
-                name: 'firstName',
-                sort: 3,
-                type: 'text',
-                label: 'Имя',
-                placeholder: 'Ваше имя',
-                show: true,
-                required: false,
-                combineFrom: 'surname',
-                combine: false
-            },
-            email: {
-                name: 'email',
-                sort: 4,
-                type: 'email',
-                label: 'E-mail',
-                placeholder: 'Ваш e-mail',
-                show: true,
-                required: false
-            },
-            phone: {
-                name: 'phone',
-                sort: 5,
-                type: 'tel',
-                label: 'Телефон',
-                placeholder: 'Ваш номер телефона',
-                show: true,
-                required: false,
-                showFlag: true,
-                pattern: 'RU',
-                available: '["RU"]'
-            },
-            adphone: {
-                name: 'adphone',
-                sort: 6,
-                type: 'text',
-                label: 'Дополнительные телефоны',
-                placeholder: 'Дополнительные телефоны',
-                show: false,
-                required: false
-            },
-            city: {
-                name: 'city',
-                sort: 7,
-                type: 'text',
-                label: 'Город',
-                placeholder: 'Выберите город',
-                show: true,
-                required: false
-            },
-            address: {
-                name: 'address',
-                sort: 8,
-                type: 'text',
-                label: 'Адрес',
-                placeholder: 'Введите адрес',
-                show: false,
-                required: false
-            },
-            shop: {
-                name: 'shop',
-                sort: 9,
-                type: 'text',
-                label: 'Студия',
-                placeholder: 'Выберите студию',
-                show: false,
-                dependence: 'city',
-                mapShow: false,
-                required: false,
-                wrap: false
-            },
-            pref: {
-                name: 'pref',
-                sort: 10,
-                type: 'text',
-                label: 'Предпочтительный способ связи',
-                placeholder: 'Предпочтительный способ связи',
-                show: false,
-                required: false
-            },
-            product: {
-                name: 'product',
-                sort: 11,
-                type: 'text',
-                label: 'Товар',
-                placeholder: 'Товар',
-                show: false,
-                required: true
-            },
-            price: {
-                sort: 12,
-                name: 'price',
-                type: 'number',
-                label: 'Стоимость',
-                placeholder: 'Стоимость',
-                show: false,
-                required: true
-            },
-            pay: {
-                name: 'pay',
-                sort: 13,
-                type: 'text',
-                label: 'Первый взнос',
-                placeholder: 'Первый взнос',
-                show: false,
-                required: true
-            },
-            term: {
-                name: 'term',
-                sort: 14,
-                type: 'number',
-                label: 'Желаемый срок кредита (мес.)',
-                placeholder: 'Желаемый срок кредита (мес.)',
-                show: false,
-                required: true
-            },
-            kitchen: {
-                name: 'kitchen',
-                sort: 15,
-                type: 'text',
-                label: 'Модель кухни',
-                placeholder: 'Выберите модель кухни',
-                show: false,
-                required: false
-            },
-            personalData: {
-                name: 'personalData',
-                sort: 17,
-                type: 'checkbox',
-                label: 'Согласен с обработкой персональных данных',
-                show: true,
-                required: true,
-                checked: true,
-                target: '_blank',
-                href: {
-                    show: false,
-                    text: 'Политикой конфиденциальности',
-                    pathname: '#'
+            "model": "client",
+            "type":"calculation",
+            "fields":{
+                submit: {
+                    name: 'submit',
+                    sort: 999,
+                    type: 'submit',
+                    label: 'Кнопка отправки',
+                    show: true,
+                    text: 'Отправить заявку'
                 }
-            },
-            wishes: {
-                name: 'wishes',
-                sort: 16,
-                type: 'textarea',
-                label: 'Пожелания',
-                placeholder: 'Пожелания',
-                show: true,
-                required: false,
-                wrap: false
-            },
-            submit: {
-                name: 'submit',
-                sort: 18,
-                type: 'submit',
-                label: 'Кнопка отправки',
-                show: true,
-                text: 'Отправить заявку'
             }
         },
 
         initialize: function(model, options) {
 
             if (options && options.phoneVerification) {
-                this.set('phone.show', true);
-                this.set('phone.required', true);
+                this.set('fields.phone.show', true);
+                this.set('fields.phone.required', true);
             }
 
             this.phoneCodesCollection = new App.Collections.PhoneCodes({model: App.Models.PhoneCode});
@@ -438,6 +247,8 @@ $(document).ready(function() {
                 that.createPhoneCodes();
             });*/
 
+            //this.fields = new App
+
             if (App.conf.server.type != 'prod')
                 this.on('change', this.log, this);
         },
@@ -449,11 +260,13 @@ $(document).ready(function() {
         },
 
         setActivePhone: function () {
-            if (this.get('phone.available')) {
-                this.phoneCodesAvailableCollection.setActive($.parseJSON(this.get('phone.available')));
-            }
-            if (this.get('phone.notAvailable')) {
-                this.phoneCodesNotAvailableCollection.setActive($.parseJSON(this.get('phone.notAvailable')));
+            if (this.has('fields.phone')) {
+                if (this.has('fields.phone.available')) {
+                    this.phoneCodesAvailableCollection.setActive($.parseJSON(this.get('fields.phone.available')));
+                }
+                if (this.has('fields.phone.notAvailable')) {
+                    this.phoneCodesNotAvailableCollection.setActive($.parseJSON(this.get('fields.phone.notAvailable')));
+                }
             }
         },
 
@@ -477,7 +290,7 @@ $(document).ready(function() {
         initialize: function () {
             this.render();
 
-            if (this.model.get('formConfig')) {
+            if (this.model.get('forms')) {
                 this.renderFormField();
             }
 
@@ -515,7 +328,7 @@ $(document).ready(function() {
         },
 
         renderFormField: function() {
-            App.formFieldGeneratorView = new App.Views.FormFieldGenerator({model: this.model.formField});
+            App.formFieldGeneratorView = new App.Views.FormFieldGenerator({model: this.model.forms});
             $('#formFieldGenerator').html(App.formFieldGeneratorView.el);
         },
 
@@ -573,7 +386,7 @@ $(document).ready(function() {
                 .removeClass('invalid')
                 .removeClass('valid');
             _.each(errors, function (error) {
-                var $el = this.$el.find('[name=' + error.attr + ']');
+                var $el = this.$el.find('[name="' + error.attr + '"]');
 
                 $el.removeClass('valid')
                     .addClass('invalid');
@@ -593,7 +406,7 @@ $(document).ready(function() {
     App.Views.FormFieldGenerator = Backbone.Ribs.View.extend({
         tagName: 'form',
         className: 'form-field-generator',
-        template: 'formFieldGenerator',
+        template: 'formsGenerator',
 
         events: {
             "change input"        : "changed",
@@ -614,10 +427,11 @@ $(document).ready(function() {
             App.Helpers.TemplateManager.get(this.template, function (template) {
                 var temp = _.template(template);
                 var data = that.model.toJSON();
-                var html = $(temp(data));
+                var html = temp(data);
                 that.$el.html(html);
-                that.selectPhoneCodesAvailable = new App.Views.Select({el: '[name="phone.available"]', collection: that.model.phoneCodesAvailableCollection}).render();
-                that.selectPhoneCodesNotAvailable = new App.Views.Select({el: '[name="phone.notAvailable"]', collection: that.model.phoneCodesNotAvailableCollection}).render();
+                this.fieldsCollection = new App.Views.Select({el: '[name="fields.phone.available"]', collection: that.model.phoneCodesAvailableCollection}).render();
+                that.selectPhoneCodesAvailable = new App.Views.Select({el: '[name="fields.phone.available"]', collection: that.model.phoneCodesAvailableCollection}).render();
+                that.selectPhoneCodesNotAvailable = new App.Views.Select({el: '[name="fields.phone.notAvailable"]', collection: that.model.phoneCodesNotAvailableCollection}).render();
             });
             return this;
         },
@@ -705,12 +519,12 @@ $(document).ready(function() {
 
             this.unrender();
 
-            if (this.model.get('initPosition') == 'static') {
+            if (this.model.get('layout.init.position') == 'static') {
 
-                if (this.model.get('initType') == 'button')
+                if (this.model.get('layout.init.type') == 'button')
                     this.$el.html(this.model.getButtonDOM());
 
-                else if (this.model.get('initType') == 'form')
+                else if (this.model.get('layout.init.type') == 'form')
                     this.$el.html(this.model.getFormDOM());
 
             } else this.$el.html('');
@@ -720,11 +534,11 @@ $(document).ready(function() {
 
         unrender: function() {
             if(UM.configsCollection) {
-                if(UM.pages[this.model.id])
-                    if (Array.isArray(UM.pages[this.model.id]))
-                        UM.pages[this.model.id][0].unrender();
+                if(UM.layouts[this.model.id])
+                    if (Array.isArray(UM.layouts[this.model.id]))
+                        UM.layouts[this.model.id][0].unrender();
                     else
-                        UM.pages[this.model.id].unrender();
+                        UM.layouts[this.model.id].unrender();
 
                 if(UM.buttons[this.model.id] && UM.buttons[this.model.id].$el.hasClass('um-btn-start--fixed'))
                     UM.buttons[this.model.id].unrender();
