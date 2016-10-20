@@ -16,10 +16,10 @@ module.exports = Backbone.Model.extend({
 
         if (options) {
             this.options = options;
-            //this.set('personalData', options.personalData.checked);
+            //this.set('personalData', options.fields.personalData.checked);
         }
 
-        if (typeof options.city !== 'undefined' && options.city.show) {
+        if (typeof options.fields.city !== 'undefined' && options.fields.city.show) {
             this.cityCollection = new UM.Collections.Citys([], this.toJSON());
             this.cityCollection.fetch().then(function(){
                 if (model.cityId) {
@@ -36,7 +36,7 @@ module.exports = Backbone.Model.extend({
             });
         }
 
-        if (typeof options.shop !== 'undefined' && options.shop.show) {
+        if (typeof options.fields.shop !== 'undefined' && options.fields.shop.show) {
             var defaultShop = {
                 name: 'Все студии',
                 city: 'all',
@@ -70,7 +70,7 @@ module.exports = Backbone.Model.extend({
             });
         }
 
-        if (typeof options.kitchen !== 'undefined' && options.kitchen.show) {
+        if (typeof options.fields.kitchen !== 'undefined' && options.fields.kitchen.show) {
             this.kitchenCollection = new UM.Collections.Kitchens([], this.toJSON());
             this.kitchenCollection.fetch().then(function(){
                 if (model.kitchenId) {
@@ -87,7 +87,7 @@ module.exports = Backbone.Model.extend({
             });
         }
 
-        if (typeof options.pref !== 'undefined' && options.pref.show) {
+        if (typeof options.fields.pref !== 'undefined' && options.fields.pref.show) {
             this.prefCollection = new UM.Collections.Options(UM.pref, this.toJSON());
 
             this.listenTo(this.prefCollection, 'change:active', function() {
@@ -98,7 +98,7 @@ module.exports = Backbone.Model.extend({
             });
         }
 
-        if (typeof options.product !== 'undefined' && options.product.show) {
+        if (typeof options.fields.product !== 'undefined' && options.fields.product.show) {
             this.productCollection = new UM.Collections.Options(UM.product, this.toJSON());
 
             this.listenTo(this.productCollection, 'change:active', function() {
@@ -109,7 +109,7 @@ module.exports = Backbone.Model.extend({
             });
         }
 
-        if (typeof options.pay !== 'undefined' && options.pay.show) {
+        if (typeof options.fields.pay !== 'undefined' && options.fields.pay.show) {
             this.payCollection = new UM.Collections.Options(UM.pay, this.toJSON());
 
             this.listenTo(this.payCollection, 'change:active', function() {
@@ -139,7 +139,7 @@ module.exports = Backbone.Model.extend({
             'KZ': /\+77\s\d{2}\-\d{3}\-\d{2}\-\d{2}/,
             'KG': /\+996\s\d{3}\-\d{3}\-\d{3}/
         };
-        var phoneFilter = new RegExp(phonePattern[this.options.phone.pattern]);
+        var phoneFilter = new RegExp(phonePattern[this.options.fields.phone.pattern]);
 
         var errors = [];
         var err;
@@ -147,14 +147,14 @@ module.exports = Backbone.Model.extend({
         _.each(attrs, function(value, key) {
             switch (key) {
                 case 'firstName':
-                    if (this.options.firstName.show) {
-                        if (this.options.firstName.required && !value) {
+                    if (this.options.fields.firstName.show) {
+                        if (this.options.fields.firstName.required && !value) {
                             err = {
                                 text: "Вы не заполнили имя",
                                 attr: 'firstName'
                             };
                             errors.push(err);
-                        //} else if (this.options.firstName.required && !lettersFilter.test(value)) {
+                        //} else if (this.options.fields.firstName.required && !lettersFilter.test(value)) {
                         //    err = {
                         //        text: "Имя должно содержать только буквы",
                         //        attr: 'firstName'
@@ -166,14 +166,14 @@ module.exports = Backbone.Model.extend({
                     }
                     break;
                 case 'surname':
-                    if (this.options.surname.show) {
-                        if (this.options.surname.required && !value) {
+                    if (this.options.fields.surname.show) {
+                        if (this.options.fields.surname.required && !value) {
                             err = {
                                 text: "Вы не заполнили фамилию",
                                 attr: 'surname'
                             };
                             errors.push(err);
-                        //} else if (this.options.surname.required && !lettersFilter.test(value)) {
+                        //} else if (this.options.fields.surname.required && !lettersFilter.test(value)) {
                         //    errors.push({
                         //        text: "Фамилия должна содержать только буквы",
                         //        attr: 'surname'
@@ -184,13 +184,13 @@ module.exports = Backbone.Model.extend({
                     }
                     break;
                 case 'email':
-                    if (this.options.email.show) {
-                        if (this.options.email.required && !value) {
+                    if (this.options.fields.email.show) {
+                        if (this.options.fields.email.required && !value) {
                             errors.push({
                                 text: "Вы не заполнили электронную почту",
                                 attr: 'email'
                             });
-                        } else if (this.options.email.required && !emailFilter.test(value)) {
+                        } else if (this.options.fields.email.required && !emailFilter.test(value)) {
                             errors.push({
                                 text: "Почтовый адресс не коректен",
                                 attr: 'email'
@@ -201,8 +201,8 @@ module.exports = Backbone.Model.extend({
                     }
                     break;
                 case 'phone':
-                    if (this.options.phone.show) {
-                        if (this.options.phone.required && !value) {
+                    if (this.options.fields.phone.show) {
+                        if (this.options.fields.phone.required && !value) {
                             err = {
                                 text: "Вы не заполнили телефон",
                                 attr: 'phone'
@@ -226,8 +226,8 @@ module.exports = Backbone.Model.extend({
                     }
                     break;
                 case 'city':
-                    if (this.options.city.show) {
-                        if (this.options.city.required && !value) {
+                    if (this.options.fields.city.show) {
+                        if (this.options.fields.city.required && !value) {
                             err = {
                                 text: "Вы не выбрали город",
                                 attr: 'city'
@@ -239,8 +239,8 @@ module.exports = Backbone.Model.extend({
                     }
                     break;
                 case 'personalData':
-                    if (this.options.personalData.show) {
-                        if (this.options.personalData.required && value == false) {
+                    if (this.options.fields.personalData.show) {
+                        if (this.options.fields.personalData.required && value == false) {
                             err = {
                                 text: "Чтобы продолжить установите этот флажок",
                                 attr: 'personalData'
@@ -253,8 +253,8 @@ module.exports = Backbone.Model.extend({
                     break;
                 /* new fields */
                 case 'adphone':
-                    if (typeof this.options.adphone !== 'undefined' && this.options.adphone.show) {
-                        if (this.options.adphone.required && !value) {
+                    if (typeof this.options.fields.adphone !== 'undefined' && this.options.fields.adphone.show) {
+                        if (this.options.fields.adphone.required && !value) {
                             err = {
                                 text: "Вы не указали дополнительный телефон",
                                 attr: 'adphone'
@@ -266,8 +266,8 @@ module.exports = Backbone.Model.extend({
                     }
                     break;
                 case 'pref':
-                    if (typeof this.options.pref !== 'undefined' && this.options.pref.show) {
-                        if (this.options.pref.required && !value) {
+                    if (typeof this.options.fields.pref !== 'undefined' && this.options.fields.pref.show) {
+                        if (this.options.fields.pref.required && !value) {
                             err = {
                                 text: "Вы не указали предпочтительный способ связи",
                                 attr: 'pref'
@@ -279,8 +279,8 @@ module.exports = Backbone.Model.extend({
                     }
                     break;
                 case 'product':
-                    if (typeof this.options.product !== 'undefined' && this.options.product.show) {
-                        if (this.options.product.required && !value) {
+                    if (typeof this.options.fields.product !== 'undefined' && this.options.fields.product.show) {
+                        if (this.options.fields.product.required && !value) {
                             err = {
                                 text: "Вы не указали товар",
                                 attr: 'product'
@@ -292,8 +292,8 @@ module.exports = Backbone.Model.extend({
                     }
                     break;
                 case 'price':
-                    if (typeof this.options.price !== 'undefined' && this.options.price.show) {
-                        if (this.options.price.required && !value) {
+                    if (typeof this.options.fields.price !== 'undefined' && this.options.fields.price.show) {
+                        if (this.options.fields.price.required && !value) {
                             err = {
                                 text: "Вы не указали стоимость",
                                 attr: 'price'
@@ -305,8 +305,8 @@ module.exports = Backbone.Model.extend({
                     }
                     break;
                 case 'pay':
-                    if (typeof this.options.pay !== 'undefined' && this.options.pay.show) {
-                        if (this.options.pay.required && !value) {
+                    if (typeof this.options.fields.pay !== 'undefined' && this.options.fields.pay.show) {
+                        if (this.options.fields.pay.required && !value) {
                             err = {
                                 text: "Вы не указали величину первого взноса",
                                 attr: 'pay'
@@ -318,8 +318,8 @@ module.exports = Backbone.Model.extend({
                     }
                     break;
                 case 'term':
-                    if (typeof this.options.term !== 'undefined' && this.options.term.show) {
-                        if (this.options.term.required && !value) {
+                    if (typeof this.options.fields.term !== 'undefined' && this.options.fields.term.show) {
+                        if (this.options.fields.term.required && !value) {
                             err = {
                                 text: "Вы не указали желаемый срок кредита",
                                 attr: 'term'

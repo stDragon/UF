@@ -10,19 +10,18 @@ module.exports = Backbone.View.extend({
     initialize: function (options) {
         this.input = this.$el.find('input');
 
-        if (options.form)
-            this.form = options.form;
+        if (options)
+            this.options = options;
 
         var phoneCodeCollection = new UM.Collections.PhoneCodeCollection(
             UM.codes,
             {
-                available: this.form.model.options.phone.available,
-                notAvailable: this.form.model.options.phone.notAvailable
+                available: this.options.available,
+                notAvailable: this.options.notAvailable
             }
         );
 
         this.phoneCodeCollection = new UM.Collections.PhoneCodeCollection(phoneCodeCollection.filterAvailable());
-        this.form.model.phoneCodeCollection = this.phoneCodeCollection;
         this.phoneCodeCollectionView = new UM.Views.PhoneCodeCollection({ collection: this.phoneCodeCollection});
         this.$el.prepend(this.phoneCodeCollectionView.el);
 
@@ -47,10 +46,10 @@ module.exports = Backbone.View.extend({
 
         if (option && option.clear === true) {
             this.input.val(active.get('code'));
-            this.form.model.options.phone.pattern = active.get('isoCode');
+            this.options.pattern = active.get('isoCode');
         }
 
-        if (typeof this.form.model.options.phone.showFlag !== 'undefined' && this.form.model.options.phone.showFlag)
+        if (typeof this.options.showFlag !== 'undefined' && this.options.showFlag)
             this.setFlag();
     },
 
@@ -92,7 +91,7 @@ module.exports = Backbone.View.extend({
     },
 
     setFlag: function () {
-        if (this.form.model.options.phone.showFlag) {
+        if (this.options.showFlag) {
             this.$el.find('.um-form-control-wrap').children('.um-phone-flag').remove();
 
             var active = this.phoneCodeCollection.getActive();

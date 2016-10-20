@@ -35,6 +35,8 @@ module.exports = UM.Views.Form.extend({
 
     initialize: function () {
 
+        this.options = this.model.options;
+
         if (this.model.cityCollection) {
             this.cityCollectionView = new UM.Views.Citys({collection: this.model.cityCollection});
         }
@@ -56,8 +58,6 @@ module.exports = UM.Views.Form.extend({
         }
 
         this.render();
-
-        if (this.model.options.class) this.$el.addClass(this.model.options.class);
 
         this.model.on('change', this.setValue, this);
         this.model.on('change:personalData', this.preValidation, this);
@@ -97,7 +97,8 @@ module.exports = UM.Views.Form.extend({
         var selector = this.$el.find('.um-form-group-phone');
 
         if (selector.length && !this.phoneView) {
-            this.phoneView = new UM.Views.PhoneInput({el: selector, form: this});
+            this.phoneView = new UM.Views.PhoneInput({el: selector, form: this.options.fields.phone});
+            this.model.phoneCodeCollection = this.phoneView.phoneCodeCollection; //пробрасывается доступ модели к коллекции телефонов, нужно для валидации
         }
     },
 
@@ -162,7 +163,7 @@ module.exports = UM.Views.Form.extend({
     },
 
     render: function () {
-        this.model.options.fields = _.sortBy(this.model.options.fields, function(opt){ return Number(opt.sort); });
+        this.model.options.fields = _.indexBy(_.sortBy(this.model.options.fields, function(opt){ return Number(opt.sort) }), 'name');
         var that = this;
         UM.TemplateManager.get(this.template, function (template) {
             var temp = _.template(template);
@@ -230,7 +231,7 @@ module.exports = UM.Views.Form.extend({
     },
 
     preValidation: function(){
-        if (this.model.options.personalData.required) {
+        if (this.options.fields.personalData.required) {
             if (this.model.get('personalData'))
                 this.enabledSubmit();
             else

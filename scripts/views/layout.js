@@ -153,9 +153,9 @@ module.exports = Backbone.Ribs.View.extend({
      * */
     showStartForm: function () {
         if (this.model.form) {
-            if (this.model.get('formType') == 'calculation'
-                || this.model.get('formType') == 'measurement'
-                || this.model.get('formType') == 'credit') {
+            if (this.model.get('global.type') == 'calculation'
+                || this.model.get('global.type') == 'measurement'
+                || this.model.get('global.type') == 'credit') {
 
                 this.formView = new UM.Views.FormUser({model: this.model.form});
 
