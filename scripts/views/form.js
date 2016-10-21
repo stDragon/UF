@@ -11,7 +11,7 @@ module.exports = Backbone.Ribs.View.extend({
         'submit': 'save'
     },
 
-    initialize: function () {
+    initialize: function (options) {
         this.listenTo(this.model, 'invalid', this.invalid);
         this.listenTo(this.model, 'valid', this.valid);
 
@@ -68,6 +68,7 @@ module.exports = Backbone.Ribs.View.extend({
         _.each(attr, function (num, key) {
             this.$el.find('[name=' + key + ']').val(num);
         }, this);
+        return this;
     },
     /**
      * Сохраняет изменения поля в модель.

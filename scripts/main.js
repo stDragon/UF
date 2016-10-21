@@ -78,8 +78,8 @@ $(document).ready(function() {
         defaults: {
             global: {
                 debug: false,
-                server: conf.server,
                 type: 'calculation',
+                server: conf.server,
                 site: {
                     url:""
                 }
@@ -100,12 +100,16 @@ $(document).ready(function() {
         },
 
         initialize: function () {
+            /**
+             * В зависимости от наличия ID создаем новый или загружаем конфиг с сервера,
+             * после синхронизации обновляем
+             * */
             if (!this.id)
                 this.createFormFieldGenerator();
             else
                 this.listenToOnce(this, 'sync', this.createFormFieldGenerator);
 
-            this.on('change:phoneVerification', this.activePhoneField, this);
+            //this.on('change:phoneVerification', this.activePhoneField, this);
 
             if (App.conf.server.type != 'prod')
                 this.on('change', this.log, this);
@@ -149,12 +153,8 @@ $(document).ready(function() {
         },
 
         createFormFieldGenerator: function() {
-            var options = {};
-            if (this.get('phoneVerification'))
-                options ={
-                phoneVerification: true
-            };
-            this.forms = new App.Models.FormFieldGenerator(this.toJSON().forms, options);
+            var fields = this.toJSON().forms;
+            this.forms = new App.Collections.FormFieldGenerators(fields);
             this.listenTo(this.forms, 'change', this.setFormConfig);
             this.listenTo(this.forms, 'change', this.unactivePhoneField);
             this.setFormConfig();
@@ -229,12 +229,12 @@ $(document).ready(function() {
             }
         },
 
-        initialize: function(model, options) {
+        initialize: function() {
 
-            if (options && options.phoneVerification) {
-                this.set('fields.phone.show', true);
-                this.set('fields.phone.required', true);
-            }
+            //if (options && options.phoneVerification) {
+            //    this.set('fields.phone.show', true);
+            //    this.set('fields.phone.required', true);
+            //}
 
             this.phoneCodesCollection = new App.Collections.PhoneCodes({model: App.Models.PhoneCode});
 
@@ -275,7 +275,11 @@ $(document).ready(function() {
         }
     });
 
-    App.Views.CodeGeneratorForm = Backbone.View.extend({
+    App.Collections.FormFieldGenerators = Backbone.Ribs.Collection.extend({
+        model: App.Models.FormFieldGenerator
+    });
+
+    App.Views.CodeGeneratorForm = Backbone.Ribs.View.extend({
 
         tagName: 'form',
         className: 'form-code-generator',
@@ -328,7 +332,7 @@ $(document).ready(function() {
         },
 
         renderFormField: function() {
-            App.formFieldGeneratorView = new App.Views.FormFieldGenerator({model: this.model.forms});
+            App.formFieldGeneratorView = new App.Views.FormFieldGeneratorCollection({ collection: this.model.forms });
             $('#formFieldGenerator').html(App.formFieldGeneratorView.el);
         },
 
@@ -429,7 +433,7 @@ $(document).ready(function() {
                 var data = that.model.toJSON();
                 var html = temp(data);
                 that.$el.html(html);
-                this.fieldsCollection = new App.Views.Select({el: '[name="fields.phone.available"]', collection: that.model.phoneCodesAvailableCollection}).render();
+                that.fieldsCollection = new App.Views.Select({el: '[name="fields.phone.available"]', collection: that.model.phoneCodesAvailableCollection}).render();
                 that.selectPhoneCodesAvailable = new App.Views.Select({el: '[name="fields.phone.available"]', collection: that.model.phoneCodesAvailableCollection}).render();
                 that.selectPhoneCodesNotAvailable = new App.Views.Select({el: '[name="fields.phone.notAvailable"]', collection: that.model.phoneCodesNotAvailableCollection}).render();
             });
@@ -547,6 +551,25 @@ $(document).ready(function() {
             }
         }
 
+    });
+
+    App.Views.FormFieldGeneratorCollection = Backbone.Ribs.View.extend({
+        className: 'form-field-generator-list',
+
+        initialize: function() {
+            this.collection.on('add', this.addOne, this);
+            this.render();
+        },
+
+        render: function() {
+            this.collection.each( this.addOne, this );
+            return this;
+        },
+
+        addOne: function(model) {
+            var view = new App.Views.FormFieldGenerator({ model: model });
+            this.$el.append(view.el);
+        }
     });
 
     var codeID = $('#formCodeGenerator').data('id');

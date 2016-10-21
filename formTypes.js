@@ -1,5 +1,6 @@
 module.exports = [
     'calculation',
     'measurement',
-    'credit'
+    'credit',
+    'code'
 ];

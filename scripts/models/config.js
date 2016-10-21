@@ -63,13 +63,14 @@ module.exports = Backbone.Ribs.Model.extend({
     initForm: function () {
         this.data.user.type = this.get('global.type');
 
-        /* Костыль для питера устанавливает аактивным */
+        /* Костыль для питера устанавливает активным */
         if (this.get('layout.style') === 'um-piter') {
             this.data.user.city = 'Санкт-Петербург';
             this.data.user.cityId = 1394549;
         }
 
         if (UM.formTypes.indexOf(this.get('global.type')) != -1) {
+            /** @todo если надо будет разделить шаги на разные модели, делать это надо будет тут */
             this.form = new UM.Models.User(this.data.user, this.get('forms'));
         } else {
             var msgErr = "Тип заявки '" + this.get('global.type') + "' не поддерживается или не корректен";
