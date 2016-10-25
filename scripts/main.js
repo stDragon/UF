@@ -1,3 +1,7 @@
+window.$ = window.$ || $;
+window._ = window._ || _;
+window.Backbone = window.Backbone || Backbone;
+
 var conf = require('../nconf.js');
 
 $(document).ready(function() {
