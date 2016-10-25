@@ -1,11 +1,8 @@
-var _ = require('underscore'),
-    $ = require('jquery'),
-    Backbone = require('backbone'),
-    conf = require('../nconf.js');
-
-window.$ = window.$ || $;
-window._ = window._ || _;
-window.Backbone = window.Backbone || Backbone;
+global.$ = require('jquery');
+global._ = require('underscore');
+global.Backbone = require('backbone');
+conf = require('../nconf.js');
+require('backbone.ribs');
 
 var UM = window.UM || {
         Models: {},
@@ -23,7 +20,6 @@ var UM = window.UM || {
 UM.Inputmask = require('../public/libs/jquery.inputmask/dist/inputmask/inputmask.js');
 require('../public/libs/jquery.inputmask/dist/inputmask/jquery.inputmask.js');
 require('../public/libs/jquery.inputmask/dist/inputmask/inputmask.extensions.js');
-require('../public/libs/backbone.ribs/backbone.ribs.js');
 require('./Backbone.Ymaps.js');
 
 window.UM = UM;

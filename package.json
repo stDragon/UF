@@ -5,7 +5,9 @@
   "main": "app.js",
   "dependencies": {
     "backbone": "^1.3.2",
+    "backbone.ribs": "^1.0.2",
     "body-parser": "^1.15.0",
+    "clipboard": "^1.5.15",
     "errorhandler": "^1.4.3",
     "express": "^4.13.4",
     "express-robots": "^0.1.6",
@@ -14,7 +16,8 @@
     "http": "0.0.0",
     "https": "^1.0.0",
     "jquery": "^2.2.2",
-    "jquery.inputmask": "^3.3.0",
+    "jquery.inputmask": "^3.3.3",
+    "materialize-css": "^0.97.7",
     "underscore": "^1.8.3"
   },
   "devDependencies": {
