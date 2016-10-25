@@ -14,6 +14,7 @@ module.exports = Backbone.Ribs.View.extend({
 
     initialize: function () {
 
+        this.formView = [];
         this.$el
             .addClass(this.model.get('layout.style'))
             .addClass('um-' + this.model.get('global.type'));
@@ -24,7 +25,7 @@ module.exports = Backbone.Ribs.View.extend({
         if (this.model.get('layout.init.type') == 'button' || this.model.get('layout.init.position') == 'fixed')
             this.$el.addClass('fixed').attr('draggable', true);
 
-        this.render();
+        this.render().createForms().renderStep(this.showForm(0));
 
         UM.vent.on('layout:show', function (id) {
             if (id == this.model.id)
@@ -66,10 +67,6 @@ module.exports = Backbone.Ribs.View.extend({
             var temp = _.template(template);
             var html = $(temp(that.model.toJSON()));
             that.$el.html(html);
-            that.$el.children('.um-body').html(that.showStartForm());
-            setTimeout(function(){
-                UM.vent.trigger('form.added', that.model.id);
-            }, 1000);
         });
         return this;
     },
@@ -93,32 +90,44 @@ module.exports = Backbone.Ribs.View.extend({
             UM.vent.trigger('button:show', this.model.id);
         }
     },
-
-    /** Добавление прелоудера для обмена данными с сервером */
+    /**
+     * Добавление прелоудера для обмена данными с сервером
+     * */
     initLoader: function () {
         this.laoder = new UM.Views.Loader();
         this.$el.children('.um-header').prepend(this.laoder.el);
     },
-
+    /**
+     *  Показывает прелоудер
+     *  */
     showLoader: function () {
         if (!this.laoder) {
             this.initLoader();
         }
         this.laoder.show();
+        return this;
     },
-
+    /**
+     *  Скрывает прелоудер
+     *  */
     hideLoader: function () {
         if (!this.laoder) {
             this.initLoader();
         }
         this.laoder.hide();
+        return this;
     },
-
+    /**
+     *  Выводит информацию о текущем конфигев консоль
+     *  */
     showInfoConsole: function() {
         var version = "1.0";
         window.cpd = console.info('Версия универсального модуля - "%s". Сервер хранения данных - "%s". Тип сервера - "%s". ID используемого конфига - "%s"', version, UM.conf.server.url, UM.conf.server.type, this.model.id);
+        return this;
     },
-
+    /**
+     *  Выводит информацию о текущем конфиге в модальное окно
+     *  */
     showInfoModal: function() {
         if (!this.modalInfoView) {
             var version = "1.0";
@@ -131,8 +140,11 @@ module.exports = Backbone.Ribs.View.extend({
             $('body').append(this.modalInfoView.el);
         }
         this.modalInfoView.show();
+        return this;
     },
-
+    /**
+     *  Отлавливает сочитания клавиш для вывода информации о модуле
+     *  */
     keyhandler: function () {
         var that = this;
         document.onkeydown = function(e){
@@ -146,24 +158,19 @@ module.exports = Backbone.Ribs.View.extend({
             }
         }
     },
-
+    createForms: function () {
+        var that = this;
+        _.each(this.model.get('forms'), function(element, index, list){
+            if(element.type !== 'code')
+                that.formView[index] = new UM.Views.FormUser({model: that.model.form}, element);
+        });
+        return this;
+    },
     /**
-     * Рендер выбранной в конфигураторе формы
-     * @todo тут надо описать шаги
+     * Рендер формы
      * */
-    showStartForm: function () {
-        if (this.model.form) {
-            if (this.model.get('global.type') == 'calculation'
-                || this.model.get('global.type') == 'measurement'
-                || this.model.get('global.type') == 'credit') {
-
-                this.formView = new UM.Views.FormUser({model: this.model.form});
-
-                return this.formView.el;
-            } else {
-                throw new Error("Тип заявки '" + this.model.get('global.type') + "' не поддерживается или не корректен");
-            }
-        }
+    showForm: function (step) {
+        return this.formView[step].el;
     },
     /**
      * Рендер формы подтверждения телефона

@@ -408,8 +408,8 @@ var db ={
             "steps": "",
             "forms": [
                 {
-                    id:1,
-                    "step": 1,
+                    id:0,
+                    "step": 0,
                     "model": "client",
                     "type":"calculation",
                     "class": "",
@@ -593,8 +593,8 @@ var db ={
                     }
                 },
                 {
-                    id:2,
-                    "step": 2,
+                    id:1,
+                    "step": 1,
                     "model": "phone",
                     "type": "code",
                     "fields": {

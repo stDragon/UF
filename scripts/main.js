@@ -15,11 +15,24 @@ $(document).ready(function() {
 
     App.codes = require('../codes.js');
     App.fields = require('../fields.js');
+    App.formTemplates = require('../formTemplates.js');
 
     App.Models.PhoneCode = require('./models/phoneCode.js');
+    App.Models.Field =  require('./models/field.js');
+    App.Models.FormTemplate = require('./models/formTemplate.js');
     App.Collections.PhoneCodes = require('./collections/phoneCodes.js');
     App.Views.SelectOption = require('./views/selectOption.js');
     App.Views.Select = require('./views/select.js');
+    App.Views.StepsTabView = require('./views/stepsTabView.js');
+    App.Views.StepsGenetatorView = require('./views/stepsGenerator.js');
+
+    App.Collections.FormTemplates = Backbone.Ribs.Model.extend({
+        model: App.Models.FormTemplate
+    });
+
+    App.Collections.Field = Backbone.Ribs.Collection.extend({
+        model: App.Models.Field
+    });
 
     /**
      *  Ajax подгрузка шаблона
@@ -100,6 +113,8 @@ $(document).ready(function() {
         },
 
         initialize: function () {
+
+            //this.fields = new App.Collections.Field(App.fields);
             /**
              * В зависимости от наличия ID создаем новый или загружаем конфиг с сервера,
              * после синхронизации обновляем
@@ -268,15 +283,17 @@ $(document).ready(function() {
                     this.phoneCodesNotAvailableCollection.setActive($.parseJSON(this.get('fields.phone.notAvailable')));
                 }
             }
-        },
-
-        log: function () {
-            console.log(this.toJSON());
         }
     });
 
     App.Collections.FormFieldGenerators = Backbone.Ribs.Collection.extend({
-        model: App.Models.FormFieldGenerator
+        model: App.Models.FormFieldGenerator,
+
+        hasPhoneVerification: function(){
+            this.find(function(model){
+                return model.get('type') === 'code';
+            })
+        }
     });
 
     App.Views.CodeGeneratorForm = Backbone.Ribs.View.extend({
@@ -295,6 +312,8 @@ $(document).ready(function() {
             this.render();
 
             if (this.model.get('forms')) {
+                this.renderStepsGenerator();
+                this.renderStepsTabs();
                 this.renderFormField();
             }
 
@@ -329,6 +348,19 @@ $(document).ready(function() {
                 if(that.model.id) that.renderCode();
             });
             return this;
+        },
+
+        renderStepsGenerator: function () {
+            var phoneVerification = this.model.forms.hasPhoneVerification();
+            console.log(phoneVerification);
+            App.stepsGeneratorView = new App.Views.StepsGenetatorView({phoneVerification: !!phoneVerification});
+            $('#addSteps').html(App.stepsGeneratorView.el);
+        },
+
+        renderStepsTabs: function () {
+            App.stepsTabView = new App.Views.StepsTabView({collection: this.model.forms});
+            $('#steps').html(App.stepsTabView.el);
+            App.stepsTabView.$el.tabs();
         },
 
         renderFormField: function() {
@@ -419,6 +451,7 @@ $(document).ready(function() {
         },
 
         initialize: function () {
+            this.$el.prop('id', 'step' + this.model.get('step'));
             this.render();
 
             this.listenTo(this.model, 'change', this.setValues);

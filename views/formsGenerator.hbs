@@ -1,5 +1,5 @@
-<h2>Настройка полей формы</h2>
-<h3>CSS класс для формы</h3>
+<h3>Настройка шага #<%= step + 1 %></h3>
+<h4>CSS класс для формы</h4>
 <div class="row">
     <div class="input-field col s6">
         <input id="class" name="class" type="text" class="validate" placeholder="um-my-form-class" value="">
@@ -7,9 +7,8 @@
     </div>
 </div>
 <% if (typeof fields !== 'undefined') {%>
-
     <% _.each(fields, function(field, key, list){%>
-        <h3><%= field.label %></h3>
+        <h4><%= field.label %></h4>
         <div class="row">
             <div class="col s1">
                 <p>Сорт.</p>

@@ -2,18 +2,14 @@
  *  Форма подтверждения телефона
  *  */
 
-module.exports = Backbone.View.extend({
+module.exports = UM.Views.Form.extend({
 
     tagName: 'form',
     className: 'um-form',
     template: 'formPhoneAuth',
 
-    events: {
-        'focus #umPhone': 'initMask',
-        'submit': 'save'
-    },
-
-    initialize: function () {
+    initialize: function (options) {
+        this.options = options;
         this.render();
         this.listenTo(this.model, 'change', this.setValue);
         this.listenTo(this.model, 'invalid', this.invalid);
@@ -40,56 +36,6 @@ module.exports = Backbone.View.extend({
             that.$el.html(html);
         });
         return this;
-    },
-
-    setValue: function () {
-        var attr = this.model.toJSON();
-        _.each(attr, function (num, key) {
-            this.$el.find('[name=' + key + ']').val(num);
-        }, this);
-    },
-
-    disabledSubmit: function () {
-        this.$el.find('button:submit').prop('disabled', true);
-    },
-
-    enabledSubmit: function () {
-        this.$el.find('button:submit').prop('disabled', false);
-    },
-
-    valid: function () {
-        this.$el.find('input')
-            .closest('.um-form-group').removeClass('um-has-error')
-            .children('.um-tooltip').remove();
-    },
-
-    invalid: function (model, errors) {
-        this.$el.find('input')
-            .closest('.um-form-group').removeClass('um-has-error')
-            .children('.um-tooltip').remove();
-        _.each(errors, function (error) {
-            var $el = this.$el.find('[name=' + error.attr + ']'),
-                $group = $el.closest('.um-form-group');
-
-            $group.addClass('um-has-error');
-            var tooltip = new UM.Views.Tooltip({text: error.text});
-            $group.append(tooltip.el);
-        }, this);
-    },
-
-    save: function (e) {
-        e.preventDefault();
-
-        var data = {};
-        this.$el.find('.um-form-control').each(function () {
-            data[this.name] = $(this).val();
-        });
-
-        this.model.save(data, {
-            error: function (model, error) {
-                UM.ajaxError(error)
-            }
-        });
     },
 
     confirm: function () {
