@@ -77,13 +77,9 @@ $(document).ready(function() {
         if(option)
             App.config.fetch().then(function(){
                 App.formCodeView = new App.Views.CodeGeneratorForm({model: App.config});
-                $('#formCodeGenerator').html(App.formCodeView.el);
-                App.example = new App.Views.Example({model: App.config});
             });
         else {
             App.formCodeView = new App.Views.CodeGeneratorForm({model: App.config});
-            $('#formCodeGenerator').html(App.formCodeView.el);
-            App.example = new App.Views.Example({model: App.config});
         }
     }
 
@@ -168,8 +164,15 @@ $(document).ready(function() {
         },
 
         createFormFieldGenerator: function() {
-            var fields = this.toJSON().forms;
-            this.forms = new App.Collections.FormFieldGenerators(fields);
+            var formsCollection;
+
+            if (this.has('forms')) {
+                formsCollection = this.toJSON().forms
+            } else {
+                var type = this.get('global.type');
+                formsCollection = _.find(App.formTemplates, function(model){return model.type === type});
+            }
+            this.forms = new App.Collections.FormFieldGenerators(formsCollection);
             this.listenTo(this.forms, 'change', this.setFormConfig);
             this.listenTo(this.forms, 'change', this.unactivePhoneField);
             this.setFormConfig();
@@ -298,7 +301,7 @@ $(document).ready(function() {
 
     App.Views.CodeGeneratorForm = Backbone.Ribs.View.extend({
 
-        tagName: 'form',
+        el: $('#formCodeGenerator'),
         className: 'form-code-generator',
         template: 'formCodeGeneratorTpl',
 
@@ -309,17 +312,13 @@ $(document).ready(function() {
         },
 
         initialize: function () {
-            this.render();
+            this.$el.html(this.render());
 
-            if (this.model.get('forms')) {
-                this.renderStepsGenerator();
-                this.renderStepsTabs();
-                this.renderFormField();
-            }
-
-            this.listenTo(this.model, 'change', this.setValue);
+            this.listenToOnce(this.model, 'sync', this.renderFormField);
             this.listenTo(this.model, 'sync', this.renderCode);
+            this.listenTo(this.model, 'sync', this.showExample);
             this.listenTo(this.model, 'sync', this.showMassageSave);
+            this.listenTo(this.model, 'change', this.setValue);
             this.listenTo(this.model, 'invalid', this.invalid);
             this.listenTo(this.model, 'invalid', this.unrenderCode);
             this.listenTo(this.model, 'request', this.valid);
@@ -352,9 +351,7 @@ $(document).ready(function() {
 
         renderStepsGenerator: function () {
             var phoneVerification = this.model.forms.hasPhoneVerification();
-            console.log(phoneVerification);
             App.stepsGeneratorView = new App.Views.StepsGenetatorView({phoneVerification: !!phoneVerification});
-            $('#addSteps').html(App.stepsGeneratorView.el);
         },
 
         renderStepsTabs: function () {
@@ -364,6 +361,8 @@ $(document).ready(function() {
         },
 
         renderFormField: function() {
+            this.renderStepsGenerator();
+            this.renderStepsTabs();
             App.formFieldGeneratorView = new App.Views.FormFieldGeneratorCollection({ collection: this.model.forms });
             $('#formFieldGenerator').html(App.formFieldGeneratorView.el);
         },
@@ -390,6 +389,10 @@ $(document).ready(function() {
             this.$el.find('[name=code]')
                 .val('')
                 .removeClass('valid');
+        },
+
+        showExample: function(){
+            App.example = new App.Views.Example({model: App.config});
         },
 
         changed: function(e) {

@@ -11,13 +11,13 @@
                 <label for="layout.class" class="active">CSS класс для модуля</label>
             </div>
             <div class="input-field col s6">
-                <select id="formType" name="formType">
+                <select id="global.type" name="global.type">
                     <option value="" disabled selected>Выберите опцию</option>
-                    <option value="calculation">Просчет</option>
-                    <option value="measurement">Замер</option>
-                    <option value="credit">Кредит</option>
+                    <option value="calculation"<%= global.type == 'calculation' ? ' selected' : ''%>>Просчет</option>
+                    <option value="measurement"<%= global.type == 'measurement' ? ' selected' : ''%>>Замер</option>
+                    <option value="credit"<%= global.type == 'credit' ? ' selected' : ''%>>Кредит</option>
                 </select>
-                <label for="formType">Тип заявки</label>
+                <label for="global.type">Тип заявки</label>
             </div>
             <div class="input-field col s6">
                 <select id="layout.style" name="layout.style">
@@ -33,7 +33,7 @@
                     <option value="um-your-house"<%= layout.style == 'um-your-house' ? ' selected' : ''%>>Твой Дом</option>
                     <option value="um-mia"<%= layout.style == 'um-mia' ? ' selected' : ''%>>Миа</option>
                 </select>
-                <label for="style">Дизайн</label>
+                <label for="layout.style">Дизайн</label>
             </div>
             <div class="input-field col s6">
                 <select id="layout.init.type" name="layout.init.type">

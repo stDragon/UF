@@ -1,5 +1,6 @@
 module.exports = Backbone.Ribs.View.extend({
 
+    el: $('#addSteps'),
     tagName: 'form',
     className: 'row',
     template: 'formAddSteps',
@@ -11,7 +12,7 @@ module.exports = Backbone.Ribs.View.extend({
     },
 
     initialize: function () {
-        this.render();
+        this.$el.html(this.render());
     },
 
     render: function () {
