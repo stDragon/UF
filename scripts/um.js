@@ -1,8 +1,11 @@
-global.$ = require('jquery');
+global.jQuery = require('jquery');
+global.$ = global.jQuery;
 global._ = require('underscore');
 global.Backbone = require('backbone');
 conf = require('../nconf.js');
 require('backbone.ribs');
+require('materialize-css');
+global.Materialize = Materialize;
 
 var UM = window.UM || {
         Models: {},

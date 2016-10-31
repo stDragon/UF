@@ -7,6 +7,8 @@
     "backbone": "^1.3.2",
     "backbone.ribs": "^1.0.2",
     "body-parser": "^1.15.0",
+    "browserify": "^13.1.1",
+    "browserify-shim": "^3.8.12",
     "clipboard": "^1.5.15",
     "errorhandler": "^1.4.3",
     "express": "^4.13.4",
@@ -22,6 +24,7 @@
   },
   "devDependencies": {
     "bower": "^1.7.9",
+    "browserify-shim": "^3.8.12",
     "gulp": "^3.9.0",
     "gulp-browserify": "^0.5.1",
     "gulp-concat": "^2.6.0",
@@ -32,6 +35,7 @@
     "gulp-uglify": "^1.5.3"
   },
   "scripts": {
+    "postinstall": "cp node_modules/materialize-css/js/date_picker/picker.js node_modules/materialize-css/bin",
     "start-dev": "gulp",
     "start-prod": "PORT=3000 PORTSSL=3001 gulp",
     "start-pre-prod": "PORT=3000 PORTSSL=3001 node node_modules/gulp/bin/gulp.js",

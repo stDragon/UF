@@ -6,7 +6,7 @@ var gulp        = require('gulp'),
     sass        = require('gulp-sass'),
     uglify      = require('gulp-uglify');
 
-gulp.task('concatMain', function() {
+gulp.task('concatMain', ['concatUm'], function() {
     return gulp.src([
             'scripts/main.js'
         ])
