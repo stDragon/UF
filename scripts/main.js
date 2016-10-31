@@ -1,6 +1,8 @@
-window.$ = window.$ || $;
-window._ = window._ || _;
-window.Backbone = window.Backbone || Backbone;
+global.$ = $;
+global.jQuery = global.$;
+global._ = _;
+global.Backbone = Backbone;
+global.Clipboard = require('clipboard');
 
 var conf = require('../nconf.js');
 
