@@ -1,4 +1,4 @@
-global.jQuery = require('jquery');
+global.jQuery = window.$ || require('jquery');
 global.$ = global.jQuery;
 global._ = require('underscore');
 global.Backbone = require('backbone');
