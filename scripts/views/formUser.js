@@ -193,6 +193,12 @@ module.exports = UM.Views.Form.extend({
                 that.$el.find('.um-form-group-firstname, .um-form-group-email, .um-form-group-phone ').wrapAll("<div class='um-form-col'></div>");
                 that.$el.find('.um-form-group-wishes , .um-form-group-personal-data').wrapAll("<div class='um-form-col'></div>");
             }
+
+            /* костыль оборачивающий собмит кнопку в стиле для ванн */
+            if (UM.configsCollection.get(that.model.get('configId')).get('style') === 'um-bath') {
+
+                that.$el.find('.js-create-order').wrap("<div class='btn-wrap'></div>");
+            }
         });
         return this;
     },
