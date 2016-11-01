@@ -15,6 +15,7 @@
     "express-robots": "^0.1.6",
     "express3-handlebars": "^0.5.2",
     "fs": "0.0.2",
+    "hammerjs": "^2.0.8",
     "http": "0.0.0",
     "https": "^1.0.0",
     "jquery": "^2.2.2",
