@@ -67,6 +67,7 @@ $color-red: #D70B07;
       z-index: 10;
       &::before {
         content: '\f178';
+        font-family: FontAwesome;
         width: 60px;
         height: 60px;
         position: absolute;
@@ -107,6 +108,7 @@ $color-red: #D70B07;
     font-size: inherit;
     display: block;
     color: inherit;
+    padding: 0;
   }
   .um-form {
     label {
@@ -163,6 +165,7 @@ $color-red: #D70B07;
     width: 100%;
     vertical-align: middle;
     border-radius: 2px;
+    font-family: OfficinaSansMedium;
     &:focus {
       background-color: rgba(234, 234, 234, 0.46);
       box-shadow: 0 0 3px rgba(0, 0, 0, 0.12) inset;
@@ -172,12 +175,13 @@ $color-red: #D70B07;
     }
   }
   .um-open-select {
-    .um-form-control {
-      background-color: rgba(234, 234, 234, 0.46);
-      box-shadow: 0 0 3px rgba(0, 0, 0, 0.12) inset;
-      border-color: currentColor;
-      color: white;
-      outline: 0;
+    .um-form-control{
+      &:focus {
+        background: white;
+        box-shadow: none;
+        border: 1px solid #dddddd;
+        color: #444444;
+      }
     }
   }
 
@@ -194,6 +198,7 @@ $color-red: #D70B07;
   }
   .um-label-text {
     color: white;
+    font-family: OfficinaSansMedium;
   }
 
   .um-label-checkbox{
@@ -201,6 +206,15 @@ $color-red: #D70B07;
       background-color: #e5e5e5;
       border: #a5a5a5 2px;
 
+    }
+  }
+  .um-dropdown-content{
+    li {
+      &.active,
+      &:focus,
+      &:hover {
+        background-color: #eee;
+      }
     }
   }
 }
