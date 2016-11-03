@@ -1,0 +1,113 @@
+@import 'mixins';
+@import 'reset';
+@import 'base';
+@import 'tooltip';
+@import 'modal';
+@import 'dropdown-select';
+
+$color-red: red;
+$color-green: rgba(51,204,0,1);
+$color-green--hover: rgba(51,204,0,0.65);
+
+@mixin btn() {
+  font: 16px/1.2 Open Sans,helvetica,sans-serif;
+  border: 0 none;
+  border-radius: 50px;
+  box-shadow: none;
+  color: #fff !important;
+  font-weight: bold;
+  margin: 0 auto;
+  padding: 0.7em 2em;
+  width: auto;
+  line-height: 1em;
+  text-shadow: 0 0 40px #000;
+  font-size: 1.2em;
+  background-color: $color-green;
+  display: block;
+  &:hover {
+    background-color: $color-green--hover;
+  }
+}
+.um-btn.um-marya--old{
+  @include btn();
+}
+
+.um.um-marya--old{
+  padding: 2em 35px 2.5em;
+  background: #eee;
+  margin: 0;
+  max-width: 410px;
+  font: 16px/1.2 Open Sans,helvetica,sans-serif;
+  .um-btn {
+    @include btn();
+  }
+  fieldset {
+    margin-bottom: 2em;
+  }
+  legend{
+    margin: 0 13px 1em;
+  }
+  .um-title,
+  .um-title-2{
+    display: block;
+    font-size: 1.3em;
+    font-weight: bold;
+    color: #666;
+  }
+  .um-form {
+    label {
+      &:not(.um-label-checkbox) {
+        color: #222;
+        display: block;
+        width: 180px;
+        font-size: 14px;
+        line-height: 30px;
+        font-weight: bold;
+      }
+    }
+  }
+  .um-form-control {
+    width: 100%;
+    font-size: 1.2em;
+    padding: 6px;
+    border: 2px solid #999;
+    background-color: white;
+    &:focus {
+      background: #ffe;
+      color: #333;
+      outline: 0;
+    }
+  }
+
+  textarea.um-form-control {
+    resize: none;
+  }
+
+  .um-form-group {
+    margin-bottom: 10px;
+    &.um-has-error {
+      .um-form-control {
+        border-color: $color-red;
+        box-shadow: none;
+      }
+    }
+    &.um-select.um-select-left .um-field-wrap::before{
+      display: none;
+    }
+    &.um-form-group-phone {
+      .um-dropdown-content {
+        display: none!important;// не показываем выпадающий список с кодами стран
+      }
+    }
+    svg[class^='um-icon-'] {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 2.5em;
+      background-color: white;
+      line-height: 100%;
+      fill: #757575;
+      cursor: pointer;
+    }
+  }
+}
