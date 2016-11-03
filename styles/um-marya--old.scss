@@ -109,4 +109,10 @@ $color-green--hover: rgba(51,204,0,0.65);
       cursor: pointer;
     }
   }
+
+  .um-city-hide {
+    .um-form-group-city {
+      display: none;
+    }
+  }
 }
