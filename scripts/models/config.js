@@ -42,7 +42,7 @@ module.exports = Backbone.Ribs.Model.extend({
             if (!this.get('initPosition'))
                 throw new Error("Не указан способ инициализации initPosition:'" + this.get('initPosition') + "' проверьте конфигурацию");
             if (!this.testUrl()) {
-                if (UM.conf.server.type == 'prod') {
+                if (UM.conf.server.type == 'prod' && window.location.hostname !== 'module.infcentre.ru') {
                     throw new Error('Ваш сайт URL "' + window.location.hostname + '" не соответствует указанному в конфигураторе "' + this.get('siteUrl') +'"');
                 } else {
                     console.warn('Ваш сайт URL "' + window.location.hostname + '" не соответствует указанному в конфигураторе "' + this.get('siteUrl') +'"');
