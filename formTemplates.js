@@ -2,6 +2,21 @@ module.exports = [
     {
         "step": 0,
         "model": "client",
+        "type":"default",
+        "fields":{
+            submit: {
+                name: 'submit',
+                sort: 999,
+                type: 'submit',
+                label: 'Кнопка отправки',
+                show: true,
+                text: 'Отправить заявку'
+            }
+        }
+    },
+    {
+        "step": 0,
+        "model": "client",
         "type":"calculation",
         "class": "",
         "fields":{

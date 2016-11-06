@@ -23,6 +23,7 @@ $(document).ready(function() {
     App.Collections.PhoneCodes = require('./collections/phoneCodes.js');
     App.Views.SelectOption = require('./views/selectOption.js');
     App.Views.Select = require('./views/select.js');
+    App.Views.TabLi = require('./views/tabLi.js');
     App.Views.StepsTabView = require('./views/stepsTabView.js');
     App.Views.StepsGenetatorView = require('./views/stepsGenerator.js');
 
@@ -174,7 +175,7 @@ $(document).ready(function() {
             }
             this.forms = new App.Collections.FormFieldGenerators(formsCollection);
             this.listenTo(this.forms, 'change', this.setFormConfig);
-            this.listenTo(this.forms, 'change', this.unactivePhoneField);
+            //this.listenTo(this.forms, 'change', this.unactivePhoneField);
             this.setFormConfig();
         },
 
@@ -227,6 +228,30 @@ $(document).ready(function() {
                 throw new Error("Не указано layout.init.type '" + this.get('layout.init.type') + "' проверьте конфигурацию");
 
             }
+        },
+        /**
+         * @param  {string} type.
+         * */
+        addStep: function (type) {
+            var phoneStep = this.forms.find(function(model){return model.get('type') === 'code'});
+
+            var step = _.find(App.formTemplates, function(model){return model.type === type});
+
+            if(type === 'code' || typeof phoneStep === 'undefined')
+                step.step = this.forms.length;
+            else {
+                step.step = this.forms.length - 1;
+                phoneStep.set('step', this.forms.length);
+            }
+
+            App.config.forms.add(step);
+        },
+        /**
+         * @param  {number} step.
+         * */
+        removeStep: function (step) {
+            this.forms.remove(this.forms.find(function(model){return model.get('step') === step}));
+            console.log(this.forms.toJSON());
         }
     });
 
@@ -292,10 +317,20 @@ $(document).ready(function() {
     App.Collections.FormFieldGenerators = Backbone.Ribs.Collection.extend({
         model: App.Models.FormFieldGenerator,
 
+        initialize: function () {
+            this.listenTo(this, 'all',function(){
+              this.log();
+          }, this)
+        },
+
         hasPhoneVerification: function(){
             this.find(function(model){
                 return model.get('type') === 'code';
-            })
+            });
+        },
+
+        log: function () {
+            console.log(this.toJSON());
         }
     });
 
@@ -364,7 +399,6 @@ $(document).ready(function() {
             this.renderStepsGenerator();
             this.renderStepsTabs();
             App.formFieldGeneratorView = new App.Views.FormFieldGeneratorCollection({ collection: this.model.forms });
-            $('#formFieldGenerator').html(App.formFieldGeneratorView.el);
         },
 
         setValue: function () {
@@ -450,6 +484,7 @@ $(document).ready(function() {
         events: {
             "change input"        : "changed",
             "change select"       : "changed",
+            "click .js-remove"    : "unrender",
             "submit"              : "submit"
         },
 
@@ -458,6 +493,7 @@ $(document).ready(function() {
             this.render();
 
             this.listenTo(this.model, 'change', this.setValues);
+            this.listenTo(this.model, 'remove', this.unrender);
 
             _.bindAll(this, 'changed');
         },
@@ -474,6 +510,17 @@ $(document).ready(function() {
                 that.selectPhoneCodesNotAvailable = new App.Views.Select({el: '[name="fields.phone.notAvailable"]', collection: that.model.phoneCodesNotAvailableCollection}).render();
             });
             return this;
+        },
+
+        unrender: function () {
+            // COMPLETELY UNBIND THE VIEW
+            this.undelegateEvents();
+
+            this.$el.removeData().unbind();
+
+            // Remove view from DOM
+            this.remove();
+            Backbone.View.prototype.remove.call(this);
         },
 
         setValues: function () {
@@ -590,6 +637,7 @@ $(document).ready(function() {
     });
 
     App.Views.FormFieldGeneratorCollection = Backbone.Ribs.View.extend({
+        el: $('#formFieldGenerator'),
         className: 'form-field-generator-list',
 
         initialize: function() {

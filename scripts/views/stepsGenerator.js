@@ -7,8 +7,8 @@ module.exports = Backbone.Ribs.View.extend({
     model: new Backbone.Model,
 
     events: {
-        'change [name="phoneVerification"]' : "changePhoneVerification",
-        'click  [name="addStep"]'           : "addStep"
+        'click [name="addStep"]'           : "addStep",
+        'click [name="phoneVerification"]' : "addStep"
     },
 
     initialize: function () {
@@ -26,11 +26,14 @@ module.exports = Backbone.Ribs.View.extend({
         return this;
     },
 
-    changePhoneVerification: function() {
-
-    },
-
-    addStep: function() {
-
+    addStep: function(e) {
+        var el = e.target;
+        if (el.disabled) return false;
+        if (el.name === 'addStep')
+            App.config.addStep('default');
+        else if (el.name === 'phoneVerification'){
+            App.config.addStep('code');
+            el.disabled = true;
+        }
     }
 });
