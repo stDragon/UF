@@ -489,12 +489,10 @@ $(document).ready(function() {
         },
 
         initialize: function () {
-            this.$el.prop('id', 'step' + this.model.get('step'));
-            this.render();
-
+            this.render().setStep();
             this.listenTo(this.model, 'change', this.setValues);
+            this.listenTo(this.model, 'change:step', this.setStep);
             this.listenTo(this.model, 'remove', this.unrender);
-
             _.bindAll(this, 'changed');
         },
 
@@ -585,6 +583,11 @@ $(document).ready(function() {
             obj[changed.name] = value;
 
             this.model.set(obj);
+        },
+
+        setStep: function () {
+            this.$el.prop('id', 'step' + this.model.get('step'));
+            this.$el.find('h3').html('Настройка шага #'+(this.model.get('step') + 1));
         },
 
         submit: function (e) {

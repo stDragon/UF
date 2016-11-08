@@ -6,10 +6,7 @@ module.exports = Backbone.Ribs.View.extend({
 
     initialize: function() {
         this.collection.on('add', this.addOne, this);
-        this.collection.on('remove', this.removeOne, this);
-        this.collection.on('all', this.initTabs, this);
-        this.render();
-        this.initTabs();
+        this.render().initTabs();
     },
 
     render: function() {
@@ -18,13 +15,9 @@ module.exports = Backbone.Ribs.View.extend({
     },
 
     addOne: function(model) {
-        var view = '<li class="tab col s3"><a href="#step'+model.get("step")+'">Шаг - '+(model.get("step")+1)+'</a></li>'
         var view = new App.Views.TabLi({ model: model });
-        this.$el.append(view);
-    },
-
-    removeOne: function(model) {
-        this.$el.find('li').eq(model.get('step')).remove();
+        this.$el.append(view.el);
+        this.initTabs();
     },
 
     initTabs: function() {
