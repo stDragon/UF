@@ -37,12 +37,12 @@ module.exports = Backbone.Collection.extend({
     },
     /**
      * Создает новый экземпляр Shops по названию города содержащих координаты для карты.
-     * @param  {string} city - Студия которую ищем.
+     * @param  {string} cityId - Студия которую ищем.
      * @return {UM.Collections.Shops} Новый объект Shops.
      */
-    filterByCityForMap: function (city) {
+    filterByCityForMap: function (cityId) {
         var filtered = this.filter(function (model) {
-            return model.get("city") === city && model.get("lat") && model.get("lat");
+            return model.get("mr3cityid") === cityId && model.get("lat") && model.get("lat");
         });
         return new UM.Collections.Shops(filtered, this.options);
     },

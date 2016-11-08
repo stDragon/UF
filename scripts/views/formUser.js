@@ -238,7 +238,7 @@ module.exports = UM.Views.Form.extend({
 
         $elMap.children().remove();
 
-        var mapShopArr = this.model.shopCollection.filterByCityForMap(this.model.get('city')).toJSON();
+        var mapShopArr = this.model.shopCollection.filterByCityForMap(this.model.get('cityId')).toJSON();
 
         var latSum = 0,
             lonSum = 0,
@@ -284,7 +284,7 @@ module.exports = UM.Views.Form.extend({
                 },
 
                 selectShop: function () {
-                    UM.vent.trigger('user:setShop', this.model.get('title'));
+                    UM.vent.trigger('user:setShop', this.model);
                 }
             });
 

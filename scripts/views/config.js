@@ -18,7 +18,7 @@ module.exports = Backbone.Ribs.View.extend({
 
     getYaMap: function () {
         var YaMapHref = '//api-maps.yandex.ru/2.1/?lang=ru_RU&mode=debug';
-        return $('script[src$="' + YaMapHref + '"]').length ? this.getScript(YaMapHref) : '';
+        return $('script[src$="' + YaMapHref + '"]').length ? '' : this.getScript(YaMapHref);
     },
 
     initHead: function () {

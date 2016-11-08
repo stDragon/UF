@@ -84,6 +84,15 @@ module.exports = Backbone.Model.extend({
                     this.set('shop', active.title);
                 }
             });
+
+            /**
+             * @todo Надо сделать проверку при использованиее нескольких форм на одной странице
+             * */
+            UM.vent.on('user:setShop', function(shop) {
+                this.set('shop', shop.get('mr3id'));
+                this.set('shopId', shop.get('name'));
+                this.shopCollection.setActive(shop.get('mr3id'));
+            }, this);
         }
 
         if (typeof options.kitchen !== 'undefined' && options.kitchen.show) {
