@@ -311,6 +311,10 @@ $(document).ready(function() {
                     this.phoneCodesNotAvailableCollection.setActive($.parseJSON(this.get('fields.phone.notAvailable')));
                 }
             }
+        },
+
+        removeField: function(field) {
+            this.unset('fields.'+field);
         }
     });
 
@@ -482,10 +486,11 @@ $(document).ready(function() {
         template: 'formsGenerator',
 
         events: {
-            "change input"        : "changed",
-            "change select"       : "changed",
-            "click .js-remove"    : "unrender",
-            "submit"              : "submit"
+            "change input"              : "changed",
+            "change select"             : "changed",
+            "click .js-remove"          : "unrender",
+            "click .js-remove-field"    : "removeField",
+            "submit"                    : "submit"
         },
 
         initialize: function () {
@@ -505,7 +510,7 @@ $(document).ready(function() {
                 that.$el.html(html);
                 that.fieldsCollection = new App.Views.Select({el: '[name="fields.phone.available"]', collection: that.model.phoneCodesAvailableCollection}).render();
                 that.selectPhoneCodesAvailable = new App.Views.Select({el: '[name="fields.phone.available"]', collection: that.model.phoneCodesAvailableCollection}).render();
-                that.selectPhoneCodesNotAvailable = new App.Views.Select({el: '[name="fields.phone.notAvailable"]', collection: that.model.phoneCodesNotAvailableCollection}).render();
+                //that.selectPhoneCodesNotAvailable = new App.Views.Select({el: '[name="fields.phone.notAvailable"]', collection: that.model.phoneCodesNotAvailableCollection}).render();
             });
             return this;
         },
@@ -519,6 +524,17 @@ $(document).ready(function() {
             // Remove view from DOM
             this.remove();
             Backbone.View.prototype.remove.call(this);
+        },
+
+        removeField: function (e) {
+            var field = $(e.target).data('field');
+            this.model.removeField(field);
+            /** переделать на событие и */
+            this.unrenderField(field);
+        },
+
+        unrenderField: function (field) {
+            this.$el.find('fieldset[data-field="'+field+'"]').remove();
         },
 
         setValues: function () {
