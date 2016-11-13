@@ -17,75 +17,6 @@ $(document).ready(function() {
     App.fields = require('../fields.js');
     App.formTemplates = require('../formTemplates.js');
 
-    App.Models.PhoneCode = require('./models/phoneCode.js');
-    App.Models.Field =  require('./models/field.js');
-    App.Models.FormTemplate = require('./models/formTemplate.js');
-    App.Collections.PhoneCodes = require('./collections/phoneCodes.js');
-    App.Views.SelectOption = require('./views/selectOption.js');
-    App.Views.Select = require('./views/select.js');
-    App.Views.TabLi = require('./views/tabLi.js');
-    App.Views.StepsTabView = require('./views/stepsTabView.js');
-    App.Views.StepsGenetatorView = require('./views/stepsGenerator.js');
-    App.Views.Field = require('./views/field.js');
-    App.Views.Fields = require('./views/fields.js');
-
-    App.Collections.FormTemplates = Backbone.Ribs.Model.extend({
-        model: App.Models.FormTemplate
-    });
-
-    App.Collections.Field = Backbone.Ribs.Collection.extend({
-        model: App.Models.Field
-    });
-
-    /**
-     *  Ajax подгрузка шаблона
-     *  */
-    App.Helpers.TemplateManager = {
-        templates: {},
-
-        get: function (id, callback) {
-            var template = this.templates[id];
-
-            if (template) {
-                callback(template);
-
-            } else {
-
-                var that = this;
-                $.ajaxPrefilter(function (options, originalOptions, jqXHR) {
-                    options.crossDomain = {
-                        crossDomain: true
-                    };
-                    options.xhrFields = {
-                        withCredentials: true
-                    };
-                });
-                $.ajax({
-                    url: conf.server.url + '/module/' + id,
-                    success: function (template) {
-                        var tmpl = template;
-                        that.templates[id] = tmpl;
-                        callback(tmpl);
-                    }
-                });
-
-            }
-
-        }
-
-    };
-
-    function init(option) {
-        App.config = new App.Models.Config(option);
-        if(option)
-            App.config.fetch().then(function(){
-                App.formCodeView = new App.Views.CodeGeneratorForm({model: App.config});
-            });
-        else {
-            App.formCodeView = new App.Views.CodeGeneratorForm({model: App.config});
-        }
-    }
-
     App.Models.Config = Backbone.Ribs.Model.extend({
         defaults: {
             global: {
@@ -257,445 +188,78 @@ $(document).ready(function() {
         }
     });
 
-    App.Models.FormFieldGenerator = Backbone.Ribs.Model.extend({
+    App.Models.PhoneCode = require('./models/phoneCode.js');
+    App.Collections.PhoneCodes = require('./collections/phoneCodes.js');
 
-        defaults: {
-            "model": "client",
-            "type":"calculation",
-            "fields":{
-                submit: {
-                    name: 'submit',
-                    sort: 999,
-                    type: 'submit',
-                    label: 'Кнопка отправки',
-                    show: true,
-                    text: 'Отправить заявку'
-                }
-            }
-        },
+    App.Models.Field =  require('./models/field.js');
+    App.Collections.Field = require('./collections/fields.js');
 
-        initialize: function() {
+    App.Models.FormTemplate = require('./models/formTemplate.js');
+    App.Collections.FormTemplates = require('./collections/formTemplates.js');
 
-            //if (options && options.phoneVerification) {
-            //    this.set('fields.phone.show', true);
-            //    this.set('fields.phone.required', true);
-            //}
+    App.Models.FormFieldGenerator = require('./models/formFieldGenerator.js');
+    App.Collections.FormFieldGenerators = require('./collections/formFieldGenerators.js');
 
-            this.newFieldCollection = new App.Collections.Field(App.fields);
-            this.fieldCollection = new App.Collections.Field(this.get('fields'));
-            this.phoneCodesCollection = new App.Collections.PhoneCodes({model: App.Models.PhoneCode});
+    App.Views.SelectOption = require('./views/selectOption.js');
+    App.Views.Select = require('./views/select.js');
+    App.Views.TabLi = require('./views/tabLi.js');
+    App.Views.CodeGeneratorForm = require('./views/codeGeneratorForm.js');
+    App.Views.StepsTabView = require('./views/stepsTabView.js');
+    App.Views.StepAddGenetator = require('./views/stepAddGenerator.js');
+    App.Views.StepGenerator = require('./views/stepGenerator.js');
+    App.Views.StepGeneratorCollection = require('./views/stepGeneratorCollection.js');
+    App.Views.Field = require('./views/field.js');
+    App.Views.Fields = require('./views/fields.js');
+    App.Views.Example = require('./views/example.js');
 
-            /** @todo надо перенести данные на сервер */
-            this.phoneCodesCollection.set(App.codes);
-            this.createPhoneCodes();
-            /*
-            var that = this;
-            this.phoneCodesCollection.fetch().then(function() {
-                that.createPhoneCodes();
-            });
-            */
+    /**
+     *  Ajax подгрузка шаблона
+     *  */
+    App.Helpers.TemplateManager = {
+        templates: {},
 
-            this.listenTo(this.fieldCollection, 'change', this.setFields);
+        get: function (id, callback) {
+            var template = this.templates[id];
 
-            if (App.conf.server.type != 'prod')
-                this.on('change', this.log, this);
-        },
+            if (template) {
+                callback(template);
 
-        createPhoneCodes: function () {
-            this.phoneCodesAvailableCollection = new App.Collections.PhoneCodes(this.phoneCodesCollection.toJSON());
-            this.phoneCodesNotAvailableCollection = new App.Collections.PhoneCodes(this.phoneCodesCollection.toJSON());
-            this.setActivePhone();
-        },
-
-        setActivePhone: function () {
-            if (this.has('fields.phone')) {
-                if (this.has('fields.phone.available')) {
-                    this.phoneCodesAvailableCollection.setActive($.parseJSON(this.get('fields.phone.available')));
-                }
-                if (this.has('fields.phone.notAvailable')) {
-                    this.phoneCodesNotAvailableCollection.setActive($.parseJSON(this.get('fields.phone.notAvailable')));
-                }
-            }
-        },
-
-        setFields: function () {
-            this.set('fields', this.fieldCollection.toJSON());
-        },
-
-        addField: function (field) {
-            var newField = this.newFieldCollection.find(function(model){return model.get('name') == field});
-            this.fieldCollection.add(newField);
-        },
-
-        removeField: function (field) {
-            this.unset('fields.'+field);
-        }
-    });
-
-    App.Collections.FormFieldGenerators = Backbone.Ribs.Collection.extend({
-        model: App.Models.FormFieldGenerator,
-
-        initialize: function () {
-            this.listenTo(this, 'all',function(){
-              this.log();
-          }, this)
-        },
-
-        hasPhoneVerification: function(){
-            this.find(function(model){
-                return model.get('type') === 'code';
-            });
-        },
-
-        log: function () {
-            console.log(this.toJSON());
-        }
-    });
-
-    App.Views.CodeGeneratorForm = Backbone.Ribs.View.extend({
-
-        el: $('#formCodeGenerator'),
-        className: 'form-code-generator',
-        template: 'formCodeGeneratorTpl',
-
-        events: {
-            "change input"        : "changed",
-            "change select"       : "changed",
-            "submit"              : "submit"
-        },
-
-        initialize: function () {
-            this.$el.html(this.render());
-
-            this.listenToOnce(this.model, 'sync', this.renderFormSteps);
-            this.listenTo(this.model, 'sync', this.renderCode);
-            this.listenTo(this.model, 'sync', this.showExample);
-            this.listenTo(this.model, 'sync', this.showMassageSave);
-            this.listenTo(this.model, 'change', this.setValue);
-            this.listenTo(this.model, 'invalid', this.invalid);
-            this.listenTo(this.model, 'invalid', this.unrenderCode);
-            this.listenTo(this.model, 'request', this.valid);
-            _.bindAll(this, 'changed');
-
-            var clipboard = new Clipboard('.js-copy-code');
-
-            clipboard.on('success', function(e) {
-                console.log(e);
-                Materialize.toast('Код скопирован в буфер обмена', 2000);
-            });
-            clipboard.on('error', function(e) {
-                console.log(e);
-                console.error('Не удалось скопировать');
-            });
-        },
-
-        render: function () {
-            var that = this;
-            App.Helpers.TemplateManager.get(this.template, function (template) {
-                var data = _.extend(that.model.toJSON());
-                var temp = _.template(template, data);
-                var html = $(temp(data));
-                that.$el.html(html);
-                that.setValue();
-                if(that.model.id) that.renderCode();
-            });
-            return this;
-        },
-
-        renderStepsGenerator: function () {
-            var phoneVerification = this.model.forms.hasPhoneVerification();
-            App.stepsGeneratorView = new App.Views.StepsGenetatorView({phoneVerification: !!phoneVerification});
-        },
-
-        renderStepsTabs: function () {
-            App.stepsTabView = new App.Views.StepsTabView({collection: this.model.forms});
-            $('#steps').html(App.stepsTabView.el);
-            App.stepsTabView.$el.tabs();
-        },
-
-        renderFormSteps: function() {
-            this.renderStepsGenerator();
-            this.renderStepsTabs();
-            App.stepGeneratorView = new App.Views.StepGeneratorCollection({ collection: this.model.forms });
-        },
-
-        setValue: function () {
-            var attr = this.model.toJSON();
-            _.each(attr, function (num, key) {
-                var $el = this.$el.find('[name=' + key + ']');
-                if ($el.is(':checkbox'))
-                    $el.prop("checked", num);
-                else
-                    $el.val(num);
-            }, this);
-            this.$el.find('select').material_select();
-        },
-
-        renderCode: function () {
-            this.$el.find('[name=code]')
-                .val(this.model.getCode())
-                .addClass('valid');
-        },
-
-        unrenderCode: function () {
-            this.$el.find('[name=code]')
-                .val('')
-                .removeClass('valid');
-        },
-
-        showExample: function(){
-            App.example = new App.Views.Example({model: App.config});
-        },
-
-        changed: function(e) {
-            var changed = e.currentTarget;
-
-            var value;
-            if (changed.type == 'checkbox') {
-                value = changed.checked;
             } else {
-                value = changed.value;
+
+                var that = this;
+                $.ajaxPrefilter(function (options, originalOptions, jqXHR) {
+                    options.crossDomain = {
+                        crossDomain: true
+                    };
+                    options.xhrFields = {
+                        withCredentials: true
+                    };
+                });
+                $.ajax({
+                    url: conf.server.url + '/module/' + id,
+                    success: function (template) {
+                        var tmpl = template;
+                        that.templates[id] = tmpl;
+                        callback(tmpl);
+                    }
+                });
+
             }
 
-            if (value === 'false') value = false;
-            if (value === 'true') value = true;
-
-            var obj = {};
-            obj[changed.name] = value;
-
-            this.model.set(obj);
-        },
-
-        valid: function () {
-            this.$el.find('input')
-                .removeClass('invalid')
-                .addClass('valid');
-        },
-
-        invalid: function (model, errors) {
-            this.$el.find('input')
-                .removeClass('invalid')
-                .removeClass('valid');
-            _.each(errors, function (error) {
-                var $el = this.$el.find('[name="' + error.attr + '"]');
-
-                $el.removeClass('valid')
-                    .addClass('invalid');
-            }, this);
-        },
-
-        showMassageSave: function () {
-            Materialize.toast('Изменения сохранены', 2000);
-        },
-
-        submit: function (e) {
-            e.preventDefault();
-            this.model.save();
         }
-    });
 
-    App.Views.StepGenerator = Backbone.Ribs.View.extend({
-        tagName: 'form',
-        className: 'step-generator',
-        template: 'stepGenerator',
+    };
 
-        events: {
-            "change input"                      : "changed",
-            "change select:not(.add-field-list)"  : "changed",
-            "click .js-remove"                  : "unrender",
-            "click .js-add-field"               : "addField",
-            "click .js-remove-field"            : "removeField",
-            "submit"                            : "submit"
-        },
-
-        initialize: function () {
-            this.render().setStep();
-            this.listenTo(this.model, 'change', this.setValues);
-            this.listenTo(this.model, 'change:step', this.setStep);
-            this.listenTo(this.model, 'remove', this.unrender);
-            _.bindAll(this, 'changed');
-        },
-
-        render: function () {
-            var that = this;
-            App.Helpers.TemplateManager.get(this.template, function (template) {
-                var temp = _.template(template);
-                var data = that.model.toJSON();
-                var html = temp(data);
-                that.$el.html(html);
-                that.fields = new App.Views.Fields({el: that.$el.find('.field-list'), collection: that.model.fieldCollection});
-
-                new App.Views.Select({el: that.$el.find('.add-field-list'), collection: that.model.newFieldCollection},{template:_.template('<%= label %>'), value: 'name'}).render();
-                new App.Views.Select({el: that.$el.find('[name="fields.phone.available"]'), collection: that.model.phoneCodesAvailableCollection}, {value: 'isoCode', multiple: true}).render();
-                new App.Views.Select({el: that.$el.find('[name="fields.phone.notAvailable"]'), collection: that.model.phoneCodesNotAvailableCollection}, {value: 'isoCode', multiple: true}).render();
+    function init(option) {
+        App.config = new App.Models.Config(option);
+        if(option)
+            App.config.fetch().then(function(){
+                App.formCodeView = new App.Views.CodeGeneratorForm({model: App.config});
             });
-            return this;
-        },
-
-        unrender: function () {
-            // COMPLETELY UNBIND THE VIEW
-            this.undelegateEvents();
-
-            this.$el.removeData().unbind();
-
-            // Remove view from DOM
-            this.remove();
-            Backbone.View.prototype.remove.call(this);
-        },
-
-        addField: function () {
-            var field = this.$el.find('select.add-field-list').val();
-            this.model.addField(field);
-        },
-
-        removeField: function (e) {
-            var field = $(e.target).data('field');
-            this.model.removeField(field);
-            /** переделать на событие и */
-            this.unrenderField(field);
-        },
-
-        unrenderField: function (field) {
-            this.$el.find('fieldset[data-field="'+field+'"]').remove();
-        },
-
-        setValues: function () {
-            /** @TODO Костыль из-за вложенного объекта, надо найти нормальное решение*/
-            var attr = this.model.toJSON();
-            _.each(attr, function (num, key) {
-                if (typeof num == 'object') {
-                    var parentKey = key;
-                    _.each(num, function (num, key) {
-                        var $el = this.$el.find('[name="' + parentKey + '.' + key + '"]');
-                        this.setValue($el, num);
-                    },this);
-                } else {
-                    var $el = this.$el.find('[name="' + key + '"]');
-                    this.setValue($el, num);
-                }
-
-            }, this);
-            this.$el.find('select').material_select();
-        },
-
-        setValue: function ($el, val) {
-            if ($el.is(':checkbox'))
-                $el.prop("checked", val);
-            if ($el.children('option').length){
-
-                $el.children('option').attr('selected', false);
-
-                val = $.parseJSON(val);
-                _.each(val, function(n){
-                    $el.children('option[value="' + n + '"]')[0].selected = true;
-                });
-            }
-            else
-                $el.val(val);
-        },
-
-        changed: function(e) {
-            var changed = e.currentTarget;
-
-            var value;
-            if (changed.type == 'checkbox') {
-                value = changed.checked;
-            } else if(changed.type == 'select-multiple'){
-                value = [];
-                _.each(changed, function(option){
-                    if (option.selected)
-                        value.push(option.value);
-                });
-            } else {
-                value = changed.value;
-            }
-
-            if (value === 'false') value = false;
-            if (value === 'true') value = true;
-
-            if (Array.isArray(value)) {
-                value = JSON.stringify(value);
-            }
-
-            var obj = {};
-            obj[changed.name] = value;
-
-            this.model.set(obj);
-        },
-
-        setStep: function () {
-            this.$el.prop('id', 'step' + this.model.get('step'));
-            this.$el.find('h3').html('Настройка шага #'+(this.model.get('step') + 1));
-        },
-
-        submit: function (e) {
-            e.preventDefault();
-            App.config.save();
+        else {
+            App.formCodeView = new App.Views.CodeGeneratorForm({model: App.config});
         }
-    });
-
-    App.Views.Example = Backbone.View.extend({
-        el: '#example',
-
-        initialize: function () {
-            this.listenTo(this.model, 'invalid', this.unrender);
-            this.listenTo(this.model, 'error', this.unrender);
-            this.listenTo(this.model, 'sync', this.render);
-        },
-
-        render: function () {
-
-            this.unrender();
-
-            if (this.model.get('layout.init.position') == 'static') {
-
-                if (this.model.get('layout.init.type') == 'button')
-                    this.$el.html(this.model.getButtonDOM());
-
-                else if (this.model.get('layout.init.type') == 'form')
-                    this.$el.html(this.model.getFormDOM());
-
-            } else this.$el.html('');
-
-            UM.init({id: this.model.id});
-        },
-
-        unrender: function() {
-            if(UM.configsCollection) {
-                if(UM.layouts[this.model.id])
-                    if (Array.isArray(UM.layouts[this.model.id]))
-                        UM.layouts[this.model.id][0].unrender();
-                    else
-                        UM.layouts[this.model.id].unrender();
-
-                if(UM.buttons[this.model.id] && UM.buttons[this.model.id].$el.hasClass('um-btn-start--fixed'))
-                    UM.buttons[this.model.id].unrender();
-
-                UM.configsCollection.reset();
-            }
-        }
-
-    });
-
-    App.Views.StepGeneratorCollection = Backbone.Ribs.View.extend({
-        el: $('#stepsGenerator'),
-        className: 'step-generator-list',
-
-        initialize: function() {
-            this.collection.on('add', this.addOne, this);
-            this.render();
-        },
-
-        render: function() {
-            this.collection.each( this.addOne, this );
-            return this;
-        },
-
-        addOne: function(model) {
-            var view = new App.Views.StepGenerator({ model: model });
-            this.$el.append(view.el);
-        }
-    });
+    }
 
     var codeID = $('#formCodeGenerator').data('id');
 
