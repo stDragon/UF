@@ -183,5 +183,17 @@ module.exports = Backbone.Ribs.View.extend({
     showConfirm: function () {
         this.confirmView = new UM.Views.Confirm();
         return this.confirmView.el;
+    },
+    /**
+     * событие гугл аналитики
+     * @param {array} arr
+     * */
+    ga: function (arr){
+        if (typeof _gaq === 'undefined') {
+            console.warn('В Google Analytics не найден объект "_gaq"');
+            return false;
+        } else {
+            _gaq.push(arr);
+        }
     }
 });
