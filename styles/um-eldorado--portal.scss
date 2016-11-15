@@ -55,6 +55,9 @@ $color-red--hover: #c81a30;
     border: 0;
     border-radius: 3px;
     background: #eff2f5;
+    .um-tooltip {
+      display: none!important;
+    }
     .um-btn {
         @include btn();
     }
