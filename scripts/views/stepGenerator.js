@@ -30,8 +30,6 @@ module.exports = Backbone.Ribs.View.extend({
             that.fields = new App.Views.Fields({el: that.$el.find('.field-list'), collection: that.model.fieldCollection});
 
             new App.Views.Select({el: that.$el.find('.add-field-list'), collection: that.model.newFieldCollection},{template:_.template('<%= label %>'), value: 'name'}).render();
-            new App.Views.Select({el: that.$el.find('[name="fields.phone.available"]'), collection: that.model.phoneCodesAvailableCollection}, {value: 'isoCode', multiple: true}).render();
-            new App.Views.Select({el: that.$el.find('[name="fields.phone.notAvailable"]'), collection: that.model.phoneCodesNotAvailableCollection}, {value: 'isoCode', multiple: true}).render();
         });
         return this;
     },
@@ -100,8 +98,8 @@ module.exports = Backbone.Ribs.View.extend({
 
     changed: function(e) {
         var changed = e.currentTarget;
-
         var value;
+
         if (changed.type == 'checkbox') {
             value = changed.checked;
         } else if(changed.type == 'select-multiple'){

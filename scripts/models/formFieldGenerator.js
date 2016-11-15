@@ -24,39 +24,11 @@ module.exports = Backbone.Ribs.Model.extend({
 
         this.newFieldCollection = new App.Collections.Field(App.fields);
         this.fieldCollection = new App.Collections.Field(this.get('fields'));
-        this.phoneCodesCollection = new App.Collections.PhoneCodes({model: App.Models.PhoneCode});
-
-        /** @todo надо перенести данные на сервер */
-        this.phoneCodesCollection.set(App.codes);
-        this.createPhoneCodes();
-        /*
-         var that = this;
-         this.phoneCodesCollection.fetch().then(function() {
-         that.createPhoneCodes();
-         });
-         */
 
         this.listenTo(this.fieldCollection, 'change', this.setFields);
 
         if (App.conf.server.type != 'prod')
             this.on('change', this.log, this);
-    },
-
-    createPhoneCodes: function () {
-        this.phoneCodesAvailableCollection = new App.Collections.PhoneCodes(this.phoneCodesCollection.toJSON());
-        this.phoneCodesNotAvailableCollection = new App.Collections.PhoneCodes(this.phoneCodesCollection.toJSON());
-        this.setActivePhone();
-    },
-
-    setActivePhone: function () {
-        if (this.has('fields.phone')) {
-            if (this.has('fields.phone.available')) {
-                this.phoneCodesAvailableCollection.setActive($.parseJSON(this.get('fields.phone.available')));
-            }
-            if (this.has('fields.phone.notAvailable')) {
-                this.phoneCodesNotAvailableCollection.setActive($.parseJSON(this.get('fields.phone.notAvailable')));
-            }
-        }
     },
 
     setFields: function () {
@@ -69,6 +41,6 @@ module.exports = Backbone.Ribs.Model.extend({
     },
 
     removeField: function (field) {
-        this.unset('fields.'+field);
+        this.unset(field);
     }
 });

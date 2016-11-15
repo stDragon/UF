@@ -21,7 +21,22 @@ module.exports = Backbone.Ribs.View.extend({
             var data = that.model.toJSON();
             var html = temp(data);
             that.$el.html(html);
+            that.$el.attr('data-field', that.model.get("name"));
+
+            if(that.model.get("name") == "phone") {
+                new App.Views.Select({el: that.$el.find('[name="phone.available"]'), collection: that.model.phoneCodesAvailableCollection}, {value: 'isoCode', multiple: true}).render();
+                new App.Views.Select({el: that.$el.find('[name="phone.notAvailable"]'), collection: that.model.phoneCodesNotAvailableCollection}, {value: 'isoCode', multiple: true}).render();
+            }
         });
+        return this;
+    },
+
+    /** Устанавливает значения полей формы*/
+    setValue: function () {
+        var attr = this.model.toJSON();
+        _.each(attr, function (num, key) {
+            this.$el.find('[name=' + key + ']').val(num);
+        }, this);
         return this;
     },
 
@@ -46,8 +61,8 @@ module.exports = Backbone.Ribs.View.extend({
 
     changed: function(e) {
         var changed = e.currentTarget;
-
         var value;
+
         if (changed.type == 'checkbox') {
             value = changed.checked;
         } else if(changed.type == 'select-multiple'){

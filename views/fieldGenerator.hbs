@@ -12,7 +12,7 @@
         </div>
     </div>
     <div class="col s2">
-        <p>Невидемый</p>
+        <p>Невидимый</p>
         <div class="switch">
             <label>
                 Off
@@ -26,14 +26,14 @@
         <div class="col s3">
             <p>Текст 1</p>
             <div class="input-field">
-                <input id="fields.<%= name %>.value1" type="text" name="fields.<%= name %>.value1" value="<%= value1 %>">
+                <input id="fields.<%= name %>.value1" type="text" name="<%= name %>.value1" value="<%= value1 %>">
                 <label for="fields.<%= name %>.value1" class="active sr-only">Текст 1</label>
             </div>
         </div>
         <div class="col s3">
             <p>Текст 2</p>
             <div class="input-field">
-                <input id="fields.<%= name %>.value2" type="text" name="fields.<%= name %>.value2" value="<%= value2 %>">
+                <input id="fields.<%= name %>.value2" type="text" name="<%= name %>.value2" value="<%= value2 %>">
                 <label for="fields.<%= name %>.value2" class="active sr-only">Текст 2</label>
             </div>
         </div>
@@ -41,7 +41,7 @@
         <div class="col s3">
             <p>Текст 2</p>
             <div class="input-field">
-                <input id="fields.<%= name %>.text" type="text" name="fields.<%= name %>.text" value="<%= text %>">
+                <input id="fields.<%= name %>.text" type="text" name="<%= name %>.text" value="<%= text %>">
                 <label for="fields.<%= name %>.text" class="active sr-only">Текст 2</label>
             </div>
         </div>
@@ -72,7 +72,7 @@
                 <div class="switch">
                     <label>
                         Off
-                        <input type="checkbox" name="fields.<%= name %>.combine" <%= combine ? 'checked' : ''%>>
+                        <input type="checkbox" name="<%= name %>.combine" <%= combine ? 'checked' : ''%>>
                         <span class="lever"></span>
                         On
                     </label>
@@ -132,7 +132,7 @@
             <div class="col s3">
                 <p>Label текст</p>
                 <div class="input-field">
-                    <input id="fields.<%= name %>.label" type="text" name="fields.<%= name %>.label" value="<%= label %>">
+                    <input id="fields.<%= name %>.label" type="text" name="<%= name %>.label" value="<%= label %>">
                     <label for="fields.<%= name %>.label" class="active sr-only">Label текст</label>
                 </div>
             </div>
@@ -142,7 +142,7 @@
                     <div class="switch">
                         <label>
                             Off
-                            <input type="checkbox" name="fields.<%= name %>.href.show"
+                            <input type="checkbox" name="<%= name %>.href.show"
                             <%= typeof href !== 'undefined' &&  href.show ? 'checked' : ''%>>
                             <span class="lever"></span>
                             On
@@ -152,7 +152,7 @@
                 <div class="col s4">
                     <p>Текст</p>
                     <div class="input-field">
-                        <input id="fields.<%= name %>.href.text" type="text" name="fields.<%= name %>.href.text"
+                        <input id="fields.<%= name %>.href.text" type="text" name="<%= name %>.href.text"
                                value="<%= typeof href !== 'undefined' && typeof href.text !== 'undefined' ? href.text : '' %>">
                         <label for="fields.<%= name %>.href.text" class="active sr-only">Текст</label>
                     </div>
@@ -160,7 +160,7 @@
                 <div class="col s4">
                     <p>Путь к соглашению</p>
                     <div class="input-field">
-                        <input id="fields.<%= name %>.href.pathname" type="text" name="fields.<%= name %>.href.pathname"
+                        <input id="fields.<%= name %>.href.pathname" type="text" name="<%= name %>.href.pathname"
                                value="<%= typeof href !== 'undefined' && typeof href.pathname !== 'undefined' ? href.pathname : '' %>">
                         <label for="fields.<%= name %>.href.pathname" class="active sr-only">Путь</label>
                     </div>
