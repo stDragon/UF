@@ -2,12 +2,12 @@
 <div class="row">
     <div class="col s1">
         <p>Удал.</p>
-        <button type="button" class="btn-floating js-remove-field" title="Удалить поле" data-field="<%= name %>">X</button>
+        <button type="button" class="btn-floating js-remove-field" title="Удалить поле" data-field="<%= name %>">&times;</button>
     </div>
     <div class="col s1">
         <p>Сорт.</p>
         <div class="input-field">
-            <input id="fields.<%= name %>.sort" type="number" name="fields.<%= name %>.sort" value="<%= sort %>">
+            <input id="fields.<%= name %>.sort" type="number" name="<%= name %>.sort" value="<%= sort %>">
             <label for="fields.<%= name %>.sort" class="active sr-only"></label>
         </div>
     </div>
@@ -16,7 +16,7 @@
         <div class="switch">
             <label>
                 Off
-                <input type="checkbox" data-name="header" name="fields.<%= name %>.hidden" <%= hidden ? 'checked' : ''%>>
+                <input type="checkbox" data-name="header" name="<%= name %>.hidden" <%= hidden ? 'checked' : ''%>>
                 <span class="lever"></span>
                 On
             </label>
@@ -51,7 +51,7 @@
             <div class="switch">
                 <label>
                     Off
-                    <input type="checkbox" name="fields.<%= name %>.required" <%= required ? 'checked' : ''%>>
+                    <input type="checkbox" name="<%= name %>.required" <%= required ? 'checked' : ''%>>
                     <span class="lever"></span>
                     On
                 </label>
@@ -61,7 +61,7 @@
             <div class="col s2">
                 <p>Placeholder</p>
                 <div class="input-field">
-                    <input id="fields.<%= name %>.placeholder" type="text" name="fields.<%= name %>.placeholder" value="<%= placeholder %>">
+                    <input id="fields.<%= name %>.placeholder" type="text" name="<%= name %>.placeholder" value="<%= placeholder %>">
                     <label for="fields.<%= name %>.placeholder" class="active sr-only">Placeholder</label>
                 </div>
             </div>
@@ -84,7 +84,7 @@
                 <div class="switch">
                     <label>
                         Off
-                        <input type="checkbox" name="fields.<%= name %>.showFlag" <%= showFlag ? 'checked' : ''%>>
+                        <input type="checkbox" name="<%= name %>.showFlag" <%= showFlag ? 'checked' : ''%>>
                         <span class="lever"></span>
                         On
                     </label>
@@ -93,7 +93,7 @@
             <div class="col s3">
                 <p>Доступные коды стран</p>
                 <div class="input-field">
-                    <select id="fields.<%= name %>.available" name="fields.<%= name %>.available" multiple></select>
+                    <select id="fields.<%= name %>.available" name="<%= name %>.available" multiple></select>
                     <label for="fields.<%= name %>.available" class="sr-only">Доступные коды стран</label>
                 </div>
             </div>
@@ -101,7 +101,7 @@
             <div class="col s4 hiddendiv">
                 <p>Не доступные коды стран</p>
                 <div class="input-field">
-                    <select id="fields.<%= name %>.notAvailable" name="fields.<%= name %>.notAvailable" multiple></select>
+                    <select id="fields.<%= name %>.notAvailable" name="<%= name %>.notAvailable" multiple></select>
                     <label for="fields.<%= name %>.notAvailable" class="sr-only">Не доступные коды стран</label>
                 </div>
             </div>
@@ -111,7 +111,7 @@
                 <div class="switch">
                     <label>
                         Off
-                        <input type="checkbox" name="fields.<%= name %>.mapShow" <%= mapShow ? 'checked' : ''%>>
+                        <input type="checkbox" name="<%= name %>.mapShow" <%= mapShow ? 'checked' : ''%>>
                         <span class="lever"></span>
                         On
                     </label>
@@ -123,7 +123,7 @@
                 <div class="switch">
                     <label>
                         Off
-                        <input type="checkbox" name="fields.<%= name %>.checked" <%= checked ? 'checked' : ''%>>
+                        <input type="checkbox" name="<%= name %>.checked" <%= checked ? 'checked' : ''%>>
                         <span class="lever"></span>
                         On
                     </label>
@@ -173,7 +173,7 @@
                 <div class="switch">
                     <label>
                         Off
-                        <input type="checkbox" name="fields.<%= name %>.wrap" <%= wrap ? 'checked' : ''%>>
+                        <input type="checkbox" name="<%= name %>.wrap" <%= wrap ? 'checked' : ''%>>
                         <span class="lever"></span>
                         On
                     </label>
