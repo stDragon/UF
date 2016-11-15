@@ -15,22 +15,15 @@ $color-orange--border: rgba(214, 42, 18, .55);
     font-weight: 600;
     line-height: 35px;
 
-    position: relative;
-
     display: inline-block;
     overflow: visible;
 
-    box-sizing: border-box;
-    min-height: 35px;
     margin: 0;
-    padding: 0 30px 0 20px;
+    padding: 0 20px;
 
     cursor: pointer;
     -webkit-transition: .2s ease-in;
             transition: .2s ease-in;
-    text-align: center;
-    vertical-align: middle;
-    text-decoration: none;
     letter-spacing: .3px;
     text-transform: uppercase;
 
@@ -45,6 +38,56 @@ $color-orange--border: rgba(214, 42, 18, .55);
     &:focus,
     &:hover {
         background-color: $color-orange--hover;
+    }
+    &.um-btn-primary {
+        padding: 0 30px 0 20px;
+        &::before {
+            font-family: FontAwesome;
+            font-weight: 400;
+            font-style: normal;
+            line-height: 1;
+
+            position: absolute;
+            top: 50%;
+            right: 10px;
+
+            margin-top: -7px;
+
+            content: '\f0da';
+
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        &::after {
+            position: absolute;
+            top: 50%;
+            right: 14px;
+
+            width: 10px;
+            height: 2px;
+            margin-top: -3px;
+            margin-left: -10px;
+
+            content: '';
+            -webkit-transition: .15s ease-in-out;
+                    transition: .15s ease-in-out;
+            transform: scale(0);
+
+            opacity: 0;
+            background-color: white;
+        }
+        &:active,
+        &:focus,
+        &:hover {
+            -webkit-transform: translateX(5px);
+                    transform: translateX(5px);
+            &::after {
+                -webkit-transform: scale(1);
+                        transform: scale(1);
+
+                opacity: 1;
+            }
+        }
     }
 }
 
@@ -61,6 +104,9 @@ $color-orange--border: rgba(214, 42, 18, .55);
     background: #f9f9f9;
     :invalid {
         box-shadow: none;
+    }
+    .um-btn {
+        @include btn();
     }
     a {
         -webkit-transition: .2s ease-in;
@@ -79,10 +125,14 @@ $color-orange--border: rgba(214, 42, 18, .55);
                 display: block;
 
                 margin-bottom: 5px;
+
+                color: inherit;
             }
             &.um-label-checkbox {
                 font-size: 11px;
                 line-height: 16px;
+
+                color: inherit;
             }
         }
         [type='submit'] {
@@ -119,19 +169,31 @@ $color-orange--border: rgba(214, 42, 18, .55);
         }
     }
     textarea.um-form-control {
+        overflow: hidden;
+
+        padding: 3px 6px;
+
         resize: none;
 
-        border: dashed transparent;
+        border: 1px dashed transparent;
         background: none;
         &:focus {
             border-color: #ddd;
+            background-color: transparent;
+            box-shadow: none;
         }
+    }
+    fieldset {
+        margin-right: -5px;
+        margin-left: -5px;
     }
     .um-form-group {
         float: left;
 
         width: 100%;
         margin-bottom: 10px;
+        padding-right: 5px;
+        padding-left: 5px;
         &:last-child {
             margin-bottom: 0;
         }
@@ -149,14 +211,21 @@ $color-orange--border: rgba(214, 42, 18, .55);
                 display: none!important;// не показываем выпадающий список с кодами стран
             }
         }
-        .um-form-group-firstname,
-        .um-form-group-email,
-        .um-form-group-phone {
-            width: calc(33.3333% - 10px);
+        &.um-form-group-firstname,
+        &.um-form-group-email,
+        &.um-form-group-phone {
+            width: 33.3333%;
         }
-        .um-form-group-city,
-        .um-form-group-shop {
-            width: calc(50% - 10px);
+        &.um-form-group-city {
+            width: 25%;
+        }
+        &.um-form-group-shop {
+            width: 75%;
+        }
+        &.um-form-group-wishes {
+            label {
+                @include sr-only();
+            }
         }
         svg[class^='um-icon-'] {
             line-height: 100%;
@@ -173,6 +242,17 @@ $color-orange--border: rgba(214, 42, 18, .55);
             background-color: white;
 
             fill: #757575;
+        }
+    }
+    .um-dropdown-content {
+        margin-top: 2px;
+
+        border: 1px solid rgb(204, 210, 204);
+        li {
+            &:hover,
+            &.active {
+                background-color: #eee;
+            }
         }
     }
 }
