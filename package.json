@@ -31,6 +31,7 @@
   "scripts": {
     "start-dev": "gulp",
     "start-prod": "PORT=3000 PORTSSL=3001 gulp",
+    "start-pre-prod": "PORT=3000 PORTSSL=3001 node node_modules/gulp/bin/gulp.js",
     "scripts": "gulp scripts",
     "styles": "gulp styles",
     "test": "echo \"Error: no test specified\" && exit 1"
