@@ -160,10 +160,10 @@ module.exports = Backbone.Ribs.View.extend({
     },
     createForms: function () {
         var that = this;
-        _.each(this.model.get('forms'), function(element, index, list){
-            if(element.type !== 'code')
-                that.formView[index] = new UM.Views.FormUser({model: that.model.form}, element);
-        });
+        _.each(this.model.get('forms'), function(step, index, list){
+            if(step.model === 'client')
+                this.formView[index] = new UM.Views.FormUser({model: that.model.form['client']}, step);
+        },this);
         return this;
     },
     /**
@@ -177,11 +177,8 @@ module.exports = Backbone.Ribs.View.extend({
      * */
     showPhoneForm: function () {
         var phone = this.model.form.get('phone');
-        this.phone = new UM.Models.Phone({
-            user: UM.forms[this.model.id].id,
-            phone: phone,
-            configId: this.model.id
-        });
+        this.model.form['phone'].set('phone', phone);
+        this.model.form['phone'].set('user', this.form['client'].id);
         this.phoneView = new UM.Views.FormUserPhone({model: this.phone});
         return this.phoneView.el;
     },

@@ -70,8 +70,22 @@ module.exports = Backbone.Ribs.Model.extend({
         }
 
         if (UM.formTypes.indexOf(this.get('global.type')) != -1) {
-            /** @todo если надо будет разделить шаги на разные модели, делать это надо будет тут */
-            this.form = new UM.Models.User(this.data.user, this.get('forms'));
+            this.form = [];
+            _.each(this.get('forms'), function (option) {
+                if (option.model === 'client') {
+                    if (typeof this.form['client'] === 'undefined')
+                        this.form['client'] = new UM.Models.User(this.data.user, option);
+                    else
+                        this.form['client'].addOption(option);
+                }
+                if (option.model === 'phone') {
+                    if (this.form['phone'] === 'undefined')
+                        this.form['phone'] = new UM.Models.Phone({
+                        configId: this.model.id
+                    });
+                }
+            }, this);
+
         } else {
             var msgErr = "Тип заявки '" + this.get('global.type') + "' не поддерживается или не корректен";
             new UM.Models.Logger({message: String(msgErr)});

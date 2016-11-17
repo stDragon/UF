@@ -8,116 +8,15 @@ module.exports = Backbone.Model.extend({
         return UM.serverUrl + '/client/'
     },
 
-    initialize: function (model, options) {
+    initialize: function (model, option) {
         UM.forms[this.get('configId')] = this;
-        var that = this;
 
         this.set('href',JSON.stringify(window.location.href));
 
-        if (options) {
-            this.options = options;
-            //this.set('personalData', options.fields.personalData.checked);
-        }
-
-        if (typeof options.fields.city !== 'undefined' && options.fields.city.show) {
-            this.cityCollection = new UM.Collections.Citys([], this.toJSON());
-            this.cityCollection.fetch().then(function(){
-                if (model.cityId) {
-                    that.cityCollection.setActive(model.cityId);
-                }
-            }, UM.ajaxError);
-
-            this.listenTo(this.cityCollection, 'change:active', function() {
-                var active = this.cityCollection.getActive();
-                if (active) {
-                    this.set('cityId', active.mr3id);
-                    this.set('city', active.name);
-                }
-            });
-        }
-
-        if (typeof options.fields.shop !== 'undefined' && options.fields.shop.show) {
-            var defaultShop = {
-                name: 'Все студии',
-                city: 'all',
-                title: 'Все студии',
-                //active: true
-            };
-            this.shopCollection = new UM.Collections.Shops([defaultShop], this.toJSON());
-            this.shopCollection.fetch({remove: false}).then(function(){
-                if (model.shopId) {
-                    that.shopCollection.setActive(model.shopId);
-                }
-            }, UM.ajaxError);
-
-            this.listenTo(this, 'change:cityId', function () {
-                this.set('shopId', '');
-                //this.set('shop', 'Все студии');
-            });
-
-            this.listenTo(this.shopCollection, 'change:active', function() {
-                var active = this.shopCollection.getActive();
-                if (active) {
-                    this.set('shopId', active.mr3id);
-                }
-            });
-
-            this.listenTo(this, 'change:shopId', function() {
-                var active = this.shopCollection.getActive();
-                if (active) {
-                    this.set('shop', active.title);
-                }
-            });
-        }
-
-        if (typeof options.fields.kitchen !== 'undefined' && options.fields.kitchen.show) {
-            this.kitchenCollection = new UM.Collections.Kitchens([], this.toJSON());
-            this.kitchenCollection.fetch().then(function(){
-                if (model.kitchenId) {
-                    that.cityCollection.setActive(model.kitchenId);
-                }
-            }, UM.ajaxError);
-
-            this.listenTo(this.kitchenCollection, 'change:active', function() {
-                var active = this.kitchenCollection.getActive();
-                if (active) {
-                    this.set('kitchenId', active.mr3id);
-                    this.set('kitchen', active.name);
-                }
-            });
-        }
-
-        if (typeof options.fields.pref !== 'undefined' && options.fields.pref.show) {
-            this.prefCollection = new UM.Collections.Options(UM.pref, this.toJSON());
-
-            this.listenTo(this.prefCollection, 'change:active', function() {
-                var active = this.prefCollection.getActive();
-                if (active) {
-                    this.set('pref', active.name);
-                }
-            });
-        }
-
-        if (typeof options.fields.product !== 'undefined' && options.fields.product.show) {
-            this.productCollection = new UM.Collections.Options(UM.product, this.toJSON());
-
-            this.listenTo(this.productCollection, 'change:active', function() {
-                var active = this.productCollection.getActive();
-                if (active) {
-                    this.set('product', active.name);
-                }
-            });
-        }
-
-        if (typeof options.fields.pay !== 'undefined' && options.fields.pay.show) {
-            this.payCollection = new UM.Collections.Options(UM.pay, this.toJSON());
-
-            this.listenTo(this.payCollection, 'change:active', function() {
-                var active = this.payCollection.getActive();
-                if (active) {
-                    this.set('pay', active.name);
-                }
-            });
+        if (option) {
+            this.options = [];
+            this.options.push(option);
+            this.initCollections(option);
         }
 
         this.on('change', function () {
@@ -126,6 +25,114 @@ module.exports = Backbone.Model.extend({
 
         if (UM.conf.server.type != 'prod')
             this.on('change', this.log, this);
+    },
+
+    addOption: function (option){
+        this.options.push(option);
+        this.initCollections(option);
+    },
+
+    initCollections: function (option) {
+        var that = this;
+        _.each(option.fields,function (field) {
+            switch (field.name) {
+                case 'city':
+                    this.cityCollection = new UM.Collections.Citys([], this.toJSON());
+                    this.cityCollection.fetch().then(function(){
+                        if (that.has('cityId')) {
+                            that.cityCollection.setActive(that.get('cityId'));
+                        }
+                    }, UM.ajaxError);
+
+                    this.listenTo(that.cityCollection, 'change:active', function() {
+                        var active = that.cityCollection.getActive();
+                        if (active) {
+                            this.set('cityId', active.mr3id);
+                            this.set('city', active.name);
+                        }
+                    });
+                    break;
+                case 'shop':
+                    var defaultShop = {
+                        //active: true,
+                        name: 'Все студии',
+                        city: 'all',
+                        title: 'Все студии'
+                    };
+                    this.shopCollection = new UM.Collections.Shops([defaultShop], this.toJSON());
+                    this.shopCollection.fetch({remove: false}).then(function(){
+                        if (that.has('shopId')) {
+                            that.shopCollection.setActive(that.get('shopId'));
+                        }
+                    }, UM.ajaxError);
+
+                    this.listenTo(this, 'change:cityId', function () {
+                        this.set('shopId', '');
+                        //this.set('shop', 'Все студии');
+                    });
+
+                    this.listenTo(this.shopCollection, 'change:active', function() {
+                        var active = this.shopCollection.getActive();
+                        if (active) {
+                            this.set('shopId', active.mr3id);
+                        }
+                    });
+
+                    this.listenTo(this, 'change:shopId', function() {
+                        var active = this.shopCollection.getActive();
+                        if (active) {
+                            this.set('shop', active.title);
+                        }
+                    });
+                    break;
+                case 'kitchen':
+                    this.kitchenCollection = new UM.Collections.Kitchens([], this.toJSON());
+                    this.kitchenCollection.fetch().then(function(){
+                        if (that.has('kitchenId')) {
+                            that.cityCollection.setActive(that.get('kitchenId'));
+                        }
+                    }, UM.ajaxError);
+
+                    this.listenTo(this.kitchenCollection, 'change:active', function() {
+                        var active = this.kitchenCollection.getActive();
+                        if (active) {
+                            this.set('kitchenId', active.mr3id);
+                            this.set('kitchen', active.name);
+                        }
+                    });
+                    break;
+                case 'pref':
+                    this.prefCollection = new UM.Collections.Options(UM.pref, this.toJSON());
+
+                    this.listenTo(this.prefCollection, 'change:active', function() {
+                        var active = this.prefCollection.getActive();
+                        if (active) {
+                            this.set('pref', active.name);
+                        }
+                    });
+                    break;
+                case 'product':
+                    this.productCollection = new UM.Collections.Options(UM.product, this.toJSON());
+
+                    this.listenTo(this.productCollection, 'change:active', function() {
+                        var active = this.productCollection.getActive();
+                        if (active) {
+                            this.set('product', active.name);
+                        }
+                    });
+                    break;
+                case 'pay':
+                    this.payCollection = new UM.Collections.Options(UM.pay, this.toJSON());
+
+                    this.listenTo(this.payCollection, 'change:active', function() {
+                        var active = this.payCollection.getActive();
+                        if (active) {
+                            this.set('pay', active.name);
+                        }
+                    });
+                    break;
+            }
+        }, this);
     },
 
     /** @TODO временны отключены часть ошибок. используется браузерный валидатор */
