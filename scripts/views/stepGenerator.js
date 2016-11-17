@@ -100,6 +100,8 @@ module.exports = Backbone.Ribs.View.extend({
         var changed = e.currentTarget;
         var value;
 
+        if ($(changed).closest('.field-list').length) return;
+
         if (changed.type == 'checkbox') {
             value = changed.checked;
         } else if(changed.type == 'select-multiple'){
@@ -120,8 +122,7 @@ module.exports = Backbone.Ribs.View.extend({
         }
 
         var obj = {};
-        var name = changed.name.split(".");
-        obj[changed.name[1]] = value;
+        obj[changed.name] = value;
 
         this.model.set(obj);
     },

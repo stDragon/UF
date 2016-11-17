@@ -83,8 +83,7 @@ module.exports = Backbone.Ribs.View.extend({
         }
 
         var obj = {};
-        var name = changed.name.split(".");
-        obj[changed.name[1]] = value;
+        obj[changed.name] = value;
 
         this.model.set(obj);
     },

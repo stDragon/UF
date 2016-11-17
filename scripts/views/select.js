@@ -12,7 +12,6 @@ module.exports = Backbone.View.extend({
     },
 
     render: function () {
-        console.log(this.$el);
         this.$el.append('<option disabled>Выберите опцию</option>');
         this.collection.each(function (model) {
             var view = new App.Views.SelectOption({model: model},this.options);

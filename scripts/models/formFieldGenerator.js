@@ -25,6 +25,7 @@ module.exports = Backbone.Ribs.Model.extend({
         this.newFieldCollection = new App.Collections.Field(App.fields);
         this.fieldCollection = new App.Collections.Field(this.get('fields'));
 
+        this.listenTo(this.fieldCollection, 'add', this.setFields);
         this.listenTo(this.fieldCollection, 'change', this.setFields);
 
         if (App.conf.server.type != 'prod')
