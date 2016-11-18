@@ -28,6 +28,10 @@ require('./Backbone.Ymaps.js');
 
 window.UM = UM;
 
+UM.prices = require('../prices.js');
+UM.colors = require('../colors.js');
+UM.rooms = require('../rooms.js');
+
 UM.Models.Logger = require('./models/logger.js');
 UM.Models.Config = require('./models/config.js');
 UM.Models.City = require('./models/city.js');
@@ -37,12 +41,18 @@ UM.Models.Shop = require('./models/shop.js');
 UM.Models.Modal = require('./models/modal.js');
 UM.Models.Kitchen = require('./models/kitchen.js');
 UM.Models.PhoneCode = require('./models/phoneCode.js');
+UM.Models.Price = require('./models/price.js');
+UM.Models.Color = require('./models/color.js');
+UM.Models.Room = require('./models/room.js');
 
 UM.Collections.Configs = require('./collections/configs.js');
 UM.Collections.Citys = require('./collections/citys.js');
 UM.Collections.Shops = require('./collections/shops.js');
 UM.Collections.Kitchens = require('./collections/kitchens.js');
 UM.Collections.PhoneCodeCollection = require('./collections/phoneCodes.js');
+UM.Collections.Prices = require('./collections/prices.js');
+UM.Collections.Colors = require('./collections/colors.js');
+UM.Collections.Rooms = require('./collections/rooms.js');
 
 UM.Views.Tooltip = require('./views/tooltip.js');
 UM.Views.Loader = require('./views/loader.js');
@@ -67,6 +77,12 @@ UM.Views.Kitchens = require('./views/kitchens.js');
 UM.Views.PhoneInput = require('./views/phoneInput.js');
 UM.Views.PhoneCode = require('./views/phoneCode.js');
 UM.Views.PhoneCodeCollection = require('./views/phoneCodeCollection.js');
+UM.Views.Price = require('./views/price.js');
+UM.Views.Prices = require('./views/prices.js');
+UM.Views.Color = require('./views/color.js');
+UM.Views.Colors = require('./views/colors.js');
+UM.Views.Room = require('./views/room.js');
+UM.Views.Rooms = require('./views/rooms.js');
 
 /** @todo Надо определить куда это определить */
 UM.codes = [

@@ -17,7 +17,12 @@ module.exports = Backbone.Model.extend({
         pay: '',
         term: '',
         wishes: '',
-        personalData: true
+        color: '',
+        comment : '',
+        file: '',
+        description: '',
+        personalData: true,
+        room : ''
     },
 
     urlRoot: function () {
@@ -108,6 +113,39 @@ module.exports = Backbone.Model.extend({
                 if (active) {
                     this.set('kitchenId', active.mr3id);
                     this.set('kitchen', active.name);
+                }
+            });
+        }
+
+        if (typeof options.price !== 'undefined' && options.price.show) {
+            this.priceCollection = new UM.Collections.Prices(UM.prices, this.toJSON());
+
+            this.listenTo(this.priceCollection, 'change:active', function() {
+                var active = this.priceCollection.getActive();
+                if (active) {
+                    this.set('price', active.name);
+                }
+            });
+        }
+
+        if (typeof options.color !== 'undefined' && options.color.show) {
+            this.colorCollection = new UM.Collections.Colors(UM.colors, this.toJSON());
+
+            this.listenTo(this.colorCollection, 'change:active', function() {
+                var active = this.colorCollection.getActive();
+                if (active) {
+                    this.set('color', active.name);
+                }
+            });
+        }
+
+        if (typeof options.room !== 'undefined' && options.room.show) {
+            this.roomCollection = new UM.Collections.Rooms(UM.rooms, this.toJSON());
+
+            this.listenTo(this.roomCollection, 'change:active', function() {
+                var active = this.roomCollection.getActive();
+                if (active) {
+                    this.set('room', active.name);
                 }
             });
         }

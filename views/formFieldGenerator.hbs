@@ -426,6 +426,105 @@
     </div>
 </div>
 
+<h3><%= description.label %></h3>
+<div class="row">
+    <div class="col s2">
+        <p>Показывать</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="description.show" <%= description.show ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s2">
+        <p>Обязательное</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="description.required" <%= description.required ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s3">
+        <p>Placeholder</p>
+        <div class="input-field">
+            <input id="description.placeholder" type="text" name="description.placeholder" value="<%= description.placeholder %>">
+            <label for="description.placeholder" class="active sr-only">Placeholder</label>
+        </div>
+    </div>
+</div>
+
+<h3><%= file.label %></h3>
+<div class="row">
+    <div class="col s2">
+        <p>Показывать</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="file.show" <%= file.show ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s2">
+        <p>Обязательное</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="file.required" <%= file.required ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s3">
+        <p>Placeholder</p>
+        <div class="input-field">
+            <input id="file.placeholder" type="text" name="file.placeholder" value="<%= file.placeholder %>">
+            <label for="file.placeholder" class="active sr-only">Placeholder</label>
+        </div>
+    </div>
+</div>
+
+<h3><%= comment.label %></h3>
+<div class="row">
+    <div class="col s2">
+        <p>Показывать</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="comment.show" <%= comment.show ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s2">
+        <p>Обязательное</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="comment.required" <%= comment.required ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s3">
+        <p>Placeholder</p>
+        <div class="input-field">
+            <input id="comment.placeholder" type="text" name="comment.placeholder" value="<%= comment.placeholder %>">
+            <label for="comment.placeholder" class="active sr-only">Placeholder</label>
+        </div>
+    </div>
+</div>
+
 <h3><%= price.label %></h3>
 <div class="row">
     <div class="col s2">
@@ -525,8 +624,8 @@
     </div>
 </div>
 
-<h3 class="hiddendiv"><%= kitchen.label %></h3>
-<div class="row hiddendiv">
+<h3 class=""><%= kitchen.label %></h3>
+<div class="row">
     <div class="col s2">
         <p>Показывать</p>
         <div class="switch">
@@ -554,6 +653,39 @@
         <div class="input-field">
             <input id="kitchen.placeholder" type="text" name="kitchen.placeholder" value="<%= kitchen.placeholder %>">
             <label for="kitchen.placeholder" class="active sr-only">Placeholder</label>
+        </div>
+    </div>
+</div>
+
+<h3><%= color.label %></h3>
+<div class="row">
+    <div class="col s2">
+        <p>Показывать</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="color.show" <%= color.show ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s2">
+        <p>Обязательное</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="color.required" <%= color.required ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s3">
+        <p>Placeholder</p>
+        <div class="input-field">
+            <input id="color.placeholder" type="text" name="color.placeholder" value="<%= color.placeholder %>">
+            <label for="color.placeholder" class="active sr-only">Placeholder</label>
         </div>
     </div>
 </div>
@@ -659,6 +791,39 @@
             <label>
                 Off
                 <input type="checkbox" name="wishes.wrap" <%= wishes.wrap ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+</div>
+
+<h3><%= room.label %></h3>
+<div class="row">
+    <div class="col s2">
+        <p>Показывать</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="room.show" <%= room.show ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s3">
+        <p>Placeholder</p>
+        <div class="input-field">
+            <input id="room.placeholder" type="text" name="room.placeholder" value="<%= room.placeholder %>">
+            <label for="room.placeholder" class="active sr-only">Placeholder</label>
+        </div>
+    </div>
+    <div class="col s3">
+        <p>Обернуть в div</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="room.wrap" <%= room.wrap ? 'checked' : ''%>>
                 <span class="lever"></span>
                 On
             </label>

@@ -325,9 +325,9 @@ $(document).ready(function() {
                 required: true
             },
             price: {
-                type: 'number',
-                label: 'Стоимость',
-                placeholder: 'Стоимость',
+                type: 'text',
+                label: 'Желаемая стоимость',
+                placeholder: 'Желаемая стоимость',
                 show: false,
                 required: true
             },
@@ -372,6 +372,41 @@ $(document).ready(function() {
                 show: true,
                 required: false,
                 wrap: false
+            },
+            description: {
+                type: 'textarea',
+                label: 'Описание помещения',
+                placeholder: 'Описание помещения',
+                show: false,
+                required: false
+            },
+            color: {
+                type: 'text',
+                label: 'Цвет',
+                placeholder: 'Цвет',
+                show: false,
+                required: false
+            },
+            comment: {
+                type: 'textarea',
+                label: 'Комментарий к файлу',
+                placeholder: 'Комментарий к файлу',
+                show: false,
+                required: false
+            },
+            file: {
+                type: 'file',
+                label: 'Приложить файлы',
+                placeholder: 'Приложить файлы',
+                show: false,
+                required: false
+            },
+            room: {
+                type: 'text',
+                label: 'Помещение',
+                placeholder: 'Помещение',
+                show: false,
+                required: false
             },
             submit: {
                 type: 'submit',

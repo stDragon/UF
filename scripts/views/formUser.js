@@ -43,6 +43,18 @@ module.exports = UM.Views.Form.extend({
             this.kitchenCollectionView = new UM.Views.Kitchens({collection: this.model.kitchenCollection});
         }
 
+        if (this.model.priceCollection) {
+            this.priceCollectionView = new UM.Views.Prices({collection: this.model.priceCollection});
+        }
+
+        if (this.model.colorCollection) {
+            this.colorCollectionView = new UM.Views.Colors({collection: this.model.colorCollection});
+        }
+
+        if (this.model.roomCollection) {
+            this.roomCollectionView = new UM.Views.Colors({collection: this.model.roomCollection});
+        }
+
         this.render();
 
         if (this.model.options.class) this.$el.addClass(this.model.options.class);
@@ -164,6 +176,15 @@ module.exports = UM.Views.Form.extend({
             if (that.kitchenCollectionView) {
                 that.addSelectList('kitchen', that.kitchenCollectionView);
             }
+            if (that.priceCollectionView) {
+                that.addSelectList('price', that.priceCollectionView);
+            }
+            if (that.colorCollectionView) {
+                that.addSelectList('color', that.colorCollectionView);
+            }
+            if (that.roomCollectionView) {
+                that.addSelectList('room', that.roomCollectionView);
+            }
             that.initPhoneMask();
             that.preValidation();
 
@@ -187,7 +208,7 @@ module.exports = UM.Views.Form.extend({
                 that.$el.find('.um-form-group-wishes').appendTo(that.$el.find('.um-login'));
             }
 
-            /* Костыль для кридитной формы твой дом */
+            /* Костыль для кредитной формы твой дом */
             if (UM.configsCollection.get(that.model.get('configId')).get('style') === 'um-your-house'
                 && UM.configsCollection.get(that.model.get('configId')).get('formType') === 'credit') {
                 that.$el.find('.um-form-group-firstname, .um-form-group-email, .um-form-group-phone ').wrapAll("<div class='um-form-col'></div>");
