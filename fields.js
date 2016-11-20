@@ -168,7 +168,7 @@ module.exports = [
         "wrap": false
     },
     {
-        "name": "button",
+        "name": "buttonPrev",
         "sort": "997",
         "type": "button",
         "label": "Кнопка к предидущему шагу",
@@ -177,7 +177,7 @@ module.exports = [
         "text": "Назад"
     },
     {
-        "name": "button",
+        "name": "buttonNext",
         "sort": "998",
         "type": "button",
         "label": "Кнопка к следующему шагу",

@@ -8,7 +8,6 @@ module.exports = Backbone.Ribs.View.extend({
         "change select:not(.add-field-list)"  : "changed",
         "click .js-remove"                  : "unrender",
         "click .js-add-field"               : "addField",
-        "click .js-remove-field"            : "removeField",
         "submit"                            : "submit"
     },
 
@@ -48,17 +47,6 @@ module.exports = Backbone.Ribs.View.extend({
     addField: function () {
         var field = this.$el.find('select.add-field-list').val();
         this.model.addField(field);
-    },
-
-    removeField: function (e) {
-        var field = $(e.target).data('field');
-        this.model.removeField(field);
-        /** переделать на событие и */
-        this.unrenderField(field);
-    },
-
-    unrenderField: function (field) {
-        this.$el.find('fieldset[data-field="'+field+'"]').remove();
     },
 
     setValues: function () {

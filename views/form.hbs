@@ -11,7 +11,7 @@
 
         <%} else if (field.type == 'checkbox' && field.name == 'personalData') {%>
 
-            <div class="um-form-group um-form-group-personal-data<%= field.required ? ' um-form-group-required' : ''%>">
+            <div class="um-form-group um-form-group-personal-data<%= field.required ? ' um-form-group-required' : ''%>"<%= field.hidden ? ' hidden' : ''%>>
                 <label class="um-label-checkbox <%= value[field.name] ? ' um-checked' : ''%>">
                     <input type="checkbox" name="<%= field.name %>" value="<%= value[field.name] %>"
                     <%= field.required ? ' required' : ''%>
@@ -25,16 +25,16 @@
                 </label>
             </div>
 
-        <%} else if (field.type == 'submit') {%>
+        <%} else if (field.type == 'submit' || field.type == 'button') {%>
 
-            <button type="submit" class="um-btn um-btn-primary js-create-order"><%= field.text %></button>
+            <button type="<%= field.type %>" class="um-btn um-btn-primary" data-name="<%= field.name %>"<%= field.hidden ? ' hidden' : ''%>><%= field.text %></button>
 
         <%} else {%>
 
             <div class="um-form-group um-form-group-<%= field.name %>
                 <%= field.required ? ' um-form-group-required' : ''%>
                 <%= (typeof field.combine !== 'undefined' && field.combine) ? 'um-hidden' : ''%>
-                <%= (typeof field.wrap !== 'undefined' && field.wrap) ? 'um-wrapper um-wrapper-hidden' : ''%>">
+                <%= (typeof field.wrap !== 'undefined' && field.wrap) ? 'um-wrapper um-wrapper-hidden' : ''%>"<%= field.hidden ? ' hidden' : ''%>>
                 <label for="um<%= field.name %>"><%= field.label %></label>
                 <%if (field.type == 'textarea') {%>
                     <div class="um-select-wrap um-field-wrap<%= (typeof field.wrap !== 'undefined' && field.wrap) ? ' um-field um-hidden' : ''%>">

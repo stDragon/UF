@@ -3,6 +3,7 @@ module.exports = Backbone.Ribs.View.extend({
     template: 'fieldGenerator',
 
     events: {
+        "click .js-remove-field"   : "remove",
         "change input"   : "changed",
         "change select"  : "changed"
     },
@@ -86,6 +87,10 @@ module.exports = Backbone.Ribs.View.extend({
         obj[changed.name] = value;
 
         this.model.set(obj);
+    },
+
+    remove: function() {
+        this.model.collection.remove(this.model);
     },
 
     unrender: function () {

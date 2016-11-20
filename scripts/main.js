@@ -107,7 +107,7 @@ $(document).ready(function() {
                 formsCollection = _.find(App.formTemplates, function(model){return model.type === type});
             }
             this.forms = new App.Collections.FormFieldGenerators(formsCollection);
-            this.listenTo(this.forms, 'change', this.setFormConfig);
+            this.listenTo(this.forms, 'all', this.setFormConfig);
             //this.listenTo(this.forms, 'change', this.unactivePhoneField);
             this.setFormConfig();
         },

@@ -25,8 +25,7 @@ module.exports = Backbone.Ribs.Model.extend({
         this.newFieldCollection = new App.Collections.Field(App.fields);
         this.fieldCollection = new App.Collections.Field(this.get('fields'));
 
-        this.listenTo(this.fieldCollection, 'add', this.setFields);
-        this.listenTo(this.fieldCollection, 'change', this.setFields);
+        this.listenTo(this.fieldCollection, 'all', this.setFields);
 
         if (App.conf.server.type != 'prod')
             this.on('change', this.log, this);
@@ -39,9 +38,5 @@ module.exports = Backbone.Ribs.Model.extend({
     addField: function (field) {
         var newField = this.newFieldCollection.find(function(model){return model.get('name') == field});
         this.fieldCollection.add(newField);
-    },
-
-    removeField: function (field) {
-        this.unset(field);
     }
 });
