@@ -33,9 +33,9 @@ module.exports = UM.Views.Form.extend({
         }
     },
 
-    initialize: function () {
+    initialize: function (model, options) {
 
-        this.options = this.model.options;
+        this.options = options;
 
         if (this.model.cityCollection) {
             this.cityCollectionView = new UM.Views.Citys({collection: this.model.cityCollection});
@@ -163,13 +163,13 @@ module.exports = UM.Views.Form.extend({
     },
 
     render: function () {
-        this.model.options.fields = _.indexBy(_.sortBy(this.model.options.fields, function(opt){ return Number(opt.sort) }), 'name');
+        this.options.fields = _.sortBy(this.options.fields, function(opt){ return Number(opt.sort) });
         var that = this;
         UM.TemplateManager.get(this.template, function (template) {
             var temp = _.template(template);
             var data = {
                 value: that.model.toJSON(),
-                options: that.model.options
+                options: that.options
             };
 
             var html = temp(data);
@@ -231,7 +231,8 @@ module.exports = UM.Views.Form.extend({
     },
 
     preValidation: function(){
-        if (this.options.fields.personalData.required) {
+        var personalData =_.find(this.options.fields, function(field) {return field.name === 'personalData'});
+        if (typeof personalData !== 'undefined' && personalData.required) {
             if (this.model.get('personalData'))
                 this.enabledSubmit();
             else

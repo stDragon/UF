@@ -13,10 +13,12 @@ module.exports = Backbone.Model.extend({
 
         this.set('href',JSON.stringify(window.location.href));
 
+        this.options = [];
+        this.fieldsCollection = new Backbone.Ribs.Collection;
         if (option) {
-            this.options = [];
             this.options.push(option);
             this.initCollections(option);
+            this.fieldsCollection.add(option.fields);
         }
 
         this.on('change', function () {
@@ -151,190 +153,166 @@ module.exports = Backbone.Model.extend({
         var err;
 
         _.each(attrs, function(value, key) {
+            var options = this.fieldsCollection.find(function(model) {return model.get('name') == key; });
             switch (key) {
                 case 'firstName':
-                    if (this.options.fields.firstName.show) {
-                        if (this.options.fields.firstName.required && !value) {
-                            err = {
-                                text: "Вы не заполнили имя",
-                                attr: 'firstName'
-                            };
-                            errors.push(err);
-                        //} else if (this.options.fields.firstName.required && !lettersFilter.test(value)) {
-                        //    err = {
-                        //        text: "Имя должно содержать только буквы",
-                        //        attr: 'firstName'
-                        //    };
-                        //    errors.push(err);
-                        } else {
-                            this.trigger('valid', 'firstName');
-                        }
+                    if (options.required && !value) {
+                        err = {
+                            text: "Вы не заполнили имя",
+                            attr: 'firstName'
+                        };
+                        errors.push(err);
+                    //} else if (this.options.fields.firstName.required && !lettersFilter.test(value)) {
+                    //    err = {
+                    //        text: "Имя должно содержать только буквы",
+                    //        attr: 'firstName'
+                    //    };
+                    //    errors.push(err);
+                    } else {
+                        this.trigger('valid', 'firstName');
                     }
                     break;
                 case 'surname':
-                    if (this.options.fields.surname.show) {
-                        if (this.options.fields.surname.required && !value) {
-                            err = {
-                                text: "Вы не заполнили фамилию",
-                                attr: 'surname'
-                            };
-                            errors.push(err);
-                        //} else if (this.options.fields.surname.required && !lettersFilter.test(value)) {
-                        //    errors.push({
-                        //        text: "Фамилия должна содержать только буквы",
-                        //        attr: 'surname'
-                        //    });
-                        } else {
-                            this.trigger('valid', 'surname');
-                        }
+                    if (options.required && !value) {
+                        err = {
+                            text: "Вы не заполнили фамилию",
+                            attr: 'surname'
+                        };
+                        errors.push(err);
+                    //} else if (this.options.fields.surname.required && !lettersFilter.test(value)) {
+                    //    errors.push({
+                    //        text: "Фамилия должна содержать только буквы",
+                    //        attr: 'surname'
+                    //    });
+                    } else {
+                        this.trigger('valid', 'surname');
                     }
                     break;
                 case 'email':
-                    if (this.options.fields.email.show) {
-                        if (this.options.fields.email.required && !value) {
-                            errors.push({
-                                text: "Вы не заполнили электронную почту",
-                                attr: 'email'
-                            });
-                        } else if (this.options.fields.email.required && !emailFilter.test(value)) {
-                            errors.push({
-                                text: "Почтовый адресс не коректен",
-                                attr: 'email'
-                            });
-                        } else {
-                            this.trigger('valid', 'email');
-                        }
+                    if (options.required && !value) {
+                        errors.push({
+                            text: "Вы не заполнили электронную почту",
+                            attr: 'email'
+                        });
+                    } else if (options.required && !emailFilter.test(value)) {
+                        errors.push({
+                            text: "Почтовый адресс не коректен",
+                            attr: 'email'
+                        });
+                    } else {
+                        this.trigger('valid', 'email');
                     }
                     break;
                 case 'phone':
-                    var phoneFilter = new RegExp(phonePattern[this.options.fields.phone.pattern]);
-                    if (this.options.fields.phone.show) {
-                        if (this.options.fields.phone.required && !value) {
-                            err = {
-                                text: "Вы не заполнили телефон",
-                                attr: 'phone'
-                            };
-                            errors.push(err);
-                        } else if (!this.validatePhoneCode(value)) {
-                            err = {
-                                text: "Телефонные номера с заданным кодом не поддерживаются",
-                                attr: 'phone'
-                            };
-                            errors.push(err);
-                        } else if (!phoneFilter.test(value)) {
-                            err = {
-                                text: "Телефон не коректен",
-                                attr: 'phone'
-                            };
-                            errors.push(err);
-                        } else {
-                            this.trigger('valid', 'phone');
-                        }
+                    var phoneFilter = new RegExp(phonePattern[options.pattern]);
+                    if (options.required && !value) {
+                        err = {
+                            text: "Вы не заполнили телефон",
+                            attr: 'phone'
+                        };
+                        errors.push(err);
+                    } else if (!this.validatePhoneCode(value)) {
+                        err = {
+                            text: "Телефонные номера с заданным кодом не поддерживаются",
+                            attr: 'phone'
+                        };
+                        errors.push(err);
+                    } else if (!phoneFilter.test(value)) {
+                        err = {
+                            text: "Телефон не коректен",
+                            attr: 'phone'
+                        };
+                        errors.push(err);
+                    } else {
+                        this.trigger('valid', 'phone');
                     }
                     break;
                 case 'city':
-                    if (this.options.fields.city.show) {
-                        if (this.options.fields.city.required && !value) {
-                            err = {
-                                text: "Вы не выбрали город",
-                                attr: 'city'
-                            };
-                            errors.push(err);
-                        } else {
-                            this.trigger('valid', 'city');
-                        }
+                    if (options.required && !value) {
+                        err = {
+                            text: "Вы не выбрали город",
+                            attr: 'city'
+                        };
+                        errors.push(err);
+                    } else {
+                        this.trigger('valid', 'city');
                     }
                     break;
                 case 'personalData':
-                    if (this.options.fields.personalData.show) {
-                        if (this.options.fields.personalData.required && value == false) {
-                            err = {
-                                text: "Чтобы продолжить установите этот флажок",
-                                attr: 'personalData'
-                            };
-                            errors.push(err);
-                        } else {
-                            this.trigger('valid', 'personalData');
-                        }
+                    if (options.required && value == false) {
+                        err = {
+                            text: "Чтобы продолжить установите этот флажок",
+                            attr: 'personalData'
+                        };
+                        errors.push(err);
+                    } else {
+                        this.trigger('valid', 'personalData');
                     }
                     break;
-                /* new fields */
                 case 'adphone':
-                    if (typeof this.options.fields.adphone !== 'undefined' && this.options.fields.adphone.show) {
-                        if (this.options.fields.adphone.required && !value) {
-                            err = {
-                                text: "Вы не указали дополнительный телефон",
-                                attr: 'adphone'
-                            };
-                            errors.push(err);
-                        } else {
-                            this.trigger('valid', 'adphone');
-                        }
+                    if (options.required && !value) {
+                        err = {
+                            text: "Вы не указали дополнительный телефон",
+                            attr: 'adphone'
+                        };
+                        errors.push(err);
+                    } else {
+                        this.trigger('valid', 'adphone');
                     }
                     break;
                 case 'pref':
-                    if (typeof this.options.fields.pref !== 'undefined' && this.options.fields.pref.show) {
-                        if (this.options.fields.pref.required && !value) {
-                            err = {
-                                text: "Вы не указали предпочтительный способ связи",
-                                attr: 'pref'
-                            };
-                            errors.push(err);
-                        } else {
-                            this.trigger('valid', 'pref');
-                        }
+                    if (options.required && !value) {
+                        err = {
+                            text: "Вы не указали предпочтительный способ связи",
+                            attr: 'pref'
+                        };
+                        errors.push(err);
+                    } else {
+                        this.trigger('valid', 'pref');
                     }
                     break;
                 case 'product':
-                    if (typeof this.options.fields.product !== 'undefined' && this.options.fields.product.show) {
-                        if (this.options.fields.product.required && !value) {
-                            err = {
-                                text: "Вы не указали товар",
-                                attr: 'product'
-                            };
-                            errors.push(err);
-                        } else {
-                            this.trigger('valid', 'product');
-                        }
+                    if (options.required && !value) {
+                        err = {
+                            text: "Вы не указали товар",
+                            attr: 'product'
+                        };
+                        errors.push(err);
+                    } else {
+                        this.trigger('valid', 'product');
                     }
                     break;
                 case 'price':
-                    if (typeof this.options.fields.price !== 'undefined' && this.options.fields.price.show) {
-                        if (this.options.fields.price.required && !value) {
-                            err = {
-                                text: "Вы не указали стоимость",
-                                attr: 'price'
-                            };
-                            errors.push(err);
-                        } else {
-                            this.trigger('valid', 'price');
-                        }
+                    if (options.required && !value) {
+                        err = {
+                            text: "Вы не указали стоимость",
+                            attr: 'price'
+                        };
+                        errors.push(err);
+                    } else {
+                        this.trigger('valid', 'price');
                     }
                     break;
                 case 'pay':
-                    if (typeof this.options.fields.pay !== 'undefined' && this.options.fields.pay.show) {
-                        if (this.options.fields.pay.required && !value) {
-                            err = {
-                                text: "Вы не указали величину первого взноса",
-                                attr: 'pay'
-                            };
-                            errors.push(err);
-                        } else {
-                            this.trigger('valid', 'pay');
-                        }
+                    if (options.required && !value) {
+                        err = {
+                            text: "Вы не указали величину первого взноса",
+                            attr: 'pay'
+                        };
+                        errors.push(err);
+                    } else {
+                        this.trigger('valid', 'pay');
                     }
                     break;
                 case 'term':
-                    if (typeof this.options.fields.term !== 'undefined' && this.options.fields.term.show) {
-                        if (this.options.fields.term.required && !value) {
-                            err = {
-                                text: "Вы не указали желаемый срок кредита",
-                                attr: 'term'
-                            };
-                            errors.push(err);
-                        } else {
-                            this.trigger('valid', 'term');
-                        }
+                    if (options.required && !value) {
+                        err = {
+                            text: "Вы не указали желаемый срок кредита",
+                            attr: 'term'
+                        };
+                        errors.push(err);
+                    } else {
+                        this.trigger('valid', 'term');
                     }
                     break;
             }
