@@ -146,7 +146,6 @@ module.exports = Backbone.Model.extend({
             'KZ': /\+77\s\d{2}\-\d{3}\-\d{2}\-\d{2}/,
             'KG': /\+996\s\d{3}\-\d{3}\-\d{3}/
         };
-        var phoneFilter = new RegExp(phonePattern[this.options.fields.phone.pattern]);
 
         var errors = [];
         var err;
@@ -208,6 +207,7 @@ module.exports = Backbone.Model.extend({
                     }
                     break;
                 case 'phone':
+                    var phoneFilter = new RegExp(phonePattern[this.options.fields.phone.pattern]);
                     if (this.options.fields.phone.show) {
                         if (this.options.fields.phone.required && !value) {
                             err = {
