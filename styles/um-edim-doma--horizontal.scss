@@ -194,6 +194,9 @@ $color-orange--border: rgba(214, 42, 18, .55);
         margin-bottom: 10px;
         padding-right: 5px;
         padding-left: 5px;
+        + .um-form-group {
+            margin-top: 0;
+        }
         &:last-child {
             margin-bottom: 0;
         }
