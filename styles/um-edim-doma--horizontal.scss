@@ -188,9 +188,6 @@ $color-orange--border: rgba(214, 42, 18, .55);
         margin-left: -5px;
     }
     .um-form-group {
-        float: left;
-
-        width: 100%;
         margin-bottom: 10px;
         padding-right: 5px;
         padding-left: 5px;
@@ -213,17 +210,6 @@ $color-orange--border: rgba(214, 42, 18, .55);
             .um-dropdown-content {
                 display: none!important;// не показываем выпадающий список с кодами стран
             }
-        }
-        &.um-form-group-firstname,
-        &.um-form-group-email,
-        &.um-form-group-phone {
-            width: 33.3333%;
-        }
-        &.um-form-group-city {
-            width: 25%;
-        }
-        &.um-form-group-shop {
-            width: 75%;
         }
         &.um-form-group-wishes {
             label {
@@ -258,4 +244,25 @@ $color-orange--border: rgba(214, 42, 18, .55);
             }
         }
     }
+}
+
+@media only screen and (min-width: 769px) {
+  .um.um-edim-doma--horizontal {
+    .um-form-group {
+      float: left;
+
+      width: 100%;
+      &.um-form-group-firstname,
+      &.um-form-group-email,
+      &.um-form-group-phone {
+        width: 33.3333%;
+      }
+      &.um-form-group-city {
+        width: 25%;
+      }
+      &.um-form-group-shop {
+        width: 75%;
+      }
+    }
+  }
 }
