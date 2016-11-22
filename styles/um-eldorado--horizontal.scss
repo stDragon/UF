@@ -71,6 +71,9 @@ $main-color: #e11a33;
       width: 25%;
       float: left;
       padding: 0 5px;
+      + .um-form-group {
+        margin-top: 0;
+      }
       &.um-select {
         &::before {
           right: 12px;
