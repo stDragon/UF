@@ -18,9 +18,11 @@ module.exports = UM.Views.Form.extend({
         'click .um-icon-add-location': 'showYaMap',
         'change input:checkbox': 'changed',
         'click .um-static-select li': 'chooseValue',
-        'submit': 'save',
         'click': 'click',
-        'input [name="name"]' : 'parseName'
+        'input [name="name"]' : 'parseName',
+        'click button[name="buttonNext"]': 'toNextStep',
+        'click button[name="buttonPrev"]': 'toPrevStep',
+        'submit': 'save'
     },
 
     click: function(e) {
@@ -37,27 +39,7 @@ module.exports = UM.Views.Form.extend({
 
         this.options = options;
 
-        if (this.model.cityCollection) {
-            this.cityCollectionView = new UM.Views.Citys({collection: this.model.cityCollection});
-        }
-
-        if (this.model.kitchenCollection) {
-            this.kitchenCollectionView = new UM.Views.Kitchens({collection: this.model.kitchenCollection});
-        }
-
-        if (this.model.prefCollection) {
-            this.prefCollectionView = new UM.Views.InputSelect({collection: this.model.prefCollection});
-        }
-
-        if (this.model.productCollection) {
-            this.productCollectionView = new UM.Views.InputSelect({collection: this.model.productCollection});
-        }
-
-        if (this.model.payCollection) {
-            this.payCollectionView = new UM.Views.InputSelect({collection: this.model.payCollection});
-        }
-
-        this.render();
+        this.initSelects().render();
 
         this.model.on('change', this.setValue, this);
         this.model.on('change:personalData', this.preValidation, this);
@@ -91,6 +73,30 @@ module.exports = UM.Views.Form.extend({
         this.$el.on('click', '.um-wrapper>label, .um-edim-doma-old .um-form-group-wishes>label', function(e) {
             that.concealed(e);
         });
+    },
+
+    initSelects: function () {
+        if (this.model.cityCollection && _.find(this.options.fields, function (field){return field.name === 'city'})) {
+            this.cityCollectionView = new UM.Views.Citys({collection: this.model.cityCollection});
+        }
+
+        if (this.model.kitchenCollection && _.find(this.options.fields, function (field){return field.name === 'kitchen'})) {
+            this.kitchenCollectionView = new UM.Views.Kitchens({collection: this.model.kitchenCollection});
+        }
+
+        if (this.model.prefCollection && _.find(this.options.fields, function (field){return field.name === 'pref'})) {
+            this.prefCollectionView = new UM.Views.InputSelect({collection: this.model.prefCollection});
+        }
+
+        if (this.model.productCollection && _.find(this.options.fields, function (field){return field.name === 'product'})) {
+            this.productCollectionView = new UM.Views.InputSelect({collection: this.model.productCollection});
+        }
+
+        if (this.model.payCollection && _.find(this.options.fields, function (field){return field.name === 'pay'})) {
+            this.payCollectionView = new UM.Views.InputSelect({collection: this.model.payCollection});
+        }
+
+        return this;
     },
 
     initPhoneMask: function () {
@@ -370,6 +376,9 @@ module.exports = UM.Views.Form.extend({
             $input.addClass('um-hidden')
     },
 
+    /**
+     * @deprecated since version 2.0
+     */
     addSteps: function () {
         this.$el.addClass('um-form-step um-form-step-1');
         this.$el.find('.um-form-group-firstname').addClass('um-form-group-step-1');
@@ -400,11 +409,27 @@ module.exports = UM.Views.Form.extend({
         });
     },
 
+    /**
+     * @deprecated since version 2.0
+     */
     nextStep: function () {
         this.$el.removeClass('um-form-step-1').addClass('um-form-step-2');
     },
 
+    /**
+     * @deprecated since version 2.0
+     */
     prevStep: function () {
         this.$el.removeClass('um-form-step-2').addClass('um-form-step-1');
+    },
+
+    toNextStep: function () {
+        this.setAttrs();
+        this.trigger('form:nextStep', this.options);
+    },
+
+    toPrevStep: function () {
+        this.setAttrs();
+        this.trigger('form:prevStep', this.options);
     }
 });

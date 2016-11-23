@@ -27,7 +27,7 @@
 
         <%} else if (field.type == 'submit' || field.type == 'button') {%>
 
-            <button type="<%= field.type %>" class="um-btn um-btn-primary" data-name="<%= field.name %>"<%= field.hidden ? ' hidden' : ''%>><%= field.text %></button>
+            <button type="<%= field.type %>" class="um-btn um-btn-primary" name="<%= field.name %>"<%= field.hidden ? ' hidden' : ''%>><%= field.text %></button>
 
         <%} else {%>
 

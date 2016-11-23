@@ -14,6 +14,7 @@ module.exports = Backbone.Ribs.View.extend({
 
     initialize: function () {
 
+        this.step = 0;
         this.formView = [];
         this.$el
             .addClass(this.model.get('layout.style'))
@@ -25,7 +26,7 @@ module.exports = Backbone.Ribs.View.extend({
         if (this.model.get('layout.init.type') == 'button' || this.model.get('layout.init.position') == 'fixed')
             this.$el.addClass('fixed').attr('draggable', true);
 
-        this.render().createForms().renderStep(this.showForm(0));
+        this.render().createForms().renderStep(this.getStep(this.step));
 
         UM.vent.on('layout:show', function (id) {
             if (id == this.model.id)
@@ -72,7 +73,8 @@ module.exports = Backbone.Ribs.View.extend({
     },
 
     renderStep: function (form) {
-        this.$el.children('.um-body').html(form);
+        this.$el.children('.um-body').children().remove();
+        this.$el.children('.um-body').html(form.el);
         return this;
     },
 
@@ -159,18 +161,25 @@ module.exports = Backbone.Ribs.View.extend({
         }
     },
     createForms: function () {
-        var that = this;
         _.each(this.model.get('forms'), function(step, index, list){
-            if(step.model === 'client')
-                this.formView[index] = new UM.Views.FormUser({model: that.model.form['client']}, step);
+            if (step.model === 'client') {
+                this.formView[index] = new UM.Views.FormUser({model: this.model.form['client']}, step);
+                this.listenTo(this.formView[index], 'form:nextStep', function(options) {
+                    this.nextStep();
+                });
+                this.listenTo(this.formView[index], 'form:prevStep', function(options) {
+                    this.prevStep();
+                });
+            }
         },this);
         return this;
     },
     /**
      * Рендер формы
+     * @param {number} step - Номер шага
      * */
-    showForm: function (step) {
-        return this.formView[step].el;
+    getStep: function (step) {
+        return this.formView[step];
     },
     /**
      * Рендер формы подтверждения телефона
@@ -188,5 +197,15 @@ module.exports = Backbone.Ribs.View.extend({
     showConfirm: function () {
         this.confirmView = new UM.Views.Confirm();
         return this.confirmView.el;
+    },
+
+    nextStep: function () {
+        this.renderStep(this.getStep(++this.step));
+        this.trigger('layout:nextStep');
+    },
+
+    prevStep: function () {
+        this.renderStep(this.getStep(--this.step));
+        this.trigger('layout:prevStep');
     }
 });
