@@ -89,6 +89,15 @@ module.exports = UM.Views.Form.extend({
         if (this.model.washingTypeCollection) {
             this.washingTypeCollectionView = new UM.Views.WashingTypes({collection: this.model.washingTypeCollection});
         }
+        if (this.model.stoveStyleCollection) {
+            this.stoveStyleCollectionView = new UM.Views.StoveStyles({collection: this.model.stoveStyleCollection});
+        }
+        if (this.model.hoodStyleCollection) {
+            this.hoodStyleCollectionView = new UM.Views.HoodStyles({collection: this.model.hoodStyleCollection});
+        }
+        if (this.model.hoodTypeCollection) {
+            this.hoodTypeCollectionView = new UM.Views.HoodTypes({collection: this.model.hoodTypeCollection});
+        }
 
         this.render();
 
@@ -258,6 +267,15 @@ module.exports = UM.Views.Form.extend({
             }
             if (that.washingTypeCollectionView) {
                 that.addSelectList('washingType', that.washingTypeCollectionView);
+            }
+            if (that.stoveStyleCollectionView) {
+                that.addSelectList('stoveStyle', that.stoveStyleCollectionView);
+            }
+            if (that.hoodStyleCollectionView) {
+                that.addSelectList('hoodStyle', that.hoodStyleCollectionView);
+            }
+            if (that.hoodTypeCollectionView) {
+                that.addSelectList('hoodType', that.hoodTypeCollectionView);
             }
             that.initPhoneMask();
             that.preValidation();

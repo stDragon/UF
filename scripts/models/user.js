@@ -329,6 +329,46 @@ module.exports = Backbone.Model.extend({
                 }
             });
         }
+        if (typeof options.stoveStyle !== 'undefined' && options.stoveStyle.show) {
+            this.stoveStyleCollection = new UM.Collections.StoveStyles(UM.stoveStyles, this.toJSON());
+
+            this.listenTo(this.stoveStyleCollection, 'change:active', function() {
+                var active = this.stoveStyleCollection.getActive();
+                if (active) {
+                    this.set('stoveStyle', active.name);
+                }
+            });
+        }
+        if (typeof options.stoveStyle !== 'undefined' && options.stoveStyle.show) {
+            this.stoveStyleCollection = new UM.Collections.StoveStyles(UM.stoveStyles, this.toJSON());
+
+            this.listenTo(this.stoveStyleCollection, 'change:active', function() {
+                var active = this.stoveStyleCollection.getActive();
+                if (active) {
+                    this.set('stoveStyle', active.name);
+                }
+            });
+        }
+        if (typeof options.hoodStyle !== 'undefined' && options.hoodStyle.show) {
+            this.hoodStyleCollection = new UM.Collections.HoodStyles(UM.hoodStyles, this.toJSON());
+
+            this.listenTo(this.hoodStyleCollection, 'change:active', function() {
+                var active = this.hoodStyleCollection.getActive();
+                if (active) {
+                    this.set('hoodStyle', active.name);
+                }
+            });
+        }
+        if (typeof options.hoodType !== 'undefined' && options.hoodType.show) {
+            this.hoodTypeCollection = new UM.Collections.HoodTypes(UM.hoodTypes, this.toJSON());
+
+            this.listenTo(this.hoodTypeCollection, 'change:active', function() {
+                var active = this.hoodTypeCollection.getActive();
+                if (active) {
+                    this.set('hoodType', active.name);
+                }
+            });
+        }
 
         this.on('change', function () {
             this.validate(this.changed);

@@ -44,6 +44,9 @@ UM.lowerSections = require('../lowerSection.js');
 UM.diningGroups = require('../diningGroup.js');
 UM.tabletopMaterials = require('../tabletopMaterial.js');
 UM.washingTypes = require('../washingType.js');
+UM.stoveStyles = require('../stoveStyle.js');
+UM.hoodStyles = require('../hoodStyle.js');
+UM.hoodTypes = require('../hoodType.js');
 
 UM.Models.Logger = require('./models/logger.js');
 UM.Models.Config = require('./models/config.js');
@@ -70,6 +73,9 @@ UM.Models.LowerSection = require('./models/lowerSection.js');
 UM.Models.DiningGroup = require('./models/diningGroup.js');
 UM.Models.TabletopMaterial = require('./models/tabletopMaterial.js');
 UM.Models.WashingType = require('./models/washingType.js');
+UM.Models.StoveStyle = require('./models/stoveStyle.js');
+UM.Models.HoodStyle = require('./models/hoodStyle.js');
+UM.Models.HoodType = require('./models/hoodType.js');
 
 UM.Collections.Configs = require('./collections/configs.js');
 UM.Collections.Citys = require('./collections/citys.js');
@@ -92,6 +98,9 @@ UM.Collections.LowerSections = require('./collections/lowerSections.js');
 UM.Collections.DiningGroups = require('./collections/diningGroups.js');
 UM.Collections.TabletopMaterials = require('./collections/tabletopMaterials.js');
 UM.Collections.WashingTypes = require('./collections/washingTypes.js');
+UM.Collections.StoveStyles = require('./collections/stoveStyles.js');
+UM.Collections.HoodTypes = require('./collections/hoodTypes.js');
+UM.Collections.HoodStyles = require('./collections/hoodStyles.js');
 
 UM.Views.Tooltip = require('./views/tooltip.js');
 UM.Views.Loader = require('./views/loader.js');
@@ -150,6 +159,12 @@ UM.Views.TabletopMaterial = require('./views/tabletopMaterial.js');
 UM.Views.TabletopMaterials = require('./views/tabletopMaterials.js');
 UM.Views.WashingType = require('./views/washingType.js');
 UM.Views.WashingTypes = require('./views/washingTypes.js');
+UM.Views.StoveStyle = require('./views/stoveStyle.js');
+UM.Views.StoveStyles = require('./views/stoveStyles.js');
+UM.Views.HoodStyle = require('./views/hoodStyle.js');
+UM.Views.HoodStyles = require('./views/hoodStyles.js');
+UM.Views.HoodType = require('./views/hoodType.js');
+UM.Views.HoodTypes = require('./views/hoodTypes.js');
 
 /** @todo Надо определить куда это определить */
 UM.codes = [
