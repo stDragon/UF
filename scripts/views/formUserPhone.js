@@ -13,7 +13,8 @@ module.exports = Backbone.View.extend({
         'submit': 'save'
     },
 
-    initialize: function () {
+    initialize: function (model, options) {
+        this.options = options;
         this.render();
         this.listenTo(this.model, 'change', this.setValue);
         this.listenTo(this.model, 'invalid', this.invalid);
@@ -40,6 +41,11 @@ module.exports = Backbone.View.extend({
             var html = $(temp(that.model.toJSON()));
             that.$el.html(html);
         });
+        var msg = "Пользователю показано окно подтверждения телефона. ";
+        if (typeof that.options.id !== 'undefined') {
+            msg += 'Форма: ' + that.options.id;
+        }
+        new UM.Models.Logger({message: String(msg)});
         return this;
     },
 
@@ -86,6 +92,12 @@ module.exports = Backbone.View.extend({
         this.$el.find('.um-form-control').each(function () {
             data[this.name] = $(this).val();
         });
+
+        var msg = "Пользователь отправил код подтверждения телефона. ";
+        if (typeof this.options.id !== 'undefined') {
+            msg += 'Форма: ' + this.options.id;
+        }
+        new UM.Models.Logger({message: String(msg)});
 
         this.model.save(data, {
             error: function (model, error) {
