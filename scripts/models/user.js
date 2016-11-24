@@ -17,12 +17,58 @@ module.exports = Backbone.Model.extend({
         pay: '',
         term: '',
         wishes: '',
+        personalData: true,
+
+        // новые поля
         color: '',
         comment : '',
         file: '',
         description: '',
-        personalData: true,
-        room : ''
+        room : '',
+        worktype: '',
+        design: '',
+        walls: '',
+        floorColor: '',
+        floorType: '',
+        floorChange: '',
+        ceilingHeight: '',
+        ceilingChange: '',
+        position: '',
+        addPlace: '',
+        kitchenStyle: '',
+        upperSection: '',
+        lowerSection: '',
+        upperSectionColor: '',
+        lowerSectionColor: '',
+        combineWishes: '',
+        diningGroup: '',
+        diningGroupLength: '',
+        diningGroupWidth: '',
+        diningGroupHeight: '',
+        chairs: '',
+        diningGroupMaterial: '',
+        diningGroupStyle: '',
+        diningGroupColor: '',
+        diningGroupExt: '',
+        tabletopMaterial: '',
+        tabletopExt: '',
+        washingType: '',
+        fridge: '',
+        deepFreeze: '',
+        dishwasher: '',
+        washer: '',
+        stoveNumber: '',
+        inMicrowaveNumber: '',
+        freeMicrowaveNumber: '',
+        oven: '',
+        hob: '',
+        stoveStyle: '',
+        hoodStyle: '',
+        hoodType: '',
+        hoodNumber: '',
+        hoodExt: '',
+        lighting:'',
+        gear :''
     },
 
     urlRoot: function () {
@@ -139,6 +185,17 @@ module.exports = Backbone.Model.extend({
             });
         }
 
+        if (typeof options.gear !== 'undefined' && options.gear.show) {
+            this.gearCollection = new UM.Collections.Gears(UM.gears, this.toJSON());
+
+            this.listenTo(this.gearCollection, 'change:active', function() {
+                var active = this.gearCollection.getActive();
+                if (active) {
+                    this.set('gear', active.name);
+                }
+            });
+        }
+
         if (typeof options.room !== 'undefined' && options.room.show) {
             this.roomCollection = new UM.Collections.Rooms(UM.rooms, this.toJSON());
 
@@ -146,6 +203,129 @@ module.exports = Backbone.Model.extend({
                 var active = this.roomCollection.getActive();
                 if (active) {
                     this.set('room', active.name);
+                }
+            });
+        }
+
+        if (typeof options.worktype !== 'undefined' && options.worktype.show) {
+            this.worktypeCollection = new UM.Collections.Worktypes(UM.worktypes, this.toJSON());
+
+            this.listenTo(this.worktypeCollection, 'change:active', function() {
+                var active = this.worktypeCollection.getActive();
+                if (active) {
+                    this.set('worktype', active.name);
+                }
+            });
+        }
+
+        if (typeof options.design !== 'undefined' && options.design.show) {
+            this.designCollection = new UM.Collections.Designs(UM.designs, this.toJSON());
+
+            this.listenTo(this.designCollection, 'change:active', function() {
+                var active = this.designCollection.getActive();
+                if (active) {
+                    this.set('design', active.name);
+                }
+            });
+        }
+
+        if (typeof options.walls !== 'undefined' && options.walls.show) {
+            this.wallCollection = new UM.Collections.Walls(UM.walls, this.toJSON());
+
+            this.listenTo(this.wallCollection, 'change:active', function() {
+                var active = this.wallCollection.getActive();
+                if (active) {
+                    this.set('walls', active.name);
+                }
+            });
+        }
+        if (typeof options.floorType !== 'undefined' && options.floorType.show) {
+            this.floorTypeCollection = new UM.Collections.FloorTypes(UM.floorTypes, this.toJSON());
+
+            this.listenTo(this.floorTypeCollection, 'change:active', function() {
+                var active = this.floorTypeCollection.getActive();
+                if (active) {
+                    this.set('floorType', active.name);
+                }
+            });
+        }
+        if (typeof options.position !== 'undefined' && options.position.show) {
+            this.positionCollection = new UM.Collections.Positions(UM.positions, this.toJSON());
+
+            this.listenTo(this.positionCollection, 'change:active', function() {
+                var active = this.positionCollection.getActive();
+                if (active) {
+                    this.set('position', active.name);
+                }
+            });
+        }
+        if (typeof options.addPlace !== 'undefined' && options.addPlace.show) {
+            this.addPlaceCollection = new UM.Collections.AddPlaces(UM.addPlaces, this.toJSON());
+
+            this.listenTo(this.addPlaceCollection, 'change:active', function() {
+                var active = this.addPlaceCollection.getActive();
+                if (active) {
+                    this.set('addPlace', active.name);
+                }
+            });
+        }
+        if (typeof options.kitchenStyle !== 'undefined' && options.kitchenStyle.show) {
+            this.kitchenStyleCollection = new UM.Collections.KitchenStyles(UM.kitchenStyles, this.toJSON());
+
+            this.listenTo(this.kitchenStyleCollection, 'change:active', function() {
+                var active = this.kitchenStyleCollection.getActive();
+                if (active) {
+                    this.set('kitchenStyle', active.name);
+                }
+            });
+        }
+        if (typeof options.upperSection !== 'undefined' && options.upperSection.show) {
+            this.upperSectionCollection = new UM.Collections.UpperSections(UM.upperSections, this.toJSON());
+
+            this.listenTo(this.upperSectionCollection, 'change:active', function() {
+                var active = this.upperSectionCollection.getActive();
+                if (active) {
+                    this.set('upperSection', active.name);
+                }
+            });
+        }
+        if (typeof options.lowerSection !== 'undefined' && options.lowerSection.show) {
+            this.lowerSectionCollection = new UM.Collections.LowerSections(UM.lowerSections, this.toJSON());
+
+            this.listenTo(this.lowerSectionCollection, 'change:active', function() {
+                var active = this.lowerSectionCollection.getActive();
+                if (active) {
+                    this.set('lowerSection', active.name);
+                }
+            });
+        }
+        if (typeof options.diningGroup !== 'undefined' && options.diningGroup.show) {
+            this.diningGroupCollection = new UM.Collections.DiningGroups(UM.diningGroups, this.toJSON());
+
+            this.listenTo(this.diningGroupCollection, 'change:active', function() {
+                var active = this.diningGroupCollection.getActive();
+                if (active) {
+                    this.set('diningGroup', active.name);
+                }
+            });
+        }
+        if (typeof options.tabletopMaterial !== 'undefined' && options.tabletopMaterial.show) {
+            this.tabletopMaterialCollection = new UM.Collections.TabletopMaterials(UM.tabletopMaterials, this.toJSON());
+
+            this.listenTo(this.tabletopMaterialCollection, 'change:active', function() {
+                var active = this.tabletopMaterialCollection.getActive();
+                if (active) {
+                    this.set('tabletopMaterial', active.name);
+                }
+            });
+        }
+        if (typeof options.washingType !== 'undefined' && options.washingType.show) {
+            this.washingTypeCollection = new UM.Collections.WashingTypes(UM.washingTypes, this.toJSON());
+
+            this.listenTo(this.washingTypeCollection, 'change:active', function() {
+                var active = this.washingTypeCollection.getActive();
+                if (active) {
+                    this.set('washingType', active.name);
                 }
             });
         }

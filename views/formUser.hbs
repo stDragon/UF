@@ -210,6 +210,404 @@
             </div>
         </div>
     <%}%>
+    <%if(typeof formConfig.worktype !== 'undefined' && formConfig.worktype.show){%>
+        <div class="um-form-group um-form-group-worktype um-select<%= formConfig.worktype.required ? ' um-form-group-required' : ''%>">
+            <label for="umWorktype"><%= formConfig.worktype.label %></label>
+            <div class="um-select-wrap um-field-wrap">
+            <input type="text" name="worktype" class="um-form-control" id="umWorktype"
+            placeholder="<%= formConfig.worktype.placeholder %>" value="<%= worktype %>"
+            <%= formConfig.worktype.required ? 'required' : ''%> readonly>
+            </div>
+        </div>
+    <%}%>
+    <%if(typeof formConfig.design !== 'undefined' && formConfig.design.show){%>
+        <div class="um-form-group um-form-group-design um-select<%= formConfig.design.required ? ' um-form-group-required' : ''%>">
+            <label for="umDesign"><%= formConfig.design.label %></label>
+            <div class="um-select-wrap um-field-wrap">
+            <input type="text" name="design" class="um-form-control" id="umDesign"
+            placeholder="<%= formConfig.design.placeholder %>" value="<%= design %>"
+            <%= formConfig.design.required ? 'required' : ''%> readonly>
+            </div>
+        </div>
+    <%}%>
+    <%if(typeof formConfig.walls !== 'undefined' && formConfig.walls.show){%>
+        <div class="um-form-group um-form-group-walls um-select<%= formConfig.walls.required ? ' um-form-group-required' : ''%>">
+            <label for="umWalls"><%= formConfig.walls.label %></label>
+            <div class="um-select-wrap um-field-wrap">
+            <input type="text" name="walls" class="um-form-control" id="umWalls"
+            placeholder="<%= formConfig.walls.placeholder %>" value="<%= walls %>"
+            <%= formConfig.walls.required ? 'required' : ''%> readonly>
+            </div>
+        </div>
+    <%}%>
+    <%if(typeof formConfig.floorColor !== 'undefined' && formConfig.floorColor.show){%>
+        <div class="um-form-group um-form-group-floorColor <%= formConfig.floorColor.required ? ' um-form-group-required' : ''%>">
+            <label for="umFloorColor"><%= formConfig.floorColor.label %></label>
+            <input type="text" name="floorColor" class="um-form-control" id="umFloorColor"
+            placeholder="<%= formConfig.floorColor.placeholder %>" value="<%= floorColor %>"
+            <%= formConfig.floorColor.required ? 'required' : ''%>>
+        </div>
+    <%}%>
+    <%if(typeof formConfig.floorType !== 'undefined' && formConfig.floorType.show){%>
+        <div class="um-form-group um-form-group-floorType um-select<%= formConfig.floorType.required ? ' um-form-group-required' : ''%>">
+            <label for="umFloorType"><%= formConfig.floorType.label %></label>
+            <div class="um-select-wrap um-field-wrap">
+            <input type="text" name="floorType" class="um-form-control" id="umFloorTyper"
+            placeholder="<%= formConfig.floorType.placeholder %>" value="<%= floorType %>"
+            <%= formConfig.floorType.required ? 'required' : ''%>>
+            </div>
+        </div>
+    <%}%>
+    <%if(formConfig.floorChange.show){%>
+        <div class="um-form-group um-form-group-personal-data<%= formConfig.floorChange.required ? ' um-form-group-required' : ''%>">
+            <label class="um-label-checkbox <%= floorChange ? ' um-checked' : ''%>">
+                <input type="checkbox" name="floorChange" value="<%= floorChange %>"
+                    <%= formConfig.floorChange.required ? ' required' : ''%>
+                    <%= floorChange ? ' checked' : ''%>>
+                <span class="um-label-text">
+                    <%= formConfig.floorChange.label %>
+                </span>
+            </label>
+        </div>
+    <%}%>
+    <%if(typeof formConfig.ceilingHeight !== 'undefined' && formConfig.ceilingHeight.show){%>
+        <div class="um-form-group um-form-group-ceilingHeight <%= formConfig.ceilingHeight.required ? ' um-form-group-required' : ''%>">
+            <label for="umCeilingHeight"><%= formConfig.ceilingHeight.label %></label>
+            <input type="text" name="ceilingHeight" class="um-form-control" id="umCeilingHeight"
+            placeholder="<%= formConfig.ceilingHeight.placeholder %>" value="<%= ceilingHeight %>"
+            <%= formConfig.ceilingHeight.required ? 'required' : ''%>>
+        </div>
+    <%}%>
+    <%if(formConfig.ceilingChange.show){%>
+        <div class="um-form-group um-form-group-personal-data<%= formConfig.ceilingChange.required ? ' um-form-group-required' : ''%>">
+            <label class="um-label-checkbox <%= ceilingChange ? ' um-checked' : ''%>">
+                <input type="checkbox" name="ceilingChange" value="<%= ceilingChange %>"
+                    <%= formConfig.ceilingChange.required ? ' required' : ''%>
+                    <%= ceilingChange ? ' checked' : ''%>>
+                <span class="um-label-text">
+                    <%= formConfig.ceilingChange.label %>
+                </span>
+            </label>
+        </div>
+    <%}%>
+    <%if(typeof formConfig.position !== 'undefined' && formConfig.position.show){%>
+        <div class="um-form-group um-form-group-position um-select<%= formConfig.position.required ? ' um-form-group-required' : ''%>">
+            <label for="umPosition"><%= formConfig.position.label %></label>
+            <div class="um-select-wrap um-field-wrap">
+            <input type="text" name="position" class="um-form-control" id="umPosition"
+            placeholder="<%= formConfig.position.placeholder %>" value="<%= position %>"
+            <%= formConfig.position.required ? 'required' : ''%> readonly>
+            </div>
+        </div>
+    <%}%>
+    <%if(typeof formConfig.addPlace !== 'undefined' && formConfig.addPlace.show){%>
+        <div class="um-form-group um-form-group-addPlace um-select<%= formConfig.addPlace.required ? ' um-form-group-required' : ''%>">
+            <label for="umAddPlace"><%= formConfig.addPlace.label %></label>
+            <div class="um-select-wrap um-field-wrap">
+            <input type="text" name="addPlace" class="um-form-control" id="umAddPlace"
+            placeholder="<%= formConfig.addPlace.placeholder %>" value="<%= addPlace %>"
+            <%= formConfig.addPlace.required ? 'required' : ''%> readonly>
+            </div>
+        </div>
+    <%}%>
+    <%if(typeof formConfig.kitchenStyle !== 'undefined' && formConfig.kitchenStyle.show){%>
+        <div class="um-form-group um-form-group-kitchenStyle um-select<%= formConfig.kitchenStyle.required ? ' um-form-group-required' : ''%>">
+            <label for="umKitchenStyle"><%= formConfig.kitchenStyle.label %></label>
+            <div class="um-select-wrap um-field-wrap">
+            <input type="text" name="kitchenStyle" class="um-form-control" id="umKitchenStyle"
+            placeholder="<%= formConfig.kitchenStyle.placeholder %>" value="<%= kitchenStyle %>"
+            <%= formConfig.kitchenStyle.required ? 'required' : ''%> readonly>
+            </div>
+        </div>
+    <%}%>
+    <%if(typeof formConfig.upperSection !== 'undefined' && formConfig.upperSection.show){%>
+        <div class="um-form-group um-form-group-upperSection um-select<%= formConfig.upperSection.required ? ' um-form-group-required' : ''%>">
+            <label for="umUpperSection"><%= formConfig.upperSection.label %></label>
+            <div class="um-select-wrap um-field-wrap">
+            <input type="text" name="upperSection" class="um-form-control" id="umUpperSection"
+            placeholder="<%= formConfig.upperSection.placeholder %>" value="<%= upperSection %>"
+            <%= formConfig.upperSection.required ? 'required' : ''%> readonly>
+            </div>
+        </div>
+    <%}%>
+    <%if(typeof formConfig.lowerSection !== 'undefined' && formConfig.lowerSection.show){%>
+        <div class="um-form-group um-form-group-lowerSection um-select<%= formConfig.lowerSection.required ? ' um-form-group-required' : ''%>">
+            <label for="umLowerSection"><%= formConfig.lowerSection.label %></label>
+            <div class="um-select-wrap um-field-wrap">
+            <input type="text" name="lowerSection" class="um-form-control" id="umLowerSection"
+            placeholder="<%= formConfig.lowerSection.placeholder %>" value="<%= lowerSection %>"
+            <%= formConfig.lowerSection.required ? 'required' : ''%> readonly>
+            </div>
+        </div>
+    <%}%>
+    <%if(typeof formConfig.upperSectionColor !== 'undefined' && formConfig.upperSectionColor.show){%>
+        <div class="um-form-group um-form-group-upperSectionColor <%= formConfig.upperSectionColor.required ? ' um-form-group-required' : ''%>">
+            <label for="umUpperSectionColor"><%= formConfig.upperSectionColor.label %></label>
+            <input type="text" name="upperSectionColor" class="um-form-control" id="umUpperSectionColor"
+            placeholder="<%= formConfig.upperSectionColor.placeholder %>" value="<%= upperSectionColor %>"
+            <%= formConfig.upperSectionColor.required ? 'required' : ''%>>
+        </div>
+    <%}%>
+    <%if(typeof formConfig.lowerSectionColor !== 'undefined' && formConfig.lowerSectionColor.show){%>
+        <div class="um-form-group um-form-group-lowerSectionColor <%= formConfig.lowerSectionColor.required ? ' um-form-group-required' : ''%>">
+            <label for="umLowerSectionColor"><%= formConfig.lowerSectionColor.label %></label>
+            <input type="text" name="lowerSectionColor" class="um-form-control" id="umLowerSectionColor"
+            placeholder="<%= formConfig.lowerSectionColor.placeholder %>" value="<%= lowerSectionColor %>"
+            <%= formConfig.lowerSectionColor.required ? 'required' : ''%>>
+        </div>
+    <%}%>
+    <%if(typeof formConfig.combineWishes !== 'undefined' && formConfig.combineWishes.show){%>
+        <div class="um-form-group um-form-group-combineWishes um-wrapper
+        <%= (typeof formConfig.wishes.wrap !== 'undefined' && formConfig.combineWishes.wrap) ? 'um-wrapper-hidden' : ''%>">
+            <label for="umCombineWishes"><%= formConfig.combineWishes.label %></label>
+            <div class="um-select-wrap um-field-wrap<%= (typeof formConfig.combineWishes.wrap !== 'undefined' && formConfig.combineWishes.wrap) ? ' um-field um-hidden' : ''%>">
+            <textarea id="umCombineWishes" type="text" name="combineWishes" class="um-form-control" placeholder="<%= formConfig.combineWishes.placeholder %>"><%= combineWishes %></textarea>
+            </div>
+        </div>
+    <%}%>
+    <%if(typeof formConfig.diningGroup !== 'undefined' && formConfig.diningGroup.show){%>
+        <div class="um-form-group um-form-group-diningGroup um-select<%= formConfig.diningGroup.required ? ' um-form-group-required' : ''%>">
+            <label for="umDiningGroup"><%= formConfig.diningGroup.label %></label>
+            <div class="um-select-wrap um-field-wrap">
+            <input type="text" name="diningGroup" class="um-form-control" id="umDiningGroup"
+            placeholder="<%= formConfig.diningGroup.placeholder %>" value="<%= diningGroup %>"
+            <%= formConfig.diningGroup.required ? 'required' : ''%> readonly>
+            </div>
+        </div>
+    <%}%>
+    <%if(typeof formConfig.diningGroupLength !== 'undefined' && formConfig.diningGroupLength.show){%>
+        <div class="um-form-group um-form-group-diningGroupLength <%= formConfig.diningGroupLength.required ? ' um-form-group-required' : ''%>">
+            <label for="umDiningGroupLength"><%= formConfig.diningGroupLength.label %></label>
+            <input type="text" name="diningGroupLength" class="um-form-control" id="umDiningGroupLength"
+            placeholder="<%= formConfig.diningGroupLength.placeholder %>" value="<%= diningGroup %>"
+            <%= formConfig.diningGroupLength.required ? 'required' : ''%>>
+        </div>
+    <%}%>
+    <%if(typeof formConfig.diningGroupWidth !== 'undefined' && formConfig.diningGroupWidth.show){%>
+        <div class="um-form-group um-form-group-diningGroupWidth <%= formConfig.diningGroupWidth.required ? ' um-form-group-required' : ''%>">
+            <label for="umDiningGroupWidth"><%= formConfig.diningGroupWidth.label %></label>
+            <input type="text" name="diningGroupWidth" class="um-form-control" id="umDiningGroupWidth"
+            placeholder="<%= formConfig.diningGroupWidth.placeholder %>" value="<%= diningGroup %>"
+            <%= formConfig.diningGroupWidth.required ? 'required' : ''%>>
+        </div>
+    <%}%>
+    <%if(typeof formConfig.diningGroupHeight !== 'undefined' && formConfig.diningGroupHeight.show){%>
+        <div class="um-form-group um-form-group-diningGroupHeight <%= formConfig.diningGroupHeight.required ? ' um-form-group-required' : ''%>">
+            <label for="umDiningGroupHeight"><%= formConfig.diningGroupHeight.label %></label>
+            <input type="text" name="diningGroupHeight" class="um-form-control" id="umDiningGroupHeight"
+            placeholder="<%= formConfig.diningGroupHeight.placeholder %>" value="<%= diningGroup %>"
+            <%= formConfig.diningGroupHeight.required ? 'required' : ''%>>
+        </div>
+    <%}%>
+    <%if(typeof formConfig.chairs !== 'undefined' && formConfig.chairs.show){%>
+        <div class="um-form-group um-form-group-chairs <%= formConfig.chairs.required ? ' um-form-group-required' : ''%>">
+            <label for="umChairs"><%= formConfig.chairs.label %></label>
+            <input type="text" name="chairs" class="um-form-control" id="umChairs"
+            placeholder="<%= formConfig.chairs.placeholder %>" value="<%= diningGroup %>"
+            <%= formConfig.chairs.required ? 'required' : ''%>>
+        </div>
+    <%}%>
+    <%if(typeof formConfig.diningGroupMaterial !== 'undefined' && formConfig.diningGroupMaterial.show){%>
+        <div class="um-form-group um-form-group-diningGroupMaterial <%= formConfig.diningGroupMaterial.required ? ' um-form-group-required' : ''%>">
+            <label for="umDiningGroupMaterial"><%= formConfig.diningGroupMaterial.label %></label>
+            <input type="text" name="diningGroupMaterial" class="um-form-control" id="umDiningGroupMaterial"
+            placeholder="<%= formConfig.diningGroupMaterial.placeholder %>" value="<%= diningGroup %>"
+            <%= formConfig.diningGroupMaterial.required ? 'required' : ''%>>
+        </div>
+    <%}%>
+    <%if(typeof formConfig.diningGroupStyle !== 'undefined' && formConfig.diningGroupStyle.show){%>
+        <div class="um-form-group um-form-group-diningGroupStyle <%= formConfig.diningGroupStyle.required ? ' um-form-group-required' : ''%>">
+            <label for="umDiningGroupStyle"><%= formConfig.diningGroupStyle.label %></label>
+            <input type="text" name="diningGroupStyle" class="um-form-control" id="umDiningGroupStyle"
+            placeholder="<%= formConfig.diningGroupStyle.placeholder %>" value="<%= diningGroup %>"
+            <%= formConfig.diningGroupStyle.required ? 'required' : ''%>>
+        </div>
+    <%}%>
+    <%if(typeof formConfig.diningGroupColor !== 'undefined' && formConfig.diningGroupColor.show){%>
+        <div class="um-form-group um-form-group-diningGroupColor <%= formConfig.diningGroupColor.required ? ' um-form-group-required' : ''%>">
+            <label for="umDiningGroupColor"><%= formConfig.diningGroupColor.label %></label>
+            <input type="text" name="diningGroupColor" class="um-form-control" id="umDiningGroupColor"
+            placeholder="<%= formConfig.diningGroupColor.placeholder %>" value="<%= diningGroup %>"
+            <%= formConfig.diningGroupColor.required ? 'required' : ''%>>
+        </div>
+    <%}%>
+    <%if(typeof formConfig.diningGroupExt !== 'undefined' && formConfig.diningGroupExt.show){%>
+        <div class="um-form-group um-form-group-diningGroupExt um-wrapper
+        <%= (typeof formConfig.diningGroupExt.wrap !== 'undefined' && formConfig.diningGroupExt.wrap) ? 'um-wrapper-hidden' : ''%>">
+            <label for="umDiningGroupExt"><%= formConfig.diningGroupExt.label %></label>
+            <div class="um-select-wrap um-field-wrap<%= (typeof formConfig.diningGroupExt.wrap !== 'undefined' && formConfig.diningGroupExt.wrap) ? ' um-field um-hidden' : ''%>">
+            <textarea id="umDiningGroupExt" type="text" name="diningGroupExt" class="um-form-control" placeholder="<%= formConfig.diningGroupExt.placeholder %>"><%= diningGroupExt %></textarea>
+            </div>
+        </div>
+    <%}%>
+    <%if(typeof formConfig.tabletopMaterial !== 'undefined' && formConfig.tabletopMaterial.show){%>
+        <div class="um-form-group um-form-group-tabletopMaterial um-select<%= formConfig.tabletopMaterial.required ? ' um-form-group-required' : ''%>">
+            <label for="umTabletopMaterial"><%= formConfig.tabletopMaterial.label %></label>
+            <div class="um-select-wrap um-field-wrap">
+            <input type="text" name="tabletopMaterial" class="um-form-control" id="umTabletopMaterial"
+            placeholder="<%= formConfig.tabletopMaterial.placeholder %>" value="<%= diningGroup %>"
+            <%= formConfig.tabletopMaterial.required ? 'required' : ''%> readonly>
+            </div>
+        </div>
+    <%}%>
+    <%if(typeof formConfig.tabletopExt !== 'undefined' && formConfig.tabletopExt.show){%>
+        <div class="um-form-group um-form-group-tabletopExt um-wrapper
+        <%= (typeof formConfig.tabletopExt.wrap !== 'undefined' && formConfig.tabletopExt.wrap) ? 'um-wrapper-hidden' : ''%>">
+            <label for="umTabletopExt"><%= formConfig.tabletopExt.label %></label>
+            <div class="um-select-wrap um-field-wrap<%= (typeof formConfig.tabletopExt.wrap !== 'undefined' && formConfig.tabletopExt.wrap) ? ' um-field um-hidden' : ''%>">
+            <textarea id="umTabletopExt" type="text" name="tabletopExt" class="um-form-control" placeholder="<%= formConfig.tabletopExt.placeholder %>"><%= tabletopExt %></textarea>
+            </div>
+        </div>
+    <%}%>
+    <%if(typeof formConfig.washingType !== 'undefined' && formConfig.washingType.show){%>
+        <div class="um-form-group um-form-group-washingType um-select<%= formConfig.washingType.required ? ' um-form-group-required' : ''%>">
+            <label for="umWashingType"><%= formConfig.washingType.label %></label>
+            <div class="um-select-wrap um-field-wrap">
+            <input type="text" name="washingType" class="um-form-control" id="umWashingType"
+            placeholder="<%= formConfig.washingType.placeholder %>" value="<%= diningGroup %>"
+            <%= formConfig.washingType.required ? 'required' : ''%>>
+            </div>
+        </div>
+    <%}%>
+    <%if(typeof formConfig.fridge !== 'undefined' && formConfig.fridge.show){%>
+        <div class="um-form-group um-form-group-fridge <%= formConfig.fridge.required ? ' um-form-group-required' : ''%>">
+            <label for="umFridge"><%= formConfig.fridge.label %></label>
+            <input type="text" name="fridge" class="um-form-control" id="umFridge"
+            placeholder="<%= formConfig.fridge.placeholder %>" value="<%= diningGroup %>"
+            <%= formConfig.fridge.required ? 'required' : ''%>>
+        </div>
+    <%}%>
+    <%if(typeof formConfig.deepFreeze !== 'undefined' && formConfig.deepFreeze.show){%>
+        <div class="um-form-group um-form-group-deepFreeze <%= formConfig.deepFreeze.required ? ' um-form-group-required' : ''%>">
+            <label for="umDeepFreeze"><%= formConfig.deepFreeze.label %></label>
+            <input type="text" name="deepFreeze" class="um-form-control" id="umDeepFreeze"
+            placeholder="<%= formConfig.deepFreeze.placeholder %>" value="<%= diningGroup %>"
+            <%= formConfig.deepFreeze.required ? 'required' : ''%>>
+        </div>
+    <%}%>
+    <%if(typeof formConfig.dishwasher !== 'undefined' && formConfig.dishwasher.show){%>
+        <div class="um-form-group um-form-group-dishwasher <%= formConfig.dishwasher.required ? ' um-form-group-required' : ''%>">
+            <label for="umDishwasher"><%= formConfig.dishwasher.label %></label>
+            <input type="text" name="dishwasher" class="um-form-control" id="umDishwasher"
+            placeholder="<%= formConfig.dishwasher.placeholder %>" value="<%= diningGroup %>"
+            <%= formConfig.dishwasher.required ? 'required' : ''%>>
+        </div>
+    <%}%>
+    <%if(typeof formConfig.washer !== 'undefined' && formConfig.washer.show){%>
+        <div class="um-form-group um-form-group-washer <%= formConfig.washer.required ? ' um-form-group-required' : ''%>">
+            <label for="umWasher"><%= formConfig.washer.label %></label>
+            <input type="text" name="washer" class="um-form-control" id="umWasher"
+            placeholder="<%= formConfig.washer.placeholder %>" value="<%= diningGroup %>"
+            <%= formConfig.washer.required ? 'required' : ''%>>
+        </div>
+    <%}%>
+    <%if(typeof formConfig.stoveNumber !== 'undefined' && formConfig.stoveNumber.show){%>
+        <div class="um-form-group um-form-group-stoveNumber <%= formConfig.stoveNumber.required ? ' um-form-group-required' : ''%>">
+            <label for="umStoveNumber"><%= formConfig.stoveNumber.label %></label>
+            <input type="text" name="stoveNumber" class="um-form-control" id="umStoveNumber"
+            placeholder="<%= formConfig.stoveNumber.placeholder %>" value="<%= diningGroup %>"
+            <%= formConfig.stoveNumber.required ? 'required' : ''%>>
+        </div>
+    <%}%>
+    <%if(typeof formConfig.inMicrowaveNumber !== 'undefined' && formConfig.inMicrowaveNumber.show){%>
+        <div class="um-form-group um-form-group-inMicrowaveNumber <%= formConfig.inMicrowaveNumber.required ? ' um-form-group-required' : ''%>">
+            <label for="umInMicrowaveNumber"><%= formConfig.inMicrowaveNumber.label %></label>
+            <input type="text" name="inMicrowaveNumber" class="um-form-control" id="umInMicrowaveNumber"
+            placeholder="<%= formConfig.inMicrowaveNumber.placeholder %>" value="<%= diningGroup %>"
+            <%= formConfig.inMicrowaveNumber.required ? 'required' : ''%>>
+        </div>
+    <%}%>
+    <%if(typeof formConfig.freeMicrowaveNumber !== 'undefined' && formConfig.freeMicrowaveNumber.show){%>
+        <div class="um-form-group um-form-group-freeMicrowaveNumber <%= formConfig.freeMicrowaveNumber.required ? ' um-form-group-required' : ''%>">
+            <label for="umFreeMicrowaveNumber"><%= formConfig.freeMicrowaveNumber.label %></label>
+            <input type="text" name="freeMicrowaveNumber" class="um-form-control" id="umFreeMicrowaveNumber"
+            placeholder="<%= formConfig.freeMicrowaveNumber.placeholder %>" value="<%= diningGroup %>"
+            <%= formConfig.freeMicrowaveNumber.required ? 'required' : ''%>>
+        </div>
+    <%}%>
+    <%if(typeof formConfig.oven !== 'undefined' && formConfig.oven.show){%>
+        <div class="um-form-group um-form-group-oven <%= formConfig.oven.required ? ' um-form-group-required' : ''%>">
+            <label for="umOven"><%= formConfig.oven.label %></label>
+            <input type="text" name="oven" class="um-form-control" id="umOven"
+            placeholder="<%= formConfig.oven.placeholder %>" value="<%= diningGroup %>"
+            <%= formConfig.oven.required ? 'required' : ''%>>
+        </div>
+    <%}%>
+    <%if(typeof formConfig.hob !== 'undefined' && formConfig.hob.show){%>
+        <div class="um-form-group um-form-group-hob <%= formConfig.hob.required ? ' um-form-group-required' : ''%>">
+            <label for="umHob"><%= formConfig.hob.label %></label>
+            <input type="text" name="hob" class="um-form-control" id="umHob"
+            placeholder="<%= formConfig.hob.placeholder %>" value="<%= diningGroup %>"
+            <%= formConfig.hob.required ? 'required' : ''%>>
+        </div>
+    <%}%>
+    <%if(typeof formConfig.stoveStyle !== 'undefined' && formConfig.stoveStyle.show){%>
+        <div class="um-form-group um-form-group-stoveStyle um-select<%= formConfig.stoveStyle.required ? ' um-form-group-required' : ''%>">
+            <label for="umStoveStyle"><%= formConfig.stoveStyle.label %></label>
+            <div class="um-select-wrap um-field-wrap">
+            <input type="text" name="stoveStyle" class="um-form-control" id="umStoveStyle"
+            placeholder="<%= formConfig.stoveStyle.placeholder %>" value="<%= diningGroup %>"
+            <%= formConfig.stoveStyle.required ? 'required' : ''%> readonly>
+            </div>
+        </div>
+    <%}%>
+    <%if(typeof formConfig.hoodStyle !== 'undefined' && formConfig.hoodStyle.show){%>
+        <div class="um-form-group um-form-group-hoodStyle um-select<%= formConfig.hoodStyle.required ? ' um-form-group-required' : ''%>">
+            <label for="umHoodStyle"><%= formConfig.hoodStyle.label %></label>
+            <div class="um-select-wrap um-field-wrap">
+            <input type="text" name="hoodStyle" class="um-form-control" id="umHoodStyle"
+            placeholder="<%= formConfig.hoodStyle.placeholder %>" value="<%= diningGroup %>"
+            <%= formConfig.hoodStyle.required ? 'required' : ''%> readonly>
+            </div>
+        </div>
+    <%}%>
+    <%if(typeof formConfig.hoodType !== 'undefined' && formConfig.hoodType.show){%>
+        <div class="um-form-group um-form-group-hoodType um-select<%= formConfig.hoodType.required ? ' um-form-group-required' : ''%>">
+            <label for="umHoodType"><%= formConfig.hoodType.label %></label>
+            <div class="um-select-wrap um-field-wrap">
+            <input type="text" name="hoodType" class="um-form-control" id="umHoodType"
+            placeholder="<%= formConfig.hoodType.placeholder %>" value="<%= diningGroup %>"
+            <%= formConfig.hoodType.required ? 'required' : ''%> readonly>
+            </div>
+        </div>
+    <%}%>
+    <%if(typeof formConfig.hoodNumber !== 'undefined' && formConfig.hoodNumber.show){%>
+        <div class="um-form-group um-form-group-hoodNumber <%= formConfig.hoodNumber.required ? ' um-form-group-required' : ''%>">
+            <label for="umHoodNumber"><%= formConfig.hoodNumber.label %></label>
+            <input type="text" name="hoodNumber" class="um-form-control" id="umHoodNumber"
+            placeholder="<%= formConfig.hoodNumber.placeholder %>" value="<%= diningGroup %>"
+            <%= formConfig.hoodNumber.required ? 'required' : ''%>>
+        </div>
+    <%}%>
+    <%if(typeof formConfig.hoodExt !== 'undefined' && formConfig.hoodExt.show){%>
+        <div class="um-form-group um-form-group-hoodExt um-wrapper
+        <%= (typeof formConfig.hoodExt.wrap !== 'undefined' && formConfig.hoodExt.wrap) ? 'um-wrapper-hidden' : ''%>">
+            <label for="umHoodExt"><%= formConfig.hoodExt.label %></label>
+            <div class="um-select-wrap um-field-wrap<%= (typeof formConfig.hoodExt.wrap !== 'undefined' && formConfig.hoodExt.wrap) ? ' um-field um-hidden' : ''%>">
+            <textarea id="umHoodExt" type="text" name="hoodExt" class="um-form-control" placeholder="<%= formConfig.hoodExt.placeholder %>"><%= hoodExt %></textarea>
+            </div>
+        </div>
+    <%}%>
+    <%if(typeof formConfig.lighting !== 'undefined' && formConfig.lighting.show){%>
+        <div class="um-form-group um-form-group-lighting um-select<%= formConfig.lighting.required ? ' um-form-group-required' : ''%>">
+            <label for="umLighting"><%= formConfig.lighting.label %></label>
+            <div class="um-select-wrap um-field-wrap">
+            <input type="text" name="lighting" class="um-form-control" id="umLighting"
+            placeholder="<%= formConfig.lighting.placeholder %>" value="<%= diningGroup %>"
+            <%= formConfig.lighting.required ? 'required' : ''%> readonly>
+            </div>
+        </div>
+    <%}%>
+    <%if(typeof formConfig.gear !== 'undefined' && formConfig.gear.show){%>
+        <div class="um-form-group um-form-group-gear um-select<%= formConfig.gear.required ? ' um-form-group-required' : ''%>">
+            <label for="umGear"><%= formConfig.gear.label %></label>
+            <div class="um-select-wrap um-field-wrap">
+            <input type="text" name="gear" class="um-form-control" id="umGear"
+            placeholder="<%= formConfig.gear.placeholder %>" value="<%= gear %>"
+            <%= formConfig.gear.required ? 'required' : ''%> readonly>
+            </div>
+        </div>
+    <%}%>
     <%if(formConfig.personalData.show){%>
         <div class="um-form-group um-form-group-personal-data<%= formConfig.personalData.required ? ' um-form-group-required' : ''%>">
             <label class="um-label-checkbox <%= personalData ? ' um-checked' : ''%>">

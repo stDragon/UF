@@ -66,7 +66,7 @@ module.exports = Backbone.Ribs.Model.extend({
     initForm: function () {
         this.data.user.type = this.get('formType');
 
-        /* Костыль для питера устанавливает аактивным */
+        /* Костыль для питера устанавливает активным */
         if (this.get('style') === 'um-piter') {
             this.data.user.city = 'Санкт-Петербург';
             this.data.user.cityId = 1394549;

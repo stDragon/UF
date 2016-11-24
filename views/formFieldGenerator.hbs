@@ -733,6 +733,7 @@
         </div>
     </div>
 </div>
+
 <h3>Ссылка на пользовательское соглашение</h3>
 <div class="row">
     <div class="col s2">
@@ -811,6 +812,17 @@
             </label>
         </div>
     </div>
+    <div class="col s2">
+        <p>Обязательное</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="room.required" <%= room.required ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
     <div class="col s3">
         <p>Placeholder</p>
         <div class="input-field">
@@ -818,15 +830,1478 @@
             <label for="room.placeholder" class="active sr-only">Placeholder</label>
         </div>
     </div>
-    <div class="col s3">
-        <p>Обернуть в div</p>
+</div>
+
+<h3><%= design.label %></h3>
+<div class="row">
+    <div class="col s2">
+        <p>Показывать</p>
         <div class="switch">
             <label>
                 Off
-                <input type="checkbox" name="room.wrap" <%= room.wrap ? 'checked' : ''%>>
+                <input type="checkbox" name="design.show" <%= design.show ? 'checked' : ''%>>
                 <span class="lever"></span>
                 On
             </label>
+        </div>
+    </div>
+    <div class="col s2">
+        <p>Обязательное</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="design.required" <%= design.required ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s3">
+        <p>Placeholder</p>
+        <div class="input-field">
+            <input id="design.placeholder" type="text" name="design.placeholder" value="<%= design.placeholder %>">
+            <label for="design.placeholder" class="active sr-only">Placeholder</label>
+        </div>
+    </div>
+</div>
+
+<h3><%= worktype.label %></h3>
+<div class="row">
+    <div class="col s2">
+        <p>Показывать</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="worktype.show" <%= worktype.show ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s2">
+        <p>Обязательное</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="worktype.required" <%= worktype.required ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s3">
+        <p>Placeholder</p>
+        <div class="input-field">
+            <input id="worktype.placeholder" type="text" name="worktype.placeholder" value="<%= worktype.placeholder %>">
+            <label for="worktype.placeholder" class="active sr-only">Placeholder</label>
+        </div>
+    </div>
+</div>
+
+<h3><%= walls.label %></h3>
+<div class="row">
+    <div class="col s2">
+        <p>Показывать</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="walls.show" <%= walls.show ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s2">
+        <p>Обязательное</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="walls.required" <%= walls.required ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s3">
+        <p>Placeholder</p>
+        <div class="input-field">
+            <input id="walls.placeholder" type="text" name="walls.placeholder" value="<%= walls.placeholder %>">
+            <label for="walls.placeholder" class="active sr-only">Placeholder</label>
+        </div>
+    </div>
+</div>
+
+<h3><%= floorColor.label %></h3>
+<div class="row">
+    <div class="col s2">
+        <p>Показывать</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="floorColor.show" <%= floorColor.show ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s2">
+        <p>Обязательное</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="floorColor.required" <%= floorColor.required ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s3">
+        <p>Placeholder</p>
+        <div class="input-field">
+            <input id="floorColor.placeholder" type="text" name="floorColor.placeholder" value="<%= floorColor.placeholder %>">
+            <label for="floorColor.placeholder" class="active sr-only">Placeholder</label>
+        </div>
+    </div>
+</div>
+
+<h3><%= floorType.label %></h3>
+<div class="row">
+    <div class="col s2">
+        <p>Показывать</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="floorType.show" <%= floorType.show ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s2">
+        <p>Обязательное</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="floorType.required" <%= floorType.required ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s3">
+        <p>Placeholder</p>
+        <div class="input-field">
+            <input id="floorType.placeholder" type="text" name="floorType.placeholder" value="<%= floorType.placeholder %>">
+            <label for="floorType.placeholder" class="active sr-only">Placeholder</label>
+        </div>
+    </div>
+</div>
+
+<h3><%= floorChange.label %></h3>
+<div class="row">
+    <div class="col s2">
+        <p>Показывать</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="floorChange.show" <%= floorChange.show ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s2">
+        <p>Обязательное</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="floorChange.required" <%= floorChange.required ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s2">
+        <p>По умолчанию</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="floorChange.checked" <%= floorChange.checked ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s3">
+        <p>Label текст</p>
+        <div class="input-field">
+            <input id="floorChange.label" type="text" name="floorChange.label" value="<%= floorChange.label %>">
+            <label for="floorChange.label" class="active sr-only">Label текст</label>
+        </div>
+    </div>
+</div>
+
+<h3><%= ceilingHeight.label %></h3>
+<div class="row">
+    <div class="col s2">
+        <p>Показывать</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="ceilingHeight.show" <%= ceilingHeight.show ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s2">
+        <p>Обязательное</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="ceilingHeight.required" <%= ceilingHeight.required ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s3">
+        <p>Placeholder</p>
+        <div class="input-field">
+            <input id="ceilingHeight.placeholder" type="text" name="ceilingHeight.placeholder" value="<%= ceilingHeight.placeholder %>">
+            <label for="ceilingHeight.placeholder" class="active sr-only">Placeholder</label>
+        </div>
+    </div>
+</div>
+
+<h3><%= ceilingChange.label %></h3>
+<div class="row">
+    <div class="col s2">
+        <p>Показывать</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="ceilingChange.show" <%= ceilingChange.show ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s2">
+        <p>Обязательное</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="ceilingChange.required" <%= ceilingChange.required ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s2">
+        <p>По умолчанию</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="ceilingChange.checked" <%= ceilingChange.checked ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s3">
+        <p>Label текст</p>
+        <div class="input-field">
+            <input id="ceilingChange.label" type="text" name="ceilingChange.label" value="<%= ceilingChange.label %>">
+            <label for="ceilingChange.label" class="active sr-only">Label текст</label>
+        </div>
+    </div>
+</div>
+
+<h3><%= position.label %></h3>
+<div class="row">
+    <div class="col s2">
+        <p>Показывать</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="position.show" <%= position.show ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s2">
+        <p>Обязательное</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="position.required" <%= position.required ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s3">
+        <p>Placeholder</p>
+        <div class="input-field">
+            <input id="position.placeholder" type="text" name="position.placeholder" value="<%= position.placeholder %>">
+            <label for="position.placeholder" class="active sr-only">Placeholder</label>
+        </div>
+    </div>
+</div>
+
+<h3><%= addPlace.label %></h3>
+<div class="row">
+    <div class="col s2">
+        <p>Показывать</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="addPlace.show" <%= addPlace.show ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s2">
+        <p>Обязательное</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="addPlace.required" <%= addPlace.required ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s3">
+        <p>Placeholder</p>
+        <div class="input-field">
+            <input id="addPlace.placeholder" type="text" name="addPlace.placeholder" value="<%= addPlace.placeholder %>">
+            <label for="addPlace.placeholder" class="active sr-only">Placeholder</label>
+        </div>
+    </div>
+</div>
+
+<h3><%= kitchenStyle.label %></h3>
+<div class="row">
+    <div class="col s2">
+        <p>Показывать</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="kitchenStyle.show" <%= kitchenStyle.show ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s2">
+        <p>Обязательное</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="kitchenStyle.required" <%= kitchenStyle.required ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s3">
+        <p>Placeholder</p>
+        <div class="input-field">
+            <input id="kitchenStyle.placeholder" type="text" name="kitchenStyle.placeholder" value="<%= kitchenStyle.placeholder %>">
+            <label for="kitchenStyle.placeholder" class="active sr-only">Placeholder</label>
+        </div>
+    </div>
+</div>
+
+<h3><%= upperSection.label %></h3>
+<div class="row">
+    <div class="col s2">
+        <p>Показывать</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="upperSection.show" <%= upperSection.show ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s2">
+        <p>Обязательное</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="upperSection.required" <%= upperSection.required ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s3">
+        <p>Placeholder</p>
+        <div class="input-field">
+            <input id="upperSection.placeholder" type="text" name="upperSection.placeholder" value="<%= upperSection.placeholder %>">
+            <label for="upperSection.placeholder" class="active sr-only">Placeholder</label>
+        </div>
+    </div>
+</div>
+
+<h3><%= lowerSection.label %></h3>
+<div class="row">
+    <div class="col s2">
+        <p>Показывать</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="lowerSection.show" <%= lowerSection.show ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s2">
+        <p>Обязательное</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="lowerSection.required" <%= lowerSection.required ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s3">
+        <p>Placeholder</p>
+        <div class="input-field">
+            <input id="lowerSection.placeholder" type="text" name="lowerSection.placeholder" value="<%= lowerSection.placeholder %>">
+            <label for="lowerSection.placeholder" class="active sr-only">Placeholder</label>
+        </div>
+    </div>
+</div>
+
+<h3><%= upperSectionColor.label %></h3>
+<div class="row">
+    <div class="col s2">
+        <p>Показывать</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="upperSectionColor.show" <%= upperSectionColor.show ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s2">
+        <p>Обязательное</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="upperSectionColor.required" <%= upperSectionColor.required ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s3">
+        <p>Placeholder</p>
+        <div class="input-field">
+            <input id="upperSectionColor.placeholder" type="text" name="upperSectionColor.placeholder" value="<%= upperSectionColor.placeholder %>">
+            <label for="upperSectionColor.placeholder" class="active sr-only">Placeholder</label>
+        </div>
+    </div>
+</div>
+
+<h3><%= lowerSectionColor.label %></h3>
+<div class="row">
+    <div class="col s2">
+        <p>Показывать</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="lowerSectionColor.show" <%= lowerSectionColor.show ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s2">
+        <p>Обязательное</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="lowerSectionColor.required" <%= lowerSectionColor.required ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s3">
+        <p>Placeholder</p>
+        <div class="input-field">
+            <input id="lowerSectionColor.placeholder" type="text" name="lowerSectionColor.placeholder" value="<%= lowerSectionColor.placeholder %>">
+            <label for="lowerSectionColor.placeholder" class="active sr-only">Placeholder</label>
+        </div>
+    </div>
+</div>
+
+<h3><%= combineWishes.label %></h3>
+<div class="row">
+    <div class="col s2">
+        <p>Показывать</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="combineWishes.show" <%= combineWishes.show ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s2">
+        <p>Обязательное</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="combineWishes.required" <%= combineWishes.required ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s3">
+        <p>Placeholder</p>
+        <div class="input-field">
+            <input id="combineWishes.placeholder" type="text" name="combineWishes.placeholder" value="<%= combineWishes.placeholder %>">
+            <label for="combineWishes.placeholder" class="active sr-only">Placeholder</label>
+        </div>
+    </div>
+</div>
+
+<h3><%= diningGroup.label %></h3>
+<div class="row">
+    <div class="col s2">
+        <p>Показывать</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="diningGroup.show" <%= diningGroup.show ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s2">
+        <p>Обязательное</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="diningGroup.required" <%= diningGroup.required ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s3">
+        <p>Placeholder</p>
+        <div class="input-field">
+            <input id="diningGroup.placeholder" type="text" name="diningGroup.placeholder" value="<%= diningGroup.placeholder %>">
+            <label for="diningGroup.placeholder" class="active sr-only">Placeholder</label>
+        </div>
+    </div>
+</div>
+
+<h3><%= diningGroupLength.label %></h3>
+<div class="row">
+    <div class="col s2">
+        <p>Показывать</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="diningGroupLength.show" <%= diningGroupLength.show ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s2">
+        <p>Обязательное</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="diningGroupLength.required" <%= diningGroupLength.required ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s3">
+        <p>Placeholder</p>
+        <div class="input-field">
+            <input id="diningGroupLength.placeholder" type="text" name="diningGroupLength.placeholder" value="<%= diningGroupLength.placeholder %>">
+            <label for="diningGroupLength.placeholder" class="active sr-only">Placeholder</label>
+        </div>
+    </div>
+</div>
+
+<h3><%= diningGroupWidth.label %></h3>
+<div class="row">
+    <div class="col s2">
+        <p>Показывать</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="diningGroupWidth.show" <%= diningGroupWidth.show ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s2">
+        <p>Обязательное</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="diningGroupWidth.required" <%= diningGroupWidth.required ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s3">
+        <p>Placeholder</p>
+        <div class="input-field">
+            <input id="diningGroupWidth.placeholder" type="text" name="diningGroupWidth.placeholder" value="<%= diningGroupWidth.placeholder %>">
+            <label for="diningGroupWidth.placeholder" class="active sr-only">Placeholder</label>
+        </div>
+    </div>
+</div>
+
+<h3><%= diningGroupHeight.label %></h3>
+<div class="row">
+    <div class="col s2">
+        <p>Показывать</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="diningGroupHeight.show" <%= diningGroupHeight.show ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s2">
+        <p>Обязательное</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="diningGroupHeight.required" <%= diningGroupHeight.required ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s3">
+        <p>Placeholder</p>
+        <div class="input-field">
+            <input id="diningGroupHeight.placeholder" type="text" name="diningGroupHeight.placeholder" value="<%= diningGroupHeight.placeholder %>">
+            <label for="diningGroupHeight.placeholder" class="active sr-only">Placeholder</label>
+        </div>
+    </div>
+</div>
+
+<h3><%= chairs.label %></h3>
+<div class="row">
+    <div class="col s2">
+        <p>Показывать</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="chairs.show" <%= chairs.show ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s2">
+        <p>Обязательное</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="chairs.required" <%= chairs.required ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s3">
+        <p>Placeholder</p>
+        <div class="input-field">
+            <input id="chairs.placeholder" type="text" name="chairs.placeholder" value="<%= chairs.placeholder %>">
+            <label for="chairs.placeholder" class="active sr-only">Placeholder</label>
+        </div>
+    </div>
+</div>
+
+<h3><%= diningGroupMaterial.label %></h3>
+<div class="row">
+    <div class="col s2">
+        <p>Показывать</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="diningGroupMaterial.show" <%= diningGroupMaterial.show ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s2">
+        <p>Обязательное</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="diningGroupMaterial.required" <%= diningGroupMaterial.required ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s3">
+        <p>Placeholder</p>
+        <div class="input-field">
+            <input id="diningGroupMaterial.placeholder" type="text" name="diningGroupMaterial.placeholder" value="<%= diningGroupMaterial.placeholder %>">
+            <label for="diningGroupMaterial.placeholder" class="active sr-only">Placeholder</label>
+        </div>
+    </div>
+</div>
+
+<h3><%= diningGroupStyle.label %></h3>
+<div class="row">
+    <div class="col s2">
+        <p>Показывать</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="diningGroupStyle.show" <%= diningGroupStyle.show ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s2">
+        <p>Обязательное</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="diningGroupStyle.required" <%= diningGroupStyle.required ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s3">
+        <p>Placeholder</p>
+        <div class="input-field">
+            <input id="diningGroupStyle.placeholder" type="text" name="diningGroupStyle.placeholder" value="<%= diningGroupStyle.placeholder %>">
+            <label for="diningGroupStyle.placeholder" class="active sr-only">Placeholder</label>
+        </div>
+    </div>
+</div>
+
+<h3><%= diningGroupColor.label %></h3>
+<div class="row">
+    <div class="col s2">
+        <p>Показывать</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="diningGroupColor.show" <%= diningGroupColor.show ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s2">
+        <p>Обязательное</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="diningGroupColor.required" <%= diningGroupColor.required ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s3">
+        <p>Placeholder</p>
+        <div class="input-field">
+            <input id="diningGroupColor.placeholder" type="text" name="diningGroupColor.placeholder" value="<%= diningGroupColor.placeholder %>">
+            <label for="diningGroupColor.placeholder" class="active sr-only">Placeholder</label>
+        </div>
+    </div>
+</div>
+
+<h3><%= diningGroupExt.label %></h3>
+<div class="row">
+    <div class="col s2">
+        <p>Показывать</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="diningGroupExt.show" <%= diningGroupExt.show ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s2">
+        <p>Обязательное</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="diningGroupExt.required" <%= diningGroupExt.required ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s3">
+        <p>Placeholder</p>
+        <div class="input-field">
+            <input id="diningGroupExt.placeholder" type="text" name="diningGroupExt.placeholder" value="<%= diningGroupExt.placeholder %>">
+            <label for="diningGroupExt.placeholder" class="active sr-only">Placeholder</label>
+        </div>
+    </div>
+</div>
+
+<h3><%= tabletopMaterial.label %></h3>
+<div class="row">
+    <div class="col s2">
+        <p>Показывать</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="tabletopMaterial.show" <%= tabletopMaterial.show ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s2">
+        <p>Обязательное</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="tabletopMaterial.required" <%= tabletopMaterial.required ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s3">
+        <p>Placeholder</p>
+        <div class="input-field">
+            <input id="tabletopMaterial.placeholder" type="text" name="tabletopMaterial.placeholder" value="<%= tabletopMaterial.placeholder %>">
+            <label for="tabletopMaterial.placeholder" class="active sr-only">Placeholder</label>
+        </div>
+    </div>
+</div>
+
+<h3><%= tabletopExt.label %></h3>
+<div class="row">
+    <div class="col s2">
+        <p>Показывать</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="tabletopExt.show" <%= tabletopExt.show ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s2">
+        <p>Обязательное</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="tabletopExt.required" <%= tabletopExt.required ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s3">
+        <p>Placeholder</p>
+        <div class="input-field">
+            <input id="tabletopExt.placeholder" type="text" name="tabletopExt.placeholder" value="<%= tabletopExt.placeholder %>">
+            <label for="tabletopExt.placeholder" class="active sr-only">Placeholder</label>
+        </div>
+    </div>
+</div>
+
+<h3><%= washingType.label %></h3>
+<div class="row">
+    <div class="col s2">
+        <p>Показывать</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="washingType.show" <%= washingType.show ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s2">
+        <p>Обязательное</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="washingType.required" <%= washingType.required ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s3">
+        <p>Placeholder</p>
+        <div class="input-field">
+            <input id="washingType.placeholder" type="text" name="washingType.placeholder" value="<%= washingType.placeholder %>">
+            <label for="washingType.placeholder" class="active sr-only">Placeholder</label>
+        </div>
+    </div>
+</div>
+
+<h3><%= fridge.label %></h3>
+<div class="row">
+    <div class="col s2">
+        <p>Показывать</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="fridge.show" <%= fridge.show ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s2">
+        <p>Обязательное</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="fridge.required" <%= fridge.required ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s3">
+        <p>Placeholder</p>
+        <div class="input-field">
+            <input id="fridge.placeholder" type="text" name="fridge.placeholder" value="<%= fridge.placeholder %>">
+            <label for="fridge.placeholder" class="active sr-only">Placeholder</label>
+        </div>
+    </div>
+</div>
+
+<h3><%= deepFreeze.label %></h3>
+<div class="row">
+    <div class="col s2">
+        <p>Показывать</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="deepFreeze.show" <%= deepFreeze.show ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s2">
+        <p>Обязательное</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="deepFreeze.required" <%= deepFreeze.required ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s3">
+        <p>Placeholder</p>
+        <div class="input-field">
+            <input id="deepFreeze.placeholder" type="text" name="deepFreeze.placeholder" value="<%= deepFreeze.placeholder %>">
+            <label for="deepFreeze.placeholder" class="active sr-only">Placeholder</label>
+        </div>
+    </div>
+</div>
+
+<h3><%= dishwasher.label %></h3>
+<div class="row">
+    <div class="col s2">
+        <p>Показывать</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="dishwasher.show" <%= dishwasher.show ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s2">
+        <p>Обязательное</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="dishwasher.required" <%= dishwasher.required ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s3">
+        <p>Placeholder</p>
+        <div class="input-field">
+            <input id="dishwasher.placeholder" type="text" name="dishwasher.placeholder" value="<%= dishwasher.placeholder %>">
+            <label for="dishwasher.placeholder" class="active sr-only">Placeholder</label>
+        </div>
+    </div>
+</div>
+
+<h3><%= washer.label %></h3>
+<div class="row">
+    <div class="col s2">
+        <p>Показывать</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="washer.show" <%= washer.show ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s2">
+        <p>Обязательное</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="washer.required" <%= washer.required ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s3">
+        <p>Placeholder</p>
+        <div class="input-field">
+            <input id="washer.placeholder" type="text" name="washer.placeholder" value="<%= washer.placeholder %>">
+            <label for="washer.placeholder" class="active sr-only">Placeholder</label>
+        </div>
+    </div>
+</div>
+
+<h3><%= stoveNumber.label %></h3>
+<div class="row">
+    <div class="col s2">
+        <p>Показывать</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="stoveNumber.show" <%= stoveNumber.show ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s2">
+        <p>Обязательное</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="stoveNumber.required" <%= stoveNumber.required ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s3">
+        <p>Placeholder</p>
+        <div class="input-field">
+            <input id="stoveNumber.placeholder" type="text" name="stoveNumber.placeholder" value="<%= stoveNumber.placeholder %>">
+            <label for="stoveNumber.placeholder" class="active sr-only">Placeholder</label>
+        </div>
+    </div>
+</div>
+
+<h3><%= inMicrowaveNumber.label %></h3>
+<div class="row">
+    <div class="col s2">
+        <p>Показывать</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="inMicrowaveNumber.show" <%= inMicrowaveNumber.show ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s2">
+        <p>Обязательное</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="inMicrowaveNumber.required" <%= inMicrowaveNumber.required ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s3">
+        <p>Placeholder</p>
+        <div class="input-field">
+            <input id="inMicrowaveNumber.placeholder" type="text" name="inMicrowaveNumber.placeholder" value="<%= inMicrowaveNumber.placeholder %>">
+            <label for="inMicrowaveNumber.placeholder" class="active sr-only">Placeholder</label>
+        </div>
+    </div>
+</div>
+
+<h3><%= freeMicrowaveNumber.label %></h3>
+<div class="row">
+    <div class="col s2">
+        <p>Показывать</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="freeMicrowaveNumber.show" <%= freeMicrowaveNumber.show ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s2">
+        <p>Обязательное</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="freeMicrowaveNumber.required" <%= freeMicrowaveNumber.required ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s3">
+        <p>Placeholder</p>
+        <div class="input-field">
+            <input id="freeMicrowaveNumber.placeholder" type="text" name="freeMicrowaveNumber.placeholder" value="<%= freeMicrowaveNumber.placeholder %>">
+            <label for="freeMicrowaveNumber.placeholder" class="active sr-only">Placeholder</label>
+        </div>
+    </div>
+</div>
+
+<h3><%= oven.label %></h3>
+<div class="row">
+    <div class="col s2">
+        <p>Показывать</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="oven.show" <%= oven.show ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s2">
+        <p>Обязательное</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="oven.required" <%= oven.required ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s3">
+        <p>Placeholder</p>
+        <div class="input-field">
+            <input id="oven.placeholder" type="text" name="oven.placeholder" value="<%= oven.placeholder %>">
+            <label for="oven.placeholder" class="active sr-only">Placeholder</label>
+        </div>
+    </div>
+</div>
+
+<h3><%= hob.label %></h3>
+<div class="row">
+    <div class="col s2">
+        <p>Показывать</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="hob.show" <%= hob.show ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s2">
+        <p>Обязательное</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="hob.required" <%= hob.required ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s3">
+        <p>Placeholder</p>
+        <div class="input-field">
+            <input id="hob.placeholder" type="text" name="hob.placeholder" value="<%= hob.placeholder %>">
+            <label for="hob.placeholder" class="active sr-only">Placeholder</label>
+        </div>
+    </div>
+</div>
+
+<h3><%= stoveStyle.label %></h3>
+<div class="row">
+    <div class="col s2">
+        <p>Показывать</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="stoveStyle.show" <%= stoveStyle.show ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s2">
+        <p>Обязательное</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="stoveStyle.required" <%= stoveStyle.required ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s3">
+        <p>Placeholder</p>
+        <div class="input-field">
+            <input id="stoveStyle.placeholder" type="text" name="stoveStyle.placeholder" value="<%= stoveStyle.placeholder %>">
+            <label for="stoveStyle.placeholder" class="active sr-only">Placeholder</label>
+        </div>
+    </div>
+</div>
+
+<h3><%= hoodStyle.label %></h3>
+<div class="row">
+    <div class="col s2">
+        <p>Показывать</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="hoodStyle.show" <%= hoodStyle.show ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s2">
+        <p>Обязательное</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="hoodStyle.required" <%= hoodStyle.required ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s3">
+        <p>Placeholder</p>
+        <div class="input-field">
+            <input id="hoodStyle.placeholder" type="text" name="hoodStyle.placeholder" value="<%= hoodStyle.placeholder %>">
+            <label for="hoodStyle.placeholder" class="active sr-only">Placeholder</label>
+        </div>
+    </div>
+</div>
+
+<h3><%= hoodType.label %></h3>
+<div class="row">
+    <div class="col s2">
+        <p>Показывать</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="hoodType.show" <%= hoodType.show ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s2">
+        <p>Обязательное</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="hoodType.required" <%= hoodType.required ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s3">
+        <p>Placeholder</p>
+        <div class="input-field">
+            <input id="hoodType.placeholder" type="text" name="hoodType.placeholder" value="<%= hoodType.placeholder %>">
+            <label for="hoodType.placeholder" class="active sr-only">Placeholder</label>
+        </div>
+    </div>
+</div>
+
+<h3><%= hoodNumber.label %></h3>
+<div class="row">
+    <div class="col s2">
+        <p>Показывать</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="hoodNumber.show" <%= hoodNumber.show ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s2">
+        <p>Обязательное</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="hoodNumber.required" <%= hoodNumber.required ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s3">
+        <p>Placeholder</p>
+        <div class="input-field">
+            <input id="hoodNumber.placeholder" type="text" name="hoodNumber.placeholder" value="<%= hoodNumber.placeholder %>">
+            <label for="hoodNumber.placeholder" class="active sr-only">Placeholder</label>
+        </div>
+    </div>
+</div>
+
+<h3><%= hoodExt.label %></h3>
+<div class="row">
+    <div class="col s2">
+        <p>Показывать</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="hoodExt.show" <%= hoodExt.show ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s2">
+        <p>Обязательное</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="hoodExt.required" <%= hoodExt.required ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s3">
+        <p>Placeholder</p>
+        <div class="input-field">
+            <input id="hoodExt.placeholder" type="text" name="hoodExt.placeholder" value="<%= hoodExt.placeholder %>">
+            <label for="hoodExt.placeholder" class="active sr-only">Placeholder</label>
+        </div>
+    </div>
+</div>
+
+<h3><%= lighting.label %></h3>
+<div class="row">
+    <div class="col s2">
+        <p>Показывать</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="lighting.show" <%= lighting.show ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s2">
+        <p>Обязательное</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="lighting.required" <%= lighting.required ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s3">
+        <p>Placeholder</p>
+        <div class="input-field">
+            <input id="lighting.placeholder" type="text" name="lighting.placeholder" value="<%= lighting.placeholder %>">
+            <label for="lighting.placeholder" class="active sr-only">Placeholder</label>
+        </div>
+    </div>
+</div>
+
+<h3><%= gear.label %></h3>
+<div class="row">
+    <div class="col s2">
+        <p>Показывать</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="gear.show" <%= gear.show ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s2">
+        <p>Обязательное</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="gear.required" <%= gear.required ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s3">
+        <p>Placeholder</p>
+        <div class="input-field">
+            <input id="gear.placeholder" type="text" name="gear.placeholder" value="<%= gear.placeholder %>">
+            <label for="gear.placeholder" class="active sr-only">Placeholder</label>
         </div>
     </div>
 </div>

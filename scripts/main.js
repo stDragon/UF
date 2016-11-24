@@ -373,6 +373,7 @@ $(document).ready(function() {
                 required: false,
                 wrap: false
             },
+            // новые поля
             description: {
                 type: 'textarea',
                 label: 'Описание помещения',
@@ -405,6 +406,315 @@ $(document).ready(function() {
                 type: 'text',
                 label: 'Помещение',
                 placeholder: 'Помещение',
+                show: false,
+                required: false
+            },
+            worktype: {
+                type: 'text',
+                label: 'Тип работ',
+                placeholder: 'Тип работ',
+                show: false,
+                required: true
+            },
+            design: {
+                type: 'text',
+                label: 'Дизайн помещения',
+                placeholder: 'Дизайн помещения',
+                show: false,
+                required: true
+            },
+            walls: {
+                type: 'text',
+                label: 'Стены',
+                placeholder: 'Стены',
+                show: false,
+                required: true
+            },
+            floorColor: {
+                type: 'text',
+                label: 'Цвет пола',
+                placeholder: 'Цвет пола',
+                show: false,
+                required: true
+            },
+            floorType: {
+                type: 'text',
+                label: 'Тип покрытия пола',
+                placeholder: 'Тип покрытия пола',
+                show: false,
+                required: false
+            },
+            floorChange: {
+                type: 'checkbox',
+                label: 'Будет ли меняться пол во время ремонта?',
+                placeholder: 'Будет ли меняться пол во время ремонта?',
+                show: false,
+                required: false,
+                checked: false
+            },
+            ceilingHeight: {
+                type: 'text',
+                label: 'Высота потолка(м)',
+                placeholder: 'Высота потолка(м)',
+                show: false,
+                required: true
+            },
+            ceilingChange: {
+                type: 'text',
+                label: 'Будет ли меняться высота потолка во время ремонта?',
+                placeholder: 'Будет ли меняться высота потолка во время ремонта?',
+                show: false,
+                required: false
+            },
+            position: {
+                type: 'text',
+                label: 'Как вы планируете распололжить кухонный гарнитур?',
+                placeholder: 'Как вы планируете расположить кухонный гарнитур?',
+                show: false,
+                required: true
+            },
+            addPlace: {
+                type: 'text',
+                label: 'Нужно ли вам отдельное место (дополнительная рабочая поверхность)?',
+                placeholder: 'Нужно ли вам отдельное место (дополнительная рабочая поверхность)?',
+                show: false,
+                required: true
+            },
+            kitchenStyle: {
+                type: 'text',
+                label: 'Стиль кухни',
+                placeholder: 'Стиль кухни',
+                show: false,
+                required: true
+            },
+            upperSection: {
+                type: 'text',
+                label: 'Материал верхних секций',
+                placeholder: 'Материал верхних секций',
+                show: false,
+                required: true
+            },
+            lowerSection: {
+                type: 'text',
+                label: 'Материал нижних секций',
+                placeholder: 'Материал нижних секций',
+                show: false,
+                required: true
+            },
+            upperSectionColor: {
+                type: 'text',
+                label: 'Цвет верхних секций',
+                placeholder: 'Цвет верхних секций',
+                show: false,
+                required: false
+            },
+            lowerSectionColor: {
+                type: 'text',
+                label: 'Цвет нижних секций',
+                placeholder: 'Цвет нижних секций',
+                show: false,
+                required: false
+            },
+            combineWishes: {
+                type: 'text',
+                label: 'Пожелания по возможным вариантам комбинации цветов (верх, низ)',
+                placeholder: 'Пожелания по возможным вариантам комбинации цветов (верх, низ)',
+                show: false,
+                required: false
+            },
+            diningGroup: {
+                type: 'text',
+                label: 'Наличие столовой группы',
+                placeholder: 'Наличие столовой группы',
+                show: false,
+                required: false
+            },
+            diningGroupLength: {
+                type: 'text',
+                label: 'Длина столовой группы(м)',
+                placeholder: 'Длина столовой группы (м)',
+                show: false,
+                required: false
+            },
+            diningGroupWidth: {
+                type: 'text',
+                label: 'Ширина столовой группы(м)',
+                placeholder: 'Ширина столовой группы (м)',
+                show: false,
+                required: false
+            },
+            diningGroupHeight: {
+                type: 'text',
+                label: 'Высота столовой группы(м)',
+                placeholder: 'Высота столовой группы (м)',
+                show: false,
+                required: false
+            },
+            chairs: {
+                type: 'text',
+                label: 'Количество стульев',
+                placeholder: 'Количество стульев',
+                show: false,
+                required: false
+            },
+            diningGroupMaterial: {
+                type: 'text',
+                label: 'Материал столовой группы',
+                placeholder: 'Материал столовой группы',
+                show: false,
+                required: false
+            },
+            diningGroupStyle: {
+                type: 'text',
+                label: 'Стиль столовой группы',
+                placeholder: 'Стиль столовой группы',
+                show: false,
+                required: false
+            },
+            diningGroupColor: {
+                type: 'text',
+                label: 'Цвет столовой группы',
+                placeholder: 'Цвет столовой группы',
+                show: false,
+                required: false
+            },
+            diningGroupExt: {
+                type: 'text',
+                label: 'Дополнительные элементы столовой группы',
+                placeholder: 'Дополнительные элементы столовой группы',
+                show: false,
+                required: false
+            },
+            tabletopMaterial: {
+                type: 'text',
+                label: 'Материал столешницы',
+                placeholder: 'Материал столешницы',
+                show: false,
+                required: true
+            },
+            tabletopExt: {
+                type: 'text',
+                label: 'Примечание(столешница)',
+                placeholder: 'Примечаение(столешница)',
+                show: false,
+                required: false
+            },
+            washingType: {
+                type: 'text',
+                label: 'Тип мойки',
+                placeholder: 'Тип мойки',
+                show: false,
+                required: false
+            },
+            fridge: {
+                type: 'text',
+                label: 'Отдельностоящий холодильник(кол-во)',
+                placeholder: 'Отдельностоящий холодильник(кол-во)',
+                show: false,
+                required: false
+            },
+            deepFreeze: {
+                type: 'text',
+                label: 'Отдельностоящий морозильник(кол-во)',
+                placeholder: 'Отдельностоящий морозильник(кол-во)',
+                show: false,
+                required: false
+            },
+            dishwasher: {
+                type: 'text',
+                label: 'Отдельностоящая посудомоечная машина(кол-во)',
+                placeholder: 'Отдельностоящая посудомоечная машина(кол-во)',
+                show: false,
+                required: false
+            },
+            washer: {
+                type: 'text',
+                label: 'Отдельностоящая стиральная машина(кол-во)',
+                placeholder: 'Отдельностоящая стиральная машина(кол-во)',
+                show: false,
+                required: false
+            },
+            stoveNumber: {
+                type: 'text',
+                label: 'Отдельностоящая кухонная плита(кол-во)',
+                placeholder: 'Отдельностоящая кухонная плита(кол-во)',
+                show: false,
+                required: false
+            },
+            inMicrowaveNumber: {
+                type: 'text',
+                label: 'Встраиваемая микроволновая печь(кол-во)',
+                placeholder: 'Встраиваемая микроволновая печь(кол-во)',
+                show: false,
+                required: false
+            },
+            freeMicrowaveNumber: {
+                type: 'text',
+                label: 'Отдельностоящая микроволновая печь(кол-во)',
+                placeholder: 'Отдельностоящая микроволновая печь(кол-во)',
+                show: false,
+                required: false
+            },
+            oven: {
+                type: 'text',
+                label: 'Встраиваемый духовой шкаф(кол-во)',
+                placeholder: 'Встраиваемый духовой шкаф(кол-во)',
+                show: false,
+                required: false
+            },
+            hob: {
+                type: 'text',
+                label: 'Встраиваемая варочная панель(кол-во)',
+                placeholder: 'Встраиваемая варочная панель(кол-во)',
+                show: false,
+                required: false
+            },
+            stoveStyle: {
+                type: 'text',
+                label: 'Кухонная плита',
+                placeholder: 'Кухонная плита',
+                show: false,
+                required: false
+            },
+            hoodStyle: {
+                type: 'text',
+                label: 'Стиль вытяжки',
+                placeholder: 'Стиль вытяжки',
+                show: false,
+                required: true
+            },
+            hoodType: {
+                type: 'text',
+                label: 'Тип вытяжки',
+                placeholder: 'Тип вытяжки',
+                show: false,
+                required: true
+            },
+            hoodNumber: {
+                type: 'text',
+                label: 'Кол-во вытяжек',
+                placeholder: 'Кол-во вытяжек',
+                show: false,
+                required: false
+            },
+            hoodExt: {
+                type: 'text',
+                label: 'Примечание к вытяжкам',
+                placeholder: 'Примечание к вытяжкам',
+                show: false,
+                required: false
+            },
+            lighting: {
+                type: 'text',
+                label: 'Освещение',
+                placeholder: 'Освещение',
+                show: false,
+                required: false
+            },
+            gear: {
+                type: 'text',
+                label: 'Дополнительные механизмы',
+                placeholder: 'Дополнительные механизмы',
                 show: false,
                 required: false
             },

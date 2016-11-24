@@ -38,21 +38,56 @@ module.exports = UM.Views.Form.extend({
         if (this.model.cityCollection) {
             this.cityCollectionView = new UM.Views.Citys({collection: this.model.cityCollection});
         }
-
         if (this.model.kitchenCollection) {
             this.kitchenCollectionView = new UM.Views.Kitchens({collection: this.model.kitchenCollection});
         }
-
         if (this.model.priceCollection) {
             this.priceCollectionView = new UM.Views.Prices({collection: this.model.priceCollection});
         }
-
         if (this.model.colorCollection) {
             this.colorCollectionView = new UM.Views.Colors({collection: this.model.colorCollection});
         }
-
         if (this.model.roomCollection) {
-            this.roomCollectionView = new UM.Views.Colors({collection: this.model.roomCollection});
+            this.roomCollectionView = new UM.Views.Rooms({collection: this.model.roomCollection});
+        }
+        if (this.model.gearCollection) {
+            this.gearCollectionView = new UM.Views.Gears({collection: this.model.gearCollection});
+        }
+        if (this.model.worktypeCollection) {
+            this.worktypeCollectionView = new UM.Views.Worktypes({collection: this.model.worktypeCollection});
+        }
+        if (this.model.designCollection) {
+            this.designCollectionView = new UM.Views.Designs({collection: this.model.designCollection});
+        }
+        if (this.model.wallCollection) {
+            this.wallCollectionView = new UM.Views.Walls({collection: this.model.wallCollection});
+        }
+        if (this.model.floorTypeCollection) {
+            this.floorTypeCollectionView = new UM.Views.FloorTypes({collection: this.model.floorTypeCollection});
+        }
+        if (this.model.positionCollection) {
+            this.positionCollectionView = new UM.Views.Positions({collection: this.model.positionCollection});
+        }
+        if (this.model.addPlaceCollection) {
+            this.addPlaceCollectionView = new UM.Views.AddPlaces({collection: this.model.addPlaceCollection});
+        }
+        if (this.model.kitchenStyleCollection) {
+            this.kitchenStyleCollectionView = new UM.Views.KitchenStyles({collection: this.model.kitchenStyleCollection});
+        }
+        if (this.model.upperSectionCollection) {
+            this.upperSectionCollectionView = new UM.Views.UpperSections({collection: this.model.upperSectionCollection});
+        }
+        if (this.model.lowerSectionCollection) {
+            this.lowerSectionCollectionView = new UM.Views.LowerSections({collection: this.model.lowerSectionCollection});
+        }
+        if (this.model.diningGroupCollection) {
+            this.diningGroupCollectionView = new UM.Views.DiningGroups({collection: this.model.diningGroupCollection});
+        }
+        if (this.model.tabletopMaterialCollection) {
+            this.tabletopMaterialCollectionView = new UM.Views.TabletopMaterials({collection: this.model.tabletopMaterialCollection});
+        }
+        if (this.model.washingTypeCollection) {
+            this.washingTypeCollectionView = new UM.Views.WashingTypes({collection: this.model.washingTypeCollection});
         }
 
         this.render();
@@ -184,6 +219,45 @@ module.exports = UM.Views.Form.extend({
             }
             if (that.roomCollectionView) {
                 that.addSelectList('room', that.roomCollectionView);
+            }
+            if (that.gearCollectionView) {
+                that.addSelectList('gear', that.gearCollectionView);
+            }
+            if (that.worktypeCollectionView) {
+                that.addSelectList('worktype', that.worktypeCollectionView);
+            }
+            if (that.designCollectionView) {
+                that.addSelectList('design', that.designCollectionView);
+            }
+            if (that.wallCollectionView) {
+                that.addSelectList('walls', that.wallCollectionView);
+            }
+            if (that.floorTypeCollectionView) {
+                that.addSelectList('floorType', that.floorTypeCollectionView);
+            }
+            if (that.positionCollectionView) {
+                that.addSelectList('position', that.positionCollectionView);
+            }
+            if (that.addPlaceCollectionView) {
+                that.addSelectList('addPlace', that.addPlaceCollectionView);
+            }
+            if (that.kitchenStyleCollectionView) {
+                that.addSelectList('kitchenStyle', that.kitchenStyleCollectionView);
+            }
+            if (that.upperSectionCollectionView) {
+                that.addSelectList('upperSection', that.upperSectionCollectionView);
+            }
+            if (that.lowerSectionCollectionView) {
+                that.addSelectList('lowerSection', that.lowerSectionCollectionView);
+            }
+            if (that.diningGroupCollectionView) {
+                that.addSelectList('diningGroup', that.diningGroupCollectionView);
+            }
+            if (that.tabletopMaterialCollectionView) {
+                that.addSelectList('tabletopMaterial', that.tabletopMaterialCollectionView);
+            }
+            if (that.washingTypeCollectionView) {
+                that.addSelectList('washingType', that.washingTypeCollectionView);
             }
             that.initPhoneMask();
             that.preValidation();
