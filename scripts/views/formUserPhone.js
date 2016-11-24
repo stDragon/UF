@@ -43,7 +43,7 @@ module.exports = Backbone.View.extend({
         });
         var msg = "Пользователю показано окно подтверждения телефона. ";
         if (typeof that.options.id !== 'undefined') {
-            msg += 'Форма: ' + that.options.id;
+            msg += 'Id пользователя: ' + that.options.id;
         }
         new UM.Models.Logger({message: String(msg)});
         return this;
@@ -93,15 +93,22 @@ module.exports = Backbone.View.extend({
             data[this.name] = $(this).val();
         });
 
-        var msg = "Пользователь отправил код подтверждения телефона. ";
-        if (typeof this.options.id !== 'undefined') {
-            msg += 'Форма: ' + this.options.id;
-        }
-        new UM.Models.Logger({message: String(msg)});
-
+        var userId = this.options.id;
         this.model.save(data, {
             error: function (model, error) {
-                UM.ajaxError(error)
+                UM.ajaxError(error);
+                var msg = "Пользователь отправил неверный код подтверждения телефона. ";
+                if (typeof userId !== 'undefined') {
+                    msg += 'Id пользователя: ' + userId + ', код: ' + data.code;
+                }
+                new UM.Models.Logger({message: String(msg)});
+            },
+            success: function(model, response) {
+                var msg = "Пользователь отправил верный код подтверждения телефона. ";
+                if (typeof userId !== 'undefined') {
+                    msg += 'Id пользователя: ' + userId + ', код: ' + data.code;
+                }
+                new UM.Models.Logger({message: String(msg)});
             }
         });
     },

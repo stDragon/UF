@@ -20,7 +20,7 @@ module.exports = Backbone.View.extend({
 
         var msg = "Пользователю показано окно с сообщением о принятой заявке. ";
         if (typeof that.options.id !== 'undefined') {
-            msg += 'Форма: ' + that.options.id;
+            msg += 'Id пользователя: ' + that.options.id;
         }
         new UM.Models.Logger({message: String(msg)});
 
