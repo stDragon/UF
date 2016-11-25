@@ -6,6 +6,7 @@ module.exports = Backbone.Ribs.Model.extend({
     defaults: {
         href: '',
         //name: '',
+        configId : '',
         message: '',
         //stack: ''
     },
@@ -16,7 +17,6 @@ module.exports = Backbone.Ribs.Model.extend({
 
     initialize: function () {
         this.set('href',JSON.stringify(window.location.href));
-
         this.save();
 
         if (UM.conf.server.type != 'prod')

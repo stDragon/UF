@@ -44,15 +44,15 @@ module.exports = Backbone.Ribs.View.extend({
         UM.vent.on('page:showPhoneForm', function (id) {
             if (id == this.model.id) {
                 if (this.model.get('phoneVerification') === true)
-                    this.renderStep(this.showPhoneForm());
+                    this.renderStep(this.showPhoneForm(id));
                 else
-                    this.renderStep(this.showConfirm());
+                    this.renderStep(this.showConfirm(id));
             }
         }, this);
 
         UM.vent.on('page:showConfirm', function (id) {
             if (id == this.model.id)
-                this.renderStep(this.showConfirm());
+                this.renderStep(this.showConfirm(id));
         }, this);
 
         this.listenTo(this.model, 'destroy', this.unrender);
@@ -167,21 +167,21 @@ module.exports = Backbone.Ribs.View.extend({
     /**
      * Рендер формы подтверждения телефона
      * */
-    showPhoneForm: function () {
+    showPhoneForm: function (id) {
         var phone = this.model.form.get('phone');
         this.phone = new UM.Models.Phone({
             user: UM.forms[this.model.id].id,
             phone: phone,
             configId: this.model.id
         });
-        this.phoneView = new UM.Views.FormUserPhone({model: this.phone}, {id: UM.forms[this.model.id].id});
+        this.phoneView = new UM.Views.FormUserPhone({model: this.phone}, {id: id, userId: UM.forms[this.model.id].id});
         return this.phoneView.el;
     },
     /**
      * Рендер сообщения об оформлении заявки
      * */
-    showConfirm: function () {
-        this.confirmView = new UM.Views.Confirm([], {id: UM.forms[this.model.id].id});
+    showConfirm: function (id) {
+        this.confirmView = new UM.Views.Confirm([], {id: id, userId: UM.forms[this.model.id].id});
         return this.confirmView.el;
     },
     /**

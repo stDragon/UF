@@ -18,11 +18,12 @@ module.exports = Backbone.View.extend({
             that.$el.html(html);
         });
 
+        var configId = (typeof that.options.id !== 'undefined') ? that.options.id : "";
         var msg = "Пользователю показано окно с сообщением о принятой заявке. ";
-        if (typeof that.options.id !== 'undefined') {
-            msg += 'Id пользователя: ' + that.options.id;
+        if (typeof that.options.userId !== 'undefined') {
+            msg += 'Id пользователя: ' + that.options.userId;
         }
-        new UM.Models.Logger({message: String(msg)});
+        new UM.Models.Logger({configId: configId, message: String(msg)});
 
         return this;
     }
