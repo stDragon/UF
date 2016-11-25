@@ -117,7 +117,7 @@ UM.codes = [
 UM.init = function (option, data) {
     $(document).ready(function(){
         UM.option.push(option);
-        /** создаем новую кллекцию конфигураций */
+        /** создаем новую коллекцию конфигураций */
         if (!UM.configsCollection)
             UM.configsCollection = new UM.Collections.Configs([], option);
 
@@ -125,8 +125,8 @@ UM.init = function (option, data) {
         UM.configsCollection.add(config);
 
         config.fetch().then(function () {
-                new UM.Views.Config({model: config});
-            }, UM.ajaxError);
+            new UM.Views.Config({model: config});
+        }, UM.ajaxError);
     });
 };
 
@@ -187,5 +187,6 @@ UM.ajaxError = function(jqXHR) {
         status: jqXHR.status,
         statusText: jqXHR.statusText
     };
-    new UM.Models.Logger({message: JSON.stringify(error)});
+
+    new UM.Models.Logger({configId: UM.option[0].id, message: JSON.stringify(error)});
 };

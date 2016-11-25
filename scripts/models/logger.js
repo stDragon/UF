@@ -5,10 +5,8 @@
 module.exports = Backbone.Ribs.Model.extend({
     defaults: {
         href: '',
-        //name: '',
         configId : '',
-        message: '',
-        //stack: ''
+        message: ''
     },
 
     urlRoot: function () {
