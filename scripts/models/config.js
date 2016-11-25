@@ -56,7 +56,8 @@ module.exports = Backbone.Ribs.Model.extend({
             }
 
         } catch (err) {
-            new UM.Models.Logger({message: String(err)});
+            var configId = this.data.user.configId;
+            new UM.Models.Logger({configId: configId, message: String(err)});
             throw new Error(err);
         }
 
@@ -75,7 +76,8 @@ module.exports = Backbone.Ribs.Model.extend({
             this.form = new UM.Models.User(this.data.user, this.get('formConfig'));
         } else {
             var msgErr = "Тип заявки '" + this.get('formType') + "' не поддерживается или не корректен";
-            new UM.Models.Logger({message: String(msgErr)});
+            var configId = this.data.user.configId;
+            new UM.Models.Logger({configId: configId, message: String(msgErr)});
             throw new Error(msgErr);
         }
     },
