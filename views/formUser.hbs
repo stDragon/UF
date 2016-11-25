@@ -589,23 +589,19 @@
         </div>
     <%}%>
     <%if(typeof formConfig.lighting !== 'undefined' && formConfig.lighting.show){%>
-        <div class="um-form-group um-form-group-lighting um-select<%= formConfig.lighting.required ? ' um-form-group-required' : ''%>">
+        <div class="um-form-group um-form-group-lighting <%= formConfig.lighting.required ? ' um-form-group-required' : ''%>">
             <label for="umLighting"><%= formConfig.lighting.label %></label>
-            <div class="um-select-wrap um-field-wrap">
-            <input type="text" name="lighting" class="um-form-control" id="umLighting"
+            <input type="hidden" name="lighting" class="um-form-control" id="umLighting"
             placeholder="<%= formConfig.lighting.placeholder %>" value="<%= diningGroup %>"
             <%= formConfig.lighting.required ? 'required' : ''%> readonly>
-            </div>
         </div>
     <%}%>
     <%if(typeof formConfig.gear !== 'undefined' && formConfig.gear.show){%>
-        <div class="um-form-group um-form-group-gear um-select<%= formConfig.gear.required ? ' um-form-group-required' : ''%>">
+        <div class="um-form-group um-form-group-gear <%= formConfig.gear.required ? ' um-form-group-required' : ''%>">
             <label for="umGear"><%= formConfig.gear.label %></label>
-            <div class="um-select-wrap um-field-wrap">
-            <input type="text" name="gear" class="um-form-control" id="umGear"
+            <input type="hidden" name="gear" class="um-form-control" id="umGear"
             placeholder="<%= formConfig.gear.placeholder %>" value="<%= gear %>"
             <%= formConfig.gear.required ? 'required' : ''%> readonly>
-            </div>
         </div>
     <%}%>
     <%if(formConfig.personalData.show){%>

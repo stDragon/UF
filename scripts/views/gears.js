@@ -2,9 +2,9 @@
  *  Дополнительные механизмы
  *  */
 
-module.exports = UM.Views.InputSelect.extend({
+module.exports = UM.Views.CheckboxList.extend({
 
-    className: 'um-dropdown-content um-gear-list',
+    className: 'um-checkbox-content um-gear-list',
 
     render: function () {
         this.collection.each(function (model) {

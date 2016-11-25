@@ -715,7 +715,7 @@ $(document).ready(function() {
                 type: 'text',
                 label: 'Дополнительные механизмы',
                 placeholder: 'Дополнительные механизмы',
-                show: false,
+                show: true,
                 required: false
             },
             submit: {
