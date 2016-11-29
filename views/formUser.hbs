@@ -240,6 +240,11 @@
             </div>
         </div>
     <%}%>
+    <%if(typeof formConfig.floorHeader !== 'undefined' && formConfig.floorHeader.show){%>
+        <div class="um-pre-header">
+            <span class="um-title-2"><%= formConfig.floorHeader.value1 %></span>
+        </div>
+    <%}%>
     <%if(typeof formConfig.floorColor !== 'undefined' && formConfig.floorColor.show){%>
         <div class="um-form-group um-form-group-floorColor <%= formConfig.floorColor.required ? ' um-form-group-required' : ''%>">
             <label for="umFloorColor"><%= formConfig.floorColor.label %></label>
@@ -270,6 +275,11 @@
             </label>
         </div>
     <%}%>
+    <%if(typeof formConfig.ceilingHeader !== 'undefined' && formConfig.ceilingHeader.show){%>
+        <div class="um-pre-header">
+            <span class="um-title-2"><%= formConfig.ceilingHeader.value1 %></span>
+        </div>
+    <%}%>
     <%if(typeof formConfig.ceilingHeight !== 'undefined' && formConfig.ceilingHeight.show){%>
         <div class="um-form-group um-form-group-ceilingHeight <%= formConfig.ceilingHeight.required ? ' um-form-group-required' : ''%>">
             <label for="umCeilingHeight"><%= formConfig.ceilingHeight.label %></label>
@@ -290,6 +300,11 @@
             </label>
         </div>
     <%}%>
+    <%if(typeof formConfig.styleHeader !== 'undefined' && formConfig.styleHeader.show){%>
+        <div class="um-pre-header">
+            <span class="um-title-2"><%= formConfig.styleHeader.value1 %></span>
+        </div>
+    <%}%>
     <%if(typeof formConfig.position !== 'undefined' && formConfig.position.show){%>
         <div class="um-form-group um-form-group-position um-select<%= formConfig.position.required ? ' um-form-group-required' : ''%>">
             <label for="umPosition"><%= formConfig.position.label %></label>
@@ -308,6 +323,11 @@
             placeholder="<%= formConfig.addPlace.placeholder %>" value="<%= addPlace %>"
             <%= formConfig.addPlace.required ? 'required' : ''%> readonly>
             </div>
+        </div>
+    <%}%>
+    <%if(typeof formConfig.kitchenHeader !== 'undefined' && formConfig.kitchenHeader.show){%>
+        <div class="um-pre-header">
+            <span class="um-title-2"><%= formConfig.kitchenHeader.value1 %></span>
         </div>
     <%}%>
     <%if(typeof formConfig.kitchenStyle !== 'undefined' && formConfig.kitchenStyle.show){%>
@@ -340,6 +360,11 @@
             </div>
         </div>
     <%}%>
+    <%if(typeof formConfig.ColorHeader !== 'undefined' && formConfig.ColorHeader.show){%>
+        <div class="um-pre-header">
+            <span class="um-title-2"><%= formConfig.ColorHeader.value1 %></span>
+        </div>
+    <%}%>
     <%if(typeof formConfig.upperSectionColor !== 'undefined' && formConfig.upperSectionColor.show){%>
         <div class="um-form-group um-form-group-upperSectionColor <%= formConfig.upperSectionColor.required ? ' um-form-group-required' : ''%>">
             <label for="umUpperSectionColor"><%= formConfig.upperSectionColor.label %></label>
@@ -363,6 +388,11 @@
             <div class="um-select-wrap um-field-wrap<%= (typeof formConfig.combineWishes.wrap !== 'undefined' && formConfig.combineWishes.wrap) ? ' um-field um-hidden' : ''%>">
             <textarea id="umCombineWishes" type="text" name="combineWishes" class="um-form-control" placeholder="<%= formConfig.combineWishes.placeholder %>"><%= combineWishes %></textarea>
             </div>
+        </div>
+    <%}%>
+    <%if(typeof formConfig.diningGroup !== 'undefined' && formConfig.diningGroup.show){%>
+        <div class="um-pre-header">
+            <span class="um-title-2"><%= formConfig.diningGroup.value1 %></span>
         </div>
     <%}%>
     <%if(typeof formConfig.diningGroup !== 'undefined' && formConfig.diningGroup.show){%>
@@ -440,6 +470,11 @@
             </div>
         </div>
     <%}%>
+    <%if(typeof formConfig.tabletopHeader !== 'undefined' && formConfig.tabletopHeader.show){%>
+        <div class="um-pre-header">
+            <span class="um-title-2"><%= formConfig.tabletopHeader.value1 %></span>
+        </div>
+    <%}%>
     <%if(typeof formConfig.tabletopMaterial !== 'undefined' && formConfig.tabletopMaterial.show){%>
         <div class="um-form-group um-form-group-tabletopMaterial um-select<%= formConfig.tabletopMaterial.required ? ' um-form-group-required' : ''%>">
             <label for="umTabletopMaterial"><%= formConfig.tabletopMaterial.label %></label>
@@ -459,6 +494,11 @@
             </div>
         </div>
     <%}%>
+    <%if(typeof formConfig.washingHeader !== 'undefined' && formConfig.washingHeader.show){%>
+        <div class="um-pre-header">
+            <span class="um-title-2"><%= formConfig.washingHeader.value1 %></span>
+        </div>
+    <%}%>
     <%if(typeof formConfig.washingType !== 'undefined' && formConfig.washingType.show){%>
         <div class="um-form-group um-form-group-washingType um-select<%= formConfig.washingType.required ? ' um-form-group-required' : ''%>">
             <label for="umWashingType"><%= formConfig.washingType.label %></label>
@@ -473,6 +513,11 @@
         <div class="um-form-group um-form-group-washingExt<%= formConfig.washingExt.required ? ' um-form-group-required' : ''%>">
             <label for="umWashingExt"><%= formConfig.washingExt.label %></label>
             <input type="text" name="washingExt" class="um-form-control" id="umWashingExt" placeholder="<%= formConfig.washingExt.placeholder %>" value="<%= washingExt %>" <%= formConfig.washingExt.required ? 'required' : ''%>>
+        </div>
+    <%}%>
+    <%if(typeof formConfig.techHeader !== 'undefined' && formConfig.techHeader.show){%>
+        <div class="um-pre-header">
+            <span class="um-title-2"><%= formConfig.techHeader.value1 %></span>
         </div>
     <%}%>
     <%if(typeof formConfig.fridge !== 'undefined' && formConfig.fridge.show){%>
@@ -619,6 +664,11 @@
             placeholder="<%= formConfig.stoveStyle.placeholder %>" value="<%= diningGroup %>"
             <%= formConfig.stoveStyle.required ? 'required' : ''%> readonly>
             </div>
+        </div>
+    <%}%>
+    <%if(typeof formConfig.hoodHeader !== 'undefined' && formConfig.hoodHeader.show){%>
+        <div class="um-pre-header">
+            <span class="um-title-2"><%= formConfig.hoodHeader.value1 %></span>
         </div>
     <%}%>
     <%if(typeof formConfig.hoodStyle !== 'undefined' && formConfig.hoodStyle.show){%>

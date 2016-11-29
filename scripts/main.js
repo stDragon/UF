@@ -616,6 +616,11 @@ $(document).ready(function() {
                 show: false,
                 required: false
             },
+            tabletopHeader: {
+                label: 'Заголовок',
+                show: false,
+                value1: 'Столешница'
+            },
             tabletopMaterial: {
                 type: 'text',
                 label: 'Материал столешницы',

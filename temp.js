@@ -106,6 +106,22 @@ var db ={
     ],
     kitchens: [
         {
+            mr3id: '4',
+            name: 'Acatcia',
+            description: '',
+            type: 'classic',
+            material: 'massif',
+            preview: 'http://www.marya.ru/upload/Acatcia2-h-01_prev.jpg'
+        },
+        {
+            mr3id: '4',
+            name: 'Axis',
+            description: '',
+            type: 'classic',
+            material: 'massif',
+            preview: 'http://www.marya.ru/upload/resize_cache/iblock/dfe/1200_400_1/dfe90c7ac6ceceb17197912c92f79572.jpg'
+        },
+        {
             mr3id: '1',
             name: 'Federica',
             description: '',
@@ -128,14 +144,6 @@ var db ={
             type: 'classic',
             material: 'massif',
             preview: 'http://www.marya.ru/upload/farm-blu-h-02_prev_1.jpg'
-        },
-        {
-            mr3id: '4',
-            name: 'Acatcia',
-            description: '',
-            type: 'classic',
-            material: 'massif',
-            preview: 'http://www.marya.ru/upload/Acatcia2-h-01_prev.jpg'
         },
         {
             mr3id: '5',

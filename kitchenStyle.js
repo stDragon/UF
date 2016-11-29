@@ -1,8 +1,10 @@
 module.exports = [
     {
-        name : 'классический'
+        style: 'classic',
+        name : 'классика'
     },
     {
+        style: 'modern',
         name : 'модерн'
     }
 ];
