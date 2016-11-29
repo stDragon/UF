@@ -399,7 +399,7 @@ $(document).ready(function() {
                 type: 'file',
                 label: 'Приложить файлы',
                 placeholder: 'Приложить файлы',
-                show: true,
+                show: false,
                 required: false
             },
             room: {
@@ -474,7 +474,8 @@ $(document).ready(function() {
                 label: 'Будет ли меняться высота потолка во время ремонта?',
                 placeholder: 'Будет ли меняться высота потолка во время ремонта?',
                 show: false,
-                required: false
+                required: false,
+                checked: false
             },
             styleHeader: {
                 label: 'Заголовок',
@@ -830,7 +831,7 @@ $(document).ready(function() {
                 type: 'text',
                 label: 'Дополнительные механизмы',
                 placeholder: 'Дополнительные механизмы',
-                show: true,
+                show: false,
                 required: false
             },
             gearExt: {

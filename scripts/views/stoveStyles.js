@@ -1,5 +1,5 @@
 /**
- *  Стены
+ *  Стиль кухонной плиты
  *  */
 
 module.exports = UM.Views.InputSelect.extend({

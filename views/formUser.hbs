@@ -258,8 +258,8 @@
             </div>
         </div>
     <%}%>
-    <%if(formConfig.floorChange.show){%>
-        <div class="um-form-group um-form-group-personal-data<%= formConfig.floorChange.required ? ' um-form-group-required' : ''%>">
+    <%if(typeof formConfig.floorChange !== 'undefined' && formConfig.floorChange.show){%>
+        <div class="um-form-group um-form-group-floorChange<%= formConfig.floorChange.required ? ' um-form-group-required' : ''%>">
             <label class="um-label-checkbox <%= floorChange ? ' um-checked' : ''%>">
                 <input type="checkbox" name="floorChange" value="<%= floorChange %>"
                     <%= formConfig.floorChange.required ? ' required' : ''%>
@@ -278,8 +278,8 @@
             <%= formConfig.ceilingHeight.required ? 'required' : ''%>>
         </div>
     <%}%>
-    <%if(formConfig.ceilingChange.show){%>
-        <div class="um-form-group um-form-group-personal-data<%= formConfig.ceilingChange.required ? ' um-form-group-required' : ''%>">
+    <%if(typeof formConfig.ceilingChange !== 'undefined' && formConfig.ceilingChange.show){%>
+        <div class="um-form-group um-form-group-ceilingChange<%= formConfig.ceilingChange.required ? ' um-form-group-required' : ''%>">
             <label class="um-label-checkbox <%= ceilingChange ? ' um-checked' : ''%>">
                 <input type="checkbox" name="ceilingChange" value="<%= ceilingChange %>"
                     <%= formConfig.ceilingChange.required ? ' required' : ''%>

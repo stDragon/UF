@@ -74,12 +74,9 @@ module.exports = Backbone.Ribs.View.extend({
                     }
                 });
                 this.$el.find('[name=' + key + ']').val(checked.join());
-            }
-            else if (key == 'file') {
-                var val = this.$el.find('[name=' + key + ']')[0].files[0];
-                this.$el.find('[name=' + key + ']').val();
-            } else
+            } else if(key != 'file') {
                 this.$el.find('[name=' + key + ']').val(num);
+            }
         }, this);
     },
     /**
