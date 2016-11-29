@@ -153,6 +153,7 @@ module.exports = Backbone.Ribs.View.extend({
     showStartForm: function () {
         if (this.model.form) {
             if (this.model.get('formType') == 'calculation'
+                || this.model.get('formType') == 'calculationExt'
                 || this.model.get('formType') == 'measurement'
                 || this.model.get('formType') == 'credit') {
 

@@ -72,7 +72,7 @@ module.exports = Backbone.Ribs.Model.extend({
             this.data.user.cityId = 1394549;
         }
 
-        if (this.get('formType') == 'calculation' || this.get('formType') == 'measurement' || this.get('formType') == 'credit') {
+        if (this.get('formType') == 'calculation' || this.get('formType') == 'calculationExt' || this.get('formType') == 'measurement' || this.get('formType') == 'credit') {
             this.form = new UM.Models.User(this.data.user, this.get('formConfig'));
         } else {
             var msgErr = "Тип заявки '" + this.get('formType') + "' не поддерживается или не корректен";
