@@ -77,6 +77,7 @@ UM.Models.WashingType = require('./models/washingType.js');
 UM.Models.StoveStyle = require('./models/stoveStyle.js');
 UM.Models.HoodStyle = require('./models/hoodStyle.js');
 UM.Models.HoodType = require('./models/hoodType.js');
+UM.Models.Lighting = require('./models/lighting.js');
 
 UM.Collections.Configs = require('./collections/configs.js');
 UM.Collections.Citys = require('./collections/citys.js');
@@ -102,6 +103,7 @@ UM.Collections.WashingTypes = require('./collections/washingTypes.js');
 UM.Collections.StoveStyles = require('./collections/stoveStyles.js');
 UM.Collections.HoodTypes = require('./collections/hoodTypes.js');
 UM.Collections.HoodStyles = require('./collections/hoodStyles.js');
+UM.Collections.Lightings = require('./collections/lightings.js');
 
 UM.Views.Tooltip = require('./views/tooltip.js');
 UM.Views.Loader = require('./views/loader.js');
@@ -166,6 +168,8 @@ UM.Views.HoodStyle = require('./views/hoodStyle.js');
 UM.Views.HoodStyles = require('./views/hoodStyles.js');
 UM.Views.HoodType = require('./views/hoodType.js');
 UM.Views.HoodTypes = require('./views/hoodTypes.js');
+UM.Views.Lighting = require('./views/lighting.js');
+UM.Views.Lightings = require('./views/lightings.js');
 
 /** @todo Надо определить куда это определить */
 UM.codes = [

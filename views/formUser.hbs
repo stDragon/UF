@@ -112,14 +112,14 @@
         </div>
     <%}%>
     <%if(typeof formConfig.comment !== 'undefined' && formConfig.comment.show){%>
-            <div class="um-form-group um-form-group-comment um-wrapper
-            <%= (typeof formConfig.comment.wrap !== 'undefined' && formConfig.comment.wrap) ? 'um-wrapper-hidden' : ''%>">
-                <label for="umComment"><%= formConfig.comment.label %></label>
-                <div class="um-select-wrap um-field-wrap<%= (typeof formConfig.comment.wrap !== 'undefined' && formConfig.comment.wrap) ? ' um-field um-hidden' : ''%>">
-                <textarea id="umComment" type="text" name="comment" class="um-form-control" placeholder="<%= formConfig.comment.placeholder %>"><%= comment %></textarea>
-                </div>
+        <div class="um-form-group um-form-group-comment um-wrapper
+        <%= (typeof formConfig.comment.wrap !== 'undefined' && formConfig.comment.wrap) ? 'um-wrapper-hidden' : ''%>">
+            <label for="umComment"><%= formConfig.comment.label %></label>
+            <div class="um-select-wrap um-field-wrap<%= (typeof formConfig.comment.wrap !== 'undefined' && formConfig.comment.wrap) ? ' um-field um-hidden' : ''%>">
+            <textarea id="umComment" type="text" name="comment" class="um-form-control" placeholder="<%= formConfig.comment.placeholder %>"><%= comment %></textarea>
             </div>
-        <%}%>
+        </div>
+    <%}%>
     <%if(typeof formConfig.price !== 'undefined' && formConfig.price.show){%>
         <div class="um-form-group um-form-group-price um-select<%= formConfig.price.required ? ' um-form-group-required' : ''%>">
             <label for="umPrice"><%= formConfig.price.label %></label>
@@ -469,12 +469,34 @@
             </div>
         </div>
     <%}%>
+    <%if(formConfig.washingExt.show){%>
+        <div class="um-form-group um-form-group-washingExt<%= formConfig.washingExt.required ? ' um-form-group-required' : ''%>">
+            <label for="umWashingExt"><%= formConfig.washingExt.label %></label>
+            <input type="text" name="washingExt" class="um-form-control" id="umWashingExt" placeholder="<%= formConfig.washingExt.placeholder %>" value="<%= washingExt %>" <%= formConfig.washingExt.required ? 'required' : ''%>>
+        </div>
+    <%}%>
     <%if(typeof formConfig.fridge !== 'undefined' && formConfig.fridge.show){%>
         <div class="um-form-group um-form-group-fridge <%= formConfig.fridge.required ? ' um-form-group-required' : ''%>">
             <label for="umFridge"><%= formConfig.fridge.label %></label>
             <input type="text" name="fridge" class="um-form-control" id="umFridge"
             placeholder="<%= formConfig.fridge.placeholder %>" value="<%= diningGroup %>"
             <%= formConfig.fridge.required ? 'required' : ''%>>
+        </div>
+    <%}%>
+    <%if(typeof formConfig.inFridge !== 'undefined' && formConfig.inFridge.show){%>
+        <div class="um-form-group um-form-group-inFridge <%= formConfig.inFridge.required ? ' um-form-group-required' : ''%>">
+            <label for="umInFridge"><%= formConfig.inFridge.label %></label>
+            <input type="text" name="inFridge" class="um-form-control" id="umInFridge"
+            placeholder="<%= formConfig.inFridge.placeholder %>" value="<%= diningGroup %>"
+            <%= formConfig.inFridge.required ? 'required' : ''%>>
+        </div>
+    <%}%>
+    <%if(typeof formConfig.fridgeExt !== 'undefined' && formConfig.fridgeExt.show){%>
+        <div class="um-form-group um-form-group-fridgeExt <%= formConfig.fridgeExt.required ? ' um-form-group-required' : ''%>">
+            <label for="umFridgeExt"><%= formConfig.fridgeExt.label %></label>
+            <input type="text" name="fridgeExt" class="um-form-control" id="umFridgeExt"
+            placeholder="<%= formConfig.fridgeExt.placeholder %>" value="<%= diningGroup %>"
+            <%= formConfig.fridgeExt.required ? 'required' : ''%>>
         </div>
     <%}%>
     <%if(typeof formConfig.deepFreeze !== 'undefined' && formConfig.deepFreeze.show){%>
@@ -485,6 +507,22 @@
             <%= formConfig.deepFreeze.required ? 'required' : ''%>>
         </div>
     <%}%>
+    <%if(typeof formConfig.inDeepFreeze !== 'undefined' && formConfig.inDeepFreeze.show){%>
+        <div class="um-form-group um-form-group-inDeepFreeze <%= formConfig.inDeepFreeze.required ? ' um-form-group-required' : ''%>">
+            <label for="umInDeepFreeze"><%= formConfig.inDeepFreeze.label %></label>
+            <input type="text" name="inDeepFreeze" class="um-form-control" id="umInDeepFreeze"
+            placeholder="<%= formConfig.inDeepFreeze.placeholder %>" value="<%= diningGroup %>"
+            <%= formConfig.inDeepFreeze.required ? 'required' : ''%>>
+        </div>
+    <%}%>
+    <%if(typeof formConfig.deepFreezeExt !== 'undefined' && formConfig.deepFreezeExt.show){%>
+        <div class="um-form-group um-form-group-deepFreezeExt <%= formConfig.deepFreezeExt.required ? ' um-form-group-required' : ''%>">
+            <label for="umDeepFreezeExt"><%= formConfig.deepFreezeExt.label %></label>
+            <input type="text" name="deepFreezeExt" class="um-form-control" id="umDeepFreezeExt"
+            placeholder="<%= formConfig.deepFreezeExt.placeholder %>" value="<%= diningGroup %>"
+            <%= formConfig.deepFreezeExt.required ? 'required' : ''%>>
+        </div>
+    <%}%>
     <%if(typeof formConfig.dishwasher !== 'undefined' && formConfig.dishwasher.show){%>
         <div class="um-form-group um-form-group-dishwasher <%= formConfig.dishwasher.required ? ' um-form-group-required' : ''%>">
             <label for="umDishwasher"><%= formConfig.dishwasher.label %></label>
@@ -493,12 +531,44 @@
             <%= formConfig.dishwasher.required ? 'required' : ''%>>
         </div>
     <%}%>
+    <%if(typeof formConfig.inDishwasher !== 'undefined' && formConfig.inDishwasher.show){%>
+        <div class="um-form-group um-form-group-inDishwasher <%= formConfig.inDishwasher.required ? ' um-form-group-required' : ''%>">
+            <label for="umInDishwasher"><%= formConfig.inDishwasher.label %></label>
+            <input type="text" name="inDishwasher" class="um-form-control" id="umIbDishwasher"
+            placeholder="<%= formConfig.inDishwasher.placeholder %>" value="<%= diningGroup %>"
+            <%= formConfig.inDishwasher.required ? 'required' : ''%>>
+        </div>
+    <%}%>
+    <%if(typeof formConfig.dishwasherExt !== 'undefined' && formConfig.dishwasherExt.show){%>
+        <div class="um-form-group um-form-group-dishwasherExt <%= formConfig.dishwasherExt.required ? ' um-form-group-required' : ''%>">
+            <label for="umDishwasherExt"><%= formConfig.dishwasherExt.label %></label>
+            <input type="text" name="dishwasherExt" class="um-form-control" id="umDishwasherExt"
+            placeholder="<%= formConfig.dishwasherExt.placeholder %>" value="<%= diningGroup %>"
+            <%= formConfig.dishwasherExt.required ? 'required' : ''%>>
+        </div>
+    <%}%>
     <%if(typeof formConfig.washer !== 'undefined' && formConfig.washer.show){%>
         <div class="um-form-group um-form-group-washer <%= formConfig.washer.required ? ' um-form-group-required' : ''%>">
             <label for="umWasher"><%= formConfig.washer.label %></label>
             <input type="text" name="washer" class="um-form-control" id="umWasher"
             placeholder="<%= formConfig.washer.placeholder %>" value="<%= diningGroup %>"
             <%= formConfig.washer.required ? 'required' : ''%>>
+        </div>
+    <%}%>
+    <%if(typeof formConfig.inWasher !== 'undefined' && formConfig.inWasher.show){%>
+        <div class="um-form-group um-form-group-inWasher <%= formConfig.inWasher.required ? ' um-form-group-required' : ''%>">
+            <label for="umInWasher"><%= formConfig.inWasher.label %></label>
+            <input type="text" name="inWasher" class="um-form-control" id="umInWasher"
+            placeholder="<%= formConfig.inWasher.placeholder %>" value="<%= diningGroup %>"
+            <%= formConfig.inWasher.required ? 'required' : ''%>>
+        </div>
+    <%}%>
+    <%if(typeof formConfig.washerExt !== 'undefined' && formConfig.washerExt.show){%>
+        <div class="um-form-group um-form-group-washerExt <%= formConfig.washerExt.required ? ' um-form-group-required' : ''%>">
+            <label for="umWasherExt"><%= formConfig.washerExt.label %></label>
+            <input type="text" name="washerExt" class="um-form-control" id="umWasherExt"
+            placeholder="<%= formConfig.washerExt.placeholder %>" value="<%= diningGroup %>"
+            <%= formConfig.washerExt.required ? 'required' : ''%>>
         </div>
     <%}%>
     <%if(typeof formConfig.stoveNumber !== 'undefined' && formConfig.stoveNumber.show){%>
@@ -596,12 +666,24 @@
             <%= formConfig.lighting.required ? 'required' : ''%> readonly>
         </div>
     <%}%>
+    <%if(formConfig.lightingExt.show){%>
+        <div class="um-form-group um-form-group-lightingExt<%= formConfig.lightingExt.required ? ' um-form-group-required' : ''%>">
+            <label for="umLightingExt"><%= formConfig.lightingExt.label %></label>
+            <input type="text" name="lightingExt" class="um-form-control" id="umLightingExt" placeholder="<%= formConfig.lightingExt.placeholder %>" value="<%= lightingExt %>" <%= formConfig.lightingExt.required ? 'required' : ''%>>
+        </div>
+    <%}%>
     <%if(typeof formConfig.gear !== 'undefined' && formConfig.gear.show){%>
         <div class="um-form-group um-form-group-gear <%= formConfig.gear.required ? ' um-form-group-required' : ''%>">
             <label for="umGear"><%= formConfig.gear.label %></label>
             <input type="hidden" name="gear" class="um-form-control" id="umGear"
             placeholder="<%= formConfig.gear.placeholder %>" value="<%= gear %>"
             <%= formConfig.gear.required ? 'required' : ''%> readonly>
+        </div>
+    <%}%>
+    <%if(formConfig.gearExt.show){%>
+        <div class="um-form-group um-form-group-gearExt<%= formConfig.gearExt.required ? ' um-form-group-required' : ''%>">
+            <label for="umGearExt"><%= formConfig.gearExt.label %></label>
+            <input type="text" name="gearExt" class="um-form-control" id="umGearExt" placeholder="<%= formConfig.gearExt.placeholder %>" value="<%= gearExt %>" <%= formConfig.gearExt.required ? 'required' : ''%>>
         </div>
     <%}%>
     <%if(formConfig.personalData.show){%>

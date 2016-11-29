@@ -399,7 +399,7 @@ $(document).ready(function() {
                 type: 'file',
                 label: 'Приложить файлы',
                 placeholder: 'Приложить файлы',
-                show: false,
+                show: true,
                 required: false
             },
             room: {
@@ -430,6 +430,11 @@ $(document).ready(function() {
                 show: false,
                 required: true
             },
+            floorHeader: {
+                label: 'Заголовок',
+                show: false,
+                value1: 'Полы'
+            },
             floorColor: {
                 type: 'text',
                 label: 'Цвет пола',
@@ -452,6 +457,11 @@ $(document).ready(function() {
                 required: false,
                 checked: false
             },
+            ceilingHeader: {
+                label: 'Заголовок',
+                show: false,
+                value1: 'Потолок'
+            },
             ceilingHeight: {
                 type: 'text',
                 label: 'Высота потолка(м)',
@@ -466,6 +476,11 @@ $(document).ready(function() {
                 show: false,
                 required: false
             },
+            styleHeader: {
+                label: 'Заголовок',
+                show: false,
+                value1: 'Планирование кухни и решение стиля'
+            },
             position: {
                 type: 'text',
                 label: 'Как вы планируете распололжить кухонный гарнитур?',
@@ -479,6 +494,11 @@ $(document).ready(function() {
                 placeholder: 'Нужно ли вам отдельное место (дополнительная рабочая поверхность)?',
                 show: false,
                 required: true
+            },
+            kitchenHeader: {
+                label: 'Заголовок',
+                show: false,
+                value1: 'Материал изготовления и стиль фасадов'
             },
             kitchenStyle: {
                 type: 'text',
@@ -501,6 +521,11 @@ $(document).ready(function() {
                 show: false,
                 required: true
             },
+            ColorHeader: {
+                label: 'Заголовок',
+                show: false,
+                value1: 'Цвет'
+            },
             upperSectionColor: {
                 type: 'text',
                 label: 'Цвет верхних секций',
@@ -521,6 +546,11 @@ $(document).ready(function() {
                 placeholder: 'Пожелания по возможным вариантам комбинации цветов (верх, низ)',
                 show: false,
                 required: false
+            },
+            diningGroupHeader: {
+                label: 'Заголовок',
+                show: false,
+                value1: 'Столовая группа'
             },
             diningGroup: {
                 type: 'text',
@@ -599,6 +629,11 @@ $(document).ready(function() {
                 show: false,
                 required: false
             },
+            washingHeader: {
+                label: 'Заголовок',
+                show: false,
+                value1: 'Мойка'
+            },
             washingType: {
                 type: 'text',
                 label: 'Тип мойки',
@@ -606,10 +641,36 @@ $(document).ready(function() {
                 show: false,
                 required: false
             },
+            washingExt: {
+                type: 'text',
+                label: 'Мойка. Другое(опишите)',
+                placeholder: 'Мойка. Другое(опишите)',
+                show: false,
+                required: false
+            },
+            techHeader: {
+                label: 'Заголовок',
+                show: false,
+                value1: 'Техника'
+            },
             fridge: {
                 type: 'text',
                 label: 'Отдельностоящий холодильник(кол-во)',
                 placeholder: 'Отдельностоящий холодильник(кол-во)',
+                show: false,
+                required: false
+            },
+            inFridge: {
+                type: 'text',
+                label: 'Встраиваемый холодильник(кол-во)',
+                placeholder: 'Встраиваемый холодильник(кол-во)',
+                show: false,
+                required: false
+            },
+            fridgeExt: {
+                type: 'text',
+                label: 'Xолодильник(примечание)',
+                placeholder: 'Xолодильник(примечание)',
                 show: false,
                 required: false
             },
@@ -620,6 +681,20 @@ $(document).ready(function() {
                 show: false,
                 required: false
             },
+            inDeepFreeze: {
+                type: 'text',
+                label: 'Встраиваемый морозильник(кол-во)',
+                placeholder: 'Встраиваемый морозильник(кол-во)',
+                show: false,
+                required: false
+            },
+            deepFreezeExt: {
+                type: 'text',
+                label: 'Морозильник(примечание)',
+                placeholder: 'Морозильник(примечание)',
+                show: false,
+                required: false
+            },
             dishwasher: {
                 type: 'text',
                 label: 'Отдельностоящая посудомоечная машина(кол-во)',
@@ -627,10 +702,38 @@ $(document).ready(function() {
                 show: false,
                 required: false
             },
+            inDishwasher: {
+                type: 'text',
+                label: 'Встраиваемая посудомоечная машина(кол-во)',
+                placeholder: 'Встраиваемая посудомоечная машина(кол-во)',
+                show: false,
+                required: false
+            },
+            dishwasherExt: {
+                type: 'text',
+                label: 'Посудомоечная машина(примечание)',
+                placeholder: 'Посудомоечная машина(примечание)',
+                show: false,
+                required: false
+            },
             washer: {
                 type: 'text',
                 label: 'Отдельностоящая стиральная машина(кол-во)',
                 placeholder: 'Отдельностоящая стиральная машина(кол-во)',
+                show: false,
+                required: false
+            },
+            inWasher: {
+                type: 'text',
+                label: 'Встраиваемая стиральная машина(кол-во)',
+                placeholder: 'Встраиваемая стиральная машина(кол-во)',
+                show: false,
+                required: false
+            },
+            washerExt: {
+                type: 'text',
+                label: 'Стиральная машина(примечание)',
+                placeholder: 'Стиральная машина(примечание)',
                 show: false,
                 required: false
             },
@@ -676,6 +779,11 @@ $(document).ready(function() {
                 show: false,
                 required: false
             },
+            hoodHeader: {
+                label: 'Заголовок',
+                show: false,
+                value1: 'Вытяжки'
+            },
             hoodStyle: {
                 type: 'text',
                 label: 'Стиль вытяжки',
@@ -711,11 +819,25 @@ $(document).ready(function() {
                 show: false,
                 required: false
             },
+            lightingExt: {
+                type: 'text',
+                label: 'Освещение. Другое(опишите)',
+                placeholder: 'Освещение. Другое(опишите)',
+                show: false,
+                required: false
+            },
             gear: {
                 type: 'text',
                 label: 'Дополнительные механизмы',
                 placeholder: 'Дополнительные механизмы',
                 show: true,
+                required: false
+            },
+            gearExt: {
+                type: 'text',
+                label: 'Дополнительные механизмы. Другое(опишите)',
+                placeholder: 'Дополнительные механизмы. Другое(опишите)',
+                show: false,
                 required: false
             },
             submit: {
@@ -854,6 +976,8 @@ $(document).ready(function() {
             var value;
             if (changed.type == 'checkbox') {
                 value = changed.checked;
+            } else if (changed.type == 'file') {
+                value = changed[0].files[0];
             } else {
                 value = changed.value;
             }
@@ -974,6 +1098,8 @@ $(document).ready(function() {
                     if (option.selected)
                         value.push(option.value);
                 });
+            } else if (changed.type == 'file') {
+                value = changed[0].files[0];
             } else {
                 value = changed.value;
             }

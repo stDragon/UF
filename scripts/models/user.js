@@ -53,10 +53,19 @@ module.exports = Backbone.Model.extend({
         tabletopMaterial: '',
         tabletopExt: '',
         washingType: '',
+        washingExt: '',
         fridge: '',
+        inFridge: '',
+        fridgeExt: '',
         deepFreeze: '',
+        inDeepFreeze: '',
+        deepFreezeExt: '',
         dishwasher: '',
+        inDishwasher: '',
+        dishwasherExt: '',
         washer: '',
+        inWasher: '',
+        washerExt: '',
         stoveNumber: '',
         inMicrowaveNumber: '',
         freeMicrowaveNumber: '',
@@ -68,7 +77,9 @@ module.exports = Backbone.Model.extend({
         hoodNumber: '',
         hoodExt: '',
         lighting:'',
-        gear :''
+        lightingExt:'',
+        gear :'',
+        gearExt :''
     },
 
     urlRoot: function () {
@@ -192,6 +203,16 @@ module.exports = Backbone.Model.extend({
                 var active = this.gearCollection.getActive();
                 if (active) {
                     this.set('gear', active.name);
+                }
+            });
+        }
+        if (typeof options.lighting !== 'undefined' && options.lighting.show) {
+            this.lightingCollection = new UM.Collections.Lightings(UM.lightings, this.toJSON());
+
+            this.listenTo(this.lightingCollection, 'change:active', function() {
+                var active = this.lightingCollection.getActive();
+                if (active) {
+                    this.set('lighting', active.name);
                 }
             });
         }

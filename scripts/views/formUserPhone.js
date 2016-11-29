@@ -91,7 +91,7 @@ module.exports = Backbone.View.extend({
 
         var data = {};
         this.$el.find('.um-form-control').each(function () {
-            data[this.name] = $(this).val();
+            data[this.name] = (this.name != 'file') ? $(this).val() : $(this)[0].files[0];
         });
 
         var userId = this.options.userId;

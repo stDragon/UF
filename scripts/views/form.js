@@ -38,6 +38,8 @@ module.exports = Backbone.Ribs.View.extend({
                 $(changed).parent('label').addClass('um-checked');
             else
                 $(changed).parent('label').removeClass('um-checked');
+        } else if (changed.type == 'file') {
+            value = changed[0].files[0];
         } else {
             value = changed.value;
         }
@@ -64,7 +66,20 @@ module.exports = Backbone.Ribs.View.extend({
     setValue: function () {
         var attr = this.model.toJSON();
         _.each(attr, function (num, key) {
-            this.$el.find('[name=' + key + ']').val(num);
+            if(key == "gear" || key == 'lighting') {
+                var checked = [];
+                this.$el.find('[name=' + key + ']').parent('label').each(function () {
+                    if($(this).hasClass('um-checked')) {
+                        checked[checked.length] = $(this).text();
+                    }
+                });
+                this.$el.find('[name=' + key + ']').val(checked.join());
+            }
+            else if (key == 'file') {
+                var val = this.$el.find('[name=' + key + ']')[0].files[0];
+                this.$el.find('[name=' + key + ']').val();
+            } else
+                this.$el.find('[name=' + key + ']').val(num);
         }, this);
     },
     /**
@@ -72,7 +87,8 @@ module.exports = Backbone.Ribs.View.extend({
      */
     setAttr: function (e) {
         var name = $(e.target).attr('name'),
-            val = $(e.target).val();
+            val = (name != 'file') ? $(e.target).val() : $(e.target)[0].files[0];
+
         this.model.set(name, val);
         this.model.set(name, val, {validate:true});
     },
@@ -82,7 +98,7 @@ module.exports = Backbone.Ribs.View.extend({
     setAttrs: function () {
         var data = {};
         this.$el.find('.um-form-control').each(function () {
-            data[this.name] = $(this).val();
+            data[this.name] = (this.name != 'file') ? $(this).val() : $(this)[0].files[0];
         });
 
         this.model.set(data);
@@ -112,9 +128,8 @@ module.exports = Backbone.Ribs.View.extend({
 
         var data = {};
         this.$el.find('.um-form-control').each(function () {
-            data[this.name] = $(this).val();
+            data[this.name] = (this.name != 'file') ? $(this).val() : $(this)[0].files[0];
         });
-
         this.model.save(data, {
             error: function (model, error) {
                 UM.ajaxError(error)
@@ -183,13 +198,13 @@ module.exports = Backbone.Ribs.View.extend({
         }, this);
     },
     /**
-     * Формирует видемые данные формы в объект
+     * Формирует видимые данные формы в объект
      * return {object} attr
      */
     getVisibleFormControl: function () {
         var attr = {};
         this.$el.find('.um-form-control:visible').each(function () {
-            attr[this.name] = $(this).val();
+            attr[this.name] = (this.name != 'file') ? $(this).val() : $(this)[0].files[0];
         });
         return attr;
     }

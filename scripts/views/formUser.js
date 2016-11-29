@@ -53,6 +53,9 @@ module.exports = UM.Views.Form.extend({
         if (this.model.gearCollection) {
             this.gearCollectionView = new UM.Views.Gears({collection: this.model.gearCollection});
         }
+        if (this.model.lightingCollection) {
+            this.lightingCollectionView = new UM.Views.Lightings({collection: this.model.lightingCollection});
+        }
         if (this.model.worktypeCollection) {
             this.worktypeCollectionView = new UM.Views.Worktypes({collection: this.model.worktypeCollection});
         }
@@ -212,6 +215,9 @@ module.exports = UM.Views.Form.extend({
             var data = _.extend(that.model.toJSON(), UM.configsCollection.get(that.model.get('configId')).toJSON());
             var html = $(temp(data));
             that.$el.html(html);
+            that.$el.prop("enctype", "multipart/form-data");
+            that.$el.attr("data-remote", "true");
+
             if (that.cityCollectionView) {
                 that.addSelectList('city', that.cityCollectionView);
                 if(that.model.shopCollection)
@@ -231,6 +237,9 @@ module.exports = UM.Views.Form.extend({
             }
             if (that.gearCollectionView) {
                 that.addSelectList('gear', that.gearCollectionView);
+            }
+            if (that.lightingCollectionView) {
+                that.addSelectList('lighting', that.lightingCollectionView);
             }
             if (that.worktypeCollectionView) {
                 that.addSelectList('worktype', that.worktypeCollectionView);
