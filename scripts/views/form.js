@@ -172,6 +172,7 @@ module.exports = Backbone.Ribs.View.extend({
                 .closest('.um-form-group').removeClass('um-has-error').addClass('um-has-success')
                 .find('.um-tooltip').remove();
         }
+        this.enabledSubmit();
     },
     /**
      * Вывод ошибок
@@ -179,6 +180,7 @@ module.exports = Backbone.Ribs.View.extend({
      * @param  {object} errors.
      */
     invalid: function (model, errors) {
+        this.disabledSubmit();
         this.$el.find('input')
             .closest('.um-form-group').removeClass('um-has-error')
             .find('.um-tooltip').remove();

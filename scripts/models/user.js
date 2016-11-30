@@ -399,7 +399,7 @@ module.exports = Backbone.Model.extend({
             this.on('change', this.log, this);
     },
 
-    /** @TODO временны отключены часть ошибок. используется браузерный валидатор */
+    /** @TODO временно отключена часть ошибок. используется браузерный валидатор */
     validate: function (attrs) {
         var emailFilter = /^[-\w.]+@([A-z0-9][-A-z0-9]+\.)+[A-z]{2,4}$/;
             //lettersFilter = /^[а-яА-ЯёЁa-zA-Z]{1,20}$/;

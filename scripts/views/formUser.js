@@ -287,7 +287,7 @@ module.exports = UM.Views.Form.extend({
                 that.addSelectList('hoodType', that.hoodTypeCollectionView);
             }
             that.initPhoneMask();
-            that.preValidation();
+            that.disabledSubmit();
 
             /* Костыль со скрывающимися комментариями для старого все для дома и питера */
             if (that.$el.closest('.um-edim-doma-old').length || that.$el.closest('.um-piter').length) {
