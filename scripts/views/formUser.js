@@ -10,7 +10,7 @@ module.exports = UM.Views.Form.extend({
 
     events: {
         'focus input': 'showOptionList',
-        //'keyup [name="city"]': 'search',
+        'keyup [name="city"]': 'search',
         'keyup [name="phone"]': 'setAttrs',
         'change input': 'setAttrs',
         'change textarea': 'setAttrs',
@@ -34,7 +34,6 @@ module.exports = UM.Views.Form.extend({
     },
 
     initialize: function () {
-
         if (this.model.cityCollection) {
             this.cityCollectionView = new UM.Views.Citys({collection: this.model.cityCollection});
         }
@@ -171,6 +170,7 @@ module.exports = UM.Views.Form.extend({
 
         if (city.length) {
             this.cityCollectionView = new UM.Views.Citys({collection: city});
+            this.addSelectList('city', this.cityCollectionView);
         }
     },
 
@@ -326,6 +326,9 @@ module.exports = UM.Views.Form.extend({
     },
 
     addSelectList: function (inputName, collectionView) {
+        if(this.$el.find('ul').is('.um-' + inputName + '-list')) {
+            this.$el.find('.um-' + inputName + '-list').remove();
+        }
         this.$el.find('[name=' + inputName + ']').before(collectionView.el);
         return this;
     },
