@@ -505,7 +505,23 @@ module.exports = Backbone.Model.extend({
                             };
                             errors.push(err);
                         } else {
-                            this.trigger('valid', 'city');
+                            var cities = this.cityCollection.toJSON(),
+                                incorrect = false;
+                            for( var key in cities) {
+                                if(value == cities[key].name) {
+                                    this.trigger('valid', 'city');
+                                    incorrect = false;
+                                    return;
+                                }
+                                else incorrect = true;
+                            }
+                            if(incorrect) {
+                                err = {
+                                    text: "Выберите город из списка",
+                                    attr: 'city'
+                                };
+                                errors.push(err);
+                            }
                         }
                     }
                     break;
