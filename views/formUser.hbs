@@ -509,7 +509,7 @@
             </div>
         </div>
     <%}%>
-    <%if(formConfig.washingExt.show){%>
+    <%if(typeof formConfig.washingExt !== 'undefined' && formConfig.washingExt.show){%>
         <div class="um-form-group um-form-group-washingExt<%= formConfig.washingExt.required ? ' um-form-group-required' : ''%>">
             <label for="umWashingExt"><%= formConfig.washingExt.label %></label>
             <input type="text" name="washingExt" class="um-form-control" id="umWashingExt" placeholder="<%= formConfig.washingExt.placeholder %>" value="<%= washingExt %>" <%= formConfig.washingExt.required ? 'required' : ''%>>
@@ -716,7 +716,7 @@
             <%= formConfig.lighting.required ? 'required' : ''%> readonly>
         </div>
     <%}%>
-    <%if(formConfig.lightingExt.show){%>
+    <%if(typeof formConfig.lightingExt !== 'undefined' && formConfig.lightingExt.show){%>
         <div class="um-form-group um-form-group-lightingExt<%= formConfig.lightingExt.required ? ' um-form-group-required' : ''%>">
             <label for="umLightingExt"><%= formConfig.lightingExt.label %></label>
             <input type="text" name="lightingExt" class="um-form-control" id="umLightingExt" placeholder="<%= formConfig.lightingExt.placeholder %>" value="<%= lightingExt %>" <%= formConfig.lightingExt.required ? 'required' : ''%>>
@@ -730,7 +730,7 @@
             <%= formConfig.gear.required ? 'required' : ''%> readonly>
         </div>
     <%}%>
-    <%if(formConfig.gearExt.show){%>
+    <%if(typeof formConfig.gearExt !== 'undefined' && formConfig.gearExt.show){%>
         <div class="um-form-group um-form-group-gearExt<%= formConfig.gearExt.required ? ' um-form-group-required' : ''%>">
             <label for="umGearExt"><%= formConfig.gearExt.label %></label>
             <input type="text" name="gearExt" class="um-form-control" id="umGearExt" placeholder="<%= formConfig.gearExt.placeholder %>" value="<%= gearExt %>" <%= formConfig.gearExt.required ? 'required' : ''%>>
