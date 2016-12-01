@@ -399,7 +399,7 @@ $(document).ready(function() {
                 type: 'file',
                 label: 'Приложить файлы',
                 placeholder: 'Приложить файлы',
-                show: false,
+                show: true,
                 required: false
             },
             room: {

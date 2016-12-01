@@ -94,32 +94,6 @@
             </div>
         </div>
     <%}%>
-    <%if(typeof formConfig.description !== 'undefined' && formConfig.description.show){%>
-        <div class="um-form-group um-form-group-description um-wrapper
-        <%= (typeof formConfig.description.wrap !== 'undefined' && formConfig.description.wrap) ? 'um-wrapper-hidden' : ''%>">
-            <label for="umDescription"><%= formConfig.description.label %></label>
-            <div class="um-select-wrap um-field-wrap<%= (typeof formConfig.description.wrap !== 'undefined' && formConfig.description.wrap) ? ' um-field um-hidden' : ''%>">
-            <textarea id="umDescription" type="text" name="description" class="um-form-control" placeholder="<%= formConfig.description.placeholder %>"><%= description %></textarea>
-            </div>
-        </div>
-    <%}%>
-    <%if(typeof formConfig.file !== 'undefined' && formConfig.file.show){%>
-        <div class="um-form-group um-form-group-file <%= formConfig.file.required ? ' um-form-group-required' : ''%>">
-            <label for="umFile"><%= formConfig.file.label %></label>
-            <input type="file" name="file" class="um-form-control" id="umFile"
-            placeholder="<%= formConfig.file.placeholder %>" value="<%= file %>"
-            <%= formConfig.file.required ? 'required' : ''%>>
-        </div>
-    <%}%>
-    <%if(typeof formConfig.comment !== 'undefined' && formConfig.comment.show){%>
-        <div class="um-form-group um-form-group-comment um-wrapper
-        <%= (typeof formConfig.comment.wrap !== 'undefined' && formConfig.comment.wrap) ? 'um-wrapper-hidden' : ''%>">
-            <label for="umComment"><%= formConfig.comment.label %></label>
-            <div class="um-select-wrap um-field-wrap<%= (typeof formConfig.comment.wrap !== 'undefined' && formConfig.comment.wrap) ? ' um-field um-hidden' : ''%>">
-            <textarea id="umComment" type="text" name="comment" class="um-form-control" placeholder="<%= formConfig.comment.placeholder %>"><%= comment %></textarea>
-            </div>
-        </div>
-    <%}%>
     <%if(typeof formConfig.price !== 'undefined' && formConfig.price.show){%>
         <div class="um-form-group um-form-group-price um-select<%= formConfig.price.required ? ' um-form-group-required' : ''%>">
             <label for="umPrice"><%= formConfig.price.label %></label>
@@ -734,6 +708,32 @@
         <div class="um-form-group um-form-group-gearExt<%= formConfig.gearExt.required ? ' um-form-group-required' : ''%>">
             <label for="umGearExt"><%= formConfig.gearExt.label %></label>
             <input type="text" name="gearExt" class="um-form-control" id="umGearExt" placeholder="<%= formConfig.gearExt.placeholder %>" value="<%= gearExt %>" <%= formConfig.gearExt.required ? 'required' : ''%>>
+        </div>
+    <%}%>
+    <%if(typeof formConfig.description !== 'undefined' && formConfig.description.show){%>
+        <div class="um-form-group um-form-group-description um-wrapper
+        <%= (typeof formConfig.description.wrap !== 'undefined' && formConfig.description.wrap) ? 'um-wrapper-hidden' : ''%>">
+            <label for="umDescription"><%= formConfig.description.label %></label>
+            <div class="um-select-wrap um-field-wrap<%= (typeof formConfig.description.wrap !== 'undefined' && formConfig.description.wrap) ? ' um-field um-hidden' : ''%>">
+            <textarea id="umDescription" type="text" name="description" class="um-form-control" placeholder="<%= formConfig.description.placeholder %>"><%= description %></textarea>
+            </div>
+        </div>
+    <%}%>
+    <%if(typeof formConfig.file !== 'undefined' && formConfig.file.show){%>
+        <div class="um-form-group um-form-group-file <%= formConfig.file.required ? ' um-form-group-required' : ''%>">
+            <label for="umFile"><%= formConfig.file.label %></label>
+            <input type="file" name="file" class="um-form-control" id="umFile"
+            placeholder="<%= formConfig.file.placeholder %>" value="<%= file %>"
+            <%= formConfig.file.required ? 'required' : ''%>>
+        </div>
+    <%}%>
+    <%if(typeof formConfig.comment !== 'undefined' && formConfig.comment.show){%>
+        <div class="um-form-group um-form-group-comment um-wrapper
+        <%= (typeof formConfig.comment.wrap !== 'undefined' && formConfig.comment.wrap) ? 'um-wrapper-hidden' : ''%>">
+            <label for="umComment"><%= formConfig.comment.label %></label>
+            <div class="um-select-wrap um-field-wrap<%= (typeof formConfig.comment.wrap !== 'undefined' && formConfig.comment.wrap) ? ' um-field um-hidden' : ''%>">
+            <textarea id="umComment" type="text" name="comment" class="um-form-control" placeholder="<%= formConfig.comment.placeholder %>"><%= comment %></textarea>
+            </div>
         </div>
     <%}%>
     <%if(formConfig.personalData.show){%>
