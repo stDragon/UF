@@ -459,72 +459,6 @@
     </div>
 </div>
 
-<h3><%= file.label %></h3>
-<div class="row">
-    <div class="col s2">
-        <p>Показывать</p>
-        <div class="switch">
-            <label>
-                Off
-                <input type="checkbox" name="file.show" <%= file.show ? 'checked' : ''%>>
-                <span class="lever"></span>
-                On
-            </label>
-        </div>
-    </div>
-    <div class="col s2">
-        <p>Обязательное</p>
-        <div class="switch">
-            <label>
-                Off
-                <input type="checkbox" name="file.required" <%= file.required ? 'checked' : ''%>>
-                <span class="lever"></span>
-                On
-            </label>
-        </div>
-    </div>
-    <div class="col s3">
-        <p>Placeholder</p>
-        <div class="input-field">
-            <input id="file.placeholder" type="text" name="file.placeholder" value="<%= file.placeholder %>">
-            <label for="file.placeholder" class="active sr-only">Placeholder</label>
-        </div>
-    </div>
-</div>
-
-<h3><%= comment.label %></h3>
-<div class="row">
-    <div class="col s2">
-        <p>Показывать</p>
-        <div class="switch">
-            <label>
-                Off
-                <input type="checkbox" name="comment.show" <%= comment.show ? 'checked' : ''%>>
-                <span class="lever"></span>
-                On
-            </label>
-        </div>
-    </div>
-    <div class="col s2">
-        <p>Обязательное</p>
-        <div class="switch">
-            <label>
-                Off
-                <input type="checkbox" name="comment.required" <%= comment.required ? 'checked' : ''%>>
-                <span class="lever"></span>
-                On
-            </label>
-        </div>
-    </div>
-    <div class="col s3">
-        <p>Placeholder</p>
-        <div class="input-field">
-            <input id="comment.placeholder" type="text" name="comment.placeholder" value="<%= comment.placeholder %>">
-            <label for="comment.placeholder" class="active sr-only">Placeholder</label>
-        </div>
-    </div>
-</div>
-
 <h3><%= price.label %></h3>
 <div class="row">
     <div class="col s2">
@@ -2841,6 +2775,72 @@
         <div class="input-field">
             <input id="gearExt.placeholder" type="text" name="gearExt.placeholder" value="<%= gearExt.placeholder %>">
             <label for="gearExt.placeholder" class="active sr-only">Placeholder</label>
+        </div>
+    </div>
+</div>
+
+<h3><%= file.label %></h3>
+<div class="row">
+    <div class="col s2">
+        <p>Показывать</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="file.show" <%= file.show ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s2">
+        <p>Обязательное</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="file.required" <%= file.required ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s3">
+        <p>Placeholder</p>
+        <div class="input-field">
+            <input id="file.placeholder" type="text" name="file.placeholder" value="<%= file.placeholder %>">
+            <label for="file.placeholder" class="active sr-only">Placeholder</label>
+        </div>
+    </div>
+</div>
+
+<h3><%= comment.label %></h3>
+<div class="row">
+    <div class="col s2">
+        <p>Показывать</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="comment.show" <%= comment.show ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s2">
+        <p>Обязательное</p>
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" name="comment.required" <%= comment.required ? 'checked' : ''%>>
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+    <div class="col s3">
+        <p>Placeholder</p>
+        <div class="input-field">
+            <input id="comment.placeholder" type="text" name="comment.placeholder" value="<%= comment.placeholder %>">
+            <label for="comment.placeholder" class="active sr-only">Placeholder</label>
         </div>
     </div>
 </div>

@@ -161,7 +161,7 @@ module.exports = Backbone.Model.extend({
             this.kitchenCollection = new UM.Collections.Kitchens([], this.toJSON());
             this.kitchenCollection.fetch().then(function(){
                 if (model.kitchenId) {
-                    that.cityCollection.setActive(model.kitchenId);
+                    that.kitchenCollection.setActive(model.kitchenId);
                 }
             }, UM.ajaxError);
 

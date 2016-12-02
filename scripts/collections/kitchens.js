@@ -41,12 +41,12 @@ module.exports = Backbone.Collection.extend({
     },
 
     setActive: function () {
-        var active = this.form.get('city');
-        var city = this.find(function(model) {
+        var active = this.form.get('kitchen');
+        var kitchen = this.find(function(model) {
             return model.get('name') == active;
         });
-        if (city)
-            city.set('active', true);
+        if (kitchen)
+            kitchen.set('active', true);
     },
 
     unsetActive: function () {

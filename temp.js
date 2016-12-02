@@ -106,60 +106,164 @@ var db ={
     ],
     kitchens: [
         {
-            mr3id: '4',
-            name: 'Acatcia',
-            description: '',
-            type: 'classic',
-            material: 'massif',
-            preview: 'http://www.marya.ru/upload/Acatcia2-h-01_prev.jpg'
+            "mr3id": "1",
+            "name": "Acatcia",
+            "description": "",
+            "type": "classic",
+            "material": "massif",
+            "preview": "http://www.marya.ru/upload/Acatcia2-h-01_prev.jpg"
         },
         {
-            mr3id: '4',
-            name: 'Axis',
-            description: '',
-            type: 'classic',
-            material: 'massif',
-            preview: 'http://www.marya.ru/upload/resize_cache/iblock/dfe/1200_400_1/dfe90c7ac6ceceb17197912c92f79572.jpg'
+            "mr3id": "2",
+            "name": "Axis",
+            "description": "",
+            "type": "classic",
+            "material": "",
+            "preview": "http://www.marya.ru/upload/resize_cache/iblock/dfe/1200_400_1/dfe90c7ac6ceceb17197912c92f79572.jpg"
         },
         {
-            mr3id: '1',
-            name: 'Federica',
-            description: '',
-            type: 'classic',
-            material: 'MDF, membrana',
-            preview: 'http://www.marya.ru/upload/Federica-01_06_A3.jpg'
+            "mr3id": "3",
+            "name": "Borgo",
+            "description": "",
+            "type": "classic",
+            "material": "",
+            "preview": ""
         },
         {
-            mr3id: '2',
-            name: 'Rosa',
-            description: '',
-            type: 'classic',
-            material: 'massif',
-            preview: 'http://www.marya.ru/upload/rosa-white-h-01_.jpg'
+            "mr3id": "4",
+            "name": "Country",
+            "description": "",
+            "type": "classic",
+            "material": "",
+            "preview": ""
         },
         {
-            mr3id: '3',
-            name: 'Farm',
-            description: '',
-            type: 'classic',
-            material: 'massif',
-            preview: 'http://www.marya.ru/upload/farm-blu-h-02_prev_1.jpg'
+            "mr3id": "5",
+            "name": "Daniela",
+            "description": "",
+            "type": "classic",
+            "material": "",
+            "preview": ""
         },
         {
-            mr3id: '5',
-            name: 'Gloria',
-            description: '',
-            type: 'classic',
-            material: 'massif',
-            preview: 'http://www.marya.ru/upload/Gloria1-h-01_prev.jpg'
+            "mr3id": "6",
+            "name": "Fab",
+            "description": "",
+            "type": "modern",
+            "material": "",
+            "preview": ""
         },
         {
-            mr3id: '6',
-            name: 'Jazz Plus',
-            description: '',
-            type: 'modern',
-            material: 'MDF, enamel',
-            preview: 'http://www.marya.ru/upload/JazzPlus-02_prev.jpg'
+            "mr3id": "7",
+            "name": "Farm",
+            "description": "",
+            "type": "classic",
+            "material": "massif",
+            "preview": "http://www.marya.ru/upload/farm-blu-h-02_prev_1.jpg"
+        },
+        {
+            "mr3id": "8",
+            "name": "Federica",
+            "description": "",
+            "type": "classic",
+            "material": "MDF,membrana",
+            "preview": "http://www.marya.ru/upload/Federica-01_06_A3.jpg"
+        },
+        {
+            "mr3id": "9",
+            "name": "Gloria",
+            "description": "",
+            "type": "classic",
+            "material": "massif",
+            "preview": "http://www.marya.ru/upload/Gloria1-h-01_prev.jpg"
+        },
+        {
+            "mr3id": "10",
+            "name": "Ice",
+            "description": "",
+            "type": "classic",
+            "material": "",
+            "preview": ""
+        },
+        {
+            "mr3id": "11",
+            "name": "Jazz",
+            "description": "",
+            "type": "modern",
+            "material": "",
+            "preview": ""
+        },
+        {
+            "mr3id": "12",
+            "name": "JazzPlus",
+            "description": "",
+            "type": "modern",
+            "material": "MDF,enamel",
+            "preview": "http://www.marya.ru/upload/JazzPlus-02_prev.jpg"
+        },
+        {
+            "mr3id": "13",
+            "name": "Life",
+            "description": "",
+            "type": "classic",
+            "material": "",
+            "preview": ""
+        },
+        {
+            "mr3id": "14",
+            "name": "Mambo",
+            "description": "",
+            "type": "modern",
+            "material": "",
+            "preview": ""
+        },
+        {
+            "mr3id": "15",
+            "name": "Mix/MixGlow/MixPrint",
+            "description": "",
+            "type": "modern",
+            "material": "",
+            "preview": ""
+        },
+        {
+            "mr3id": "16",
+            "name": "Nicolle",
+            "description": "",
+            "type": "classic",
+            "material": "",
+            "preview": ""
+        },
+        {
+            "mr3id": "17",
+            "name": "Patrizia",
+            "description": "",
+            "type": "modern",
+            "material": "",
+            "preview": ""
+        },
+        {
+            "mr3id": "18",
+            "name": "Patrizia",
+            "description": "",
+            "type": "modern",
+            "material": "",
+            "preview": ""
+        },
+        {
+            "mr3id": "19",
+            "name": "Prestige",
+            "description": "",
+            "type": "modern",
+            "material": "",
+            "preview": ""
+        },
+        {
+            "mr3id": "20",
+            "name": "Primula",
+            "description": "",
+            "type": "modern",
+            "material": "",
+            "preview": ""
         }
     ],
     phoneCodes: [
