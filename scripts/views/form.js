@@ -128,7 +128,7 @@ module.exports = Backbone.Ribs.View.extend({
             data[this.name] = (this.name != 'file') ? $(this).val() : $(this)[0].files[0];
         });
 
-        if (data['city'] != '' || typeof data['city'] !== 'undefined' && typeof this.model.get('cityId') !== 'undefined') {
+        if (this.model.options.city.show && (data['city'] != '' || typeof data['city'] !== 'undefined' && typeof this.model.get('cityId') !== 'undefined')) {
             var city = this.model.cityCollection.find(function(city) {return city.get('name') == data['city']});
             data['cityId'] = city.get('mr3id');
         }
