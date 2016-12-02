@@ -21,7 +21,7 @@ module.exports = Backbone.Ribs.View.extend({
         this.listenTo(this.model, 'invalid', this.invalid);
         this.listenTo(this.model, 'invalid', this.unrenderCode);
         this.listenTo(this.model, 'request', this.valid);
-        _.bindAll(this, 'changed');
+        //_.bindAll(this, 'changed');
 
         var clipboard = new Clipboard('.js-copy-code');
 
@@ -49,20 +49,23 @@ module.exports = Backbone.Ribs.View.extend({
     },
 
     renderStepsGenerator: function () {
-        var phoneVerification = this.model.forms.hasPhoneVerification();
+        var phoneVerification = this.model.steps.hasPhoneVerification();
         App.stepsGeneratorView = new App.Views.StepAddGenetator({phoneVerification: !!phoneVerification});
+        return this;
     },
 
     renderStepsTabs: function () {
-        App.stepsTabView = new App.Views.StepsTabView({collection: this.model.forms});
+        App.stepsTabView = new App.Views.StepsTabView({collection: this.model.steps});
         $('#steps').html(App.stepsTabView.el);
         App.stepsTabView.$el.tabs();
+        return this;
     },
 
     renderFormSteps: function() {
-        this.renderStepsGenerator();
-        this.renderStepsTabs();
-        App.stepGeneratorView = new App.Views.StepGeneratorCollection({ collection: this.model.forms });
+        this.renderStepsGenerator()
+            .renderStepsTabs();
+        App.stepGeneratorView = new App.Views.StepGeneratorCollection({ collection: this.model.steps });
+        return this;
     },
 
     setValue: function () {
@@ -75,6 +78,7 @@ module.exports = Backbone.Ribs.View.extend({
                 $el.val(num);
         }, this);
         this.$el.find('select').material_select();
+        return this;
     },
 
     renderCode: function () {

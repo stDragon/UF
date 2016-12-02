@@ -415,6 +415,7 @@ var db ={
                     "class": "",
                     "fields":{
                         "header":{
+                            "hidden": false,
                             "name":"header",
                             "sort":1,
                             "type":"html",
@@ -424,6 +425,7 @@ var db ={
                             "value2":"Бесплатный дизайн-проект в&nbsp;три&nbsp;клика"
                         },
                         "surname":{
+                            "hidden": false,
                             "name":"surname",
                             "sort":2,
                             "type":"text",
@@ -433,6 +435,7 @@ var db ={
                             "required":false
                         },
                         "firstName":{
+                            "hidden": false,
                             "name":"firstName",
                             "sort":3,
                             "type":"text",
@@ -444,6 +447,7 @@ var db ={
                             "combine":false
                         },
                         "email":{
+                            "hidden": false,
                             "name":"email",
                             "sort":4,
                             "type":"email",
@@ -453,6 +457,7 @@ var db ={
                             "required":false
                         },
                         "phone":{
+                            "hidden": false,
                             "name":"phone",
                             "sort":5,
                             "type":"tel",
@@ -465,6 +470,7 @@ var db ={
                             "available":"[\"RU\"]"
                         },
                         "adphone":{
+                            "hidden": false,
                             "name":"adphone",
                             "sort":6,
                             "type":"text",
@@ -474,6 +480,7 @@ var db ={
                             "required":false
                         },
                         "city":{
+                            "hidden": false,
                             "name":"city",
                             "sort":7,
                             "type":"text",
@@ -483,6 +490,7 @@ var db ={
                             "required":false
                         },
                         "address":{
+                            "hidden": false,
                             "name":"address",
                             "sort":8,
                             "type":"text",
@@ -492,6 +500,7 @@ var db ={
                             "required":false
                         },
                         "shop":{
+                            "hidden": false,
                             "name":"shop",
                             "sort":9,
                             "type":"text",
@@ -504,6 +513,7 @@ var db ={
                             "wrap":false
                         },
                         "pref":{
+                            "hidden": false,
                             "name":"pref",
                             "sort":10,
                             "type":"text",
@@ -513,6 +523,7 @@ var db ={
                             "required":false
                         },
                         "product":{
+                            "hidden": false,
                             "name":"product",
                             "sort":11,
                             "type":"text",
@@ -522,6 +533,7 @@ var db ={
                             "required":true
                         },
                         "price":{
+                            "hidden": false,
                             "sort":12,
                             "name":"price",
                             "type":"number",
@@ -531,6 +543,7 @@ var db ={
                             "required":true
                         },
                         "pay":{
+                            "hidden": false,
                             "name":"pay",
                             "sort":13,
                             "type":"text",
@@ -540,6 +553,7 @@ var db ={
                             "required":true
                         },
                         "term":{
+                            "hidden": false,
                             "name":"term",
                             "sort":14,
                             "type":"number",
@@ -549,6 +563,7 @@ var db ={
                             "required":true
                         },
                         "kitchen":{
+                            "hidden": false,
                             "name":"kitchen",
                             "sort":15,
                             "type":"text",
@@ -558,6 +573,7 @@ var db ={
                             "required":false
                         },
                         "personalData":{
+                            "hidden": false,
                             "name":"personalData",
                             "sort":17,
                             "type":"checkbox",
@@ -573,6 +589,7 @@ var db ={
                             }
                         },
                         "wishes":{
+                            "hidden": false,
                             "name":"wishes",
                             "sort":16,
                             "type":"textarea",
@@ -583,6 +600,7 @@ var db ={
                             "wrap":false
                         },
                         "submit":{
+                            "hidden": false,
                             "name":"submit",
                             "sort":999,
                             "type":"submit",
@@ -599,6 +617,7 @@ var db ={
                     "type": "code",
                     "fields": {
                         "surname":{
+                            "hidden": false,
                             "name":"code",
                             "sort":1,
                             "type":"text",
@@ -608,6 +627,7 @@ var db ={
                             "required":true
                         },
                         "submit":{
+                            "hidden": false,
                             "name":"submit",
                             "sort":999,
                             "type":"submit",

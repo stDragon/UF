@@ -4,10 +4,6 @@
 
 module.exports = UM.Views.Form.extend({
 
-    tagName: 'form',
-    className: 'um-form',
-    template: 'form',
-
     events: {
         'focus input': 'showOptionList',
         //'keyup [name="city"]': 'search',

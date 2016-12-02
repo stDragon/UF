@@ -1,5 +1,7 @@
 module.exports = Backbone.Ribs.View.extend({
 
+    tagName: 'form',
+    className: 'um-form',
     template: 'form',
 
     events: {

@@ -16,7 +16,7 @@ module.exports = Backbone.Ribs.View.extend({
         this.listenTo(this.model, 'change', this.setValues);
         this.listenTo(this.model, 'change:step', this.setStep);
         this.listenTo(this.model, 'remove', this.unrender);
-        _.bindAll(this, 'changed');
+        //_.bindAll(this, 'changed');
     },
 
     render: function () {
@@ -28,7 +28,7 @@ module.exports = Backbone.Ribs.View.extend({
             that.$el.html(html);
             that.fields = new App.Views.Fields({el: that.$el.find('.field-list'), collection: that.model.fieldCollection});
 
-            new App.Views.Select({el: that.$el.find('.add-field-list'), collection: that.model.newFieldCollection},{template:_.template('<%= label %>'), value: 'name'}).render();
+            that.initSelects();
         });
         return this;
     },
@@ -42,6 +42,11 @@ module.exports = Backbone.Ribs.View.extend({
         // Remove view from DOM
         this.remove();
         Backbone.View.prototype.remove.call(this);
+    },
+
+    initSelects: function () {
+        new App.Views.Select({el: this.$el.find('.add-field-list'), collection: this.model.newFieldCollection},{template:_.template('<%= label %>'), value: 'name'}).render();
+        return this;
     },
 
     addField: function () {

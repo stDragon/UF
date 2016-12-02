@@ -1,10 +1,9 @@
 module.exports = Backbone.Ribs.Collection.extend({
-    model: App.Models.FormFieldGenerator,
+    model: App.Models.Step,
 
     initialize: function () {
-        this.listenTo(this, 'all',function(){
-            this.log();
-        }, this)
+        if (App.conf.server.type !== 'prod')
+            this.on('all', function(eventName){this.log(eventName)}, this);
     },
 
     hasPhoneVerification: function(){
@@ -13,7 +12,8 @@ module.exports = Backbone.Ribs.Collection.extend({
         });
     },
 
-    log: function () {
+    log: function (eventName) {
+        console.log('Сработало событие: '+ eventName);
         console.log(this.toJSON());
     }
 });

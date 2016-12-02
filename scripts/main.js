@@ -2,7 +2,7 @@ var conf = require('../nconf.js');
 
 $(document).ready(function() {
     window.validate_field = function(){}; //отмена встроенного валидатора Materialize
-
+    /** @global */
     window.App = {
         Models: {},
         Collections: {},
@@ -50,25 +50,25 @@ $(document).ready(function() {
              * после синхронизации обновляем
              * */
             if (!this.id)
-                this.createFormFieldGenerator();
+                this.createSteps();
             else
-                this.listenToOnce(this, 'sync', this.createFormFieldGenerator);
+                this.listenToOnce(this, 'sync', this.createSteps);
 
             //this.on('change:phoneVerification', this.activePhoneField, this);
 
             if (App.conf.server.type != 'prod')
-                this.on('change', this.log, this);
+                this.on('all', function(eventName){this.log(eventName)}, this);
         },
 
         activePhoneField: function () {
-            if(this.get('phoneVerification') && this.forms) {
-                this.forms.set('forms.fields.phone.show', true);
-                this.forms.set('forms.fields.phone.required', true);
+            if(this.get('phoneVerification') && this.steps) {
+                this.steps.set('steps.fields.phone.show', true);
+                this.steps.set('steps.fields.phone.required', true);
             }
         },
 
         unactivePhoneField: function () {
-            if(!this.get('forms.fields.phone.required')) {
+            if(!this.get('steps.fields.phone.required')) {
                 this.set('phoneVerification', false);
             }
         },
@@ -93,57 +93,90 @@ $(document).ready(function() {
             if (errors.length) return errors;
         },
 
-        log: function () {
+        log: function (eventName) {
+            console.log('Сработало событие: '+ eventName);
             console.log(this.toJSON());
         },
+        /**
+         * Создает коллекцию шагов и связывает ее с текущим конфигом
+         * @return {App.Models.Config}
+         * */
+        createSteps: function() {
+            var stepCollection;
 
-        createFormFieldGenerator: function() {
-            var formsCollection;
-
-            if (this.has('forms')) {
-                formsCollection = this.toJSON().forms
+            if (this.has('steps')) {
+                stepCollection = this.get('steps');
             } else {
-                var type = this.get('global.type');
-                formsCollection = _.find(App.formTemplates, function(model){return model.type === type});
+                stepCollection = this.getTemplateStep(this.get('global.type'));
             }
-            this.forms = new App.Collections.FormFieldGenerators(formsCollection);
-            this.listenTo(this.forms, 'all', this.setFormConfig);
-            //this.listenTo(this.forms, 'change', this.unactivePhoneField);
-            this.setFormConfig();
-        },
+            this.steps = new App.Collections.Steps(stepCollection);
+            this.listenTo(this.steps, 'all', this.setSteps);
+            //this.listenTo(this.steps, 'change', this.unactivePhoneField);
 
-        setFormConfig: function () {
-            this.set('forms', this.forms.toJSON());
+            return this;
         },
-
+        /**
+         * Создает коллекцию шагов и связывает ее с текущим конфигом
+         * @param  {object} steps.
+         * @return {App.Models.Config}
+         * */
+        setSteps: function (steps) {
+            if (typeof steps !== 'undefined') {
+                this.set('steps', steps);
+            } else {
+                this.set('steps', this.steps.toJSON());
+            }
+            return this;
+        },
+        /**
+         * Создает DOM кнопки
+         * @todo вынести текст и стили в конфиг
+         * @return {string}
+         * */
         getButtonDOM: function() {
             return '<button type="button" data-um-id="' + this.id + '" class="um-btn um-btn-contrast ' + this.get('style') + '">Заказать кухню</button>'
         },
-
+        /**
+         * @return {string} DOM элемент в котором будет рендарится форма
+         * */
         getFormDOM: function() {
             return '<div data-um-id="' + this.id + '"></div>'
         },
-
+        /**
+         * @return {string} url конфига, зависит от сервера
+         * */
         getScriptHref: function () {
-            if (App.conf.server.type == 'dev')
-                return '//' + location.hostname + '/public/js/marya-um.full.js';
+            if (conf.server.url.type == 'dev')
+                return '//' + conf.server.url + '/public/js/marya-um.full.js';
             else
-                return '//' + location.hostname + '/public/js/marya-um.js';
+                return '//' + conf.server.url + '/public/js/marya-um.js';
         },
-
+        /**
+         * @return {string} JS составляющая кода размещения на сайте, содержит полный скрипт
+         * */
         getScript: function () {
             return '<script type="text/javascript" src="' + this.getScriptHref() + '"><\/script>' +
                 '<script>UM.init(' + JSON.stringify(this.toJSON()) + ');<\/script>';
         },
-
+        /**
+         * @return {string} JS составляющая кода размещения на сайте, содержит полный скрипт, содержет только ID конфига
+         * */
         getShortScript: function () {
             var data = {id: this.get('id')};
             return '<script type="text/javascript" src="' + this.getScriptHref() + '"><\/script>' +
                 '<script>UM.init(' + JSON.stringify(data) + ');<\/script>';
         },
-
-        getCode: function () {
-            var code = this.getShortScript();
+        /**
+         * @param  {string} scriptType Тип кода, полный или короткий
+         * @return {string} Код для размещения на сайте
+         * */
+        getCode: function (scriptType) {
+            scriptType = scriptType || 'short';
+            var code;
+            if (scriptType == 'short')
+                code = this.getShortScript();
+            else
+                code = this.getScript();
 
             if (this.get('layout.init.position') == 'fixed') {
 
@@ -164,27 +197,36 @@ $(document).ready(function() {
         },
         /**
          * @param  {string} type.
+         * @return {object} Конфиг шагов из шаблона
+         * */
+        getTemplateStep: function (type) {
+            return _.find(App.formTemplates, function(model){return model.type === type});
+        },
+        /** Добавляет шаг
+         * @param  {string} type.
+         * @return {App.Models.Config}
          * */
         addStep: function (type) {
-            var phoneStep = this.forms.find(function(model){return model.get('type') === 'code'});
+            var phoneStep = this.steps.find(function(model){return model.get('type') === 'code'});
 
-            var step = _.find(App.formTemplates, function(model){return model.type === type});
+            var step = this.getTemplateStep(type);
 
             if(type === 'code' || typeof phoneStep === 'undefined')
-                step.step = this.forms.length;
+                step.step = this.steps.length;
             else {
-                step.step = this.forms.length - 1;
-                phoneStep.set('step', this.forms.length);
+                step.step = this.steps.length - 1;
+                phoneStep.set('step', this.steps.length);
             }
 
-            App.config.forms.add(step);
+            this.steps.add(step);
+            return this;
         },
-        /**
+        /** Удаляет шаг
          * @param  {number} step.
          * */
         removeStep: function (step) {
-            this.forms.remove(this.forms.find(function(model){return model.get('step') === step}));
-            console.log(this.forms.toJSON());
+            this.steps.remove(this.steps.find(function(model){return model.get('step') === step}));
+            return this;
         }
     });
 
@@ -197,13 +239,13 @@ $(document).ready(function() {
     App.Models.FormTemplate = require('./models/formTemplate.js');
     App.Collections.FormTemplates = require('./collections/formTemplates.js');
 
-    App.Models.FormFieldGenerator = require('./models/formFieldGenerator.js');
-    App.Collections.FormFieldGenerators = require('./collections/formFieldGenerators.js');
+    App.Models.Step = require('./models/step.js');
+    App.Collections.Steps = require('./collections/steps.js');
 
     App.Views.SelectOption = require('./views/selectOption.js');
     App.Views.Select = require('./views/select.js');
     App.Views.TabLi = require('./views/tabLi.js');
-    App.Views.CodeGeneratorForm = require('./views/codeGeneratorForm.js');
+    App.Views.ConfigGenerator = require('./views/configGenerator.js');
     App.Views.StepsTabView = require('./views/stepsTabView.js');
     App.Views.StepAddGenetator = require('./views/stepAddGenerator.js');
     App.Views.StepGenerator = require('./views/stepGenerator.js');
@@ -249,15 +291,18 @@ $(document).ready(function() {
         }
 
     };
-
+    /**
+     * Запускает генератор, уже сохраненный или дефолтный
+     * @param  {string|number} option.
+     * */
     function init(option) {
         App.config = new App.Models.Config(option);
         if(option)
             App.config.fetch().then(function(){
-                App.formCodeView = new App.Views.CodeGeneratorForm({model: App.config});
+                App.configGeneratorView = new App.Views.ConfigGenerator({model: App.config});
             });
         else {
-            App.formCodeView = new App.Views.CodeGeneratorForm({model: App.config});
+            App.configGeneratorView = new App.Views.ConfigGenerator({model: App.config});
         }
     }
 
