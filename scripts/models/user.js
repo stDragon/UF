@@ -504,7 +504,7 @@ module.exports = Backbone.Model.extend({
                                 attr: 'city'
                             };
                             errors.push(err);
-                        } else {
+                        } else if(value) {
                             var cities = this.cityCollection.toJSON(),
                                 incorrect = false;
                             for( var key in cities) {
