@@ -40,6 +40,9 @@ app.all('*', function(req, res, next) {
     res.header("Access-Control-Allow-Origin", serverName);
     res.header("Access-Control-Allow-Credentials", "true");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    /**
+     *  Кэширование, выключено т.к. кэшируется и заголовок
+     *  */
     //res.setHeader('Cache-Control', 'public, max-age=' + 604800);
     //res.setHeader("Expires", new Date(Date.now() + 604800000).toUTCString());
     next();
@@ -49,15 +52,36 @@ app.use(robots(__dirname + '/robots.txt'));
 
 app.use('/public',express.static(__dirname + '/public'));
 //app.use(express.errorHandler({dumpExceptions: true, showStack: true}));
-
+/**
+ * Единственный url по которому можно обратиться к node на pre-prod и prod
+ * Не используется, можно проверить жива ли node
+ * @deprecated
+ * */
 app.get('/module', function(req, res) {
     res.render('index');
 });
+/**
+ * получение шаблонов на pre-prod и prod не используется, т.к. переведено на nginx
+ * */
 app.get('/module/:id', function(req, res) {
-    //if (!configs[req.params.id])
-    //    res.redirect('/module');
-
     res.render(req.params.id, {layout: false});
+});
+/**
+ * Только для локального тестирования.
+ * На продакшине запросы будут обработаны php сервером
+ * Получаем index страницу
+ * */
+app.get('/', function(req, res) {
+    res.render('index');
+});
+/**
+ * Получаем index страницу с ранее сохраненным конфигом
+ * */
+app.get('/:id', function(req, res) {
+    if (!configs[req.params.id])
+        res.redirect('/module');
+
+    res.render('index', {id: req.params.id});
 });
 
 app.post('/um/umdata/conf/', jsonParser, function(req, res) {

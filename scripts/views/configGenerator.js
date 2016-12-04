@@ -77,14 +77,21 @@ module.exports = Backbone.Ribs.View.extend({
             else
                 $el.val(num);
         }, this);
+        this.initSelects();
+        return this;
+    },
+
+    initSelects: function () {
         this.$el.find('select').material_select();
         return this;
     },
 
     renderCode: function () {
+        if(typeof this.model.id === 'undefined') return this;
         this.$el.find('[name=code]')
             .val(this.model.getCode())
             .addClass('valid');
+        return this;
     },
 
     unrenderCode: function () {

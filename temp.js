@@ -384,7 +384,7 @@ var db ={
             }
         },
         /** Тестовый конфиг v2.0 */
-        "testNew": {
+        testNew: {
             "id": "testNew",
             "global": {
                 "debug": "false",
