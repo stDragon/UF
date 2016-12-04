@@ -48,10 +48,10 @@ $(document).ready(function() {
              * В зависимости от наличия ID создаем новый или загружаем конфиг с сервера,
              * после синхронизации обновляем
              * */
-            if (!this.id)
-                this.createSteps();
-            else
+            if (this.id)
                 this.listenToOnce(this, 'sync', this.createSteps);
+            else
+                this.createSteps();
 
             //this.on('change:phoneVerification', this.activePhoneField, this);
 

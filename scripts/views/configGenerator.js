@@ -13,15 +13,16 @@ module.exports = Backbone.Ribs.View.extend({
     initialize: function () {
         this.$el.html(this.render());
 
-        this.listenToOnce(this.model, 'sync', this.renderFormSteps);
-        this.listenTo(this.model, 'sync', this.renderCode);
-        this.listenTo(this.model, 'sync', this.showExample);
-        this.listenTo(this.model, 'sync', this.showMassageSave);
+        if (this.model.id)
+            this.listenToOnce(this.model, 'sync', this.renderFormSteps);
+        else
+            this.renderFormSteps();
+
+        this.listenTo(this.model, 'sync', this.afterSync);
         this.listenTo(this.model, 'change', this.setValue);
         this.listenTo(this.model, 'invalid', this.invalid);
         this.listenTo(this.model, 'invalid', this.unrenderCode);
         this.listenTo(this.model, 'request', this.valid);
-        //_.bindAll(this, 'changed');
 
         var clipboard = new Clipboard('.js-copy-code');
 
@@ -48,22 +49,29 @@ module.exports = Backbone.Ribs.View.extend({
         return this;
     },
 
-    renderStepsGenerator: function () {
+    afterSync: function () {
+        this.renderCode();
+        this.showExample();
+        this.showMassageSave();
+        return this;
+    },
+
+    renderStepAddGenerator: function () {
         var phoneVerification = this.model.steps.hasPhoneVerification();
         App.stepsGeneratorView = new App.Views.StepAddGenetator({phoneVerification: !!phoneVerification});
         return this;
     },
 
-    renderStepsTabs: function () {
-        App.stepsTabView = new App.Views.StepsTabView({collection: this.model.steps});
-        $('#steps').html(App.stepsTabView.el);
-        App.stepsTabView.$el.tabs();
+    renderStepTabs: function () {
+        this.stepsTabView = new App.Views.StepsTabView({collection: this.model.steps});
+        $('#steps').html(this.stepsTabView.el);
+        this.stepsTabView.$el.tabs();
         return this;
     },
 
     renderFormSteps: function() {
-        this.renderStepsGenerator()
-            .renderStepsTabs();
+        this.renderStepAddGenerator()
+            .renderStepTabs();
         App.stepGeneratorView = new App.Views.StepGeneratorCollection({ collection: this.model.steps });
         return this;
     },
