@@ -15,7 +15,7 @@ module.exports = Backbone.Ribs.View.extend({
     initialize: function () {
 
         this.step = 0;
-        this.formView = [];
+        this.stepView = [];
         this.$el
             .addClass(this.model.get('layout.style'))
             .addClass('um-' + this.model.get('global.type'));
@@ -161,13 +161,13 @@ module.exports = Backbone.Ribs.View.extend({
         }
     },
     createForms: function () {
-        _.each(this.model.get('forms'), function(step, index, list){
+        _.each(this.model.get('steps'), function(step, index, list){
             if (step.model === 'client') {
-                this.formView[index] = new UM.Views.FormUser({model: this.model.form['client']}, step);
-                this.listenTo(this.formView[index], 'form:nextStep', function(options) {
+                this.stepView[index] = new UM.Views.FormUser({model: this.model.form['client']}, step);
+                this.listenTo(this.stepView[index], 'form:nextStep', function(options) {
                     this.nextStep();
                 });
-                this.listenTo(this.formView[index], 'form:prevStep', function(options) {
+                this.listenTo(this.stepView[index], 'form:prevStep', function(options) {
                     this.prevStep();
                 });
             }
@@ -179,7 +179,7 @@ module.exports = Backbone.Ribs.View.extend({
      * @param {number} step - Номер шага
      * */
     getStep: function (step) {
-        return this.formView[step];
+        return this.stepView[step];
     },
     /**
      * Рендер формы подтверждения телефона

@@ -71,7 +71,7 @@ module.exports = Backbone.Ribs.Model.extend({
 
         if (UM.formTypes.indexOf(this.get('global.type')) != -1) {
             this.form = [];
-            _.each(this.get('forms'), function (option) {
+            _.each(this.get('steps'), function (option) {
                 if (option.model === 'client') {
                     if (typeof this.form['client'] === 'undefined')
                         this.form['client'] = new UM.Models.User(this.data.user, option);
