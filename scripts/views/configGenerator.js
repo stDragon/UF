@@ -11,7 +11,7 @@ module.exports = Backbone.Ribs.View.extend({
     },
 
     initialize: function () {
-        this.$el.html(this.render());
+        this.render();
 
         if (this.model.id)
             this.listenToOnce(this.model, 'sync', this.renderFormSteps);
@@ -43,8 +43,7 @@ module.exports = Backbone.Ribs.View.extend({
             var temp = _.template(template, data);
             var html = $(temp(data));
             that.$el.html(html);
-            that.setValue();
-            if(that.model.id) that.renderCode();
+            that.initSelects();
         });
         return this;
     },
@@ -95,7 +94,6 @@ module.exports = Backbone.Ribs.View.extend({
     },
 
     renderCode: function () {
-        if(typeof this.model.id === 'undefined') return this;
         this.$el.find('[name=code]')
             .val(this.model.getCode())
             .addClass('valid');
