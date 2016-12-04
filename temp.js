@@ -405,16 +405,15 @@ var db ={
                     "position": "fixed"
                 }
             },
-            "steps": "",
-            "forms": [
+            "steps": [
                 {
                     id:0,
                     "step": 0,
                     "model": "client",
                     "type":"calculation",
                     "class": "",
-                    "fields":{
-                        "header":{
+                    "fields":[
+                        {
                             "hidden": false,
                             "name":"header",
                             "sort":1,
@@ -424,7 +423,7 @@ var db ={
                             "value1":"Легко!",
                             "value2":"Бесплатный дизайн-проект в&nbsp;три&nbsp;клика"
                         },
-                        "surname":{
+                        {
                             "hidden": false,
                             "name":"surname",
                             "sort":2,
@@ -434,7 +433,7 @@ var db ={
                             "show":false,
                             "required":false
                         },
-                        "firstName":{
+                        {
                             "hidden": false,
                             "name":"firstName",
                             "sort":3,
@@ -446,7 +445,7 @@ var db ={
                             "combineFrom":"surname",
                             "combine":false
                         },
-                        "email":{
+                        {
                             "hidden": false,
                             "name":"email",
                             "sort":4,
@@ -456,7 +455,7 @@ var db ={
                             "show":true,
                             "required":false
                         },
-                        "phone":{
+                        {
                             "hidden": false,
                             "name":"phone",
                             "sort":5,
@@ -469,7 +468,7 @@ var db ={
                             "pattern":"RU",
                             "available":"[\"RU\"]"
                         },
-                        "adphone":{
+                        {
                             "hidden": false,
                             "name":"adphone",
                             "sort":6,
@@ -479,7 +478,7 @@ var db ={
                             "show":false,
                             "required":false
                         },
-                        "city":{
+                        {
                             "hidden": false,
                             "name":"city",
                             "sort":7,
@@ -489,7 +488,7 @@ var db ={
                             "show":true,
                             "required":false
                         },
-                        "address":{
+                        {
                             "hidden": false,
                             "name":"address",
                             "sort":8,
@@ -499,7 +498,7 @@ var db ={
                             "show":false,
                             "required":false
                         },
-                        "shop":{
+                        {
                             "hidden": false,
                             "name":"shop",
                             "sort":9,
@@ -512,7 +511,7 @@ var db ={
                             "required":false,
                             "wrap":false
                         },
-                        "pref":{
+                        {
                             "hidden": false,
                             "name":"pref",
                             "sort":10,
@@ -522,7 +521,7 @@ var db ={
                             "show":false,
                             "required":false
                         },
-                        "product":{
+                        {
                             "hidden": false,
                             "name":"product",
                             "sort":11,
@@ -532,7 +531,7 @@ var db ={
                             "show":false,
                             "required":true
                         },
-                        "price":{
+                        {
                             "hidden": false,
                             "sort":12,
                             "name":"price",
@@ -542,7 +541,7 @@ var db ={
                             "show":false,
                             "required":true
                         },
-                        "pay":{
+                        {
                             "hidden": false,
                             "name":"pay",
                             "sort":13,
@@ -552,7 +551,7 @@ var db ={
                             "show":false,
                             "required":true
                         },
-                        "term":{
+                        {
                             "hidden": false,
                             "name":"term",
                             "sort":14,
@@ -562,7 +561,7 @@ var db ={
                             "show":false,
                             "required":true
                         },
-                        "kitchen":{
+                        {
                             "hidden": false,
                             "name":"kitchen",
                             "sort":15,
@@ -572,7 +571,7 @@ var db ={
                             "show":false,
                             "required":false
                         },
-                        "personalData":{
+                        {
                             "hidden": false,
                             "name":"personalData",
                             "sort":17,
@@ -588,7 +587,7 @@ var db ={
                                 "pathname":"#"
                             }
                         },
-                        "wishes":{
+                        {
                             "hidden": false,
                             "name":"wishes",
                             "sort":16,
@@ -599,7 +598,7 @@ var db ={
                             "required":false,
                             "wrap":false
                         },
-                        "submit":{
+                        {
                             "hidden": false,
                             "name":"submit",
                             "sort":999,
@@ -608,15 +607,15 @@ var db ={
                             "show":true,
                             "text":"Отправить заявку"
                         }
-                    }
+                    ]
                 },
                 {
                     id:1,
                     "step": 1,
                     "model": "phone",
                     "type": "code",
-                    "fields": {
-                        "surname":{
+                    "fields": [
+                        {
                             "hidden": false,
                             "name":"code",
                             "sort":1,
@@ -626,7 +625,7 @@ var db ={
                             "show":true,
                             "required":true
                         },
-                        "submit":{
+                        {
                             "hidden": false,
                             "name":"submit",
                             "sort":999,
@@ -635,7 +634,7 @@ var db ={
                             "show":true,
                             "text":"Подтвердить"
                         }
-                    }
+                    ]
                 }
             ]
         }

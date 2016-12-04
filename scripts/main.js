@@ -44,7 +44,6 @@ $(document).ready(function() {
 
         initialize: function () {
 
-            //this.fields = new App.Collections.Field(App.fields);
             /**
              * В зависимости от наличия ID создаем новый или загружаем конфиг с сервера,
              * после синхронизации обновляем
@@ -110,6 +109,7 @@ $(document).ready(function() {
                 stepCollection = this.getTemplateStep(this.get('global.type'));
             }
             this.steps = new App.Collections.Steps(stepCollection);
+            this.setSteps();
             this.listenTo(this.steps, 'all', this.setSteps);
             //this.listenTo(this.steps, 'change', this.unactivePhoneField);
 
