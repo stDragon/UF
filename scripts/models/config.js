@@ -28,7 +28,7 @@ module.exports = Backbone.Ribs.Model.extend({
         this.data.user.configId = this.id;
 
         this.on('sync', this.checkConfig, this);
-        this.on('sync', this.initForm, this);
+        this.on('sync', this.initForms, this);
     },
 
     checkConfig: function () {
@@ -60,7 +60,7 @@ module.exports = Backbone.Ribs.Model.extend({
 
     },
 
-    initForm: function () {
+    initForms: function () {
         this.data.user.type = this.get('global.type');
 
         /* Костыль для питера устанавливает активным */

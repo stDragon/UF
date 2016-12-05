@@ -26,7 +26,7 @@ module.exports = Backbone.Ribs.View.extend({
         if (this.model.get('layout.init.type') == 'button' || this.model.get('layout.init.position') == 'fixed')
             this.$el.addClass('fixed').attr('draggable', true);
 
-        this.render().createForms().renderStep(this.getStep(this.step));
+        this.render().createSteps().renderStep(this.getStep(this.step));
 
         UM.vent.on('layout:show', function (id) {
             if (id == this.model.id)
@@ -123,8 +123,7 @@ module.exports = Backbone.Ribs.View.extend({
      *  Выводит информацию о текущем конфигев консоль
      *  */
     showInfoConsole: function() {
-        var version = "1.0";
-        window.cpd = console.info('Версия универсального модуля - "%s". Сервер хранения данных - "%s". Тип сервера - "%s". ID используемого конфига - "%s"', version, UM.conf.server.url, UM.conf.server.type, this.model.id);
+        window.cpd = console.info('Версия универсального модуля - "%s". Сервер хранения данных - "%s". Тип сервера - "%s". ID используемого конфига - "%s"', UM.version, UM.conf.server.url, UM.conf.server.type, this.model.id);
         return this;
     },
     /**
@@ -132,8 +131,7 @@ module.exports = Backbone.Ribs.View.extend({
      *  */
     showInfoModal: function() {
         if (!this.modalInfoView) {
-            var version = "1.0";
-            var text = '<p>Версия универсального модуля - "'+version+'".</p>' +
+            var text = '<p>Версия универсального модуля - "'+UM.version+'".</p>' +
                 '<p>Сервер хранения данных - "<a href="'+UM.conf.server.url+'">'+UM.conf.server.url+'</a>".</p>' +
                 '<p>Тип сервера - "'+UM.conf.server.type+'".</p>' +
                 '<p>ID используемого конфига - "'+this.model.id+'"</p>';
@@ -160,7 +158,7 @@ module.exports = Backbone.Ribs.View.extend({
             }
         }
     },
-    createForms: function () {
+    createSteps: function () {
         _.each(this.model.get('steps'), function(step, index, list){
             if (step.model === 'client') {
                 this.stepView[index] = new UM.Views.FormUser({model: this.model.form['client']}, step);

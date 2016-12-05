@@ -1,6 +1,7 @@
 var _ = require('underscore'),
     $ = require('jquery'),
     Backbone = require('backbone'),
+    pjson = require('../package.json'),
     conf = require('../nconf.js');
 
 window.$ = window.$ || $;
@@ -12,6 +13,7 @@ var UM = window.UM || {
         Collections: {},
         Views: {},
         Router: {},
+        version: pjson.version,
         option: [],
         layouts: [],
         forms: [],

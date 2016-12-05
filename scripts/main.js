@@ -1,4 +1,5 @@
-var conf = require('../nconf.js');
+var conf = require('../nconf.js'),
+    pjson = require('../package.json');
 
 $(document).ready(function() {
     window.validate_field = function(){}; //отмена встроенного валидатора Materialize
@@ -9,6 +10,7 @@ $(document).ready(function() {
         Views: {},
         Router: {},
         Helpers: {},
+        version: pjson.version,
         serverUrl: conf.server.url + '/um/umdata',
         conf: conf
     };
