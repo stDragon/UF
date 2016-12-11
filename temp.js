@@ -483,6 +483,8 @@ var db ={
                             "name":"city",
                             "sort":7,
                             "type":"text",
+                            "collection": true,
+                            "url": 'cities',
                             "label":"Город",
                             "placeholder":"Выберите город",
                             "show":true,

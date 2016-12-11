@@ -11,6 +11,8 @@ module.exports = Backbone.View.extend({
     },
 
     initialize: function () {
+        if (typeof this.collection.options.name !== 'undefined')
+            this.$el.addClass('um-'+this.collection.options.name+'-list');
         this.render();
         this.$el.siblings('input').prop('readonly', true).closest().addClass('um-select');
         this.collection.on('sync', this.render, this);

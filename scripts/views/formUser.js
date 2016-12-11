@@ -72,9 +72,12 @@ module.exports = UM.Views.Form.extend({
     },
 
     initSelects: function () {
-        if (this.model.cityCollection && _.find(this.options.fields, function (field){return field.name === 'city'})) {
-            this.cityCollectionView = new UM.Views.Citys({collection: this.model.cityCollection});
-        }
+
+        this.optionCollectionView = new Backbone.Ribs.Collection();
+
+        _.each(this.model.optionCollection, function(option){
+            this.optionCollectionView.add(new UM.Views.InputSelect({collection: option}));
+        },this);
 
         if (this.model.kitchenCollection && _.find(this.options.fields, function (field){return field.name === 'kitchen'})) {
             this.kitchenCollectionView = new UM.Views.Kitchens({collection: this.model.kitchenCollection});

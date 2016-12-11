@@ -1,1 +1,0 @@
-module.exports = UM.Views.InputSelectOption.extend();

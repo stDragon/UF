@@ -36,24 +36,29 @@ module.exports = Backbone.Model.extend({
 
     initCollections: function (option) {
         var that = this;
+        this.optionCollection = [];
+        var collections = _.filter(option.fields, function(field){ return field.collection === true; });
+
+        _.each(collections, function (field) {
+            this.optionCollection[field.name] = new UM.Collections.Options([], this.toJSON());
+            this.optionCollection[field.name].fetch().then(function(){
+                if (that.has('cityId')) {
+                    that.optionCollection[field.name].setActive(that.get(field.name+'Id'));
+                }
+            }, UM.ajaxError);
+
+            this.listenTo(that.optionCollection[field.name], 'change:active', function() {
+                var active = that.optionCollection[field.name].getActive();
+                if (active) {
+                    this.set(field.name+'Id', active.mr3id);
+                    this.set(field.name, active.name);
+                }
+            });
+
+        }, this);
+
         _.each(option.fields,function (field) {
             switch (field.name) {
-                case 'city':
-                    this.cityCollection = new UM.Collections.Citys([], this.toJSON());
-                    this.cityCollection.fetch().then(function(){
-                        if (that.has('cityId')) {
-                            that.cityCollection.setActive(that.get('cityId'));
-                        }
-                    }, UM.ajaxError);
-
-                    this.listenTo(that.cityCollection, 'change:active', function() {
-                        var active = that.cityCollection.getActive();
-                        if (active) {
-                            this.set('cityId', active.mr3id);
-                            this.set('city', active.name);
-                        }
-                    });
-                    break;
                 case 'shop':
                     var defaultShop = {
                         //active: true,
