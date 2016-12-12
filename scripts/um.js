@@ -1,13 +1,11 @@
-global.jQuery = window.$ || require('jquery');
-global.$ = global.jQuery;
-global._ = require('underscore');
-global.Backbone = require('backbone');
-conf = require('../nconf.js');
+var $ = require('jquery'),
+    Clipboard = require('clipboard'),
+    _ = require('underscore'),
+    Backbone = require('backbone'),
+    conf = require('../nconf.js');
 require('backbone.ribs');
-require('materialize-css');
-global.Materialize = Materialize;
 
-var UM = window.UM || {
+global.UM = window.UM || {
         Models: {},
         Collections: {},
         Views: {},
@@ -23,9 +21,17 @@ var UM = window.UM || {
 UM.Inputmask = require('../public/libs/jquery.inputmask/dist/inputmask/inputmask.js');
 require('../public/libs/jquery.inputmask/dist/inputmask/jquery.inputmask.js');
 require('../public/libs/jquery.inputmask/dist/inputmask/inputmask.extensions.js');
+
+window._ = _;
+window.Backbone = Backbone;
 require('./Backbone.Ymaps.js');
 
-window.UM = UM;
+module.exports = $;
+module.exports = Clipboard;
+module.exports = _;
+module.exports = Backbone;
+module.exports = conf;
+module.exports = UM;
 
 UM.Models.Logger = require('./models/logger.js');
 UM.Models.Config = require('./models/config.js');

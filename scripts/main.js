@@ -1,10 +1,22 @@
-global.$ = $;
-global.jQuery = global.$;
-global._ = _;
-global.Backbone = Backbone;
-global.Clipboard = require('clipboard');
+var jQuery = require('jquery'),
+    Clipboard = require('clipboard'),
+    _ = require('underscore'),
+    Backbone = require('backbone'),
+    conf = require('../nconf.js');
+require('backbone.ribs');
+window.jQuery = jQuery;
+window.Backbone = Backbone;
 
-var conf = require('../nconf.js');
+module.exports = jQuery;
+module.exports = Clipboard;
+module.exports = _;
+module.exports = Backbone;
+module.exports = conf;
+
+
+require('materialize-css');
+window.Materialize = Materialize;
+module.exports = Materialize;
 
 $(document).ready(function() {
     window.validate_field = function(){}; //отмена встроенного валидатора Materialize
@@ -18,6 +30,7 @@ $(document).ready(function() {
         serverUrl: conf.server.url + '/um/umdata',
         conf: conf
     };
+    module.exports = App;
 
     App.codes = [
         {
