@@ -62,6 +62,6 @@ module.exports = Backbone.Collection.extend({
 
     getMask: function () {
         var active = this.getActive();
-        return '+' + active.get('code').replace(/[0-9]/g, '9') + ' ' + active.get('mask');
+        return '+' + active.get('code').replace(/[0-9]/g, '9') + '' + active.get('mask');
     }
 });

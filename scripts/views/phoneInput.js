@@ -79,7 +79,8 @@ module.exports = Backbone.View.extend({
             inputCode = val.substr(0, i);
 
             var model = this.phoneCodeCollection.find(function(model) {
-                return model.get('code') == inputCode;
+                var model_code = model.get('code').replace("-", "");
+                return model_code == inputCode;
             });
 
             if (model && model.get('available') !== false) {

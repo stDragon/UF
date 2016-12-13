@@ -181,7 +181,7 @@ UM.codes = [
     {
         isoCode: 'RU',
         name: 'Россия',
-        code: '7',
+        code: '7-',
         mask: '999-999-99-99',
         img: UM.conf.server.url + '/public/img/flags/ru.gif',
         active: true
@@ -189,30 +189,30 @@ UM.codes = [
     {
         isoCode: 'BY',
         name: 'Белоруссия',
-        code: '375',
-        mask: '999-99-99-99',
+        code: '37-5',
+        mask: '99-999-99-99',
         img: UM.conf.server.url + '/public/img/flags/by.gif'
     },
     {
         available: false,
         isoCode: 'UA',
         name: 'Украина',
-        code: '380',
-        mask: '999-99-99-99',
+        code: '38-0',
+        mask: '99-999-99-99',
         img: UM.conf.server.url + '/public/img/flags/ua.gif'
     },
     {
         isoCode: 'KZ',
         name: 'Казахстан',
-        code: '77',
+        code: '7-7',
         mask: '99-999-99-99',
         img: UM.conf.server.url + '/public/img/flags/kz.gif'
     },
     {
         isoCode: 'KG',
         name: 'Киргизия',
-        code: '996',
-        mask: '999-999-999',
+        code: '99-6',
+        mask: '99-999-99-99',
         img: UM.conf.server.url + '/public/img/flags/kg.gif'
     }
 ];

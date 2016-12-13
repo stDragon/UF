@@ -404,11 +404,11 @@ module.exports = Backbone.Model.extend({
         var emailFilter = /^[-\w.]+@([A-z0-9][-A-z0-9]+\.)+[A-z]{2,4}$/;
             //lettersFilter = /^[а-яА-ЯёЁa-zA-Z]{1,20}$/;
         var phonePattern = {
-            'RU': /\+7\s\d{3}\-\d{3}\-\d{2}\-\d{2}/,
-            'BY': /\+375\s\d{3}\-\d{2}\-\d{2}\-\d{2}/,
-            'UA': /\+380\s\d{3}\-\d{2}\-\d{2}\-\d{2}/,
-            'KZ': /\+77\s\d{2}\-\d{3}\-\d{2}\-\d{2}/,
-            'KG': /\+996\s\d{3}\-\d{3}\-\d{3}/
+            'RU': /\+7-\d{3}\-\d{3}\-\d{2}\-\d{2}/,
+            'BY': /\+37-5\d{2}\-\d{3}\-\d{2}\-\d{2}/,
+            'UA': /\+38-0\d{2}\-\d{3}\-\d{2}\-\d{2}/,
+            'KZ': /\+7-7\d{2}\-\d{3}\-\d{2}\-\d{2}/,
+            'KG': /\+99-6\d{2}\-\d{3}\-\d{2}\-\d{2}/
         };
         var phoneFilter = new RegExp(phonePattern[this.options.phone.pattern]);
 
@@ -649,7 +649,8 @@ module.exports = Backbone.Model.extend({
             inputCode = val.substr(0, i);
 
             var model = this.phoneCodeCollection.find(function(model) {
-                return model.get('code') == inputCode;
+                var model_code = model.get('code').replace("-", "");
+                return model_code == inputCode;
             });
 
             if (model && model.get('available') !== false) {
