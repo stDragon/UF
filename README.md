@@ -300,12 +300,15 @@ UM.vent.on('event', function, context);
 
 Список глобальных событий ('event')
 
-event              | data           | description 
------------------- | -------------- | -----------
-button:show        | id             | показать фиксированную кнопку
-page:show          | id             | показать форму заявки
-page:showPhoneForm | id             | показать форму подтверждения телефона
-page:showConfirm   | id             | показать "заявка принята"
+event                       | data           | description
+--------------------------- | -------------- | -----------
+button:show                 | id             | показать фиксированную кнопку
+page:show                   | id             | показать форму заявки
+page:showPhoneForm          | id             | показать форму подтверждения телефона
+page:showConfirm            | id             | показать "заявка принята"
+page:shownForm              | id             | показана форма
+page:shownPhoneVerification | id             | показана форма подтверждения телефона
+page:shownConfirm           | id             | показано "заявка принята"
 
 Например мы хотим перенаправить пользователя (через 5 сек) после получения "ваша заявка принята"
 

@@ -24,7 +24,7 @@ module.exports = Backbone.Ribs.View.extend({
         if (this.model.get('initType') == 'button' || this.model.get('initPosition') == 'fixed')
             this.$el.addClass('fixed').attr('draggable', true);
 
-        this.render();
+        this.render().shownForm();
 
         UM.vent.on('page:show', function (id) {
             if (id == this.model.id)
@@ -185,6 +185,13 @@ module.exports = Backbone.Ribs.View.extend({
         this.confirmView = new UM.Views.Confirm([], {id: id, userId: UM.forms[this.model.id].id});
         return this.confirmView.el;
     },
+    /**
+     * Показан первый шаг
+     * */
+    shownForm: function (id) {
+        return this;
+    },
+
     /**
      * событие гугл аналитики
      * @param {array} arr

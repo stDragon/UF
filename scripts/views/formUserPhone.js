@@ -15,7 +15,7 @@ module.exports = Backbone.View.extend({
 
     initialize: function (model, options) {
         this.options = options;
-        this.render();
+        this.render().shownPhoneVerification();
         this.listenTo(this.model, 'change', this.setValue);
         this.listenTo(this.model, 'invalid', this.invalid);
         this.listenTo(this.model, 'request', function () {
@@ -84,6 +84,15 @@ module.exports = Backbone.View.extend({
             tooltip.$el.html(error.text);
             $group.append(tooltip.el);
         }, this);
+    },
+
+
+    /**
+     * Показан шаг с подтверждением телефона
+     * */
+    shownPhoneVerification: function (id) {
+        console.log("shownPhoneVerification");
+        return this;
     },
 
     save: function (e) {
