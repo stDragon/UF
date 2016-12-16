@@ -869,6 +869,15 @@ $(document).ready(function() {
                 type: 'submit',
                 label: 'Кнопка отправки',
                 text: 'Отправить заявку'
+            },
+            ga : {
+                text: "Кука google analytics"
+            },
+            ga_client_id : {
+                text: "Id клиента google analytics"
+            },
+            utm : {
+                text: "UTM метки"
             }
         },
 

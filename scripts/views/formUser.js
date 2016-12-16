@@ -137,6 +137,30 @@ module.exports = UM.Views.Form.extend({
         this.$el.on('click', '.um-wrapper>label, .um-edim-doma-old .um-form-group-wishes>label', function(e) {
             that.concealed(e);
         });
+
+        /*   данные гугл аналитики   */
+        function getCookie(cname) {
+            var name = cname + "=";
+            var ca = document.cookie.split(';');
+            for(var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+
+        var ga = getCookie('_ga'),
+            ga_client_id = (ga != "") ? decodeURIComponent(ga[1]).match(/(\d+\.\d+)$/) : "",
+            utm = getCookie('sbjs_current');
+
+        this.model.set('ga', ga);
+        this.model.set('ga_client_id', ga_client_id);
+        this.model.set('utm', utm);
     },
 
     initPhoneMask: function () {

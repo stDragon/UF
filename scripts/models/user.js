@@ -79,7 +79,12 @@ module.exports = Backbone.Model.extend({
         lighting:'',
         lightingExt:'',
         gear :'',
-        gearExt :''
+        gearExt :'',
+
+        // google analytics
+        ga : "",
+        ga_client_id : "",
+        utm : ""
     },
 
     urlRoot: function () {
