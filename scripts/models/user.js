@@ -396,7 +396,7 @@ module.exports = Backbone.Model.extend({
         }
 
         this.on('change', function () {
-            this.validate(this.changed, this);
+            this.validate(this.changed);
         }, this);
 
         if (UM.conf.server.type != 'prod')
