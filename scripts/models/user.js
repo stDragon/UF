@@ -414,7 +414,15 @@ module.exports = Backbone.Model.extend({
             'KZ': /\+7-7\d{2}\-\d{3}\-\d{2}\-\d{2}/,
             'KG': /\+99-6\d{2}\-\d{3}\-\d{2}\-\d{2}/
         };
-        var phoneFilter = new RegExp(phonePattern[this.options.phone.pattern]);
+        var phonePatternNum = {
+            'RU': /7\d{10}/,
+            'BY': /375\d{9}/,
+            'UA': /380\d{9}/,
+            'KZ': /77\d{9}/,
+            'KG': /996\d{9}/
+        };
+        var phoneFilter = new RegExp(phonePattern[this.options.phone.pattern]),
+            phoneFilterNum = new RegExp(phonePatternNum[this.options.phone.pattern]);
 
         var errors = [];
         var err;
@@ -428,7 +436,7 @@ module.exports = Backbone.Model.extend({
                                 text: "Вы не заполнили электронную почту",
                                 attr: 'email'
                             });
-                        } else if (this.options.email.required && !emailFilter.test(value)) {
+                        } else if (value && !emailFilter.test(value)) {
                             errors.push({
                                 text: "Почтовый адресс не коректен",
                                 attr: 'email'
@@ -452,7 +460,7 @@ module.exports = Backbone.Model.extend({
                                 attr: 'phone'
                             };
                             errors.push(err);
-                        } else if (!phoneFilter.test(value)) {
+                        } else if (!phoneFilter.test(value) && !phoneFilterNum.test(value.replace(/[^0-9]/g, ''))) {
                             err = {
                                 text: "Телефон не коректен",
                                 attr: 'phone'
@@ -516,9 +524,8 @@ module.exports = Backbone.Model.extend({
                                 attr: key
                             };
                             errors.push(err);
-                        } else {
+                        } else
                             this.trigger('valid', key);
-                        }
                     }
             }
         }, this);
@@ -551,7 +558,6 @@ module.exports = Backbone.Model.extend({
     },
 
     validatePhoneCode: function(val) {
-
         val = val.replace(/[^0-9]/g, '');
 
         if(val.charAt(0) == '8') {
