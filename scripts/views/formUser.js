@@ -155,7 +155,8 @@ module.exports = UM.Views.Form.extend({
         }
 
         var ga = getCookie('_ga'),
-            ga_client_id = (ga != "") ? decodeURIComponent(ga[1]).match(/(\d+\.\d+)$/) : "",
+            ga_match = decodeURIComponent(ga).match(/(\d+\.\d+)$/),
+            ga_client_id = (ga_match != null) ? ga_match[0] : "",
             utm = getCookie('sbjs_current');
 
         this.model.set('ga', ga);
