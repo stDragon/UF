@@ -421,43 +421,6 @@ module.exports = Backbone.Model.extend({
 
         _.each(attrs, function(value, key) {
             switch (key) {
-                case 'firstName':
-                    if (this.options.firstName.show) {
-                        if (this.options.firstName.required && !value) {
-                            err = {
-                                text: "Вы не заполнили имя",
-                                attr: 'firstName'
-                            };
-                            errors.push(err);
-                        //} else if (this.options.firstName.required && !lettersFilter.test(value)) {
-                        //    err = {
-                        //        text: "Имя должно содержать только буквы",
-                        //        attr: 'firstName'
-                        //    };
-                        //    errors.push(err);
-                        } else {
-                            this.trigger('valid', 'firstName');
-                        }
-                    }
-                    break;
-                case 'surname':
-                    if (this.options.surname.show) {
-                        if (this.options.surname.required && !value) {
-                            err = {
-                                text: "Вы не заполнили фамилию",
-                                attr: 'surname'
-                            };
-                            errors.push(err);
-                        //} else if (this.options.surname.required && !lettersFilter.test(value)) {
-                        //    errors.push({
-                        //        text: "Фамилия должна содержать только буквы",
-                        //        attr: 'surname'
-                        //    });
-                        } else {
-                            this.trigger('valid', 'surname');
-                        }
-                    }
-                    break;
                 case 'email':
                     if (this.options.email.show) {
                         if (this.options.email.required && !value) {
@@ -542,85 +505,21 @@ module.exports = Backbone.Model.extend({
                         }
                     }
                     break;
-                /* new fields */
-                case 'adphone':
-                    if (typeof this.options.adphone !== 'undefined' && this.options.adphone.show) {
-                        if (this.options.adphone.required && !value) {
+                default :
+                    var item = _.find(this.options, function(list, predicate){
+                        return predicate === key;
+                    });
+                    if (typeof item !== "undefined" && item.show) {
+                        if (item.required && !value) {
                             err = {
-                                text: "Вы не указали дополнительный телефон",
-                                attr: 'adphone'
+                                text: "Не заполнено поле: " + item.placeholder,
+                                attr: key
                             };
                             errors.push(err);
                         } else {
-                            this.trigger('valid', 'adphone');
+                            this.trigger('valid', key);
                         }
                     }
-                    break;
-                case 'pref':
-                    if (typeof this.options.pref !== 'undefined' && this.options.pref.show) {
-                        if (this.options.pref.required && !value) {
-                            err = {
-                                text: "Вы не указали предпочтительный способ связи",
-                                attr: 'pref'
-                            };
-                            errors.push(err);
-                        } else {
-                            this.trigger('valid', 'pref');
-                        }
-                    }
-                    break;
-                case 'product':
-                    if (typeof this.options.product !== 'undefined' && this.options.product.show) {
-                        if (this.options.product.required && !value) {
-                            err = {
-                                text: "Вы не указали товар",
-                                attr: 'product'
-                            };
-                            errors.push(err);
-                        } else {
-                            this.trigger('valid', 'product');
-                        }
-                    }
-                    break;
-                case 'price':
-                    if (typeof this.options.price !== 'undefined' && this.options.price.show) {
-                        if (this.options.price.required && !value) {
-                            err = {
-                                text: "Вы не указали стоимость",
-                                attr: 'price'
-                            };
-                            errors.push(err);
-                        } else {
-                            this.trigger('valid', 'price');
-                        }
-                    }
-                    break;
-                case 'pay':
-                    if (typeof this.options.pay !== 'undefined' && this.options.pay.show) {
-                        if (this.options.pay.required && !value) {
-                            err = {
-                                text: "Вы не указали величину первого взноса",
-                                attr: 'pay'
-                            };
-                            errors.push(err);
-                        } else {
-                            this.trigger('valid', 'pay');
-                        }
-                    }
-                    break;
-                case 'term':
-                    if (typeof this.options.term !== 'undefined' && this.options.term.show) {
-                        if (this.options.term.required && !value) {
-                            err = {
-                                text: "Вы не указали желаемый срок кредита",
-                                attr: 'term'
-                            };
-                            errors.push(err);
-                        } else {
-                            this.trigger('valid', 'term');
-                        }
-                    }
-                    break;
             }
         }, this);
 
