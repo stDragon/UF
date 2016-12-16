@@ -106,7 +106,6 @@ module.exports = UM.Views.Form.extend({
         if (this.model.options.class) this.$el.addClass(this.model.options.class);
 
         this.model.on('change', this.setValue, this);
-        this.model.on('change:personalData', this.preValidation, this);
 
         if (this.model.options.shop.show) {
             this.createYaMapModal();
@@ -139,26 +138,26 @@ module.exports = UM.Views.Form.extend({
         });
 
         /*   данные гугл аналитики   */
-        function getCookie(cname) {
-            var name = cname + "=";
-            var ca = document.cookie.split(';');
-            for(var i = 0; i < ca.length; i++) {
-                var c = ca[i];
-                while (c.charAt(0) == ' ') {
-                    c = c.substring(1);
-                }
-                if (c.indexOf(name) == 0) {
-                    return c.substring(name.length, c.length);
-                }
-            }
-            return "";
-        }
-
-        var ga = getCookie('_ga'),
-            utm = getCookie('sbjs_current');
+        var ga = this.getCookie('_ga'),
+            utm = this.getCookie('sbjs_current');
 
         this.model.set('ga', ga);
         this.model.set('utm', utm);
+    },
+
+    getCookie: function(cname) {
+        var name = cname + "=";
+        var ca = document.cookie.split(';');
+        for(var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
     },
 
     initPhoneMask: function () {
@@ -309,7 +308,7 @@ module.exports = UM.Views.Form.extend({
                 that.addSelectList('hoodType', that.hoodTypeCollectionView);
             }
             that.initPhoneMask();
-            that.disabledSubmit();
+            that.preValidation();
 
             /* Костыль со скрывающимися комментариями для старого все для дома и питера */
             if (that.$el.closest('.um-edim-doma-old').length || that.$el.closest('.um-piter').length) {
@@ -338,7 +337,7 @@ module.exports = UM.Views.Form.extend({
                 that.$el.find('.um-form-group-wishes , .um-form-group-personal-data').wrapAll("<div class='um-form-col'></div>");
             }
 
-            /* костыль оборачивающий собмит кнопку в стиле для ванн */
+            /* костыль оборачивающий сабмит кнопку в стиле для ванн */
             if (UM.configsCollection.get(that.model.get('configId')).get('style') === 'um-bath') {
 
                 that.$el.find('.js-create-order').wrap("<div class='btn-wrap'></div>");
@@ -356,12 +355,11 @@ module.exports = UM.Views.Form.extend({
     },
 
     preValidation: function(){
-        if (this.model.options.personalData.required) {
-            if (this.model.get('personalData'))
-                this.enabledSubmit();
-            else
-                this.disabledSubmit();
-        }
+        var validate = this.model.validate(this.model.attributes);
+        if(validate == 0)
+            this.enabledSubmit();
+        else
+            this.disabledSubmit();
     },
 
     /**
@@ -496,7 +494,7 @@ module.exports = UM.Views.Form.extend({
 
         var that = this;
         this.$el.on('click', '.um-btn-next', function (e) {
-            /** Предварительная проверка на валидность видемых элементов формы */
+            /** Предварительная проверка на валидность видимых элементов формы */
             var errors = that.model.validate(that.getVisibleFormControl());
             if (errors)
                 that.invalid(that.model, errors);

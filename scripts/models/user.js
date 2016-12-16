@@ -396,7 +396,7 @@ module.exports = Backbone.Model.extend({
         }
 
         this.on('change', function () {
-            this.validate(this.changed);
+            this.validate(this.changed, this);
         }, this);
 
         if (UM.conf.server.type != 'prod')
@@ -627,7 +627,23 @@ module.exports = Backbone.Model.extend({
         if (UM.conf.server.type != 'prod' && errors.length)
             console.warn(errors);
 
-        if (errors.length) return errors;
+        if (errors.length)
+            return errors;
+        else return 0;
+    },
+
+    /**
+     * Кнопка отправки становится неактивной
+     */
+    disabledSubmit: function () {
+
+        this.$el.find('button:submit')[0].disabled = true;
+    },
+    /**
+     * Кнопка отправки становится активной
+     */
+    enabledSubmit: function () {
+        this.$el.find('button:submit')[0].disabled = false;
     },
 
     log: function () {
