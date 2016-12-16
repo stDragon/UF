@@ -871,10 +871,7 @@ $(document).ready(function() {
                 text: 'Отправить заявку'
             },
             ga : {
-                text: "Кука google analytics"
-            },
-            ga_client_id : {
-                text: "Id клиента google analytics"
+                text: "Google analytics cookie"
             },
             utm : {
                 text: "UTM метки"

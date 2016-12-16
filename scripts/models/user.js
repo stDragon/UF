@@ -83,7 +83,6 @@ module.exports = Backbone.Model.extend({
 
         // google analytics
         ga : "",
-        ga_client_id : "",
         utm : ""
     },
 
