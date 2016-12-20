@@ -473,7 +473,7 @@ module.exports = Backbone.Model.extend({
                     break;
                 case 'city':
                     if (this.options.city.show) {
-                        if (this.options.city.required && !value) {
+                        if ((this.options.city.required || this.options.shop.required) && !value) {
                             err = {
                                 text: "Вы не выбрали город",
                                 attr: 'city'
