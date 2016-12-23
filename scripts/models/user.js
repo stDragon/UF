@@ -538,20 +538,6 @@ module.exports = Backbone.Model.extend({
         else return 0;
     },
 
-    /**
-     * Кнопка отправки становится неактивной
-     */
-    disabledSubmit: function () {
-
-        this.$el.find('button:submit')[0].disabled = true;
-    },
-    /**
-     * Кнопка отправки становится активной
-     */
-    enabledSubmit: function () {
-        this.$el.find('button:submit')[0].disabled = false;
-    },
-
     log: function () {
         console.log('Изменен: ' + _.keys(this.changedAttributes()));
         console.log(this.toJSON());
