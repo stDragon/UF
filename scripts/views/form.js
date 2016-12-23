@@ -155,13 +155,15 @@ module.exports = Backbone.Ribs.View.extend({
      * Кнопка отправки становится неактивной
      */
     disabledSubmit: function () {
-        this.$el.find('button:submit')[0].disabled = true;
+        if(typeof this.$el.find('button:submit')[0] !== "undefined")
+            this.$el.find('button:submit')[0].disabled = true;
     },
     /**
      * Кнопка отправки становится активной
      */
     enabledSubmit: function () {
-        this.$el.find('button:submit')[0].disabled = false;
+        if(typeof this.$el.find('button:submit')[0] !== "undefined")
+            this.$el.find('button:submit')[0].disabled = false;
     },
 
     valid: function (attr) {
