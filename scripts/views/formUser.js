@@ -14,7 +14,6 @@ module.exports = UM.Views.Form.extend({
         'keyup [name="phone"]': 'setAttrs',
         'change input': 'setAttrs',
         'change textarea': 'setAttrs',
-        'blur': 'preValidation',
         'click .um-icon-add-location': 'showYaMap',
         'change input:checkbox': 'changed',
         'click .um-static-select li': 'chooseValue',
