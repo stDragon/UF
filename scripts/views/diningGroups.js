@@ -1,5 +1,5 @@
 /**
- *  Верхние секции
+ *  Столовая группа
  *  */
 
 module.exports = UM.Views.InputSelect.extend({
