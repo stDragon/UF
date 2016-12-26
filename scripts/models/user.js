@@ -1,5 +1,5 @@
 /**
- *  Клиент оформивший заявку
+ *  Клиент, оформивший заявку
  *  */
 
 module.exports = Backbone.Model.extend({
