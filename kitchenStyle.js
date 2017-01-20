@@ -1,10 +1,14 @@
 module.exports = [
     {
         style: 'classic',
-        name : 'классика'
+        name : 'Классика'
     },
     {
         style: 'modern',
-        name : 'модерн'
+        name : 'Современный стиль'
+    },
+    {
+        style: 'neoclassic',
+        name : 'Неоклассика'
     }
 ];
