@@ -53,7 +53,9 @@ $color-red-text: #ba3223;
 .um.um-mia--new {
     font: normal 14px / 20px 'Trebuchet MS', Helvetica, Arial, sans-serif;
 
-    background-color: initial;
+    padding: 15px;
+
+    background-color: rgba(85, 92, 96, .06);
     .um-tooltip {
         display: none!important;
     }
@@ -88,7 +90,7 @@ $color-red-text: #ba3223;
     }
     label {
         font-family: 'Schlange';
-        font-weight: bold !important;
+        font-weight: bold;
 
         display: block;
 
@@ -100,6 +102,8 @@ $color-red-text: #ba3223;
         width: 100%;
     }
     .um-form-control {
+        font: inherit;
+
         width: 100%;
         max-width: 100%;
         height: 40px;
@@ -116,13 +120,12 @@ $color-red-text: #ba3223;
         }
     }
     textarea.um-form-control {
+        resize: none;
         text-align: center;
 
         border: 0 transparent dashed;
         background: none;
         &:focus {
-            height: auto;
-
             cursor: text;
 
             color: #444;
@@ -134,20 +137,7 @@ $color-red-text: #ba3223;
         }
     }
     .um-form-group {
-        float: left;
-
-        width: 100%;
         margin-bottom: 15px;
-        &.um-form-group-firstname,
-        &.um-form-group-email,
-        &.um-form-group-phone,
-        &.um-form-group-city {
-            width: calc(50% - 17px);
-        }
-        &.um-form-group-email,
-        &.um-form-group-city {
-            float: right;
-        }
         &.um-form-group-wishes {
             label {
                 display: none;
@@ -180,7 +170,9 @@ $color-red-text: #ba3223;
         }
     }
     .um-label-checkbox {
+        font: inherit;
         font-size: 11px;
+        font-weight: normal;
         line-height: 16px;
     }
     .um-dropdown-content {
@@ -206,6 +198,45 @@ $color-red-text: #ba3223;
             &:hover {
                 color: white;
                 background-color: $color-red;
+            }
+        }
+    }
+}
+
+@media (min-width: 768px) {
+    .um.um-mia--new {
+        padding: 20px 40px;
+        .um-form-group {
+            float: left;
+
+            width: 100%;
+            &.um-form-group-firstname,
+            &.um-form-group-email,
+            &.um-form-group-phone,
+            &.um-form-group-city {
+                width: calc(50% - 12px);
+            }
+            &.um-form-group-email,
+            &.um-form-group-city {
+                float: right;
+            }
+        }
+    }
+}
+@media (min-width: 960px) {
+    .um.um-mia--new {
+        padding: 20px 40px;
+    }
+}
+@media (min-width: 1220px) {
+    .um.um-mia--new {
+        padding: 20px 100px;
+        .um-form-group {
+            &.um-form-group-firstname,
+            &.um-form-group-email,
+            &.um-form-group-phone,
+            &.um-form-group-city {
+                width: calc(50% - 17px);
             }
         }
     }
