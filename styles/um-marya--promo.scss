@@ -86,11 +86,12 @@ $color-red--hover: #F44336;
       }
     }
   }
-  legend {
-    text-align: right;
-    border-bottom: 1px solid #ddd;
-    width: 100%;
-    margin-bottom: 15px;
+  fieldset {
+    > legend {
+      text-align: right;
+      width: 100%;
+      margin-bottom: 15px;
+    }
   }
   .um-title,
   .um-title-2 {
@@ -151,6 +152,13 @@ $color-red--hover: #F44336;
     color: #444;
     border: 1px solid #d6d6d6;
     background: #fff;
+    &:focus {
+      border-color: #d8d8d8;
+      outline: 0;
+      background: #f7f7f7;
+      color: #444;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.09) inset;
+    }
     &:not([type='radio']):not([type='checkbox']) {
       vertical-align: middle;
     }
@@ -293,7 +301,11 @@ $color-red--hover: #F44336;
   }
 }
 
-
+@media(max-width:959px){
+  .um-btn[type="submit"]::before {
+    left: 0;
+  }
+}
 
 @media (min-width: 960px) {
   .um-horizontal {
