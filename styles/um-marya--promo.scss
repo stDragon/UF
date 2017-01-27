@@ -199,8 +199,9 @@ $color-red--hover: #f44336;
             cursor: text;
 
             color: #444;
-            border: 1px #e8e8e8 dashed;
+            border: 1px #d6d6d6 dashed;
             outline: 0;
+            background-color: rgba(255, 255, 255, 0);
             -webkit-box-shadow: none;
                -moz-box-shadow: none;
                     box-shadow: none;
