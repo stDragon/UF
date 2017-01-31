@@ -53,6 +53,8 @@ $color-red--hover: #f44336;
 
 .um.um-marya--promo {
     font: inherit;
+
+    width: 100%;
     .um-tooltip {
         display: none!important;
     }
@@ -307,20 +309,24 @@ $color-red--hover: #f44336;
             }
         }
     }
+    .phone-verification-caption {
+        padding: 20px 20px 0 20px;
+        > p {
+            font-size: 18px;
+            line-height: 22px;
 
-  .phone-verification-caption {
-    padding: 20px 20px 0 20px;
-    > p {
-      font-size: 18px;
-      line-height: 22px;
-      color: #242424;
+            color: #242424;
+        }
     }
-  }
-  .um-get-phone-code {
-    .um-btn[type='submit'] {
-      margin-top: 20px;
+    .um-get-phone-code {
+        .um-btn[type='submit'] {
+            margin-top: 20px;
+        }
     }
-  }
+}
+
+.um-vertical {
+   min-height: 100%;
 }
 
 .um-horizontal {
