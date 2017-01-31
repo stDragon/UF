@@ -307,6 +307,20 @@ $color-red--hover: #f44336;
             }
         }
     }
+
+  .phone-verification-caption {
+    padding: 20px 20px 0 20px;
+    > p {
+      font-size: 18px;
+      line-height: 22px;
+      color: #242424;
+    }
+  }
+  .um-get-phone-code {
+    .um-btn[type='submit'] {
+      margin-top: 20px;
+    }
+  }
 }
 
 .um-horizontal {
