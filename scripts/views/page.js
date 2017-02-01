@@ -24,7 +24,7 @@ module.exports = Backbone.Ribs.View.extend({
         if (this.model.get('initType') == 'button' || this.model.get('initPosition') == 'fixed')
             this.$el.addClass('fixed').attr('draggable', true);
 
-        this.render().shownForm();
+        this.render();
 
         UM.vent.on('page:show', function (id) {
             if (id == this.model.id)
@@ -44,9 +44,9 @@ module.exports = Backbone.Ribs.View.extend({
         UM.vent.on('page:showPhoneForm', function (id) {
             if (id == this.model.id) {
                 if (this.model.get('phoneVerification') === true)
-                    this.renderStep(this.showPhoneForm(id));
+                    this.renderStep(this.showPhoneForm(id)).shownPhoneVerification();
                 else
-                    this.renderStep(this.showConfirm(id));
+                    this.renderStep(this.showConfirm(id)).shownConfirm();
             }
         }, this);
 
@@ -69,6 +69,7 @@ module.exports = Backbone.Ribs.View.extend({
             that.$el.children('.um-body').html(that.showStartForm());
             setTimeout(function(){
                 UM.vent.trigger('form.added', that.model.id);
+                that.shownForm();
             }, 1000);
         });
         return this;
@@ -187,11 +188,28 @@ module.exports = Backbone.Ribs.View.extend({
     },
     /**
      * Показан первый шаг
+     * @return this
      * */
-    shownForm: function (id) {
+    shownForm: function () {
+        UM.vent.trigger('page:shownForm', this);
         return this;
     },
-
+    /**
+     * Показан шаг подтверждения телефона
+     * @return this
+     * */
+    shownPhoneVerification: function () {
+        UM.vent.trigger('page:shownPhoneVerification', this);
+        return this;
+    },
+    /**
+     * Показан шаг "Спасибо за заявку"
+     * @return this
+     * */
+    shownConfirm: function () {
+        UM.vent.trigger('page:shownConfirm', this);
+        return this;
+    },
     /**
      * событие гугл аналитики
      * @param {array} arr

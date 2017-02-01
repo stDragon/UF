@@ -306,9 +306,9 @@ button:show                 | id             | показать фиксиров
 page:show                   | id             | показать форму заявки
 page:showPhoneForm          | id             | показать форму подтверждения телефона
 page:showConfirm            | id             | показать "заявка принята"
-page:shownForm              | id             | показана форма
-page:shownPhoneVerification | id             | показана форма подтверждения телефона
-page:shownConfirm           | id             | показано "заявка принята"
+page:shownForm              | {UM.Views.Page}| показана форма
+page:shownPhoneVerification | {UM.Views.Page}| показана форма подтверждения телефона
+page:shownConfirm           | {UM.Views.Page}| показано "заявка принята"
 
 Например мы хотим перенаправить пользователя (через 5 сек) после получения "ваша заявка принята"
 

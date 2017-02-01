@@ -8,7 +8,7 @@ module.exports = Backbone.View.extend({
 
     initialize: function (model, options) {
         this.options = options;
-        this.render().shownConfirm();
+        this.render();
     },
 
     render: function () {
@@ -25,13 +25,6 @@ module.exports = Backbone.View.extend({
         }
         new UM.Models.Logger({configId: configId, message: String(msg)});
 
-        return this;
-    },
-
-    /* *
-     * Показано сообщение об отправке формы
-     * */
-    shownConfirm: function (id) {
         return this;
     }
 });
