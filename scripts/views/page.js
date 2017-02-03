@@ -24,7 +24,7 @@ module.exports = Backbone.Ribs.View.extend({
         if (this.model.get('initType') == 'button' || this.model.get('initPosition') == 'fixed')
             this.$el.addClass('fixed').attr('draggable', true);
 
-        this.render();
+        this.render().shownForm();
 
         UM.vent.on('page:show', function (id) {
             if (id == this.model.id)
@@ -52,7 +52,7 @@ module.exports = Backbone.Ribs.View.extend({
 
         UM.vent.on('page:showConfirm', function (id) {
             if (id == this.model.id)
-                this.renderStep(this.showConfirm(id));
+                this.renderStep(this.showConfirm(id)).shownConfirm();
         }, this);
 
         this.listenTo(this.model, 'destroy', this.unrender);
@@ -69,7 +69,6 @@ module.exports = Backbone.Ribs.View.extend({
             that.$el.children('.um-body').html(that.showStartForm());
             setTimeout(function(){
                 UM.vent.trigger('form.added', that.model.id);
-                that.shownForm();
             }, 1000);
         });
         return this;
