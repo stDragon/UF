@@ -295,6 +295,6 @@ UM.ajaxError = function(jqXHR) {
         status: jqXHR.status,
         statusText: jqXHR.statusText
     };
-
+    if(jqXHR.status == 0) $("[data-um-id=" + UM.option[0].id + "]").addClass("um-errorZero").html("нет соединения");
     new UM.Models.Logger({configId: UM.option[0].id, message: JSON.stringify(error)});
 };
