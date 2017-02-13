@@ -33,26 +33,7 @@ module.exports = Backbone;
 module.exports = conf;
 module.exports = UM;
 
-UM.prices = require('../prices.js');
-UM.colors = require('../colors.js');
-UM.rooms = require('../rooms.js');
-UM.gears = require('../gear.js');
-UM.worktypes = require('../worktype.js');
-UM.designs = require('../design.js');
-UM.walls = require('../walls.js');
-UM.floorTypes = require('../floorType.js');
-UM.positions = require('../position.js');
-UM.addPlaces = require('../addPlace.js');
-UM.kitchenStyles = require('../kitchenStyle.js');
-UM.upperSections = require('../upperSection.js');
-UM.lowerSections = require('../lowerSection.js');
-UM.diningGroups = require('../diningGroup.js');
-UM.tabletopMaterials = require('../tabletopMaterial.js');
-UM.washingTypes = require('../washingType.js');
-UM.stoveStyles = require('../stoveStyle.js');
-UM.hoodStyles = require('../hoodStyle.js');
-UM.hoodTypes = require('../hoodType.js');
-UM.lightings = require('../lighting.js');
+UM.data = require('./data.js');
 
 UM.Models.Logger = require('./models/logger.js');
 UM.Models.Config = require('./models/config.js');

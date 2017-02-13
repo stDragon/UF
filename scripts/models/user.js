@@ -179,7 +179,7 @@ module.exports = Backbone.Model.extend({
         }
 
         if (typeof options.price !== 'undefined' && options.price.show) {
-            this.priceCollection = new UM.Collections.Prices(UM.prices, this.toJSON());
+            this.priceCollection = new UM.Collections.Prices(UM.data.prices, this.toJSON());
 
             this.listenTo(this.priceCollection, 'change:active', function() {
                 var active = this.priceCollection.getActive();
@@ -190,7 +190,7 @@ module.exports = Backbone.Model.extend({
         }
 
         if (typeof options.color !== 'undefined' && options.color.show) {
-            this.colorCollection = new UM.Collections.Colors(UM.colors, this.toJSON());
+            this.colorCollection = new UM.Collections.Colors(UM.data.colors, this.toJSON());
 
             this.listenTo(this.colorCollection, 'change:active', function() {
                 var active = this.colorCollection.getActive();
@@ -201,7 +201,7 @@ module.exports = Backbone.Model.extend({
         }
 
         if (typeof options.gear !== 'undefined' && options.gear.show) {
-            this.gearCollection = new UM.Collections.Gears(UM.gears, this.toJSON());
+            this.gearCollection = new UM.Collections.Gears(UM.data.gears, this.toJSON());
 
             this.listenTo(this.gearCollection, 'change:active', function() {
                 var active = this.gearCollection.getActive();
@@ -211,7 +211,7 @@ module.exports = Backbone.Model.extend({
             });
         }
         if (typeof options.lighting !== 'undefined' && options.lighting.show) {
-            this.lightingCollection = new UM.Collections.Lightings(UM.lightings, this.toJSON());
+            this.lightingCollection = new UM.Collections.Lightings(UM.data.lightings, this.toJSON());
 
             this.listenTo(this.lightingCollection, 'change:active', function() {
                 var active = this.lightingCollection.getActive();
@@ -222,7 +222,7 @@ module.exports = Backbone.Model.extend({
         }
 
         if (typeof options.room !== 'undefined' && options.room.show) {
-            this.roomCollection = new UM.Collections.Rooms(UM.rooms, this.toJSON());
+            this.roomCollection = new UM.Collections.Rooms(UM.data.rooms, this.toJSON());
 
             this.listenTo(this.roomCollection, 'change:active', function() {
                 var active = this.roomCollection.getActive();
@@ -233,7 +233,7 @@ module.exports = Backbone.Model.extend({
         }
 
         if (typeof options.worktype !== 'undefined' && options.worktype.show) {
-            this.worktypeCollection = new UM.Collections.Worktypes(UM.worktypes, this.toJSON());
+            this.worktypeCollection = new UM.Collections.Worktypes(UM.data.worktypes, this.toJSON());
 
             this.listenTo(this.worktypeCollection, 'change:active', function() {
                 var active = this.worktypeCollection.getActive();
@@ -244,7 +244,7 @@ module.exports = Backbone.Model.extend({
         }
 
         if (typeof options.design !== 'undefined' && options.design.show) {
-            this.designCollection = new UM.Collections.Designs(UM.designs, this.toJSON());
+            this.designCollection = new UM.Collections.Designs(UM.data.designs, this.toJSON());
 
             this.listenTo(this.designCollection, 'change:active', function() {
                 var active = this.designCollection.getActive();
@@ -255,7 +255,7 @@ module.exports = Backbone.Model.extend({
         }
 
         if (typeof options.walls !== 'undefined' && options.walls.show) {
-            this.wallCollection = new UM.Collections.Walls(UM.walls, this.toJSON());
+            this.wallCollection = new UM.Collections.Walls(UM.data.walls, this.toJSON());
 
             this.listenTo(this.wallCollection, 'change:active', function() {
                 var active = this.wallCollection.getActive();
@@ -265,7 +265,7 @@ module.exports = Backbone.Model.extend({
             });
         }
         if (typeof options.floorType !== 'undefined' && options.floorType.show) {
-            this.floorTypeCollection = new UM.Collections.FloorTypes(UM.floorTypes, this.toJSON());
+            this.floorTypeCollection = new UM.Collections.FloorTypes(UM.data.floorTypes, this.toJSON());
 
             this.listenTo(this.floorTypeCollection, 'change:active', function() {
                 var active = this.floorTypeCollection.getActive();
@@ -275,7 +275,7 @@ module.exports = Backbone.Model.extend({
             });
         }
         if (typeof options.position !== 'undefined' && options.position.show) {
-            this.positionCollection = new UM.Collections.Positions(UM.positions, this.toJSON());
+            this.positionCollection = new UM.Collections.Positions(UM.data.positions, this.toJSON());
 
             this.listenTo(this.positionCollection, 'change:active', function() {
                 var active = this.positionCollection.getActive();
@@ -285,7 +285,7 @@ module.exports = Backbone.Model.extend({
             });
         }
         if (typeof options.addPlace !== 'undefined' && options.addPlace.show) {
-            this.addPlaceCollection = new UM.Collections.AddPlaces(UM.addPlaces, this.toJSON());
+            this.addPlaceCollection = new UM.Collections.AddPlaces(UM.data.addPlaces, this.toJSON());
 
             this.listenTo(this.addPlaceCollection, 'change:active', function() {
                 var active = this.addPlaceCollection.getActive();
@@ -295,7 +295,7 @@ module.exports = Backbone.Model.extend({
             });
         }
         if (typeof options.kitchenStyle !== 'undefined' && options.kitchenStyle.show) {
-            this.kitchenStyleCollection = new UM.Collections.KitchenStyles(UM.kitchenStyles, this.toJSON());
+            this.kitchenStyleCollection = new UM.Collections.KitchenStyles(UM.data.kitchenStyles, this.toJSON());
 
             this.listenTo(this.kitchenStyleCollection, 'change:active', function() {
                 var active = this.kitchenStyleCollection.getActive();
@@ -305,7 +305,7 @@ module.exports = Backbone.Model.extend({
             });
         }
         if (typeof options.upperSection !== 'undefined' && options.upperSection.show) {
-            this.upperSectionCollection = new UM.Collections.UpperSections(UM.upperSections, this.toJSON());
+            this.upperSectionCollection = new UM.Collections.UpperSections(UM.data.sections, this.toJSON());
 
             this.listenTo(this.upperSectionCollection, 'change:active', function() {
                 var active = this.upperSectionCollection.getActive();
@@ -315,7 +315,7 @@ module.exports = Backbone.Model.extend({
             });
         }
         if (typeof options.lowerSection !== 'undefined' && options.lowerSection.show) {
-            this.lowerSectionCollection = new UM.Collections.LowerSections(UM.lowerSections, this.toJSON());
+            this.lowerSectionCollection = new UM.Collections.LowerSections(UM.data.sections, this.toJSON());
 
             this.listenTo(this.lowerSectionCollection, 'change:active', function() {
                 var active = this.lowerSectionCollection.getActive();
@@ -325,7 +325,7 @@ module.exports = Backbone.Model.extend({
             });
         }
         if (typeof options.diningGroup !== 'undefined' && options.diningGroup.show) {
-            this.diningGroupCollection = new UM.Collections.DiningGroups(UM.diningGroups, this.toJSON());
+            this.diningGroupCollection = new UM.Collections.DiningGroups(UM.data.diningGroups, this.toJSON());
 
             this.listenTo(this.diningGroupCollection, 'change:active', function() {
                 var active = this.diningGroupCollection.getActive();
@@ -335,7 +335,7 @@ module.exports = Backbone.Model.extend({
             });
         }
         if (typeof options.tabletopMaterial !== 'undefined' && options.tabletopMaterial.show) {
-            this.tabletopMaterialCollection = new UM.Collections.TabletopMaterials(UM.tabletopMaterials, this.toJSON());
+            this.tabletopMaterialCollection = new UM.Collections.TabletopMaterials(UM.data.tabletopMaterials, this.toJSON());
 
             this.listenTo(this.tabletopMaterialCollection, 'change:active', function() {
                 var active = this.tabletopMaterialCollection.getActive();
@@ -345,7 +345,7 @@ module.exports = Backbone.Model.extend({
             });
         }
         if (typeof options.washingType !== 'undefined' && options.washingType.show) {
-            this.washingTypeCollection = new UM.Collections.WashingTypes(UM.washingTypes, this.toJSON());
+            this.washingTypeCollection = new UM.Collections.WashingTypes(UM.data.washingTypes, this.toJSON());
 
             this.listenTo(this.washingTypeCollection, 'change:active', function() {
                 var active = this.washingTypeCollection.getActive();
@@ -355,7 +355,7 @@ module.exports = Backbone.Model.extend({
             });
         }
         if (typeof options.stoveStyle !== 'undefined' && options.stoveStyle.show) {
-            this.stoveStyleCollection = new UM.Collections.StoveStyles(UM.stoveStyles, this.toJSON());
+            this.stoveStyleCollection = new UM.Collections.StoveStyles(UM.data.stoveStyles, this.toJSON());
 
             this.listenTo(this.stoveStyleCollection, 'change:active', function() {
                 var active = this.stoveStyleCollection.getActive();
@@ -365,7 +365,7 @@ module.exports = Backbone.Model.extend({
             });
         }
         if (typeof options.stoveStyle !== 'undefined' && options.stoveStyle.show) {
-            this.stoveStyleCollection = new UM.Collections.StoveStyles(UM.stoveStyles, this.toJSON());
+            this.stoveStyleCollection = new UM.Collections.StoveStyles(UM.data.stoveStyles, this.toJSON());
 
             this.listenTo(this.stoveStyleCollection, 'change:active', function() {
                 var active = this.stoveStyleCollection.getActive();
@@ -375,7 +375,7 @@ module.exports = Backbone.Model.extend({
             });
         }
         if (typeof options.hoodStyle !== 'undefined' && options.hoodStyle.show) {
-            this.hoodStyleCollection = new UM.Collections.HoodStyles(UM.hoodStyles, this.toJSON());
+            this.hoodStyleCollection = new UM.Collections.HoodStyles(UM.data.hoodStyles, this.toJSON());
 
             this.listenTo(this.hoodStyleCollection, 'change:active', function() {
                 var active = this.hoodStyleCollection.getActive();
@@ -385,7 +385,7 @@ module.exports = Backbone.Model.extend({
             });
         }
         if (typeof options.hoodType !== 'undefined' && options.hoodType.show) {
-            this.hoodTypeCollection = new UM.Collections.HoodTypes(UM.hoodTypes, this.toJSON());
+            this.hoodTypeCollection = new UM.Collections.HoodTypes(UM.data.hoodTypes, this.toJSON());
 
             this.listenTo(this.hoodTypeCollection, 'change:active', function() {
                 var active = this.hoodTypeCollection.getActive();
