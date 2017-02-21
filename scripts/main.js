@@ -93,6 +93,7 @@ $(document).ready(function() {
     ];
 
     App.Collections.PhoneCodes = require('./collections/phoneCodes.js');
+    App.Models.PhoneCode = require('./models/phoneCode.js');
     App.Collections.EmailMasks = require('./collections/emailMasks.js');
     App.Views.SelectOption = require('./views/selectOption.js');
     App.Views.Select = require('./views/select.js');
@@ -1138,7 +1139,8 @@ $(document).ready(function() {
         setValue: function ($el, val) {
             if ($el.is(':checkbox'))
                 $el.prop("checked", val);
-            if ($el.children('option').length && $el.multiple){
+            if ($el.children('option').length && $el.prop("multiple")){
+                console.log($el);
                 $el.children('option').attr('selected', false);
 
                 val = $.parseJSON(val);

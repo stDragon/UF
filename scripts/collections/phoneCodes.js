@@ -49,9 +49,13 @@ module.exports = Backbone.Collection.extend({
         var active = this.find(function(model) {
             return model.get('active') == true;
         });
-        if (active) {
-            return active;
+        console.log(active);
+        if (!active) {
+            active = this.find(function(model, predicate) {
+                return predicate == 0;
+            });
         }
+        return active;
     },
 
     unsetActive: function () {
