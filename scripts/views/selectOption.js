@@ -14,7 +14,6 @@ module.exports = Backbone.View.extend({
     },
 
     render: function () {
-
         if (this.model.get('active'))
             this.$el.attr('selected','selected');
 

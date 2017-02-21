@@ -71,8 +71,29 @@ $(document).ready(function() {
         }
     ];
 
-    App.Models.PhoneCode = require('./models/phoneCode.js');
+    App.mask = [
+        {
+            isoCode: 'empty',
+            name: 'Не выбрано',
+            mask: '',
+            code: ''
+        },
+        {
+            isoCode: 'hh',
+            name: 'HeadHunter',
+            mask: '*{1,60}',
+            code: '@hh.ru'
+        },
+        {
+            isoCode: 'rzd',
+            name: 'RZD',
+            mask: '*{1,60}',
+            code: '@rzd.ru'
+        }
+    ];
+
     App.Collections.PhoneCodes = require('./collections/phoneCodes.js');
+    App.Collections.EmailMasks = require('./collections/emailMasks.js');
     App.Views.SelectOption = require('./views/selectOption.js');
     App.Views.Select = require('./views/select.js');
 
@@ -886,6 +907,7 @@ $(document).ready(function() {
             }
 
             this.phoneCodesCollection = new App.Collections.PhoneCodes({model: App.Models.PhoneCode});
+            this.EmailMasksCollection = new App.Collections.EmailMasks({model: App.Models.EmailMask});
 
             var that = this;
 
@@ -895,6 +917,9 @@ $(document).ready(function() {
             /*this.phoneCodesCollection.fetch().then(function() {
                 that.createPhoneCodes();
             });*/
+
+            this.EmailMasksCollection.set(App.mask);
+            this.createEmailMask();
 
             if (App.conf.server.type != 'prod')
                 this.on('change', this.log, this);
@@ -912,6 +937,14 @@ $(document).ready(function() {
             }
             if (this.get('phone.notAvailable')) {
                 this.phoneCodesNotAvailableCollection.setActive($.parseJSON(this.get('phone.notAvailable')));
+            }
+        },
+
+        createEmailMask: function () {
+            this.emailMasksActiveCollection = new App.Collections.EmailMasks(this.EmailMasksCollection.toJSON());
+            if (this.get('email.mask')) {
+                this.emailMasksActiveCollection.setActive($.parseJSON(this.get('email.mask')));
+                console.log(this.emailMasksActiveCollection);
             }
         },
 
@@ -1078,6 +1111,7 @@ $(document).ready(function() {
                 that.$el.html(html);
                 that.selectPhoneCodesAvailable = new App.Views.Select({el: '[name="phone.available"]', collection: that.model.phoneCodesAvailableCollection}).render();
                 that.selectPhoneCodesNotAvailable = new App.Views.Select({el: '[name="phone.notAvailable"]', collection: that.model.phoneCodesNotAvailableCollection}).render();
+                that.selectEmailMask = new App.Views.Select({el: '[name="email.mask"]', collection: that.model.emailMasksActiveCollection}).render();
             });
             return this;
         },
@@ -1104,8 +1138,7 @@ $(document).ready(function() {
         setValue: function ($el, val) {
             if ($el.is(':checkbox'))
                 $el.prop("checked", val);
-            if ($el.children('option').length){
-
+            if ($el.children('option').length && $el.multiple){
                 $el.children('option').attr('selected', false);
 
                 val = $.parseJSON(val);
@@ -1134,7 +1167,6 @@ $(document).ready(function() {
             } else {
                 value = changed.value;
             }
-
             if (value === 'false') value = false;
             if (value === 'true') value = true;
 

@@ -63,6 +63,7 @@ UM.Models.Shop = require('./models/shop.js');
 UM.Models.Modal = require('./models/modal.js');
 UM.Models.Kitchen = require('./models/kitchen.js');
 UM.Models.PhoneCode = require('./models/phoneCode.js');
+UM.Models.EmailMask = require('./models/emailMask.js');
 UM.Models.Price = require('./models/price.js');
 UM.Models.Color = require('./models/color.js');
 UM.Models.Room = require('./models/room.js');
@@ -89,6 +90,7 @@ UM.Collections.Citys = require('./collections/citys.js');
 UM.Collections.Shops = require('./collections/shops.js');
 UM.Collections.Kitchens = require('./collections/kitchens.js');
 UM.Collections.PhoneCodeCollection = require('./collections/phoneCodes.js');
+UM.Collections.EmailMasksCollection = require('./collections/emailMasks.js');
 UM.Collections.Prices = require('./collections/prices.js');
 UM.Collections.Colors = require('./collections/colors.js');
 UM.Collections.Rooms = require('./collections/rooms.js');
@@ -133,6 +135,7 @@ UM.Views.Shops = require('./views/shops.js');
 UM.Views.Kitchen = require('./views/kitchen.js');
 UM.Views.Kitchens = require('./views/kitchens.js');
 UM.Views.PhoneInput = require('./views/phoneInput.js');
+UM.Views.EmailInput = require('./views/email.js');
 UM.Views.PhoneCode = require('./views/phoneCode.js');
 UM.Views.PhoneCodeCollection = require('./views/phoneCodeCollection.js');
 UM.Views.Price = require('./views/price.js');
@@ -214,6 +217,27 @@ UM.codes = [
         code: '99-6',
         mask: '99-999-99-99',
         img: UM.conf.server.url + '/public/img/flags/kg.gif'
+    }
+];
+
+UM.mask = [
+    {
+        isoCode: 'empty',
+        name: 'Не выбрано',
+        mask: '',
+        code: ''
+    },
+    {
+        isoCode: 'hh',
+        name: 'HeadHunter',
+        mask: '*{1,60}',
+        code: '@hh.ru'
+    },
+    {
+        isoCode: 'rzd',
+        name: 'RZD',
+        mask: '*{1,60}',
+        code: '@rzd.ru'
     }
 ];
 

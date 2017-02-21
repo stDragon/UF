@@ -34,7 +34,7 @@
     <%if(formConfig.email.show){%>
         <div class="um-form-group um-form-group-email<%= formConfig.email.required ? ' um-form-group-required' : ''%>">
             <label for="umEmail"><%= formConfig.email.label %></label>
-            <input type="email" name="email" class="um-form-control" id="umEmail" placeholder="<%= formConfig.email.placeholder %>" value="<%= email %>" <%= formConfig.email.required ? 'required' : ''%>>
+            <input type="text" name="email" class="um-form-control" id="umEmail" placeholder="<%= formConfig.email.placeholder %>" value="<%= email %>" <%= formConfig.email.required ? 'required' : ''%>>
         </div>
     <%}%>
     <%if(formConfig.phone.show){%>

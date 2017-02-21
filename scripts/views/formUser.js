@@ -167,6 +167,14 @@ module.exports = UM.Views.Form.extend({
         }
     },
 
+    initEmailMask: function () {
+        var selector = this.$el.find('.um-form-group-email');
+
+        if (selector.length && !this.emailView) {
+            this.emailView = new UM.Views.EmailInput({el: selector, form: this});
+        }
+    },
+
     createSelectShop: function () {
         var cityId = this.model.get('cityId');
 
@@ -307,6 +315,7 @@ module.exports = UM.Views.Form.extend({
                 that.addSelectList('hoodType', that.hoodTypeCollectionView);
             }
             that.initPhoneMask();
+            that.initEmailMask();
             that.preValidation();
 
             /* Костыль со скрывающимися комментариями для старого все для дома и питера */
