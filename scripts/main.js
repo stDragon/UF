@@ -944,7 +944,7 @@ $(document).ready(function() {
         createEmailMask: function () {
             this.emailMasksActiveCollection = new App.Collections.EmailMasks(this.EmailMasksCollection.toJSON());
             if (this.get('email.mask')) {
-                this.emailMasksActiveCollection.setActive($.parseJSON(this.get('email.mask')));
+                this.emailMasksActiveCollection.setActive(this.get('email.mask'));
             }
         },
 
