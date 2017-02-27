@@ -945,7 +945,6 @@ $(document).ready(function() {
             this.emailMasksActiveCollection = new App.Collections.EmailMasks(this.EmailMasksCollection.toJSON());
             if (this.get('email.mask')) {
                 this.emailMasksActiveCollection.setActive($.parseJSON(this.get('email.mask')));
-                console.log(this.emailMasksActiveCollection);
             }
         },
 
@@ -1140,7 +1139,6 @@ $(document).ready(function() {
             if ($el.is(':checkbox'))
                 $el.prop("checked", val);
             if ($el.children('option').length && $el.prop("multiple")){
-                console.log($el);
                 $el.children('option').attr('selected', false);
 
                 val = $.parseJSON(val);

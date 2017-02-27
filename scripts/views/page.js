@@ -55,6 +55,11 @@ module.exports = Backbone.Ribs.View.extend({
                 this.renderStep(this.showConfirm(id)).shownConfirm();
         }, this);
 
+        UM.vent.on('page:showWarning', function (id) {
+            if (id == this.model.id)
+                this.renderStep(this.showWarning(id));
+        }, this);
+
         this.listenTo(this.model, 'destroy', this.unrender);
 
         this.keyhandler();
@@ -184,6 +189,13 @@ module.exports = Backbone.Ribs.View.extend({
     showConfirm: function (id) {
         this.confirmView = new UM.Views.Confirm([], {id: id, userId: UM.forms[this.model.id].id});
         return this.confirmView.el;
+    },
+    /**
+     * Рендер сообщения о повторной отправке
+     * */
+    showWarning: function (id) {
+        this.WarningView = new UM.Views.Warning([], {id: id, userEmail: this.model.form.get("email")});
+        return this.WarningView.el;
     },
     /**
      * Показан первый шаг

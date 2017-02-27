@@ -134,7 +134,10 @@ module.exports = Backbone.Ribs.View.extend({
         }
         this.model.save(data, {
             error: function (model, error) {
-                UM.ajaxError(error)
+                if(error.status == 406) {
+                    UM.vent.trigger('page:showWarning', model.get('configId'));
+                }
+                else UM.ajaxError(error)
             }
         });
     },

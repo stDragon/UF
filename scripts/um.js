@@ -128,6 +128,7 @@ UM.Views.CheckboxList = require('./views/CheckboxList.js');
 UM.Views.FormUser = require('./views/formUser.js');
 UM.Views.FormUserPhone = require('./views/formUserPhone.js');
 UM.Views.Confirm = require('./views/confirm.js');
+UM.Views.Warning = require('./views/warning.js');
 UM.Views.City = require('./views/city.js');
 UM.Views.Citys = require('./views/citys.js');
 UM.Views.Shop = require('./views/shop.js');
