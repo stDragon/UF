@@ -1,7 +1,7 @@
 {
-  "name": "um",
+  "name": "uf",
   "version": "2.0",
-  "description": "",
+  "description": "Universal Form Generator",
   "main": "app.js",
   "dependencies": {
     "backbone": "^1.3.2",
@@ -36,13 +36,13 @@
     "styles": "gulp styles",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "s-oleynik",
+  "author": "stDragon",
   "license": "ISC",
   "repository": {
     "type": "git",
-    "url": "dev.marya.ru:s-oleynik/UM.git"
+    "url": "git@github.com:stDragon/UF.git"
   },
   "keywords": [
-    "Мария"
+    "Form Generator, callback form"
   ]
 }
