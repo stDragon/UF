@@ -5,7 +5,7 @@
 module.exports = Backbone.Model.extend({
 
     urlRoot: function () {
-        return UM.serverUrl + '/client/'
+        return UM.dataUrl + '/client/'
     },
 
     initialize: function (model, option) {

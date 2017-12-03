@@ -14,7 +14,7 @@ module.exports = Backbone.Collection.extend({
     },
 
     url: function () {
-        return UM.serverUrl + '/'+ this.options.name +'/' + this.options.configId || ''
+        return UM.dataUrl + '/'+ this.options.name +'/' + this.options.configId || ''
     },
 
     /**

@@ -1,6 +1,6 @@
 {
   "name": "uf",
-  "version": "2.0",
+  "version": "2.0.0beta",
   "description": "Universal Form Generator",
   "main": "app.js",
   "dependencies": {
@@ -29,9 +29,7 @@
     "gulp-uglify": "^1.5.3"
   },
   "scripts": {
-    "start-dev": "gulp",
-    "start-pre-prod": "PORT=3000 PORTSSL=3001 node node_modules/gulp/bin/gulp.js",
-    "start-prod": "PORT=3000 PORTSSL=3001 gulp",
+    "start": "gulp",
     "scripts": "gulp scripts",
     "styles": "gulp styles",
     "test": "echo \"Error: no test specified\" && exit 1"

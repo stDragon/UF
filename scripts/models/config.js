@@ -8,14 +8,14 @@ module.exports = Backbone.Ribs.Model.extend({
             "debug": false,
             "type": "calculation",
             "server": {
-                "url":UM.serverUrl,
+                "url":UM.dataUrl,
                 "type": "prod"
             }
         }
     },
 
     urlRoot: function () {
-        return UM.serverUrl + '/conf/'
+        return UM.dataUrl + '/conf/'
     },
 
     initialize: function (model, data) {

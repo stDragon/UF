@@ -79,7 +79,7 @@ gulp styles
 Name                     | type           | default                       | description 
 ------------------------ | -------------- | ----------------------------- | -----------
 ID                       | number         | ""                            | ID конфига
-serverUrl                | string         | "//uf.ru"                     | Url сервера с которого будет запрашиваться скрипт и на который будут отправляться данные
+dataUrl                  | string         | "//uf.ru"                     | Url сервера с которого будет запрашиваться скрипт и на который будут отправляться данные
 siteUrl                  | string         | ""                            | Url сайта партнера на котором будет отображаться модуль
 formType                 | string         | "calculation"                 | тип заявки
 style                    | string/boolean | "/public/css/um-material.css" | стиль для модуля

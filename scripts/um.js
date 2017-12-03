@@ -18,7 +18,7 @@ var UM = window.UM || {
         layouts: [],
         forms: [],
         buttons: [],
-        serverUrl: conf.server.url + '/um/umdata',
+        dataUrl: conf.server.url + '/um/umdata',
         conf: conf
     };
 

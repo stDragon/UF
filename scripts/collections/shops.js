@@ -18,7 +18,7 @@ module.exports = Backbone.Collection.extend({
     },
 
     url: function () {
-        return UM.serverUrl + '/shops/' + this.options.configId || ''
+        return UM.dataUrl + '/shops/' + this.options.configId || ''
     },
     /**
      * Создает новый экземпляр Shops по названию города.

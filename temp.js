@@ -201,7 +201,7 @@ var db ={
             "initType":"form",
             "initPosition":"fixed",
             "phoneVerification":false,
-            "serverUrl":"//localhost/um/umdata",
+            "dataUrl":"//localhost/um/umdata",
             "siteUrl":"bx.local",
             "formType":"calculation",
             "formConfig":{

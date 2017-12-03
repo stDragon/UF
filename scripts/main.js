@@ -11,7 +11,7 @@ $(document).ready(function() {
         Router: {},
         Helpers: {},
         version: pjson.version,
-        serverUrl: conf.server.url + '/um/umdata',
+        dataUrl: conf.server.url + '/um/umdata',
         conf: conf
     };
 
@@ -24,7 +24,7 @@ $(document).ready(function() {
             global: {
                 debug: false,
                 type: 'calculation',
-                server: conf.server,
+                server: App.conf.server,
                 site: {
                     url:""
                 }
@@ -41,7 +41,7 @@ $(document).ready(function() {
         },
 
         urlRoot: function () {
-            return App.serverUrl + '/conf/'
+            return App.dataUrl + '/conf/'
         },
 
         initialize: function () {
@@ -57,7 +57,7 @@ $(document).ready(function() {
 
             //this.on('change:phoneVerification', this.activePhoneField, this);
 
-            if (App.conf.server.type != 'prod')
+            if (App.conf.server.type !== 'prod')
                 this.on('all', function(eventName){this.log(eventName)}, this);
         },
 
@@ -148,10 +148,10 @@ $(document).ready(function() {
          * @return {string} url конфига, зависит от сервера
          * */
         getScriptHref: function () {
-            if (conf.server.url.type == 'dev')
-                return '//' + conf.server.url + '/public/js/marya-um.full.js';
+            if (App.conf.server.type === 'dev')
+                return '//' + App.conf.server.url + '/public/js/marya-um.full.js';
             else
-                return '//' + conf.server.url + '/public/js/marya-um.js';
+                return '//' + App.conf.server.url + '/public/js/marya-um.js';
         },
         /**
          * @return {string} JS составляющая кода размещения на сайте, содержит полный скрипт
@@ -175,20 +175,20 @@ $(document).ready(function() {
         getCode: function (scriptType) {
             scriptType = scriptType || 'short';
             var code;
-            if (scriptType == 'short')
+            if (scriptType === 'short')
                 code = this.getShortScript();
             else
                 code = this.getScript();
 
-            if (this.get('layout.init.position') == 'fixed') {
+            if (this.get('layout.init.position') === 'fixed') {
 
                 return  code;
 
-            } else if (this.get('layout.init.position') == 'static') {
+            } else if (this.get('layout.init.position') === 'static') {
 
-                if (this.get('layout.init.type') == 'button')
+                if (this.get('layout.init.type') === 'button')
                     return this.getButtonDOM() + code;
-                else if(this.get('layout.init.type') == 'form')
+                else if(this.get('layout.init.type') === 'form')
                     return this.getFormDOM() + code;
 
             } else {
@@ -280,7 +280,7 @@ $(document).ready(function() {
                     };
                 });
                 $.ajax({
-                    url: conf.server.url + '/module/' + id,
+                    url: App.conf.server.url + '/module/' + id,
                     success: function (template) {
                         var tmpl = template;
                         that.templates[id] = tmpl;

@@ -6,6 +6,6 @@ module.exports = Backbone.Ribs.Collection.extend({
     model: UM.Models.Config,
 
     url: function () {
-        return UM.serverUrl + '/conf/'
+        return UM.dataUrl + '/conf/'
     }
 });
