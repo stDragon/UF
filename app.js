@@ -5,6 +5,7 @@ var express      = require('express'),
     errorhandler = require('errorhandler'),
     expressHbs = require('express3-handlebars'),
     robots = require('express-robots'),
+    conf = require('./nconf.js'),
     bodyParser   = require('body-parser');
 
 var app = module.exports.app = exports.app = express();
@@ -84,7 +85,7 @@ app.get('/:id', function(req, res) {
     res.render('index', {id: req.params.id});
 });
 
-app.post('/um/umdata/conf/', jsonParser, function(req, res) {
+app.post(conf.server.dataPrefix + '/conf/', jsonParser, function(req, res) {
     var data = req.body;
     data.id = Date.now().toString();
     configs[data.id] = data;
@@ -92,7 +93,7 @@ app.post('/um/umdata/conf/', jsonParser, function(req, res) {
     res.status(201).json(data);
 });
 
-app.route('/um/umdata/conf/:id')
+app.route(conf.server.dataPrefix + '/conf/:id')
     .get(jsonParser, function(req, res) {
         res.json(configs[req.params.id]);
     })
@@ -107,31 +108,31 @@ app.route('/um/umdata/conf/:id')
         res.status(200).json(configs[req.params.id]);
     });
 
-app.get('/um/umdata/fields/', function(req, res) {
+app.get(conf.server.dataPrefix + '/fields/', function(req, res) {
     res.json(fields);
 });
 
-app.get('/um/umdata/cities/', function(req, res) {
+app.get(conf.server.dataPrefix + '/cities/', function(req, res) {
     res.json(cities);
 });
 
-app.get('/um/umdata/cities/:id', function(req, res) {
+app.get(conf.server.dataPrefix + '/cities/:id', function(req, res) {
     res.json(cities);
 });
 
-app.get('/um/umdata/shops', function(req, res) {
+app.get(conf.server.dataPrefix + '/shops', function(req, res) {
     res.json(shops);
 });
 
-app.get('/um/umdata/shops/:id', function(req, res) {
+app.get(conf.server.dataPrefix + '/shops/:id', function(req, res) {
     res.json(shops);
 });
 
-app.get('/um/umdata/kitchens/', function(req, res) {
+app.get(conf.server.dataPrefix + '/kitchens/', function(req, res) {
     res.json(kitchens);
 });
 
-app.get('/um/umdata/kitchens/:id', function(req, res) {
+app.get(conf.server.dataPrefix + '/kitchens/:id', function(req, res) {
     res.json(kitchens);
 });
 
@@ -139,7 +140,7 @@ app.get('/api/phoneCodes/', function(req, res) {
     res.json(phoneCodes);
 });
 
-app.post('/um/umdata/code/', jsonParser, function(req, res) {
+app.post(conf.server.dataPrefix + '/code/', jsonParser, function(req, res) {
     var data = req.body;
     setTimeout(function(){
         if(data.code == 5555){
@@ -152,7 +153,7 @@ app.post('/um/umdata/code/', jsonParser, function(req, res) {
     }, 2000);
 });
 
-app.post('/um/umdata/client/', jsonParser, function(req, res) {
+app.post(conf.server.dataPrefix + '/client/', jsonParser, function(req, res) {
     var data = req.body;
     data.id = Date.now().toString();
     users[data.id] = data;
@@ -166,7 +167,7 @@ app.get('/um/umclient/add/:id', jsonParser, function(req, res) {
     res.json(users[req.params.id]);
 });
 
-app.post('/um/umdata/log/', jsonParser, function(req, res) {
+app.post(conf.server.dataPrefix + '/log/', jsonParser, function(req, res) {
     var data = req.body;
     data.id = Date.now().toString();
     logs[data.id] = data;
