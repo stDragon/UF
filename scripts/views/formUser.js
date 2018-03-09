@@ -26,81 +26,14 @@ module.exports = UM.Views.Form.extend({
         var $el = $(e.target);
         if($el.hasClass('um-form-control') || $el.hasClass('um-phone-flag') || $el.hasClass('um-field-wrap')) {
             this.showOptionList(e);
-            return;
         } else if(!$el.closest('.um-dropdown-content').length) {
             this.hiddenOptionList()
         }
     },
 
     initialize: function () {
-        if (this.model.cityCollection) {
-            this.cityCollectionView = new UM.Views.Citys({collection: this.model.cityCollection});
-        }
-        if (this.model.kitchenCollection) {
-            this.kitchenCollectionView = new UM.Views.Kitchens({collection: this.model.kitchenCollection});
-        }
-        if (this.model.priceCollection) {
-            this.priceCollectionView = new UM.Views.Prices({collection: this.model.priceCollection});
-        }
-        if (this.model.colorCollection) {
-            this.colorCollectionView = new UM.Views.Colors({collection: this.model.colorCollection});
-        }
-        if (this.model.roomCollection) {
-            this.roomCollectionView = new UM.Views.Rooms({collection: this.model.roomCollection});
-        }
-        if (this.model.gearCollection) {
-            this.gearCollectionView = new UM.Views.Gears({collection: this.model.gearCollection});
-        }
-        if (this.model.lightingCollection) {
-            this.lightingCollectionView = new UM.Views.Lightings({collection: this.model.lightingCollection});
-        }
-        if (this.model.worktypeCollection) {
-            this.worktypeCollectionView = new UM.Views.Worktypes({collection: this.model.worktypeCollection});
-        }
-        if (this.model.designCollection) {
-            this.designCollectionView = new UM.Views.Designs({collection: this.model.designCollection});
-        }
-        if (this.model.wallCollection) {
-            this.wallCollectionView = new UM.Views.Walls({collection: this.model.wallCollection});
-        }
-        if (this.model.floorTypeCollection) {
-            this.floorTypeCollectionView = new UM.Views.FloorTypes({collection: this.model.floorTypeCollection});
-        }
-        if (this.model.positionCollection) {
-            this.positionCollectionView = new UM.Views.Positions({collection: this.model.positionCollection});
-        }
-        if (this.model.addPlaceCollection) {
-            this.addPlaceCollectionView = new UM.Views.AddPlaces({collection: this.model.addPlaceCollection});
-        }
-        if (this.model.kitchenStyleCollection) {
-            this.kitchenStyleCollectionView = new UM.Views.KitchenStyles({collection: this.model.kitchenStyleCollection});
-        }
-        if (this.model.upperSectionCollection) {
-            this.upperSectionCollectionView = new UM.Views.UpperSections({collection: this.model.upperSectionCollection});
-        }
-        if (this.model.lowerSectionCollection) {
-            this.lowerSectionCollectionView = new UM.Views.LowerSections({collection: this.model.lowerSectionCollection});
-        }
-        if (this.model.diningGroupCollection) {
-            this.diningGroupCollectionView = new UM.Views.DiningGroups({collection: this.model.diningGroupCollection});
-        }
-        if (this.model.tabletopMaterialCollection) {
-            this.tabletopMaterialCollectionView = new UM.Views.TabletopMaterials({collection: this.model.tabletopMaterialCollection});
-        }
-        if (this.model.washingTypeCollection) {
-            this.washingTypeCollectionView = new UM.Views.WashingTypes({collection: this.model.washingTypeCollection});
-        }
-        if (this.model.stoveStyleCollection) {
-            this.stoveStyleCollectionView = new UM.Views.StoveStyles({collection: this.model.stoveStyleCollection});
-        }
-        if (this.model.hoodStyleCollection) {
-            this.hoodStyleCollectionView = new UM.Views.HoodStyles({collection: this.model.hoodStyleCollection});
-        }
-        if (this.model.hoodTypeCollection) {
-            this.hoodTypeCollectionView = new UM.Views.HoodTypes({collection: this.model.hoodTypeCollection});
-        }
 
-        this.render();
+        this.initCollectionViews().render();
 
         if (this.model.options.class) this.$el.addClass(this.model.options.class);
 
@@ -142,6 +75,16 @@ module.exports = UM.Views.Form.extend({
 
         this.model.set('ga', ga);
         this.model.set('utm', utm);
+    },
+
+    initCollectionViews: function () {
+        this.collectionView = [];
+
+        _.each(this.model.collections, function (collection, key) {
+            this.collectionView[key] = new UM.Views.InputSelect({collection: collection});
+        }, this);
+
+        return this;
     },
 
     getCookie: function(cname) {
