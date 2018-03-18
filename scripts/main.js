@@ -15,7 +15,6 @@ $(document).ready(function() {
         conf: conf
     };
 
-    App.codes = require('../codes.js');
     App.fields = require('../fields.js');
     App.formTemplates = require('../formTemplates.js');
 

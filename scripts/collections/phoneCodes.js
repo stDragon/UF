@@ -2,7 +2,7 @@ module.exports = Backbone.Collection.extend({
     model: UM.Models.PhoneCode,
 
     url: function () {
-        return '/api/phoneCodes/'
+        return UM.dataUrl + '/phoneCodes/'
     },
 
     initialize: function(models, options) {

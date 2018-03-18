@@ -5,11 +5,18 @@ module.exports = Backbone.Ribs.Model.extend({
 
     initialize: function() {
         if (this.get('name') === 'phone') {
-            this.phoneCodesCollection = new App.Collections.PhoneCodes({model: App.Models.PhoneCode});
+            this.phoneCodesCollection = new App.Collections.PhoneCodes({
+                model: App.Models.PhoneCode,
+                url: function () {
+                    return App.dataUrl + '/phoneCodes'
+                }
+            });
 
-            /** @todo надо перенести данные на сервер */
-            this.phoneCodesCollection.set(App.codes);
-            this.createPhoneCodes();
+
+            this.phoneCodesCollection.on('sync', function () {
+                this.createPhoneCodes()
+            }, this);
+            this.phoneCodesCollection.fetch();
             /*
              var that = this;
              this.phoneCodesCollection.fetch().then(function() {

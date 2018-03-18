@@ -136,7 +136,7 @@ app.get(conf.server.dataPrefix + '/kitchens/:id', function(req, res) {
     res.json(kitchens);
 });
 
-app.get('/api/phoneCodes/', function(req, res) {
+app.get(conf.server.dataPrefix + '/phoneCodes/', function(req, res) {
     res.json(phoneCodes);
 });
 
