@@ -1,12 +1,4 @@
-#Репозиторий front-end универсального модуля заявки.
-
-## User config
-
-Для начала работы с данным репозиторием задайте(если не заданы) свои имя и email для git как на примере ниже.
-
-`git config --global user.name "Anatoliy Soldatov"`
-
-`git config --global user.email "a-soldatov@marya.ru"`
+#Универсальный генератор форм front-end.
 
 ## Install
 Запускаем консоль с правами администратора.
@@ -19,13 +11,13 @@
 * скачать репозеторий:
 
 ```sh
-git clone git@dev.marya.ru:s-oleynik/UM.git
+git clone git@github.com:stDragon/UF.git
 ```
 
 * переходим в папку проекта:
 
 ```sh
-cd UM
+cd UF
 ```
 
 * установить модули :
@@ -87,7 +79,7 @@ gulp styles
 Name                     | type           | default                       | description 
 ------------------------ | -------------- | ----------------------------- | -----------
 ID                       | number         | ""                            | ID конфига
-serverUrl                | string         | "//module.infcentre.ru"       | Url сервера с которого будет запрашиваться скрипт и на который будут отправляться данные
+dataUrl                  | string         | "//uf.ru"                     | Url сервера с которого будет запрашиваться скрипт и на который будут отправляться данные
 siteUrl                  | string         | ""                            | Url сайта партнера на котором будет отображаться модуль
 formType                 | string         | "calculation"                 | тип заявки
 style                    | string/boolean | "/public/css/um-material.css" | стиль для модуля
@@ -192,7 +184,7 @@ img          | string         | ""       | +        | Флаг страны
 На странице http://module.infcentre.ru/um/ партнер получает код скрипта вида:
 
 ```html
-<script type="text/javascript" src="http://module.infcentre.ru/public/js/marya-um.min.js"></script>
+<script type="text/javascript" src="//uf.ru/public/js/marya-um.min.js"></script>
 <script>UM.init({"id":"29BA15DA-DE36-170B-7BD4-570303E6C321"});</script>
 ```
 
@@ -204,7 +196,7 @@ img          | string         | ""       | +        | Флаг страны
 * Подключение скрипта модуля
 
 ```html
-<script type="text/javascript" src="http://module.infcentre.ru/public/js/marya-um.js"></script>
+<script type="text/javascript" src="//uf.ru/public/js/marya-um.js"></script>
 ```
 Если на сайте используется jQuery, underscore или backbone скрипт необходимо подключать после них.
 
@@ -219,7 +211,7 @@ img          | string         | ""       | +        | Флаг страны
 Для кнопки он соответстует:
 
 ```html
-<button type="button" data-id="29BA15DA-DE36-170B-7BD4-570303E6C321" data-type="um-btn-init">Заказать кухню</button>
+<button type="button" data-id="29BA15DA-DE36-170B-7BD4-570303E6C321" data-type="um-btn-init">Заказать</button>
 ```
 
 при нажатию на эту кнопку откроется форма
@@ -295,7 +287,7 @@ UM.init({"id":"29BA15DA-DE36-170B-7BD4-570303E6C321"}, {user : user});
 Чтобы проследить за этими событиями используется глобальная слежка за всеми событиями и отлавлевать интересующий нас по ID конфигурации
 
 ```js
-UM.vent.on('event', function, context);
+UM.vent.on('event', function(){}, context);
 ```
 
 Список глобальных событий ('event')
@@ -314,14 +306,14 @@ page:shownConfirm           | {UM.Views.Page}| показано "заявка п
 
 ```js
 UM.vent.on('page:showConfirm', function(id){
-    if (id == "29BA15DA-DE36-170B-7BD4-570303E6C321") {
+    if (id === "29BA15DA-DE36-170B-7BD4-570303E6C321") {
         console.log('Форма id: ' + id + ' отправила заявку');
         setTimeout(rederect, 5000);
     }
 });
 
 function rederect(){
-     window.location.href = "//www.marya.ru"
+     window.location.href = "https://www.yandex.ru/"
 }
 ```
 
@@ -330,7 +322,7 @@ function rederect(){
 Чтобы следить за изменениями формы используется функция прослушивания событий модели 
 
 ```js
-UM.vent.listenTo(model, 'event', function);
+UM.vent.listenTo(model, 'event', function(){});
 ```
 
 Пример получить данные после успешной отправки данных на сервер и вывести почту в консоль

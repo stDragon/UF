@@ -5,6 +5,7 @@ var express      = require('express'),
     errorhandler = require('errorhandler'),
     expressHbs = require('express3-handlebars'),
     robots = require('express-robots'),
+    conf = require('./nconf.js'),
     bodyParser   = require('body-parser');
 
 var app = module.exports.app = exports.app = express();
@@ -20,6 +21,7 @@ app.set('view engine', 'hbs');
  * */
 var tmp = require('./temp');
 var logs = tmp.tmpDb.logs,
+    fields = tmp.tmpDb.fields,
     cities = tmp.tmpDb.cities,
     shops = tmp.tmpDb.shops,
     users = tmp.tmpDb.users,
@@ -39,6 +41,9 @@ app.all('*', function(req, res, next) {
     res.header("Access-Control-Allow-Origin", serverName);
     res.header("Access-Control-Allow-Credentials", "true");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    /**
+     *  Кэширование, выключено т.к. кэшируется и заголовок
+     *  */
     //res.setHeader('Cache-Control', 'public, max-age=' + 604800);
     //res.setHeader("Expires", new Date(Date.now() + 604800000).toUTCString());
     next();
@@ -48,18 +53,39 @@ app.use(robots(__dirname + '/robots.txt'));
 
 app.use('/public',express.static(__dirname + '/public'));
 //app.use(express.errorHandler({dumpExceptions: true, showStack: true}));
-
+/**
+ * Единственный url по которому можно обратиться к node на pre-prod и prod
+ * Не используется, можно проверить жива ли node
+ * @deprecated
+ * */
 app.get('/module', function(req, res) {
     res.render('index');
 });
+/**
+ * получение шаблонов на pre-prod и prod не используется, т.к. переведено на nginx
+ * */
 app.get('/module/:id', function(req, res) {
-    //if (!configs[req.params.id])
-    //    res.redirect('/module');
-
     res.render(req.params.id, {layout: false});
 });
+/**
+ * Только для локального тестирования.
+ * На продакшине запросы будут обработаны php сервером
+ * Получаем index страницу
+ * */
+app.get('/', function(req, res) {
+    res.render('index');
+});
+/**
+ * Получаем index страницу с ранее сохраненным конфигом
+ * */
+app.get('/:id', function(req, res) {
+    if (!configs[req.params.id])
+        res.redirect('/module');
 
-app.post('/um/umdata/conf/', jsonParser, function(req, res) {
+    res.render('index', {id: req.params.id});
+});
+
+app.post(conf.server.dataPrefix + '/conf/', jsonParser, function(req, res) {
     var data = req.body;
     data.id = Date.now().toString();
     configs[data.id] = data;
@@ -67,7 +93,7 @@ app.post('/um/umdata/conf/', jsonParser, function(req, res) {
     res.status(201).json(data);
 });
 
-app.route('/um/umdata/conf/:id')
+app.route(conf.server.dataPrefix + '/conf/:id')
     .get(jsonParser, function(req, res) {
         res.json(configs[req.params.id]);
     })
@@ -82,35 +108,39 @@ app.route('/um/umdata/conf/:id')
         res.status(200).json(configs[req.params.id]);
     });
 
-app.get('/um/umdata/cities/', function(req, res) {
+app.get(conf.server.dataPrefix + '/fields/', function(req, res) {
+    res.json(fields);
+});
+
+app.get(conf.server.dataPrefix + '/cities/', function(req, res) {
     res.json(cities);
 });
 
-app.get('/um/umdata/cities/:id', function(req, res) {
+app.get(conf.server.dataPrefix + '/cities/:id', function(req, res) {
     res.json(cities);
 });
 
-app.get('/um/umdata/shops', function(req, res) {
+app.get(conf.server.dataPrefix + '/shops', function(req, res) {
     res.json(shops);
 });
 
-app.get('/um/umdata/shops/:id', function(req, res) {
+app.get(conf.server.dataPrefix + '/shops/:id', function(req, res) {
     res.json(shops);
 });
 
-app.get('/um/umdata/kitchens/', function(req, res) {
+app.get(conf.server.dataPrefix + '/kitchens/', function(req, res) {
     res.json(kitchens);
 });
 
-app.get('/um/umdata/kitchens/:id', function(req, res) {
+app.get(conf.server.dataPrefix + '/kitchens/:id', function(req, res) {
     res.json(kitchens);
 });
 
-app.get('/api/phoneCodes/', function(req, res) {
+app.get(conf.server.dataPrefix + '/phoneCodes/', function(req, res) {
     res.json(phoneCodes);
 });
 
-app.post('/um/umdata/code/', jsonParser, function(req, res) {
+app.post(conf.server.dataPrefix + '/code/', jsonParser, function(req, res) {
     var data = req.body;
     setTimeout(function(){
         if(data.code == 5555){
@@ -123,7 +153,7 @@ app.post('/um/umdata/code/', jsonParser, function(req, res) {
     }, 2000);
 });
 
-app.post('/um/umdata/client/', jsonParser, function(req, res) {
+app.post(conf.server.dataPrefix + '/client/', jsonParser, function(req, res) {
     var data = req.body;
     data.id = Date.now().toString();
     users[data.id] = data;
@@ -137,7 +167,7 @@ app.get('/um/umclient/add/:id', jsonParser, function(req, res) {
     res.json(users[req.params.id]);
 });
 
-app.post('/um/umdata/log/', jsonParser, function(req, res) {
+app.post(conf.server.dataPrefix + '/log/', jsonParser, function(req, res) {
     var data = req.body;
     data.id = Date.now().toString();
     logs[data.id] = data;

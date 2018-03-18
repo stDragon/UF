@@ -33,7 +33,7 @@ module.exports = UM.Views.Button.extend({
     },
 
     clicked: function () {
-        UM.vent.trigger('page:show', this.model.id);
+        UM.vent.trigger('layout:show', this.model.id);
         this.hide();
     }
 });

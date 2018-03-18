@@ -1,34 +1,30 @@
 {
-  "name": "um",
-  "version": "1.0.0",
-  "description": "",
+  "name": "uf",
+  "version": "2.0.0beta",
+  "description": "Universal Form Generator",
   "main": "app.js",
   "dependencies": {
     "backbone": "^1.3.2",
-    "backbone.ribs": "^1.0.2",
-    "body-parser": "^1.15.0",
-    "browserify": "^13.1.1",
-    "browserify-shim": "^3.8.12",
-    "clipboard": "^1.5.15",
-    "errorhandler": "^1.4.3",
-    "express": "^4.13.4",
+    "body-parser": "^1.18.2",
+    "errorhandler": "^1.5.0",
+    "express": "^4.16.3",
     "express-robots": "^0.1.6",
     "express3-handlebars": "^0.5.2",
     "fs": "0.0.2",
-    "hammerjs": "^2.0.8",
     "http": "0.0.0",
     "https": "^1.0.0",
     "jquery": "^2.2.2",
-    "jquery.inputmask": "^3.3.3",
-    "materialize-css": "^0.97.7",
-    "underscore": "^1.8.3"
+    "jquery.inputmask": "^3.3.4",
+    "node-gyp": "^3.6.2",
+    "node-sass": "^4.8.2",
+    "underscore": "^1.8.3",
+    "xml2json": "^0.11.0"
   },
   "devDependencies": {
-    "bower": "^1.7.9",
-    "browserify-shim": "^3.8.12",
+    "bower": "^1.8.2",
     "gulp": "^3.9.0",
     "gulp-browserify": "^0.5.1",
-    "gulp-concat": "^2.6.0",
+    "gulp-concat": "^2.6.1",
     "gulp-express": "^0.3.5",
     "gulp-imagemin": "^2.4.0",
     "gulp-rename": "^1.2.2",
@@ -36,21 +32,18 @@
     "gulp-uglify": "^1.5.3"
   },
   "scripts": {
-    "postinstall": "cp node_modules/materialize-css/js/date_picker/picker.js node_modules/materialize-css/bin",
-    "start-dev": "gulp",
-    "start-prod": "PORT=9000 PORTSSL=9001 gulp",
-    "start-pre-prod": "PORT=9000 PORTSSL=9001 node node_modules/gulp/bin/gulp.js",
+    "start": "gulp",
     "scripts": "gulp scripts",
     "styles": "gulp styles",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "s-oleynik",
+  "author": "stDragon",
   "license": "ISC",
   "repository": {
     "type": "git",
-    "url": "dev.marya.ru:s-oleynik/UM.git"
+    "url": "git@github.com:stDragon/UF.git"
   },
   "keywords": [
-    "Мария"
+    "Form Generator, callback form"
   ]
 }

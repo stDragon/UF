@@ -25,13 +25,14 @@ module.exports = Backbone.Ribs.View.extend({
         var $head = $('head'),
             head = '';
 
-        if (this.model.get('style') && !$('link[href$="' + this.model.get('style') + '.css"]').length) {
-            var styleHref = UM.conf.server.url + '/public/css/' + this.model.get('style') + '.css';
+        if (!$('link[href$="' + this.model.get('layout.style') + '.css"]').length) {
+            var styleHref = UM.conf.server.url + '/public/css/' + this.model.get('layout.style') + '.css';
             head += this.getStyle(styleHref);
         }
 
-        if (this.model.get('formConfig').shop.mapShow)
-            head += this.getYaMap();
+        /** @todo перенести в field */
+        //if (this.model.get('formConfig').shop.mapShow)
+        //    head += this.getYaMap();
 
         if (head)
             $head.append(head);
@@ -40,45 +41,45 @@ module.exports = Backbone.Ribs.View.extend({
     initBody: function () {
         var $body = $('body');
 
-        if (this.model.get('initType') == 'button') {
+        if (this.model.get('layout.init.type') == 'button') {
 
-            if (this.model.get('initPosition') == 'fixed') {
+            if (this.model.get('layout.init.position') == 'fixed') {
                 this.button = new UM.Views.ButtonFixed({model: this.model});
                 $body.append(this.button.el);
-            } else if (this.model.get('initPosition') == 'static')
+            } else if (this.model.get('layout.init.position') == 'static')
                 this.button = new UM.Views.ButtonStatic({model: this.model});
 
             UM.buttons[this.model.id] = this.button;
 
-            this.page = new UM.Views.Page({model: this.model});
-            $body.append(this.page.el);
-            this.page.hide();
+            this.layout = new UM.Views.Layout({model: this.model});
+            $body.append(this.layout.el);
+            this.layout.hide();
 
-        } else if (this.model.get('initType') == 'form') {
+        } else if (this.model.get('layout.init.type') == 'form') {
 
-            if (this.model.get('initPosition') == 'fixed') {
-                this.page = new UM.Views.Page({model: this.model});
-                $body.append(this.page.el);
-            } else if (this.model.get('initPosition') == 'static') {
+            if (this.model.get('layout.init.position') == 'fixed') {
+                this.layout = new UM.Views.Layout({model: this.model});
+                $body.append(this.layout.el);
+            } else if (this.model.get('layout.init.position') == 'static') {
                 /** @TODO обратная совместимость с вставлением формы по айдишнику*/
                 var $el = $('#um-form-init');
                 if ($el.length) {
-                    this.page = new UM.Views.Page({model: this.model});
-                    $el.html(this.page.el);
+                    this.layout = new UM.Views.Layout({model: this.model});
+                    $el.html(this.layout.el);
                 }
                 else {
-                    this.page = [];
+                    this.layout = [];
                     var that = this;
                     $('[data-um-id=' + this.model.id + ']').each(function(index){
-                        var page =  new UM.Views.Page({model: that.model});
-                        $(this).html(page.el);
-                        that.page[index] = page;
+                        var layout =  new UM.Views.Layout({model: that.model});
+                        $(this).html(layout.el);
+                        that.layout[index] = layout;
                     });
                 }
 
             }
         }
 
-        UM.pages[this.model.id] = this.page;
+        UM.layouts[this.model.id] = this.layout;
     }
 });

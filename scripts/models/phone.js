@@ -10,7 +10,7 @@ module.exports = Backbone.Model.extend({
     },
 
     urlRoot: function () {
-        return UM.serverUrl + '/code/'
+        return UM.dataUrl + '/code/'
     },
 
     validate: function (attrs, options) {

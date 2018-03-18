@@ -10,7 +10,7 @@ module.exports = Backbone.Ribs.Model.extend({
     },
 
     urlRoot: function () {
-        return UM.serverUrl + '/log/'
+        return UM.dataUrl + '/log/'
     },
 
     initialize: function () {

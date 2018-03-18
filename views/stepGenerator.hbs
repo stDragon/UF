@@ -1,0 +1,20 @@
+<h3>Настройка шага #<%= step + 1 %></h3>
+<h4>CSS класс для формы</h4>
+<div class="row">
+    <div class="input-field col s6">
+        <input id="class" name="class" type="text" class="validate" placeholder="um-my-form-class" value="">
+        <label for="class" class="active sr-only">CSS класс для формы</label>
+    </div>
+</div>
+<div class="field-list"></div>
+<div class="row">
+    <div class="input-field col s6">
+        <select class="add-field-list"></select>
+        <label for="addFieldList">Добавить поле</label>
+    </div>
+    <div class="input-field col s6">
+        <button type="button" class="btn-floating js-add-field"><i class="material-icons">add</i></button>
+    </div>
+</div>
+<button type="submit" class="btn">Сохранить</button>
+<button type="button" class="btn-flat js-remove">Удалить шаг</button>

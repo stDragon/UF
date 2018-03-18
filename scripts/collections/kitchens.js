@@ -17,7 +17,7 @@ module.exports = Backbone.Collection.extend({
     },
 
     url: function () {
-        return UM.serverUrl + '/kitchens/' + this.options.configId || ''
+        return UM.dataUrl + '/kitchens/' + this.options.configId || ''
     },
     /**
      * Сортирует по названию

@@ -4,56 +4,57 @@
 
 module.exports = UM.Views.Form.extend({
 
-    tagName: 'form',
-    className: 'um-form',
-    template: 'formUser',
-
     events: {
         'focus input': 'showOptionList',
-        'keyup [name="city"]': 'search',
+        //'keyup [name="city"]': 'search',
         'keyup [name="phone"]': 'setAttrs',
         'change input': 'setAttrs',
         'change textarea': 'setAttrs',
+        'blur': 'preValidation',
         'click .um-icon-add-location': 'showYaMap',
         'change input:checkbox': 'changed',
         'click .um-static-select li': 'chooseValue',
-        'submit': 'save',
         'click': 'click',
-        'input [name="name"]' : 'parseName'
+        'input [name="name"]' : 'parseName',
+        'click button[name="buttonNext"]': 'toNextStep',
+        'click button[name="buttonPrev"]': 'toPrevStep',
+        'submit': 'save'
     },
 
     click: function(e) {
         var $el = $(e.target);
         if($el.hasClass('um-form-control') || $el.hasClass('um-phone-flag') || $el.hasClass('um-field-wrap')) {
             this.showOptionList(e);
+            return;
         } else if(!$el.closest('.um-dropdown-content').length) {
             this.hiddenOptionList()
         }
     },
 
-    initialize: function () {
+    initialize: function (model, options) {
 
-        this.initCollectionViews().render();
+        this.options = options;
 
-        if (this.model.options.class) this.$el.addClass(this.model.options.class);
+        this.initSelects().render();
 
         this.model.on('change', this.setValue, this);
+        this.model.on('change:personalData', this.preValidation, this);
 
-        if (this.model.options.shop.show) {
-            this.createYaMapModal();
-            this.model.on('change:cityId', this.createSelectShop, this);
-        }
+        //if (this.model.options.shop.show) {
+        //    this.createYaMapModal();
+        //    this.model.on('change:cityId', this.createSelectShop, this);
+        //}
         this.listenTo(this.model, 'request', function () {
-            UM.vent.trigger('page:showLoader', this.model.get('configId'));
+            UM.vent.trigger('layout:showLoader', this.model.get('configId'));
             this.valid();
             this.disabledSubmit();
         });
         this.listenTo(this.model, 'sync', function () {
-            UM.vent.trigger('page:hideLoader', this.model.get('configId'));
-            UM.vent.trigger('page:showPhoneForm', this.model.get('configId'));
+            UM.vent.trigger('layout:hideLoader', this.model.get('configId'));
+            UM.vent.trigger('layout:showPhoneForm', this.model.get('configId'));
         });
         this.listenTo(this.model, 'error', function () {
-            UM.vent.trigger('page:hideLoader', this.model.get('configId'));
+            UM.vent.trigger('layout:hideLoader', this.model.get('configId'));
             this.enabledSubmit();
         });
         this.listenTo(this.model, 'invalid', this.invalid);
@@ -68,53 +69,41 @@ module.exports = UM.Views.Form.extend({
         this.$el.on('click', '.um-wrapper>label, .um-edim-doma-old .um-form-group-wishes>label', function(e) {
             that.concealed(e);
         });
-
-        /*   данные гугл аналитики   */
-        var ga = this.getCookie('_ga'),
-            utm = this.getCookie('sbjs_current');
-
-        this.model.set('ga', ga);
-        this.model.set('utm', utm);
     },
 
-    initCollectionViews: function () {
-        this.collectionView = [];
+    initSelects: function () {
 
-        _.each(this.model.collections, function (collection, key) {
-            this.collectionView[key] = new UM.Views.InputSelect({collection: collection});
-        }, this);
+        this.optionCollectionView = new Backbone.Ribs.Collection();
+
+        _.each(this.model.optionCollection, function(option){
+            this.optionCollectionView.add(new UM.Views.InputSelect({collection: option}));
+        },this);
+
+        if (this.model.kitchenCollection && _.find(this.options.fields, function (field){return field.name === 'kitchen'})) {
+            this.kitchenCollectionView = new UM.Views.Kitchens({collection: this.model.kitchenCollection});
+        }
+
+        if (this.model.prefCollection && _.find(this.options.fields, function (field){return field.name === 'pref'})) {
+            this.prefCollectionView = new UM.Views.InputSelect({collection: this.model.prefCollection});
+        }
+
+        if (this.model.productCollection && _.find(this.options.fields, function (field){return field.name === 'product'})) {
+            this.productCollectionView = new UM.Views.InputSelect({collection: this.model.productCollection});
+        }
+
+        if (this.model.payCollection && _.find(this.options.fields, function (field){return field.name === 'pay'})) {
+            this.payCollectionView = new UM.Views.InputSelect({collection: this.model.payCollection});
+        }
 
         return this;
-    },
-
-    getCookie: function(cname) {
-        var name = cname + "=";
-        var ca = document.cookie.split(';');
-        for(var i = 0; i < ca.length; i++) {
-            var c = ca[i];
-            while (c.charAt(0) == ' ') {
-                c = c.substring(1);
-            }
-            if (c.indexOf(name) == 0) {
-                return c.substring(name.length, c.length);
-            }
-        }
-        return "";
     },
 
     initPhoneMask: function () {
         var selector = this.$el.find('.um-form-group-phone');
 
         if (selector.length && !this.phoneView) {
-            this.phoneView = new UM.Views.PhoneInput({el: selector, form: this});
-        }
-    },
-
-    initEmailMask: function () {
-        var selector = this.$el.find('.um-form-group-email');
-
-        if (selector.length && !this.emailView) {
-            this.emailView = new UM.Views.EmailInput({el: selector, form: this});
+            this.phoneView = new UM.Views.PhoneInput({el: selector, form: this.options.fields.phone});
+            this.model.phoneCodeCollection = this.phoneView.phoneCodeCollection; //пробрасывается доступ модели к коллекции телефонов, нужно для валидации
         }
     },
 
@@ -141,7 +130,6 @@ module.exports = UM.Views.Form.extend({
 
         if (city.length) {
             this.cityCollectionView = new UM.Views.Citys({collection: city});
-            this.addSelectList('city', this.cityCollectionView);
         }
     },
 
@@ -180,14 +168,17 @@ module.exports = UM.Views.Form.extend({
     },
 
     render: function () {
+        this.options.fields = _.sortBy(this.options.fields, function(opt){ return Number(opt.sort) });
         var that = this;
         UM.TemplateManager.get(this.template, function (template) {
             var temp = _.template(template);
-            var data = _.extend(that.model.toJSON(), UM.configsCollection.get(that.model.get('configId')).toJSON());
-            var html = $(temp(data));
+            var data = {
+                value: that.model.toJSON(),
+                options: that.options
+            };
+
+            var html = temp(data);
             that.$el.html(html);
-            that.$el.prop("enctype", "multipart/form-data");
-            that.$el.attr("data-remote", "true");
 
             if (that.cityCollectionView) {
                 that.addSelectList('city', that.cityCollectionView);
@@ -197,69 +188,17 @@ module.exports = UM.Views.Form.extend({
             if (that.kitchenCollectionView) {
                 that.addSelectList('kitchen', that.kitchenCollectionView);
             }
-            if (that.priceCollectionView) {
-                that.addSelectList('price', that.priceCollectionView);
+            if (that.prefCollectionView) {
+                that.addSelectList('pref', that.prefCollectionView);
             }
-            if (that.colorCollectionView) {
-                that.addSelectList('color', that.colorCollectionView);
+            if (that.productCollectionView) {
+                that.addSelectList('product', that.productCollectionView);
             }
-            if (that.roomCollectionView) {
-                that.addSelectList('room', that.roomCollectionView);
-            }
-            if (that.gearCollectionView) {
-                that.addSelectList('gear', that.gearCollectionView);
-            }
-            if (that.lightingCollectionView) {
-                that.addSelectList('lighting', that.lightingCollectionView);
-            }
-            if (that.worktypeCollectionView) {
-                that.addSelectList('worktype', that.worktypeCollectionView);
-            }
-            if (that.designCollectionView) {
-                that.addSelectList('design', that.designCollectionView);
-            }
-            if (that.wallCollectionView) {
-                that.addSelectList('walls', that.wallCollectionView);
-            }
-            if (that.floorTypeCollectionView) {
-                that.addSelectList('floorType', that.floorTypeCollectionView);
-            }
-            if (that.positionCollectionView) {
-                that.addSelectList('position', that.positionCollectionView);
-            }
-            if (that.addPlaceCollectionView) {
-                that.addSelectList('addPlace', that.addPlaceCollectionView);
-            }
-            if (that.kitchenStyleCollectionView) {
-                that.addSelectList('kitchenStyle', that.kitchenStyleCollectionView);
-            }
-            if (that.upperSectionCollectionView) {
-                that.addSelectList('upperSection', that.upperSectionCollectionView);
-            }
-            if (that.lowerSectionCollectionView) {
-                that.addSelectList('lowerSection', that.lowerSectionCollectionView);
-            }
-            if (that.diningGroupCollectionView) {
-                that.addSelectList('diningGroup', that.diningGroupCollectionView);
-            }
-            if (that.tabletopMaterialCollectionView) {
-                that.addSelectList('tabletopMaterial', that.tabletopMaterialCollectionView);
-            }
-            if (that.washingTypeCollectionView) {
-                that.addSelectList('washingType', that.washingTypeCollectionView);
-            }
-            if (that.stoveStyleCollectionView) {
-                that.addSelectList('stoveStyle', that.stoveStyleCollectionView);
-            }
-            if (that.hoodStyleCollectionView) {
-                that.addSelectList('hoodStyle', that.hoodStyleCollectionView);
-            }
-            if (that.hoodTypeCollectionView) {
-                that.addSelectList('hoodType', that.hoodTypeCollectionView);
+            if (that.payCollectionView) {
+                that.addSelectList('pay', that.payCollectionView);
             }
             that.initPhoneMask();
-            that.initEmailMask();
-            that.preValidation();
+            //that.preValidation();
 
             /* Костыль со скрывающимися комментариями для старого все для дома и питера */
             if (that.$el.closest('.um-edim-doma-old').length || that.$el.closest('.um-piter').length) {
@@ -281,36 +220,44 @@ module.exports = UM.Views.Form.extend({
                 that.$el.find('.um-form-group-wishes').appendTo(that.$el.find('.um-login'));
             }
 
-            /* Костыль для кредитной формы твой дом */
+            /* Костыль для кридитной формы твой дом */
             if (UM.configsCollection.get(that.model.get('configId')).get('style') === 'um-your-house'
-                && UM.configsCollection.get(that.model.get('configId')).get('formType') === 'credit') {
+                && UM.configsCollection.get(that.model.get('configId')).get('global.type') === 'credit') {
                 that.$el.find('.um-form-group-firstname, .um-form-group-email, .um-form-group-phone ').wrapAll("<div class='um-form-col'></div>");
                 that.$el.find('.um-form-group-wishes , .um-form-group-personal-data').wrapAll("<div class='um-form-col'></div>");
-            }
-
-            /* костыль оборачивающий сабмит кнопку в стиле для ванн */
-            if (UM.configsCollection.get(that.model.get('configId')).get('style') === 'um-bath') {
-
-                that.$el.find('.js-create-order').wrap("<div class='btn-wrap'></div>");
             }
         });
         return this;
     },
 
     addSelectList: function (inputName, collectionView) {
-        if(this.$el.find('ul').is('.um-' + inputName + '-list')) {
-            this.$el.find('.um-' + inputName + '-list').remove();
-        }
         this.$el.find('[name=' + inputName + ']').before(collectionView.el);
         return this;
     },
 
     preValidation: function(){
-        var validate = this.model.validate(this.model.attributes);
-        if(validate == 0)
-            this.enabledSubmit();
-        else
-            this.disabledSubmit();
+        var personalData =_.find(this.options.fields, function(field) {return field.name === 'personalData'});
+        if (typeof personalData !== 'undefined' && personalData.required) {
+            if (this.model.get('personalData'))
+                this.enabledSubmit();
+            else
+                this.disabledSubmit();
+        }
+    },
+
+    /**
+     * При объедининеии полей Фамилия и Имя при вводе значения с клавиатуры разделяет значения имени и фамилии
+     */
+    parseName: function(e) {
+        var val = ($(e.target).val()).trim(),
+            id = $(e.target).attr('id'),
+            i = val.trim().indexOf(' '),
+            surname = val.substr(0, i),
+            name = val.substr((i + 1), val.length);
+
+        this.$el.find('[name=surname]').val(surname);
+        this.$el.find('[name=firstName]').val(name);
+        this.setAttrs();
     },
 
     /**
@@ -334,7 +281,7 @@ module.exports = UM.Views.Form.extend({
 
         $elMap.children().remove();
 
-        var mapShopArr = this.model.shopCollection.filterByCityForMap(this.model.get('cityId')).toJSON();
+        var mapShopArr = this.model.shopCollection.filterByCityForMap(this.model.get('city')).toJSON();
 
         var latSum = 0,
             lonSum = 0,
@@ -380,7 +327,7 @@ module.exports = UM.Views.Form.extend({
                 },
 
                 selectShop: function () {
-                    UM.vent.trigger('user:setShop', this.model);
+                    UM.vent.trigger('user:setShop', this.model.get('title'));
                 }
             });
 
@@ -428,6 +375,9 @@ module.exports = UM.Views.Form.extend({
             $input.addClass('um-hidden')
     },
 
+    /**
+     * @deprecated since version 2.0
+     */
     addSteps: function () {
         this.$el.addClass('um-form-step um-form-step-1');
         this.$el.find('.um-form-group-firstname').addClass('um-form-group-step-1');
@@ -445,7 +395,7 @@ module.exports = UM.Views.Form.extend({
 
         var that = this;
         this.$el.on('click', '.um-btn-next', function (e) {
-            /** Предварительная проверка на валидность видимых элементов формы */
+            /** Предварительная проверка на валидность видемых элементов формы */
             var errors = that.model.validate(that.getVisibleFormControl());
             if (errors)
                 that.invalid(that.model, errors);
@@ -458,11 +408,27 @@ module.exports = UM.Views.Form.extend({
         });
     },
 
+    /**
+     * @deprecated since version 2.0
+     */
     nextStep: function () {
         this.$el.removeClass('um-form-step-1').addClass('um-form-step-2');
     },
 
+    /**
+     * @deprecated since version 2.0
+     */
     prevStep: function () {
         this.$el.removeClass('um-form-step-2').addClass('um-form-step-1');
+    },
+
+    toNextStep: function () {
+        this.setAttrs();
+        this.trigger('form:nextStep', this.options);
+    },
+
+    toPrevStep: function () {
+        this.setAttrs();
+        this.trigger('form:prevStep', this.options);
     }
 });

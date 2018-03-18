@@ -1,8 +1,9 @@
 module.exports = Backbone.View.extend({
 
-    initialize: function () {
+    initialize: function (model, options) {
+        this.options = options;
 
-        if (this.el.multiple) {
+        if (this.options.multiple) {
             this.collection.options.multiple = true;
         }
 
@@ -13,10 +14,9 @@ module.exports = Backbone.View.extend({
     render: function () {
         this.$el.append('<option disabled>Выберите опцию</option>');
         this.collection.each(function (model) {
-            var view = new App.Views.SelectOption({model: model});
+            var view = new App.Views.SelectOption({model: model},this.options);
             this.$el.append(view.render().el);
         }, this);
-
         this.$el.material_select();
 
         return this;

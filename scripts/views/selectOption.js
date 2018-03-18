@@ -7,7 +7,13 @@ module.exports = Backbone.View.extend({
     tagName: "option",
     template: _.template('<%= name %>'),
 
-    initialize: function () {
+    initialize: function (model, options) {
+        if (typeof options !== 'undefined') {
+            this.options = options;
+            if (typeof options.template !== 'undefined') {
+                this.template = options.template;
+            }
+        }
         this.render();
 
         this.model.on('change', this.render, this);
@@ -17,7 +23,7 @@ module.exports = Backbone.View.extend({
         if (this.model.get('active'))
             this.$el.attr('selected','selected');
 
-        this.el.value = this.model.get('isoCode');
+        this.el.value = this.model.get(this.options.value);
         this.el.selected = this.model.get('active');
         this.$el.data('icon', this.model.get('img'));
 

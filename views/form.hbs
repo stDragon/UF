@@ -1,0 +1,70 @@
+<fieldset class="um-login <%= options.class %>">
+
+    <% _.each(options.fields, function(field, key, list){%>
+
+        <%if (field.type == 'html') {%>
+
+            <legend>
+                <span class="um-title"><%= field.value1 %></span>
+                <span class="um-title-2"><%= field.value2 %></span>
+            </legend>
+
+        <%} else if (field.type == 'checkbox' && field.name == 'personalData') {%>
+
+            <div class="um-form-group um-form-group-personal-data<%= field.required ? ' um-form-group-required' : ''%>"<%= field.hidden ? ' hidden' : ''%>>
+                <label class="um-label-checkbox <%= value[field.name] ? ' um-checked' : ''%>">
+                    <input type="checkbox" name="<%= field.name %>" value="<%= value[field.name] %>"
+                    <%= field.required ? ' required' : ''%>
+                    <%= value[field.name] ? ' checked' : ''%>>
+                        <span class="um-label-text">
+                            <%= field.label %>
+                            <%if(typeof field.href !== 'undefined' && field.href.show) {%>
+                                <a target="_blank" href="<%= field.href.pathname %>" class="um-privacy"><%= field.href.text %></a>
+                            <%}%>
+                        </span>
+                </label>
+            </div>
+
+        <%} else if (field.type == 'submit' || field.type == 'button') {%>
+
+            <button type="<%= field.type %>" class="um-btn um-btn-primary" name="<%= field.name %>"<%= field.hidden ? ' hidden' : ''%>><%= field.text %></button>
+
+        <%} else {%>
+
+            <div class="um-form-group um-form-group-<%= field.name %>
+                <%= field.required ? ' um-form-group-required' : ''%>
+                <%= (typeof field.combine !== 'undefined' && field.combine) ? 'um-hidden' : ''%>
+                <%= (typeof field.wrap !== 'undefined' && field.wrap) ? 'um-wrapper um-wrapper-hidden' : ''%>"<%= field.hidden ? ' hidden' : ''%>>
+                <label for="um<%= field.name %>"><%= field.label %></label>
+                <%if (field.type == 'textarea') {%>
+                    <div class="um-select-wrap um-field-wrap<%= (typeof field.wrap !== 'undefined' && field.wrap) ? ' um-field um-hidden' : ''%>">
+                        <textarea id="um<%= field.name %>"
+                                  name="<%= field.name %>"
+                                  class="um-form-control"
+                                  placeholder="<%= field.placeholder %>"><%= value[field.name] %></textarea>
+                    </div>
+                <%} else {%>
+                    <div class="um-form-control-wrap">
+                        <input id="um<%= field.name %>"
+                               name="<%= field.name %>"
+                               type="<%= field.type %>"
+                               class="um-form-control"
+                               placeholder="<%= field.placeholder %>"
+                               value="<%= value[field.name] %>"
+                        <%= field.required ? 'required' : ''%>>
+
+                        <%if(field.mapShow !== 'undefined' && field.mapShow){%>
+                        <svg height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg" class="um-icon-add-location">
+                            <path d="M0 0h24v24H0V0z" fill="none"/>
+                            <path d="M12 2C8.14 2 5 5.14 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.86-3.14-7-7-7zm4 8h-3v3h-2v-3H8V8h3V5h2v3h3v2z"/>
+                        </svg>
+                        <%}%>
+                    </div>
+
+                <%}%>
+            </div>
+
+        <%}%>
+
+    <%});%>
+</fieldset>

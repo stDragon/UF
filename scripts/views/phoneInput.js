@@ -10,19 +10,18 @@ module.exports = Backbone.View.extend({
     initialize: function (options) {
         this.input = this.$el.find('input');
 
-        if (options.form)
-            this.form = options.form;
+        if (options)
+            this.options = options;
 
         var phoneCodeCollection = new UM.Collections.PhoneCodeCollection(
             UM.codes,
             {
-                available: this.form.model.options.phone.available,
-                notAvailable: this.form.model.options.phone.notAvailable
+                available: this.options.available,
+                notAvailable: this.options.notAvailable
             }
         );
 
         this.phoneCodeCollection = new UM.Collections.PhoneCodeCollection(phoneCodeCollection.filterAvailable());
-        this.form.model.phoneCodeCollection = this.phoneCodeCollection;
         this.phoneCodeCollectionView = new UM.Views.PhoneCodeCollection({ collection: this.phoneCodeCollection});
         this.$el.prepend(this.phoneCodeCollectionView.el);
 
@@ -39,7 +38,7 @@ module.exports = Backbone.View.extend({
 
     setMask: function (option) {
         var mask = this.phoneCodeCollection.getMask();
-        /* От работы через jquery пришлось отказатся из-за некоректной работной работы inputmask через browserify */
+        /* От работы через jquery пришлось отказатся из-за некоректной работы inputmask через browserify */
         var im = new UM.Inputmask(mask);
         im.mask(this.input);
 
@@ -47,18 +46,16 @@ module.exports = Backbone.View.extend({
 
         if (option && option.clear === true) {
             this.input.val(active.get('code'));
-            this.form.model.options.phone.pattern = active.get('isoCode');
+            this.options.pattern = active.get('isoCode');
         }
 
-        if (typeof this.form.model.options.phone.showFlag !== 'undefined' && this.form.model.options.phone.showFlag)
+        if (typeof this.options.showFlag !== 'undefined' && this.options.showFlag)
             this.setFlag();
     },
 
     setCode: function () {
         /* убираем ошибку  */
-        this.input
-            .closest('.um-form-group').removeClass('um-has-error')
-            .find('.um-tooltip').remove();
+        this.removeError();
 
         var val = this.input.val().replace(/[^0-9]/g, '');
 
@@ -66,10 +63,7 @@ module.exports = Backbone.View.extend({
             return false;
         }
 
-        if(val.charAt(0) == '8') {
-            val = val.replace("8", "7");
-            this.input.val(val);
-        }
+        val = this.convertRuIsoCode(val);
 
         var isFound = false;
 
@@ -91,26 +85,54 @@ module.exports = Backbone.View.extend({
             }
         }
 
-        /* вывод ошибки  */
+        /* вывод ошибки */
         if (!isFound) {
-
-            var $group = this.input.closest('.um-form-group');
-            $group.addClass('um-has-error');
-
-            if (document.inputEncoding == "UTF-8") { // обход проблемы с кодировкой
-                var tooltip = new UM.Views.Tooltip();
-                tooltip.$el.html('Телефонные номера с заданным кодом не поддерживаются');
-                $group.find('.um-form-control').after(tooltip.el);
-            }
-
-            console.warn('Телефонные номера с заданным кодом не поддерживаются')
+            this.addError();
         }
     },
 
     setFlag: function () {
-        var active = this.phoneCodeCollection.getActive();
-        this.$el.find('.um-phone-wrap').children('.um-phone-flag').remove();
-        this.$el.find('.um-phone-wrap').prepend('<img src="' + active.get('img') + '" alt="' + active.get('name') + '" class="um-phone-flag">');
-        this.$el.addClass('um-with-phone-flag')
+        if (this.options.showFlag) {
+            this.$el.find('.um-form-control-wrap').children('.um-phone-flag').remove();
+
+            var active = this.phoneCodeCollection.getActive();
+
+            if (active) {
+                this.$el.find('.um-form-control-wrap').prepend(this.flagImg(active));
+                this.$el.addClass('um-with-phone-flag');
+            } else {
+                this.$el.removeClass('um-with-phone-flag');
+            }
+        }
+    },
+
+    flagImg: function (active) {
+        return '<img src="' + active.get('img') + '" alt="' + active.get('name') + '" class="um-phone-flag">';
+    },
+
+    addError: function () {
+        var $group = this.input.closest('.um-form-group');
+        $group.addClass('um-has-error');
+
+        if (document.inputEncoding == "UTF-8") { // обход проблемы с кодировкой
+            var tooltip = new UM.Views.Tooltip({text: 'Телефонные номера с заданным кодом не поддерживаются'});
+            $group.find('.um-form-control').after(tooltip.el);
+        }
+
+        console.warn('Телефонные номера с заданным кодом не поддерживаются')
+    },
+
+    removeError: function () {
+        this.input
+            .closest('.um-form-group').removeClass('um-has-error')
+            .find('.um-tooltip').remove();
+    },
+
+    convertRuIsoCode: function (val) {
+        if(val.charAt(0) == '8') {
+            val = val.replace("8", "7");
+            this.input.val(val);
+        }
+        return val;
     }
 });

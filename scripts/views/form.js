@@ -1,29 +1,33 @@
 module.exports = Backbone.Ribs.View.extend({
+
+    tagName: 'form',
+    className: 'um-form',
+    template: 'form',
+
     events: {
         'focus .um-dropdown-content + input': 'showOptionList',
         'change input': 'setAttrs',
         'change textarea': 'setAttrs',
         'change input:checkbox': 'changed',
         'click .um-static-select li': 'chooseValue',
-        'input [name="name"]' : 'parseName',
         'submit': 'save'
     },
 
-    initialize: function () {
+    initialize: function (options) {
         this.listenTo(this.model, 'invalid', this.invalid);
         this.listenTo(this.model, 'valid', this.valid);
 
         this.listenTo(this.model, 'request', function () {
-            UM.vent.trigger('page:showLoader', this.model.get('configId'));
+            UM.vent.trigger('layout:showLoader', this.model.get('configId'));
             this.valid();
             this.disabledSubmit();
         });
         this.listenTo(this.model, 'sync', function () {
-            UM.vent.trigger('page:hideLoader', this.model.get('configId'));
-            UM.vent.trigger('page:showPhoneForm', this.model.get('configId'));
+            UM.vent.trigger('layout:hideLoader', this.model.get('configId'));
+            UM.vent.trigger('layout:showPhoneForm', this.model.get('configId'));
         });
         this.listenTo(this.model, 'error', function () {
-            UM.vent.trigger('page:hideLoader', this.model.get('configId'));
+            UM.vent.trigger('layout:hideLoader', this.model.get('configId'));
             this.enabledSubmit();
         });
     },
@@ -38,8 +42,6 @@ module.exports = Backbone.Ribs.View.extend({
                 $(changed).parent('label').addClass('um-checked');
             else
                 $(changed).parent('label').removeClass('um-checked');
-        } else if (changed.type == 'file') {
-            value = changed[0].files[0];
         } else {
             value = changed.value;
         }
@@ -66,26 +68,16 @@ module.exports = Backbone.Ribs.View.extend({
     setValue: function () {
         var attr = this.model.toJSON();
         _.each(attr, function (num, key) {
-            if(key == "gear" || key == 'lighting') {
-                var checked = [];
-                this.$el.find('[name=' + key + ']').parent('label').each(function () {
-                    if($(this).hasClass('um-checked')) {
-                        checked[checked.length] = $(this).text();
-                    }
-                });
-                this.$el.find('[name=' + key + ']').val(checked.join());
-            } else if(key != 'file') {
-                this.$el.find('[name=' + key + ']').val(num);
-            }
+            this.$el.find('[name=' + key + ']').val(num);
         }, this);
+        return this;
     },
     /**
      * Сохраняет изменения поля в модель.
      */
     setAttr: function (e) {
         var name = $(e.target).attr('name'),
-            val = (name != 'file') ? $(e.target).val() : $(e.target)[0].files[0];
-
+            val = $(e.target).val();
         this.model.set(name, val);
         this.model.set(name, val, {validate:true});
     },
@@ -95,26 +87,11 @@ module.exports = Backbone.Ribs.View.extend({
     setAttrs: function () {
         var data = {};
         this.$el.find('.um-form-control').each(function () {
-            data[this.name] = (this.name != 'file') ? $(this).val() : $(this)[0].files[0];
+            data[this.name] = $(this).val();
         });
 
         this.model.set(data);
         this.model.set(data, {validate:true});
-    },
-
-    /**
-     * При объединении полей Фамилия и Имя при вводе значения с клавиатуры разделяет значения имени и фамилии
-     */
-    parseName: function(e) {
-        var val = ($(e.target).val()).trim(),
-            id = $(e.target).attr('id'),
-            i = val.trim().indexOf(' '),
-            surname = val.substr(0, i),
-            name = val.substr((i + 1), val.length);
-
-        this.$el.find('[name=surname]').val(surname);
-        this.$el.find('[name=firstName]').val(name);
-        this.setAttrs();
     },
 
     /**
@@ -125,19 +102,12 @@ module.exports = Backbone.Ribs.View.extend({
 
         var data = {};
         this.$el.find('.um-form-control').each(function () {
-            data[this.name] = (this.name != 'file') ? $(this).val() : $(this)[0].files[0];
+            data[this.name] = $(this).val();
         });
 
-        if (this.model.options.city.show && (data['city'] != '' || typeof data['city'] !== 'undefined' && typeof this.model.get('cityId') !== 'undefined')) {
-            var city = this.model.cityCollection.find(function(city) {return city.get('name') == data['city']});
-            data['cityId'] = city.get('mr3id');
-        }
         this.model.save(data, {
             error: function (model, error) {
-                if(error.status == 406) {
-                    UM.vent.trigger('page:showWarning', model.get('configId'));
-                }
-                else UM.ajaxError(error)
+                UM.ajaxError(error)
             }
         });
     },
@@ -158,15 +128,13 @@ module.exports = Backbone.Ribs.View.extend({
      * Кнопка отправки становится неактивной
      */
     disabledSubmit: function () {
-        if(typeof this.$el.find('button:submit')[0] !== "undefined")
-            this.$el.find('button:submit')[0].disabled = true;
+        this.$el.find('button:submit').prop('disabled', true);
     },
     /**
      * Кнопка отправки становится активной
      */
     enabledSubmit: function () {
-        if(typeof this.$el.find('button:submit')[0] !== "undefined")
-            this.$el.find('button:submit')[0].disabled = false;
+        this.$el.find('button:submit').prop('disabled', false) ;
     },
 
     valid: function (attr) {
@@ -182,7 +150,6 @@ module.exports = Backbone.Ribs.View.extend({
                 .closest('.um-form-group').removeClass('um-has-error').addClass('um-has-success')
                 .find('.um-tooltip').remove();
         }
-        this.enabledSubmit();
     },
     /**
      * Вывод ошибок
@@ -190,30 +157,29 @@ module.exports = Backbone.Ribs.View.extend({
      * @param  {object} errors.
      */
     invalid: function (model, errors) {
-        this.disabledSubmit();
         this.$el.find('input')
             .closest('.um-form-group').removeClass('um-has-error')
             .find('.um-tooltip').remove();
+
         _.each(errors, function (error) {
             var $el = this.$el.find('[name=' + error.attr + ']'),
                 $group = $el.closest('.um-form-group');
 
             $group.addClass('um-has-error').removeClass('um-has-success');
             if (document.inputEncoding == "UTF-8") {
-                var tooltip = new UM.Views.Tooltip();
-                tooltip.$el.html(error.text);
+                var tooltip = new UM.Views.Tooltip({text: error.text});
                 $group.find('.um-form-control').after(tooltip.el);
             }
         }, this);
     },
     /**
-     * Формирует видимые данные формы в объект
+     * Формирует видемые данные формы в объект
      * return {object} attr
      */
     getVisibleFormControl: function () {
         var attr = {};
         this.$el.find('.um-form-control:visible').each(function () {
-            attr[this.name] = (this.name != 'file') ? $(this).val() : $(this)[0].files[0];
+            attr[this.name] = $(this).val();
         });
         return attr;
     }
