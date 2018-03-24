@@ -11,7 +11,7 @@ $(document).ready(function() {
         Router: {},
         Helpers: {},
         version: pjson.version,
-        dataUrl: conf.server.url + '/um/umdata',
+        dataUrl: conf.server.url + conf.server.dataPrefix,
         conf: conf
     };
 

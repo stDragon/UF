@@ -713,7 +713,7 @@ var db ={
                 "debug": "false",
                 "type": "calculation",
                 "server": {
-                    "url": "//localhost/um/umdata", // //module.infcentre.ru/um/umdata || //umodule.marya.ru/um/umdata
+                    "url": "//localhost/data", // //module.infcentre.ru/um/umdata || //umodule.marya.ru/um/umdata
                     "type": "prod" // dev || pre-prod || prod
                 },
                 "site": {
