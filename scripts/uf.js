@@ -70,51 +70,6 @@ UM.Views.PhoneInput = require('./views/phoneInput.js');
 UM.Views.PhoneCode = require('./views/phoneCode.js');
 UM.Views.PhoneCodeCollection = require('./views/phoneCodeCollection.js');
 
-/** @todo Надо определить куда это определить */
-UM.codes = [
-    {
-        isoCode: 'RU',
-        name: 'Россия',
-        code: '7',
-        mask: '999-999-99-99',
-        img: UM.conf.server.url + '/public/img/flags/ru.gif',
-        active: true
-    },
-    {
-        isoCode: 'BY',
-        name: 'Белоруссия',
-        code: '375',
-        mask: '999-99-99-99',
-        img: UM.conf.server.url + '/public/img/flags/by.gif'
-    },
-    {
-        available: false,
-        isoCode: 'UA',
-        name: 'Украина',
-        code: '380',
-        mask: '999-99-99-99',
-        img: UM.conf.server.url + '/public/img/flags/ua.gif'
-    },
-    {
-        isoCode: 'KZ',
-        name: 'Казахстан',
-        code: '77',
-        mask: '99-999-99-99',
-        img: UM.conf.server.url + '/public/img/flags/kz.gif'
-    },
-    {
-        isoCode: 'KG',
-        name: 'Киргизия',
-        code: '996',
-        mask: '999-999-999',
-        img: UM.conf.server.url + '/public/img/flags/kg.gif'
-    }
-];
-UM.pref = require('../pref.js');
-UM.product = require('../product.js');
-UM.pay = require('../pay.js');
-UM.formTypes = require('../formTypes.js');
-
 /**
  *  Запуск модуля
  *  @param  {string} option - Опции для инициализации модуля.

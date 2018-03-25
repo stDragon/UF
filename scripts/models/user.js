@@ -108,7 +108,7 @@ module.exports = Backbone.Model.extend({
                         }
                     });
                     break;
-                case 'pref':
+                /*case 'pref':
                     this.prefCollection = new UM.Collections.Options(UM.pref, this.toJSON());
 
                     this.listenTo(this.prefCollection, 'change:active', function() {
@@ -137,7 +137,7 @@ module.exports = Backbone.Model.extend({
                             this.set('pay', active.name);
                         }
                     });
-                    break;
+                    break;*/
             }
         }, this);
     },

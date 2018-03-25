@@ -83,7 +83,7 @@ module.exports = UM.Views.Form.extend({
             this.kitchenCollectionView = new UM.Views.Kitchens({collection: this.model.kitchenCollection});
         }
 
-        if (this.model.prefCollection && _.find(this.options.fields, function (field){return field.name === 'pref'})) {
+        /*if (this.model.prefCollection && _.find(this.options.fields, function (field){return field.name === 'pref'})) {
             this.prefCollectionView = new UM.Views.InputSelect({collection: this.model.prefCollection});
         }
 
@@ -93,7 +93,7 @@ module.exports = UM.Views.Form.extend({
 
         if (this.model.payCollection && _.find(this.options.fields, function (field){return field.name === 'pay'})) {
             this.payCollectionView = new UM.Views.InputSelect({collection: this.model.payCollection});
-        }
+        }*/
 
         return this;
     },
