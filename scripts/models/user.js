@@ -45,7 +45,7 @@ module.exports = Backbone.Model.extend({
                 if (that.has('cityId')) {
                     that.optionCollection[field.name].setActive(that.get(field.name+'Id'));
                 }
-            }, UM.ajaxError);
+            }, UM.helpers.ajaxError);
 
             this.listenTo(that.optionCollection[field.name], 'change:active', function() {
                 var active = that.optionCollection[field.name].getActive();
@@ -71,7 +71,7 @@ module.exports = Backbone.Model.extend({
                         if (that.has('shopId')) {
                             that.shopCollection.setActive(that.get('shopId'));
                         }
-                    }, UM.ajaxError);
+                    }, UM.helpers.ajaxError);
 
                     this.listenTo(this, 'change:cityId', function () {
                         this.set('shopId', '');
@@ -98,7 +98,7 @@ module.exports = Backbone.Model.extend({
                         if (that.has('kitchenId')) {
                             that.cityCollection.setActive(that.get('kitchenId'));
                         }
-                    }, UM.ajaxError);
+                    }, UM.helpers.ajaxError);
 
                     this.listenTo(this.kitchenCollection, 'change:active', function() {
                         var active = this.kitchenCollection.getActive();

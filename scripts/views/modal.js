@@ -18,7 +18,7 @@ module.exports = Backbone.View.extend({
 
     render: function () {
         var that = this;
-        UM.TemplateManager.get(this.template, function (template) {
+        UM.helpers.templateManager.get(this.template, function (template) {
             var temp = _.template(template);
             var html = $(temp(that.model.toJSON()));
             that.$el.html(html);

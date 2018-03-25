@@ -30,6 +30,8 @@ require('./Backbone.Ymaps.js');
 
 window.UM = UM;
 
+UM.helpers = require('./helpers.js');
+
 UM.Models.Logger = require('./models/logger.js');
 UM.Models.Config = require('./models/config.js');
 UM.Models.Option = require('./models/option.js');
@@ -87,66 +89,6 @@ UM.init = function (option, data) {
 
         config.fetch().then(function () {
                 new UM.Views.Config({model: config});
-            }, UM.ajaxError);
+            }, UM.helpers.ajaxError);
     });
-};
-
-/**
- *  Helper создания событий
- *  */
-UM.vent = _.extend({}, Backbone.Events);
-
-/**
- *  Helper шаблон из статичного DOM элемента по его ID
- *  */
-UM.template = function (id) {
-    return _.template($('#' + id).html());
-};
-
-/**
- *  Ajax подгрузка шаблона
- *  */
-UM.TemplateManager = {
-    templates: {},
-
-    get: function (id, callback) {
-        var template = this.templates[id];
-
-        if (template) {
-            callback(template);
-
-        } else {
-
-            var that = this;
-            $.ajaxPrefilter(function (options, originalOptions, jqXHR) {
-                options.crossDomain = {
-                    crossDomain: true
-                };
-                options.xhrFields = {
-                    withCredentials: true
-                };
-            });
-            $.ajax({
-                url: conf.server.url + '/module/' + id,
-                success: function (template) {
-                    var tmpl = template;
-                    that.templates[id] = tmpl;
-                    callback(tmpl);
-                },
-                error: UM.ajaxError
-            });
-
-        }
-
-    }
-
-};
-
-UM.ajaxError = function(jqXHR) {
-    var error = {
-        responseText: jqXHR.responseText,
-        status: jqXHR.status,
-        statusText: jqXHR.statusText
-    };
-    new UM.Models.Logger({message: JSON.stringify(error)});
 };

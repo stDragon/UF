@@ -9,7 +9,7 @@ module.exports = UM.Views.Button.extend({
     initialize: function () {
         this.render();
         this.$el.addClass(this.model.get('style'));
-        UM.vent.on('button:show', function (id) {
+        UM.helpers.vent.on('button:show', function (id) {
             if (id == this.model.id)
                 this.show();
         }, this);
@@ -33,7 +33,7 @@ module.exports = UM.Views.Button.extend({
     },
 
     clicked: function () {
-        UM.vent.trigger('layout:show', this.model.id);
+        UM.helpers.vent.trigger('layout:show', this.model.id);
         this.hide();
     }
 });

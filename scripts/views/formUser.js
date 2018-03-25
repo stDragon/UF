@@ -45,16 +45,16 @@ module.exports = UM.Views.Form.extend({
         //    this.model.on('change:cityId', this.createSelectShop, this);
         //}
         this.listenTo(this.model, 'request', function () {
-            UM.vent.trigger('layout:showLoader', this.model.get('configId'));
+            UM.helpers.vent.trigger('layout:showLoader', this.model.get('configId'));
             this.valid();
             this.disabledSubmit();
         });
         this.listenTo(this.model, 'sync', function () {
-            UM.vent.trigger('layout:hideLoader', this.model.get('configId'));
-            UM.vent.trigger('layout:showPhoneForm', this.model.get('configId'));
+            UM.helpers.vent.trigger('layout:hideLoader', this.model.get('configId'));
+            UM.helpers.vent.trigger('layout:showPhoneForm', this.model.get('configId'));
         });
         this.listenTo(this.model, 'error', function () {
-            UM.vent.trigger('layout:hideLoader', this.model.get('configId'));
+            UM.helpers.vent.trigger('layout:hideLoader', this.model.get('configId'));
             this.enabledSubmit();
         });
         this.listenTo(this.model, 'invalid', this.invalid);
@@ -170,7 +170,7 @@ module.exports = UM.Views.Form.extend({
     render: function () {
         this.options.fields = _.sortBy(this.options.fields, function(opt){ return Number(opt.sort) });
         var that = this;
-        UM.TemplateManager.get(this.template, function (template) {
+        UM.helpers.templateManager.get(this.template, function (template) {
             var temp = _.template(template);
             var data = {
                 value: that.model.toJSON(),
@@ -327,7 +327,7 @@ module.exports = UM.Views.Form.extend({
                 },
 
                 selectShop: function () {
-                    UM.vent.trigger('user:setShop', this.model.get('title'));
+                    UM.helpers.vent.trigger('user:setShop', this.model.get('title'));
                 }
             });
 

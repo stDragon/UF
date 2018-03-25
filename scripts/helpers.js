@@ -1,8 +1,29 @@
 module.exports = {
     /**
+     *  Helper создания событий
+     *  */
+    vent: _.extend({}, Backbone.Events),
+    /**
+     * Логирование ajax ошибок на сервере
+     * */
+    ajaxError: function (jqXHR) {
+        var error = {
+            responseText: jqXHR.responseText,
+            status: jqXHR.status,
+            statusText: jqXHR.statusText
+        };
+        new UM.Models.Logger({message: JSON.stringify(error)});
+    },
+    /**
+     *  Helper шаблон из статичного DOM элемента по его ID
+     *  */
+    template: function (id) {
+        return _.template($('#' + id).html());
+    },
+    /**
      *  Ajax подгрузка шаблона
      *  */
-    TemplateManager : {
+    templateManager: {
         templates: {},
 
         get: function (id, callback) {
@@ -29,10 +50,7 @@ module.exports = {
                         callback(tmpl);
                     }
                 });
-
             }
-
         }
-
     }
 };

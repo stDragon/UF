@@ -13,7 +13,7 @@ module.exports = Backbone.View.extend({
 
     render: function () {
         var that = this;
-        UM.TemplateManager.get(this.template, function (template) {
+        UM.helpers.templateManager.get(this.template, function (template) {
             var html = $(template);
             that.$el.html(html);
         });

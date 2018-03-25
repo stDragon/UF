@@ -28,22 +28,22 @@ module.exports = Backbone.Ribs.View.extend({
 
         this.render().createSteps().renderStep(this.getStep(this.step));
 
-        UM.vent.on('layout:show', function (id) {
+        UM.helpers.vent.on('layout:show', function (id) {
             if (id == this.model.id)
                 this.show();
         }, this);
 
-        UM.vent.on('layout:showLoader', function (id) {
+        UM.helpers.vent.on('layout:showLoader', function (id) {
             if (id == this.model.id)
                 this.renderStep(this.showLoader());
         }, this);
 
-        UM.vent.on('layout:hideLoader', function (id) {
+        UM.helpers.vent.on('layout:hideLoader', function (id) {
             if (id == this.model.id)
                 this.renderStep(this.hideLoader());
         }, this);
 
-        UM.vent.on('layout:showPhoneForm', function (id) {
+        UM.helpers.vent.on('layout:showPhoneForm', function (id) {
             if (id == this.model.id) {
                 if (this.model.get('phoneVerification') === true)
                     this.renderStep(this.showPhoneForm());
@@ -52,7 +52,7 @@ module.exports = Backbone.Ribs.View.extend({
             }
         }, this);
 
-        UM.vent.on('layout:showConfirm', function (id) {
+        UM.helpers.vent.on('layout:showConfirm', function (id) {
             if (id == this.model.id)
                 this.renderStep(this.showConfirm());
         }, this);
@@ -64,7 +64,7 @@ module.exports = Backbone.Ribs.View.extend({
 
     render: function () {
         var that = this;
-        UM.TemplateManager.get(this.template, function (template) {
+        UM.helpers.templateManager.get(this.template, function (template) {
             var temp = _.template(template);
             var html = $(temp(that.model.toJSON()));
             that.$el.html(html);
@@ -89,7 +89,7 @@ module.exports = Backbone.Ribs.View.extend({
     hide: function () {
         this.$el.addClass('um-hidden');
         if (this.model.get('initType') == 'button') {
-            UM.vent.trigger('button:show', this.model.id);
+            UM.helpers.vent.trigger('button:show', this.model.id);
         }
     },
     /**

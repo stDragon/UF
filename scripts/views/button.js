@@ -8,6 +8,6 @@ module.exports = Backbone.View.extend({
     },
 
     clicked: function () {
-        UM.vent.trigger('layout:show', this.model.id);
+        UM.helpers.vent.trigger('layout:show', this.model.id);
     }
 });
