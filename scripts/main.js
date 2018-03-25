@@ -148,9 +148,9 @@ $(document).ready(function() {
          * */
         getScriptHref: function () {
             if (App.conf.server.type === 'dev')
-                return '//' + App.conf.server.url + '/public/js/marya-um.full.js';
+                return '//' + App.conf.server.url + '/public/js/uf.js';
             else
-                return '//' + App.conf.server.url + '/public/js/marya-um.js';
+                return '//' + App.conf.server.url + '/public/js/uf.min.js';
         },
         /**
          * @return {string} JS составляющая кода размещения на сайте, содержит полный скрипт

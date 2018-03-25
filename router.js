@@ -46,7 +46,10 @@ module.exports = function (app) {
      * Получаем index страницу
      * */
     app.get('/', function (req, res) {
-        res.render('index');
+        console.log(123);
+        res.render('index', {
+            title: 'Получение HTML-кода модуля'
+        });
     });
     /**
      * Получаем index страницу с ранее сохраненным конфигом
@@ -153,10 +156,7 @@ module.exports = function (app) {
 
 function generateView(app) {
     var expressHbs = require('express3-handlebars');
-
-    app.set('view engine', 'html');
     app.set('views', __dirname + '/views');
-
     app.engine('hbs', expressHbs({extname: 'hbs', defaultLayout: 'main.hbs'}));
     app.set('view engine', 'hbs');
     return app;

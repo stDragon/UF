@@ -3,7 +3,7 @@ module.exports = function(app){
         http         = require('http'),
         fs           = require('fs');
 
-    app.set('port', process.env.PORT || 80);
+    app.set('port', process.env.PORT || 8080);
 
     var httpServer = http.createServer(app);
 
