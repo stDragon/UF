@@ -13,7 +13,7 @@ module.exports = Backbone.Ribs.View.extend({
     },
 
     addOne: function(model) {
-        var view = new App.Views.StepGenerator({ model: model });
+        var view = new UM.Views.StepGenerator({ model: model });
         this.$el.append(view.el);
     }
 });

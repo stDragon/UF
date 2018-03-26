@@ -21,12 +21,12 @@ module.exports = Backbone.Ribs.View.extend({
 
     render: function () {
         var that = this;
-        App.Helpers.TemplateManager.get(this.template, function (template) {
+        UM.Helpers.TemplateManager.get(this.template, function (template) {
             var temp = _.template(template);
             var data = that.model.toJSON();
             var html = temp(data);
             that.$el.html(html);
-            that.fields = new App.Views.Fields({el: that.$el.find('.field-list'), collection: that.model.fieldCollection});
+            that.fields = new UM.Views.Fields({el: that.$el.find('.field-list'), collection: that.model.fieldCollection});
 
             that.initSelects();
         });
@@ -45,7 +45,7 @@ module.exports = Backbone.Ribs.View.extend({
     },
 
     initSelects: function () {
-        new App.Views.Select({el: this.$el.find('.add-field-list'), collection: this.model.newFieldCollection},{template:_.template('<%= label %>'), value: 'name'}).render();
+        new UM.Views.Select({el: this.$el.find('.add-field-list'), collection: this.model.newFieldCollection},{template:_.template('<%= label %>'), value: 'name'}).render();
         return this;
     },
 
@@ -127,6 +127,6 @@ module.exports = Backbone.Ribs.View.extend({
 
     submit: function (e) {
         e.preventDefault();
-        App.config.save();
+        UM.config.save();
     }
 });

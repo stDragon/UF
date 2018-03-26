@@ -24,7 +24,7 @@ module.exports = Backbone.Ribs.Model.extend({
 
         this.createFields();
 
-        if (App.conf.server.type != 'prod')
+        if (UM.conf.server.type != 'prod')
             this.on('all', function(eventName){this.log(eventName)}, this);
     },
 
@@ -37,8 +37,8 @@ module.exports = Backbone.Ribs.Model.extend({
      * @return {object}
      * */
     createFields: function () {
-        this.newFieldCollection = new App.Collections.Field(App.fields);
-        this.fieldCollection = new App.Collections.Field(this.get('fields'));
+        this.newFieldCollection = new UM.Collections.Field(UM.fields);
+        this.fieldCollection = new UM.Collections.Field(this.get('fields'));
 
         this.listenTo(this.fieldCollection, 'all', this.setFields);
         return this;

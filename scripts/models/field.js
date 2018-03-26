@@ -5,10 +5,10 @@ module.exports = Backbone.Ribs.Model.extend({
 
     initialize: function() {
         if (this.get('name') === 'phone') {
-            this.phoneCodesCollection = new App.Collections.PhoneCodes({
-                model: App.Models.PhoneCode,
+            this.phoneCodesCollection = new UM.Collections.PhoneCodes({
+                model: UM.Models.PhoneCode,
                 url: function () {
-                    return App.dataUrl + '/phoneCodes'
+                    return UM.dataUrl + '/phoneCodes'
                 }
             });
 
@@ -30,8 +30,8 @@ module.exports = Backbone.Ribs.Model.extend({
      * @return {object}
      * */
     createPhoneCodes: function () {
-        this.phoneCodesAvailableCollection = new App.Collections.PhoneCodes(this.phoneCodesCollection.toJSON());
-        this.phoneCodesNotAvailableCollection = new App.Collections.PhoneCodes(this.phoneCodesCollection.toJSON());
+        this.phoneCodesAvailableCollection = new UM.Collections.PhoneCodes(this.phoneCodesCollection.toJSON());
+        this.phoneCodesNotAvailableCollection = new UM.Collections.PhoneCodes(this.phoneCodesCollection.toJSON());
         this.setActivePhone();
         return this;
     },

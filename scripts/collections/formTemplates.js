@@ -1,3 +1,3 @@
 module.exports = Backbone.Ribs.Collection.extend({
-    model: App.Models.FormTemplate
+    model: UM.Models.FormTemplate
 });

@@ -4,7 +4,7 @@ var conf = require('../nconf.js'),
 $(document).ready(function() {
     window.validate_field = function(){}; //отмена встроенного валидатора Materialize
     /** @global */
-    window.App = {
+    window.UM = {
         Models: {},
         Collections: {},
         Views: {},
@@ -15,15 +15,15 @@ $(document).ready(function() {
         conf: conf
     };
 
-    App.fields = require('../fields.js');
-    App.formTemplates = require('../formTemplates.js');
+    UM.fields = require('../fields.js');
+    UM.formTemplates = require('../formTemplates.js');
 
-    App.Models.Config = Backbone.Ribs.Model.extend({
+    UM.Models.Config = Backbone.Ribs.Model.extend({
         defaults: {
             global: {
                 debug: false,
                 type: 'calculation',
-                server: App.conf.server,
+                server: UM.conf.server,
                 site: {
                     url:""
                 }
@@ -40,7 +40,7 @@ $(document).ready(function() {
         },
 
         urlRoot: function () {
-            return App.dataUrl + '/conf/'
+            return UM.dataUrl + '/conf/'
         },
 
         initialize: function () {
@@ -56,7 +56,7 @@ $(document).ready(function() {
 
             //this.on('change:phoneVerification', this.activePhoneField, this);
 
-            if (App.conf.server.type !== 'prod')
+            if (UM.conf.server.type !== 'prod')
                 this.on('all', function(eventName){this.log(eventName)}, this);
         },
 
@@ -99,7 +99,7 @@ $(document).ready(function() {
         },
         /**
          * Создает коллекцию шагов и связывает ее с текущим конфигом
-         * @return {App.Models.Config}
+         * @return {UM.Models.Config}
          * */
         createSteps: function() {
             var stepCollection;
@@ -109,7 +109,7 @@ $(document).ready(function() {
             } else {
                 stepCollection = this.getTemplateStep(this.get('global.type'));
             }
-            this.steps = new App.Collections.Steps(stepCollection);
+            this.steps = new UM.Collections.Steps(stepCollection);
             this.setSteps();
             this.listenTo(this.steps, 'all', this.setSteps);
             //this.listenTo(this.steps, 'change', this.unactivePhoneField);
@@ -119,7 +119,7 @@ $(document).ready(function() {
         /**
          * Создает коллекцию шагов и связывает ее с текущим конфигом
          * @param  {object} steps.
-         * @return {App.Models.Config}
+         * @return {UM.Models.Config}
          * */
         setSteps: function (steps) {
             if (typeof steps !== 'undefined') {
@@ -147,10 +147,10 @@ $(document).ready(function() {
          * @return {string} url конфига, зависит от сервера
          * */
         getScriptHref: function () {
-            if (App.conf.server.type === 'dev')
-                return '//' + App.conf.server.url + '/public/js/uf.js';
+            if (UM.conf.server.type === 'dev')
+                return '//' + UM.conf.server.url + '/public/js/uf.js';
             else
-                return '//' + App.conf.server.url + '/public/js/uf.min.js';
+                return '//' + UM.conf.server.url + '/public/js/uf.min.js';
         },
         /**
          * @return {string} JS составляющая кода размещения на сайте, содержит полный скрипт
@@ -201,11 +201,11 @@ $(document).ready(function() {
          * @return {object} Конфиг шагов из шаблона
          * */
         getTemplateStep: function (type) {
-            return _.find(App.formTemplates, function(model){return model.type === type});
+            return _.find(UM.formTemplates, function(model){return model.type === type});
         },
         /** Добавляет шаг
          * @param  {string} type.
-         * @return {App.Models.Config}
+         * @return {UM.Models.Config}
          * */
         addStep: function (type) {
             var phoneStep = this.steps.find(function(model){return model.get('type') === 'code'});
@@ -231,34 +231,34 @@ $(document).ready(function() {
         }
     });
 
-    App.Models.PhoneCode = require('./models/phoneCode.js');
-    App.Collections.PhoneCodes = require('./collections/phoneCodes.js');
+    UM.Models.PhoneCode = require('./models/phoneCode.js');
+    UM.Collections.PhoneCodes = require('./collections/phoneCodes.js');
 
-    App.Models.Field =  require('./models/field.js');
-    App.Collections.Field = require('./collections/fields.js');
+    UM.Models.Field =  require('./models/field.js');
+    UM.Collections.Field = require('./collections/fields.js');
 
-    App.Models.FormTemplate = require('./models/formTemplate.js');
-    App.Collections.FormTemplates = require('./collections/formTemplates.js');
+    UM.Models.FormTemplate = require('./models/formTemplate.js');
+    UM.Collections.FormTemplates = require('./collections/formTemplates.js');
 
-    App.Models.Step = require('./models/step.js');
-    App.Collections.Steps = require('./collections/steps.js');
+    UM.Models.Step = require('./models/step.js');
+    UM.Collections.Steps = require('./collections/steps.js');
 
-    App.Views.SelectOption = require('./views/selectOption.js');
-    App.Views.Select = require('./views/select.js');
-    App.Views.TabLi = require('./views/tabLi.js');
-    App.Views.ConfigGenerator = require('./views/configGenerator.js');
-    App.Views.StepsTabView = require('./views/stepsTabView.js');
-    App.Views.StepAddGenetator = require('./views/stepAddGenerator.js');
-    App.Views.StepGenerator = require('./views/stepGenerator.js');
-    App.Views.StepGeneratorCollection = require('./views/stepGeneratorCollection.js');
-    App.Views.Field = require('./views/field.js');
-    App.Views.Fields = require('./views/fields.js');
-    App.Views.Example = require('./views/example.js');
+    UM.Views.SelectOption = require('./views/selectOption.js');
+    UM.Views.Select = require('./views/select.js');
+    UM.Views.TabLi = require('./views/tabLi.js');
+    UM.Views.ConfigGenerator = require('./views/configGenerator.js');
+    UM.Views.StepsTabView = require('./views/stepsTabView.js');
+    UM.Views.StepAddGenetator = require('./views/stepAddGenerator.js');
+    UM.Views.StepGenerator = require('./views/stepGenerator.js');
+    UM.Views.StepGeneratorCollection = require('./views/stepGeneratorCollection.js');
+    UM.Views.Field = require('./views/field.js');
+    UM.Views.Fields = require('./views/fields.js');
+    UM.Views.Example = require('./views/example.js');
 
     /**
      *  Ajax подгрузка шаблона
      *  */
-    App.Helpers.TemplateManager = {
+    UM.Helpers.TemplateManager = {
         templates: {},
 
         get: function (id, callback) {
@@ -279,7 +279,7 @@ $(document).ready(function() {
                     };
                 });
                 $.ajax({
-                    url: App.conf.server.url + '/module/' + id,
+                    url: UM.conf.server.url + '/module/' + id,
                     success: function (template) {
                         var tmpl = template;
                         that.templates[id] = tmpl;
@@ -297,13 +297,13 @@ $(document).ready(function() {
      * @param  {string|number} option.
      * */
     function init(option) {
-        App.config = new App.Models.Config(option);
+        UM.config = new UM.Models.Config(option);
         if(option)
-            App.config.fetch().then(function(){
-                App.configGeneratorView = new App.Views.ConfigGenerator({model: App.config});
+            UM.config.fetch().then(function(){
+                UM.configGeneratorView = new UM.Views.ConfigGenerator({model: UM.config});
             });
         else {
-            App.configGeneratorView = new App.Views.ConfigGenerator({model: App.config});
+            UM.configGeneratorView = new UM.Views.ConfigGenerator({model: UM.config});
         }
     }
 

@@ -15,7 +15,7 @@ module.exports = Backbone.Ribs.View.extend({
     },
 
     addOne: function(model) {
-        var view = new App.Views.TabLi({ model: model });
+        var view = new UM.Views.TabLi({ model: model });
         this.$el.append(view.el);
         this.initTabs();
     },

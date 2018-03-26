@@ -14,7 +14,7 @@ module.exports = Backbone.View.extend({
     render: function () {
         this.$el.append('<option disabled>Выберите опцию</option>');
         this.collection.each(function (model) {
-            var view = new App.Views.SelectOption({model: model},this.options);
+            var view = new UM.Views.SelectOption({model: model},this.options);
             this.$el.append(view.render().el);
         }, this);
         this.$el.material_select();

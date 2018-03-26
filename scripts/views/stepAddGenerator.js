@@ -17,7 +17,7 @@ module.exports = Backbone.Ribs.View.extend({
 
     render: function () {
         var that = this;
-        App.Helpers.TemplateManager.get(this.template, function (template) {
+        UM.Helpers.TemplateManager.get(this.template, function (template) {
             var data = _.extend(that.model.toJSON());
             var temp = _.template(template, data);
             var html = $(temp(data));
@@ -30,9 +30,9 @@ module.exports = Backbone.Ribs.View.extend({
         var el = e.target;
         if (el.disabled) return false;
         if (el.name === 'addStep')
-            App.config.addStep('default');
+            UM.config.addStep('default');
         else if (el.name === 'phoneVerification'){
-            App.config.addStep('code');
+            UM.config.addStep('code');
             el.disabled = true;
         }
     }

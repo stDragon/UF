@@ -12,7 +12,7 @@ module.exports = Backbone.Ribs.View.extend({
     },
 
     addOne: function(model) {
-        var view = new App.Views.Field({ model: model });
+        var view = new UM.Views.Field({ model: model });
         this.$el.append(view.el);
     }
 });

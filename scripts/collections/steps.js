@@ -1,8 +1,8 @@
 module.exports = Backbone.Ribs.Collection.extend({
-    model: App.Models.Step,
+    model: UM.Models.Step,
 
     initialize: function () {
-        if (App.conf.server.type !== 'prod')
+        if (UM.conf.server.type !== 'prod')
             this.on('all', function(eventName){this.log(eventName)}, this);
     },
 

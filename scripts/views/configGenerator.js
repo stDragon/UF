@@ -38,7 +38,7 @@ module.exports = Backbone.Ribs.View.extend({
 
     render: function () {
         var that = this;
-        App.Helpers.TemplateManager.get(this.template, function (template) {
+        UM.Helpers.TemplateManager.get(this.template, function (template) {
             var data = _.extend(that.model.toJSON());
             var temp = _.template(template, data);
             var html = $(temp(data));
@@ -57,12 +57,12 @@ module.exports = Backbone.Ribs.View.extend({
 
     renderStepAddGenerator: function () {
         var phoneVerification = this.model.steps.hasPhoneVerification();
-        App.stepsGeneratorView = new App.Views.StepAddGenetator({phoneVerification: !!phoneVerification});
+        UM.stepsGeneratorView = new UM.Views.StepAddGenetator({phoneVerification: !!phoneVerification});
         return this;
     },
 
     renderStepTabs: function () {
-        this.stepsTabView = new App.Views.StepsTabView({collection: this.model.steps});
+        this.stepsTabView = new UM.Views.StepsTabView({collection: this.model.steps});
         $('#steps').html(this.stepsTabView.el);
         this.stepsTabView.$el.tabs();
         return this;
@@ -71,7 +71,7 @@ module.exports = Backbone.Ribs.View.extend({
     renderFormSteps: function() {
         this.renderStepAddGenerator()
             .renderStepTabs();
-        App.stepGeneratorView = new App.Views.StepGeneratorCollection({ collection: this.model.steps });
+        UM.stepGeneratorView = new UM.Views.StepGeneratorCollection({ collection: this.model.steps });
         return this;
     },
 
@@ -107,7 +107,7 @@ module.exports = Backbone.Ribs.View.extend({
     },
 
     showExample: function(){
-        App.example = new App.Views.Example({model: App.config});
+        UM.example = new UM.Views.Example({model: UM.config});
     },
 
     changed: function(e) {
